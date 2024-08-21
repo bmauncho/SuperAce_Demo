@@ -15,7 +15,7 @@ public class CommandCentre : MonoBehaviour
 
     private void Awake ()
     {
-        Application.targetFrameRate = 30;
+        //Application.targetFrameRate = 30;
         if (Instance != null && Instance != this)
         {
             Destroy(this);

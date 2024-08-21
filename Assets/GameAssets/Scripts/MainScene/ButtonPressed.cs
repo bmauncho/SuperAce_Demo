@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ButtonPressed : MonoBehaviour
 {
+    public bool isSpinButton = false;
     // Update is called once per frame
     void Update()
     {
@@ -11,7 +12,10 @@ public class ButtonPressed : MonoBehaviour
         {
             if(!CommandCentre.Instance.GridManager_.IsGridCreationComplete())
             {
-                DisableButtonInteractvity();
+                if (isSpinButton)
+                {
+                    DisableButtonInteractvity();
+                }
             }
             else
             {
@@ -21,7 +25,7 @@ public class ButtonPressed : MonoBehaviour
        
     }
 
-     void EnableButtonInteractvity ()
+    void EnableButtonInteractvity ()
     {
         CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
         GetComponent<Button>().interactable = true;
@@ -36,7 +40,10 @@ public class ButtonPressed : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             Bounce();
-            CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
+            if (CommandCentre.Instance)
+            {
+                CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
+            }
         }
     }
 

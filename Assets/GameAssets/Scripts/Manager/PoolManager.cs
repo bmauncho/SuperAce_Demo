@@ -43,12 +43,18 @@ public class PoolManager : MonoBehaviour
     
     public void ReturnCard ( GameObject card )
     {
-        // Return a card to the pool
-        card.transform.rotation = Quaternion.Euler(0,0,0);
-        card.GetComponent<Card>().SetCardOutLine();
-        card.transform.SetParent(transform);
-        card.transform.localPosition = Vector3.zero;
-        card.SetActive(false);
-        cardPool.Enqueue(card);
+        if (card)
+        {
+            // Return a card to the pool
+            card.transform.rotation = Quaternion.Euler(0 , 0 , 0);
+            if (card.GetComponent<Card>().Outline.sprite != null)
+            {
+                card.GetComponent<Card>().SetCardOutLine();
+            }
+            card.transform.SetParent(transform);
+            card.transform.localPosition = Vector3.zero;
+            card.SetActive(false);
+            cardPool.Enqueue(card);
+        }
     }
 }

@@ -141,9 +141,13 @@ public class GridManager : MonoBehaviour
 
         foreach (Transform tr in tempPos)
         {
-            if (tr.GetComponent<CardPos>().TheOwner)
+            if (tr)
             {
                 poolManager.ReturnCard(tr.GetComponent<CardPos>().TheOwner);
+                if (tr.GetComponent<CardPos>().GetComponentInChildren<Card>())
+                {
+                    poolManager.ReturnCard(tr.GetComponent<CardPos>().GetComponentInChildren<Card>().gameObject);
+                }
                 tr.GetComponent<CardPos>().TheOwner = null;
             }
         }

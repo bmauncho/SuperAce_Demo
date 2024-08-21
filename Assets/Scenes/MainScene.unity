@@ -5841,6 +5841,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 114935934213018868, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: isSpinButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168547448813655116, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: isSpinButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3121876385245775330, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: isSpinButton
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3213835915480220546, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5956,6 +5968,14 @@ PrefabInstance:
     - target: {fileID: 5743327019179972835, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890625697242152211, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: isSpinButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6171449515231716910, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: isSpinButton
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8488,6 +8508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a117680a237e5541a1efc269e3823d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpinButton: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
