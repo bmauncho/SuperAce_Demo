@@ -36,6 +36,7 @@ public class ButtonPressed : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             Bounce();
+            CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
         }
     }
 

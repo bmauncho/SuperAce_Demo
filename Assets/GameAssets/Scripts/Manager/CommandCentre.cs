@@ -10,6 +10,9 @@ public class CommandCentre : MonoBehaviour
     public WinLoseManager WinLoseManager_;
     public GridColumnManager GridColumnManager_;
     public MainMenuController MainMenuController_;
+    public SoundManager SoundManager_;
+    public SettingsManager SettingsManager_;
+
     private void Awake ()
     {
         Application.targetFrameRate = 30;

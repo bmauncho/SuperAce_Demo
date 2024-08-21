@@ -118,7 +118,7 @@ public class GridManager : MonoBehaviour
                         targetPos.GetComponent<CardPos>().TheOwner = card;
                         CalculateObjectsPlaced();
                     });
-
+                CommandCentre.Instance.SoundManager_.PlaySound("Card" , false , .75f);
                 currentDeck.DeckCards.Remove(card);
             }
         }
