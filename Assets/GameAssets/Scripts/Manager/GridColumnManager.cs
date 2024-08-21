@@ -10,7 +10,8 @@ public class GridColumnManager : MonoBehaviour
     public bool IsDoneCheckingWin;
     public bool isWinChecked = false;
     public bool [] refillColumnCompleted;
-    private bool [] columnsToRefill;       // Array to track which columns were initially empty
+    public bool [] columnsToRefill;
+    public bool isRepositioning;
 
     private void Start ()
     {
@@ -37,7 +38,6 @@ public class GridColumnManager : MonoBehaviour
     {
         List<GameObject> cardsInColumn = GetCardsInColumn(colIndex);
         bool repositioning = false;
-
         for (int i = 0 ; i < cardsInColumn.Count ; i++)
         {
             if (!cardsInColumn [i].gameObject.activeSelf)
@@ -80,7 +80,6 @@ public class GridColumnManager : MonoBehaviour
     public IEnumerator RefillColumn ( int colIndex , List<GameObject> cardsInColumn )
     {
         Debug.Log($"refilling");
-        yield return new WaitForSeconds(colIndex * 0.2f); // Small delay before starting
 
         Deck responsibleDeck = multiDeckManager.GetDeck(colIndex);
         Vector3 newCardPos;
@@ -93,6 +92,7 @@ public class GridColumnManager : MonoBehaviour
 
                 // Draw a new card from the responsible deck
                 GameObject newCard = responsibleDeck.DrawCard();
+                responsibleDeck.RefillDeckFromPool();
 
                 // Check if the deck is empty
                 if (newCard == null)
@@ -103,9 +103,9 @@ public class GridColumnManager : MonoBehaviour
 
                 // Place the new card in the correct position
                 newCard.transform.SetParent(cardsInColumn [i].transform.parent);
-                newCard.transform.rotation=Quaternion.Euler(0,180f,0);
+                newCard.transform.rotation = Quaternion.Euler(0,180f,0);
                 // Animate the card's movement to the new position
-                Tween myTween = newCard.transform.DOLocalMove(newCardPos , 0.35f)
+                Tween myTween = newCard.transform.DOLocalMove(newCardPos , CommandCentre.Instance.GridManager_.moveDuration)
                     .SetEase(Ease.OutQuad).SetDelay(colIndex*2 * 0.1f);
                 yield return myTween.WaitForCompletion();
 
@@ -170,7 +170,7 @@ public class GridColumnManager : MonoBehaviour
         refillColumnCompleted [colIndex] = true;
     }
 
-    private bool AreAllRefillColumnsCompleted ()
+    public bool AreAllRefillColumnsCompleted ()
     {
         // Check if all columns that were marked for refill are completed
         for (int i = 0 ; i < columnsToRefill.Length ; i++)
@@ -183,7 +183,6 @@ public class GridColumnManager : MonoBehaviour
 
         return true; // All marked columns are done refilling
     }
-
     public void refreshAllRefillColumnsCompleted ()
     {
         for (int i = 0;i< refillColumnCompleted.Length ; i++)

@@ -61,8 +61,6 @@ public class GridManager : MonoBehaviour
     [ContextMenu("Create Grid")]
     public void CreateGrid ()
     {
-        Debug.Log("create grid");
-
         Deck [] decks = multiDeckManager.decks;
         totalObjectsToPlace = decks.Length * 4;
         objectsPlaced = 0;
@@ -112,7 +110,7 @@ public class GridManager : MonoBehaviour
                 card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                 card.transform.DOMove(targetPos.position , moveDuration)
                     .SetEase(Ease.OutQuad)
-                    .SetDelay(( row * delayBetweenMoves ) + ( col * 4 * delayBetweenMoves ))
+                    .SetDelay(( row * delayBetweenMoves ) + ( col *4 * delayBetweenMoves ))
                     .OnComplete(() =>
                     {
                         targetPos.GetComponent<CardPos>().TheOwner = card;
@@ -126,8 +124,6 @@ public class GridManager : MonoBehaviour
 
     void returnToPool ()
     {
-        Debug.Log("Returning cards to pool");
-
         List<Transform> tempPos = new List<Transform>();
         if (tempPos.Count > 0) { tempPos.Clear(); }
 
@@ -178,12 +174,11 @@ public class GridManager : MonoBehaviour
 
     IEnumerator GridMovement ( Vector3 Dir , Vector3 OriginalPos )
     {
-        Tween myTween = CardsParent.transform.DOLocalMove(CardsParent.transform.localPosition + Dir , 1f);
+        Tween myTween = CardsParent.transform.DOLocalMove(CardsParent.transform.localPosition + Dir , .25f);
         yield return myTween.WaitForCompletion();
         returnToPool();
         CardsParent.transform.localPosition = OriginalPos;
         IsResetDone = true;
-        yield return new WaitForSeconds(.5f);
         CreateGrid();
     }
 

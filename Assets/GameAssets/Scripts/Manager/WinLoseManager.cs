@@ -14,17 +14,6 @@ public class WinLoseManager : MonoBehaviour
 
     public void PopulateGridChecker ( Transform parent )
     {
-        if (columns.Count > 0)
-        {
-            // Clear the existing columns
-            foreach (var column in columns)
-            {
-                column.Cards.Clear();
-            }
-            // Clear the columns list
-            columns.Clear();
-        }
-
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
         SpinEnd();

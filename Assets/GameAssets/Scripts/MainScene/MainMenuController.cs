@@ -87,6 +87,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator SpinReel ()
     {
+        CommandCentre.Instance.WinLoseManager_.enableSpin = false;
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
     }

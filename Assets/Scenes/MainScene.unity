@@ -3397,7 +3397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8527106825086873834, guid: 56c4937550b77be468d705d8f0c0e6c5, type: 3}
-  poolSize: 100
+  poolSize: 150
 --- !u!1 &972018302
 GameObject:
   m_ObjectHideFlags: 0
@@ -7835,7 +7835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardsParent: {fileID: 857952519}
-  moveDuration: 0.5
+  moveDuration: 0.25
   delayBetweenMoves: 0.1
   totalObjectsToPlace: 20
   IsResetDone: 0

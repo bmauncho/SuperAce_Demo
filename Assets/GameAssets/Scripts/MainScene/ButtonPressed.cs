@@ -10,16 +10,25 @@ public class ButtonPressed : MonoBehaviour
     {
         if (CommandCentre.Instance)
         {
-            if(!CommandCentre.Instance.GridManager_.IsGridCreationComplete())
+            if (isSpinButton)
             {
-                if (isSpinButton)
+                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
                 {
-                    DisableButtonInteractvity();
+                    //delay 
+                    EnableButtonInteractvity();
                 }
-            }
-            else
-            {
-                EnableButtonInteractvity();
+                else
+                {
+                    if (CommandCentre.Instance.MainMenuController_.isBtnPressed)
+                    {
+                        DisableButtonInteractvity();
+                    }
+                    else
+                    {
+                        DisableButtonInteractvity();
+                    }
+                    
+                }
             }
         }
        

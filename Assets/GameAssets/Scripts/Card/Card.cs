@@ -53,6 +53,7 @@ public class Card : MonoBehaviour
     public void SetCardType ()
     {
         cardType = CompareEnumToString();
+        if (cardType == CardType.Scatter) { IsGoldenCard = false; }
     }
 
     public void SetCardBack ( Sprite backSprite = null )
@@ -75,6 +76,7 @@ public class Card : MonoBehaviour
         EnableCardOBJ();
         SetCardBack(backGoldenSprite);
         IsGoldenCard = true;
+        IsScatterCard = false;
     }
 
     public void SetCardOutLine ( Sprite outLineSprite = null )
@@ -87,6 +89,7 @@ public class Card : MonoBehaviour
     public void SetScatterCard ( Sprite scatterCardSprite = null )
     {
         IsScatterCard = true;
+        IsGoldenCard = false;
         SetCardBack();
         SetCard(scatterCardSprite);
         SetCardOutLine();

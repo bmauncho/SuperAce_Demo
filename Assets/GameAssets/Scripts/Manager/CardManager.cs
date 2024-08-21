@@ -88,4 +88,72 @@ public class CardManager : MonoBehaviour
         cardName = Card.GetComponent<Card>().card.sprite.name;
         return cardName;
     }
+
+    public void GetAndAssignSprites ( Transform cardTransform )
+    {
+        // Cache the Card component
+        Card cardComponent = cardTransform.GetComponent<Card>();
+
+        // Get all SpriteRenderers attached to the Card object or its children
+        SpriteRenderer [] spriteRenderers = cardTransform.GetComponentsInChildren<SpriteRenderer>();
+
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+        {
+            // Check if the spriteRenderer has no sprite assigned
+            if (spriteRenderer.sprite == null)
+            {
+                switch (spriteRenderer.name)
+                {
+                    case "Back":
+                        spriteRenderer.sprite = backSprite;
+                        Debug.Log("Assigned default sprite to Back.");
+                        break;
+
+                    case "cardBg":
+                        spriteRenderer.sprite = cardComponent.IsGoldenCard ? Goldbackground : Normalbackground;
+                        Debug.Log("Assigned default sprite to cardBg.");
+                        break;
+
+                    case "card":
+                        if (cardComponent.IsScatterCard)
+                        {
+                            spriteRenderer.sprite = ScatterCard;
+                        }
+                        else
+                        {
+                            AssignCardSprite(spriteRenderer , cardComponent.cardType);
+                        }
+                        Debug.Log("Assigned default sprite to card.");
+                        break;
+
+                    case "Outline":
+                        if (cardComponent.IsGoldenCard)
+                        {
+                            spriteRenderer.sprite = DefaultOutline;
+                        }
+                        Debug.Log("Assigned default sprite to Outline.");
+                        break;
+
+                    default:
+                        Debug.Log("No default sprite assigned for " + spriteRenderer.name);
+                        break;
+                }
+            }
+        }
+    }
+
+    private void AssignCardSprite ( SpriteRenderer spriteRenderer , CardType cardType )
+    {
+        // Iterate through the cardSprites array and find the matching sprite by name
+        foreach (Sprite cardSprite in cardSprites)
+        {
+            if (cardSprite.name == cardType.ToString())
+            {
+                spriteRenderer.sprite = cardSprite;
+                break;  // Exit the loop once the correct sprite is found
+            }
+        }
+    }
+
+
 }

@@ -16,6 +16,18 @@ public class Deck : MonoBehaviour
         poolManager = CommandCentre.Instance.PoolManager_;
     }
 
+    private void Update ()
+    {
+        if (HasEnoughCards())
+        {
+            return;
+        }
+        else
+        {
+            RefillDeckFromPool();
+        }
+    }
+
     public void ClearDeck ()
     {
         if(DeckCards.Count > 0) {DeckCards.Clear(); }
@@ -66,6 +78,7 @@ public class Deck : MonoBehaviour
             Transform card = null;
             if (checkifCardsAreInTheDeckObj())
             {
+                RefillDeckFromPool();
                 card = transform.GetComponentInChildren<Card>().transform;
             }
             else
@@ -86,7 +99,7 @@ public class Deck : MonoBehaviour
             {
                 CommandCentre.Instance.CardManager_.RandomizeDealing_Scatter(card);
             }
-
+            CommandCentre.Instance.CardManager_.GetAndAssignSprites(card);
             card.SetParent(null);
             card.gameObject.SetActive(true);
             return card.gameObject;
