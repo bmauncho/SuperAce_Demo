@@ -97,6 +97,7 @@ public class GridManager : MonoBehaviour
                 }
 
                 GameObject card = currentDeck.DrawCard();
+                
                 if (card == null)
                 {
                     Debug.LogWarning("Card is null. Skipping.");
@@ -116,8 +117,8 @@ public class GridManager : MonoBehaviour
                         targetPos.GetComponent<CardPos>().TheOwner = card;
                         CalculateObjectsPlaced();
                     });
-                CommandCentre.Instance.SoundManager_.PlaySound("Card" , false , .75f);
-                currentDeck.DeckCards.Remove(card);
+                //CommandCentre.Instance.SoundManager_.PlaySound("Card" , false , .75f);
+                currentDeck.RemnoveCardFromDeck(card);
             }
         }
     }

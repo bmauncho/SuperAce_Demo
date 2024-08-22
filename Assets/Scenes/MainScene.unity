@@ -2487,8 +2487,8 @@ MonoBehaviour:
   - {fileID: 1941976443}
   - {fileID: 1747358885}
   AmbientSound: {fileID: 1826893466}
-  minSound: 0.5
-  maxSound: 1
+  minSound: 0.25
+  maxSound: 0.5
 --- !u!1001 &671450887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6163,6 +6163,8 @@ MonoBehaviour:
   IsDoneCheckingWin: 0
   isWinChecked: 0
   refillColumnCompleted: 
+  columnsToRefill: 
+  isRepositioning: 0
 --- !u!1 &1653753867
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,7 +7029,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826893464}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fffefbb69e4b1f94e8fc1866cee47859, type: 3}

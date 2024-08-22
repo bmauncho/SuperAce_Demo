@@ -23,16 +23,30 @@ public class GridColumnManager : MonoBehaviour
     {
         isWinChecked = false;
         IsDoneCheckingWin = false;
-        Debug.Log("Get columns");
         // Get the number of columns and rows
         int columns = No_Of_Columns;
 
         // Iterate through each column
-        for (int col = 0 ; col <= columns-1 ; col++)
-        {
-            StartCoroutine(HandleDisabledCardInColumn(col));
-        }
+        StartCoroutine(ProcessColumnsSequentially(columns));
     }
+    private IEnumerator ProcessColumnsSequentially ( int columns )
+    {
+        for (int col = 0 ; col < columns ; col++)
+        {
+            // Process each column one after the other
+            yield return StartCoroutine(HandleDisabledCardInColumn(col));
+        }
+
+        // After all columns are processed, check win conditions
+        if (!isWinChecked)
+        {
+            isWinChecked = true;
+            IsDoneCheckingWin = true;
+        }
+
+        CommandCentre.Instance.WinLoseManager_.enableSpin = true;
+    }
+
 
     IEnumerator HandleDisabledCardInColumn ( int colIndex )
     {
@@ -48,23 +62,13 @@ public class GridColumnManager : MonoBehaviour
             }
         }
         refillColumnCompleted [colIndex] = false;
-        Debug.Log($"Checking if needs repositioning: {repositioning}");
         if (repositioning)
         {
-            Debug.Log($"repositioning");
             CommandCentre.Instance.WinLoseManager_.enableSpin = false;
             StartCoroutine(RefillColumn(colIndex, cardsInColumn));
         }
         else
         {
-            Debug.Log($"repositioning done");
-            yield return new WaitForSeconds(2);
-            if (!isWinChecked)
-            {
-                isWinChecked = true;
-                IsDoneCheckingWin = true;
-            }
-            CommandCentre.Instance.WinLoseManager_.enableSpin = true;
             yield break;
         }
 
@@ -79,50 +83,57 @@ public class GridColumnManager : MonoBehaviour
 
     public IEnumerator RefillColumn ( int colIndex , List<GameObject> cardsInColumn )
     {
-        Debug.Log($"refilling");
-
         Deck responsibleDeck = multiDeckManager.GetDeck(colIndex);
-        Vector3 newCardPos;
+        WinLoseManager winLoseManager = CommandCentre.Instance.WinLoseManager_;
+        PoolManager poolManager = CommandCentre.Instance.PoolManager_;
 
-        for (int i = 0 ; i < cardsInColumn.Count ; i++)
+        // Track new cards to be added to the column
+        List<GameObject> newCards = new List<GameObject>();
+
+        for (int j = 0 ; j < cardsInColumn.Count ; j++)
         {
-            if (!cardsInColumn [i].gameObject.activeSelf)
+            if (!cardsInColumn [j].activeSelf) // Check if the card is disabled
             {
-                newCardPos = cardsInColumn [i].transform.localPosition;
-
-                // Draw a new card from the responsible deck
                 GameObject newCard = responsibleDeck.DrawCard();
-                responsibleDeck.RefillDeckFromPool();
-
-                // Check if the deck is empty
                 if (newCard == null)
                 {
                     Debug.LogError("Deck is empty, unable to refill.");
                     yield break;
                 }
 
-                // Place the new card in the correct position
-                newCard.transform.SetParent(cardsInColumn [i].transform.parent);
-                newCard.transform.rotation = Quaternion.Euler(0,180f,0);
-                // Animate the card's movement to the new position
-                Tween myTween = newCard.transform.DOLocalMove(newCardPos , CommandCentre.Instance.GridManager_.moveDuration)
-                    .SetEase(Ease.OutQuad).SetDelay(colIndex*2 * 0.1f);
-                yield return myTween.WaitForCompletion();
+                Vector3 targetPosition = cardsInColumn [j].transform.localPosition;
+                newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                newCard.transform.SetParent(cardsInColumn [j].transform.parent);
 
-                // Activate and set the new card as the owner of the position
-                ActivateNewCard(newCard);
-                CommandCentre.Instance.PoolManager_.ReturnCard(cardsInColumn [i].gameObject);
+                CardPos cardPos = cardsInColumn [j].transform.GetComponentInParent<CardPos>();
+                int cardIndex = j; // Create a local copy of j to use inside the lambda
 
-                // Update the responsible deck and column list
-                responsibleDeck.DeckCards.Remove(cardsInColumn [i].gameObject);
-                responsibleDeck.RefillDeckFromPool();
+                newCards.Add(newCard);
 
-                CommandCentre.Instance.WinLoseManager_.columns [colIndex].Cards.Remove(cardsInColumn [i].gameObject);
-                CommandCentre.Instance.WinLoseManager_.columns [colIndex].Cards.Add(newCard);
+                newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
+                    .SetEase(Ease.OutQuad).SetDelay(colIndex * 4 * 0.05f).OnComplete(() =>
+                    {
+                        cardPos.TheOwner = newCard;
+                        ActivateNewCard(newCard);
+                    });
             }
         }
 
-        // Mark that refilling for this column is complete
+        yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 5 * 0.05f);
+
+        // Apply the changes to the list after the tween has completed
+        for (int j = 0 ; j < cardsInColumn.Count ; j++)
+        {
+            if (!cardsInColumn [j].activeSelf && j < newCards.Count)
+            {
+                GameObject newCard = newCards [j];
+                responsibleDeck.RemnoveCardFromDeck(newCard);
+                poolManager.ReturnCard(cardsInColumn [j].gameObject);
+                winLoseManager.columns [colIndex].Cards [j] = newCard;
+            }
+        }
+
+        // Mark the column as completed
         refillColumnCompleted [colIndex] = true;
 
         // If all columns are done refilling, check for win condition
@@ -131,6 +142,8 @@ public class GridColumnManager : MonoBehaviour
             CheckWin();
         }
     }
+
+
 
     void CheckWin ()
     {

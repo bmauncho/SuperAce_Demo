@@ -53,7 +53,6 @@ public class WinLoseManager : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("spin again");
         return false;
     }
 

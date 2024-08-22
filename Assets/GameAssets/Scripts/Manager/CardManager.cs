@@ -11,11 +11,6 @@ public class CardManager : MonoBehaviour
     public Sprite ScatterCard;
     public Sprite [] cardSprites;
 
-    private void Start ()
-    {
-
-    }
-
     public Sprite RamomizeCards ()
     {
         int RandomSprite = 0;
@@ -106,12 +101,10 @@ public class CardManager : MonoBehaviour
                 {
                     case "Back":
                         spriteRenderer.sprite = backSprite;
-                        Debug.Log("Assigned default sprite to Back.");
                         break;
 
                     case "cardBg":
                         spriteRenderer.sprite = cardComponent.IsGoldenCard ? Goldbackground : Normalbackground;
-                        Debug.Log("Assigned default sprite to cardBg.");
                         break;
 
                     case "card":
@@ -123,7 +116,6 @@ public class CardManager : MonoBehaviour
                         {
                             AssignCardSprite(spriteRenderer , cardComponent.cardType);
                         }
-                        Debug.Log("Assigned default sprite to card.");
                         break;
 
                     case "Outline":
@@ -131,11 +123,9 @@ public class CardManager : MonoBehaviour
                         {
                             spriteRenderer.sprite = DefaultOutline;
                         }
-                        Debug.Log("Assigned default sprite to Outline.");
                         break;
 
                     default:
-                        Debug.Log("No default sprite assigned for " + spriteRenderer.name);
                         break;
                 }
             }

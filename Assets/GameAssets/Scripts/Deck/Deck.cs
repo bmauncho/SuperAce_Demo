@@ -99,9 +99,9 @@ public class Deck : MonoBehaviour
             {
                 CommandCentre.Instance.CardManager_.RandomizeDealing_Scatter(card);
             }
-            CommandCentre.Instance.CardManager_.GetAndAssignSprites(card);
             card.SetParent(null);
             card.gameObject.SetActive(true);
+            CommandCentre.Instance.CardManager_.GetAndAssignSprites(card);
             return card.gameObject;
         }
         return null;
@@ -157,4 +157,11 @@ public class Deck : MonoBehaviour
         }
         return false;
     }
+
+    public void RemnoveCardFromDeck (GameObject Card)
+    {
+        DeckCards.Remove(Card);
+    }
+
+
 }
