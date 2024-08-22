@@ -111,7 +111,7 @@ public class GridColumnManager : MonoBehaviour
                 newCards.Add(newCard);
 
                 newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
-                    .SetEase(Ease.OutQuad).SetDelay(colIndex * 4 * 0.05f).OnComplete(() =>
+                    .SetEase(Ease.OutQuad).SetDelay(colIndex * 4 * 0.1f).OnComplete(() =>
                     {
                         cardPos.TheOwner = newCard;
                         ActivateNewCard(newCard);
@@ -119,7 +119,7 @@ public class GridColumnManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 5 * 0.05f);
+        yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 4 * 0.1f);
 
         // Apply the changes to the list after the tween has completed
         for (int j = 0 ; j < cardsInColumn.Count ; j++)
