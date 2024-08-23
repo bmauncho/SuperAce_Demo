@@ -2168,6 +2168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 555689062}
+  - component: {fileID: 555689063}
   m_Layer: 0
   m_Name: CashManager
   m_TagString: Untagged
@@ -2190,6 +2191,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1078225053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555689063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555689061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e021a62549118640bf3dda56a0ebe9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CashAmountText: {fileID: 699066906}
+  WinCashAmountText: {fileID: 1116604403}
+  CashAmount: 0
 --- !u!1 &564760782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,6 +2743,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TheOwner: {fileID: 0}
+--- !u!114 &699066906 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3908192736006908328, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 1612391383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &713341190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,6 +3304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentBetAmount: {fileID: 1612391385}
   BetMenu_: {fileID: 236762431}
+  BetAmount: 2
 --- !u!4 &903507519
 Transform:
   m_ObjectHideFlags: 0
@@ -3877,6 +3905,7 @@ MonoBehaviour:
   SoundManager_: {fileID: 665285071}
   SettingsManager_: {fileID: 875969378}
   BetManager_: {fileID: 903507518}
+  CashManager_: {fileID: 555689063}
 --- !u!1 &1092331074
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,6 +4072,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 136.1764}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1116604403 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2886330921119720481, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 1612391383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1126896183
 GameObject:
   m_ObjectHideFlags: 0
@@ -6217,6 +6257,10 @@ PrefabInstance:
     - target: {fileID: 5743327019179972835, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: m_Name
       value: GamePlayMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743327019179972835, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8465902877968440715, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -8673,7 +8717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 206739835697330815, guid: 9997905e0064acc46b70db698189acd2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 528397816856317008, guid: 9997905e0064acc46b70db698189acd2, type: 3}
       propertyPath: m_Pivot.x

@@ -21,5 +21,12 @@ public class Bet : MonoBehaviour
     {
         IsPressed = true;
         CommandCentre.Instance.BetManager_.SetCurrentbetAmount(Amount);
+        Invoke(nameof(DeactivateBetMenu) , .25f);
     }
+
+    public void DeactivateBetMenu ()
+    {
+        CommandCentre.Instance.MainMenuController_.CloseBets();
+    }
+    
 }

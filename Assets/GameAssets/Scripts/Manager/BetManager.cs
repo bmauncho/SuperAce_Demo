@@ -8,7 +8,12 @@ public class BetManager : MonoBehaviour
 {
     public TMP_Text CurrentBetAmount;
     public BetMenu BetMenu_;
+    public float BetAmount;
 
+    private void Start ()
+    {
+        CurrentBetAmount.text = BetAmount.ToString();
+    }
     void DeactivateAllBets ()
     {
         List<Bet> Betbuttons = new List<Bet>(BetMenu_.betButtonsController_.BetButtons);
@@ -25,6 +30,7 @@ public class BetManager : MonoBehaviour
 
     public void SetCurrentbetAmount (float Amount)
     {
+        BetAmount = Amount;
         CurrentBetAmount.SetText(Amount.ToString());
         DeactivateAllBets ();
     }

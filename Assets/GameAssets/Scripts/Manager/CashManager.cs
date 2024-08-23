@@ -1,16 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class CashManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public TextMeshProUGUI CashAmountText;
+    public TextMeshProUGUI WinCashAmountText;
+    public float CashAmount = 0;
+
+    // Start is called before the first frame update
     void Start()
     {
-        
+        float MoneyIntheBank = PlayerPrefs.GetFloat("TotalCash");
+        MoneyIntheBank = 2000;
+        CashAmount = MoneyIntheBank;
+        updateThecashUi();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void IncreaseCash(float amount)
     {
-        
+        CashAmount += amount;
+
+        updateThecashUi();
+    }
+
+    public void DecreaseCash(float amount)
+    {
+        CashAmount -= amount;
+        if(CashAmount < 0)
+        {
+            CashAmount = 0;
+        }
+
+        updateThecashUi();
+    }
+
+    [ContextMenu("BreakTheBank")]
+    public void BreakTheBank()
+    {
+        CashAmount = 1000;
+        PlayerPrefs.SetFloat("TotalCash", CashAmount);
+        updateThecashUi();
+    }
+
+    public void SaveCashAmount()
+    {
+        PlayerPrefs.SetFloat("TotalCash", Mathf.FloorToInt(CashAmount));
+    }
+
+    public void updateThecashUi ()
+    {
+        CashAmountText.SetText("$" + Mathf.FloorToInt(CashAmount).ToString());
+    }
+    [ContextMenu("IncreaseCash")]
+    public void TestIncreasecash ()
+    {
+        IncreaseCash(50);
+        SaveCashAmount();
+    }
+
+    [ContextMenu("DecreaseCash")]
+    public void TestDecreasecash ()
+    {
+        DecreaseCash(50);
+        SaveCashAmount();
     }
 }
