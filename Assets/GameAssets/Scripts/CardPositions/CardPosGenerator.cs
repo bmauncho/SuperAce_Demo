@@ -7,6 +7,7 @@ public class CardPosGenerator : MonoBehaviour
     public Vector3 Spacing = new Vector3(1.5f , 1.5f , 0f);
     public int gridSizeX = 5;
     public int gridSizeY = 4;
+    public string ItemName;
 
     [ContextMenu("Create Grid")]
     void CreateGrid ()
@@ -17,7 +18,7 @@ public class CardPosGenerator : MonoBehaviour
             for (int row = 0 ; row < gridSizeY ; row++)
             {
                 GameObject card = Instantiate(CardPositioner , transform);
-                card.name = "Pos_" + thepos.ToString();
+                card.name = ItemName + thepos.ToString();
                 Vector3 targetPos = new Vector3(col * Spacing.x , row * Spacing.y , 0f);
                 card.transform.localPosition = targetPos;
                 thepos++;
