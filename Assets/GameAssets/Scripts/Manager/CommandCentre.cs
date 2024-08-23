@@ -12,7 +12,7 @@ public class CommandCentre : MonoBehaviour
     public MainMenuController MainMenuController_;
     public SoundManager SoundManager_;
     public SettingsManager SettingsManager_;
-
+    public BetManager BetManager_;
     private void Awake ()
     {
         //Application.targetFrameRate = 30;

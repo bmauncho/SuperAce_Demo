@@ -1,16 +1,25 @@
+using TMPro;
 using UnityEngine;
 
 public class Bet : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public TMP_Text BetAmount;
+    public float Amount;
+    public bool IsPressed;
+    
+    public void SetBet ()
     {
-        
+        SetBetAmount(Amount);
+    }
+   
+    void SetBetAmount(float amount )
+    {
+        BetAmount.text = amount.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BetIsSet ()
     {
-        
+        IsPressed = true;
+        CommandCentre.Instance.BetManager_.SetCurrentbetAmount(Amount);
     }
 }

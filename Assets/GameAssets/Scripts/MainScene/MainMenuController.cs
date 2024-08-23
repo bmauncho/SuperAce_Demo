@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
 {
-    public GameObject GameplayMenu;
-    public GameObject StartGameScreen;
-
+    [Header("Variables")]
     public bool CanSpin = false;
     public bool isBtnPressed = false;
+    [Space(10)]
+    [Header("Menus")]
+    public GameObject GameplayMenu;
+    public GameObject StartGameMenu;
+    public GameObject BetingMenu;
+
+
 
     void Start ()
     {
@@ -29,7 +34,7 @@ public class MainMenuController : MonoBehaviour
 
     public void StartGame ()
     {
-        DisableStartGameScreen();
+        DisableStartGameMenu();
         Invoke(nameof(ManualStart) , 0.25f);
     }
 
@@ -53,14 +58,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    public void EnableStartGameScreen ()
+    public void EnableStartGameMenu ()
     {
-        StartGameScreen.SetActive(true);
+        StartGameMenu.SetActive(true);
     }
 
-    public void DisableStartGameScreen ()
+    public void DisableStartGameMenu()
     {
-        StartGameScreen.SetActive(false);
+        StartGameMenu.SetActive(false);
     }
 
     public void EnableGameplayMenu ()
@@ -90,5 +95,28 @@ public class MainMenuController : MonoBehaviour
         CommandCentre.Instance.WinLoseManager_.enableSpin = false;
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
+    }
+
+    public void OpenBets ()
+    {
+        BetingMenu.SetActive(true);
+    }
+
+    public void CloseBets ()
+    {
+        BetingMenu.SetActive(false);
+    }
+
+    public void Bet ()
+    {
+        GamePlayMenuController gpmc = GameplayMenu.GetComponent<GamePlayMenuController>();
+        if (gpmc.betsBtn.BetsButton.isOn)
+        {
+            OpenBets();
+        }
+        else
+        {
+            CloseBets();
+        }
     }
 }
