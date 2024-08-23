@@ -21,17 +21,18 @@ public class GridColumnManager : MonoBehaviour
 
     public void CheckAndFillColumns (int No_Of_Columns)
     {
+        refreshAllRefillColumnsCompleted ();
         isWinChecked = false;
         IsDoneCheckingWin = false;
         // Get the number of columns and rows
         int columns = No_Of_Columns;
-
+        InitializeRefillTracking(No_Of_Columns);
         // Iterate through each column
         StartCoroutine(ProcessColumnsSequentially(columns));
     }
     private IEnumerator ProcessColumnsSequentially ( int columns )
     {
-        for (int col = 0 ; col < columns ; col++)
+        for (int col = 0 ; col <= columns-1; col++)
         {
             // Process each column one after the other
             yield return StartCoroutine(HandleDisabledCardInColumn(col));
@@ -43,8 +44,6 @@ public class GridColumnManager : MonoBehaviour
             isWinChecked = true;
             IsDoneCheckingWin = true;
         }
-
-        CommandCentre.Instance.WinLoseManager_.enableSpin = true;
     }
 
 
@@ -57,6 +56,7 @@ public class GridColumnManager : MonoBehaviour
             if (!cardsInColumn [i].gameObject.activeSelf)
             {
                 // Mark that the column needs a refill
+                MarkColumnForRefill(colIndex);
                 repositioning = true;
                 break;
             }
@@ -87,67 +87,66 @@ public class GridColumnManager : MonoBehaviour
         WinLoseManager winLoseManager = CommandCentre.Instance.WinLoseManager_;
         PoolManager poolManager = CommandCentre.Instance.PoolManager_;
 
-        // Track new cards to be added to the column
         List<GameObject> newCards = new List<GameObject>();
+
+        if (!responsibleDeck.CheckifDeckHasCards())
+        {
+            Debug.LogError("Deck is empty, unable to refill.");
+            refillColumnCompleted [colIndex] = true;
+            yield break;
+        }
 
         for (int j = 0 ; j < cardsInColumn.Count ; j++)
         {
-            if (!cardsInColumn [j].activeSelf) // Check if the card is disabled
+            if (!cardsInColumn [j].activeSelf)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
+                if (!responsibleDeck.CheckifDeckHasCards())
+                {
+                    responsibleDeck.RefillDeckFromPool();
+                }
                 if (newCard == null)
                 {
-                    Debug.LogError("Deck is empty, unable to refill.");
-                    yield break;
+                    Debug.LogError("Deck is empty, unable to continue refilling.");
+                    break;
                 }
 
                 Vector3 targetPosition = cardsInColumn [j].transform.localPosition;
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                 newCard.transform.SetParent(cardsInColumn [j].transform.parent);
-
                 CardPos cardPos = cardsInColumn [j].transform.GetComponentInParent<CardPos>();
-                int cardIndex = j; // Create a local copy of j to use inside the lambda
+                cardPos.TheOwner = newCard;
 
                 newCards.Add(newCard);
 
+                // Tween the card to its target position
                 newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
-                    .SetEase(Ease.OutQuad).SetDelay(colIndex * 4 * 0.1f).OnComplete(() =>
+                    .SetEase(Ease.OutQuad)
+                    .SetDelay(colIndex * 4 * 0.1f)
+                    .OnComplete(() =>
                     {
-                        cardPos.TheOwner = newCard;
                         ActivateNewCard(newCard);
                     });
+
+                // Wait for the card movement to complete
+                yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration);
+                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex , newCard);
             }
         }
 
         yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 4 * 0.1f);
 
-        // Apply the changes to the list after the tween has completed
-        for (int j = 0 ; j < cardsInColumn.Count ; j++)
-        {
-            if (!cardsInColumn [j].activeSelf && j < newCards.Count)
-            {
-                GameObject newCard = newCards [j];
-                responsibleDeck.RemnoveCardFromDeck(newCard);
-                poolManager.ReturnCard(cardsInColumn [j].gameObject);
-                winLoseManager.columns [colIndex].Cards [j] = newCard;
-            }
-        }
-
-        // Mark the column as completed
-        refillColumnCompleted [colIndex] = true;
-
-        // If all columns are done refilling, check for win condition
-        if (refillColumnCompleted.All(x => x))
+        MarkRefillComplete(colIndex);
+        if (AreAllRefillColumnsCompleted())
         {
             CheckWin();
+            CommandCentre.Instance.WinLoseManager_.enableSpin = true;
         }
     }
 
-
-
     void CheckWin ()
     {
-        CommandCentre.Instance.WinLoseManager_.SpinEnd();
+        CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         Debug.Log("Win condition checked.");
         isWinChecked = true;
         IsDoneCheckingWin = true;
@@ -196,6 +195,7 @@ public class GridColumnManager : MonoBehaviour
 
         return true; // All marked columns are done refilling
     }
+
     public void refreshAllRefillColumnsCompleted ()
     {
         for (int i = 0;i< refillColumnCompleted.Length ; i++)

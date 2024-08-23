@@ -77,7 +77,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (!isBtnPressed)
         {
-            if (CanSpin)
+            if (CanSpin && CommandCentre.Instance.WinLoseManager_.enableSpin)
             {
                 StartCoroutine(SpinReel());
             }

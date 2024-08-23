@@ -131,7 +131,7 @@ public class WinLoseManager : MonoBehaviour
         }
         else
         {
-            enableSpin=true;
+            enableSpin = true;
             Debug.Log("spin again");
         }
     }

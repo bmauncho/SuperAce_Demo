@@ -206,4 +206,15 @@ public class GridManager : MonoBehaviour
         Debug.LogWarning("Card not found in any column.");
         return -1;
     }
+
+    public void RefreshCurrentColumnCards (int colIndex,GameObject newCard)
+    {
+        for (int j = 0 ; j < Columns [colIndex].Cards.Count ; j++)
+        {
+            if (!Columns [colIndex].Cards [j].activeSelf)
+            {
+                Columns [colIndex].Cards [j]= newCard;
+            }
+        }
+    }
 }

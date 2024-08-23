@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 
 public class Deck : MonoBehaviour
 {
@@ -18,14 +20,7 @@ public class Deck : MonoBehaviour
 
     private void Update ()
     {
-        if (HasEnoughCards())
-        {
-            return;
-        }
-        else
-        {
-            RefillDeckFromPool();
-        }
+        refilldeck();
     }
 
     public void ClearDeck ()
@@ -78,6 +73,7 @@ public class Deck : MonoBehaviour
             Transform card = null;
             if (checkifCardsAreInTheDeckObj())
             {
+                Debug.Log($"Checkif cards are in the deck:{checkifCardsAreInTheDeckObj()}");
                 RefillDeckFromPool();
                 card = transform.GetComponentInChildren<Card>().transform;
             }
@@ -111,6 +107,7 @@ public class Deck : MonoBehaviour
     public bool CheckifDeckHasCards ()
     {
         List<Transform> cards = new List<Transform>();
+        if(cards.Count > 0) {cards.Clear();}
         foreach (Transform card in transform)
         {
            cards.Add( card );
@@ -163,5 +160,25 @@ public class Deck : MonoBehaviour
         DeckCards.Remove(Card);
     }
 
-
+    void refilldeck ()
+    {
+        switch (CheckifDeckHasCards())
+        { 
+            case true:
+                Debug.Log($"Does it have cards:{CheckifDeckHasCards()}");
+                if (HasEnoughCards())
+                {
+                    Debug.Log($"Does it have enough cards:{CheckifDeckHasCards()}");
+                    break;
+                }
+                else
+                {
+                    RefillDeckFromPool();
+                }
+                break;
+            case false:
+                RefillDeckFromPool();
+                break;
+        }
+    }
 }
