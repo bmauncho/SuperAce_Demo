@@ -165,10 +165,10 @@ public class Deck : MonoBehaviour
         switch (CheckifDeckHasCards())
         { 
             case true:
-                Debug.Log($"Does it have cards:{CheckifDeckHasCards()}");
+                //Debug.Log($"Does it have cards:{CheckifDeckHasCards()}");
                 if (HasEnoughCards())
                 {
-                    Debug.Log($"Does it have enough cards:{CheckifDeckHasCards()}");
+                   // Debug.Log($"Does it have enough cards:{CheckifDeckHasCards()}");
                     break;
                 }
                 else

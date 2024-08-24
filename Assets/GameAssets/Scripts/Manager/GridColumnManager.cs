@@ -92,6 +92,7 @@ public class GridColumnManager : MonoBehaviour
         if (!responsibleDeck.CheckifDeckHasCards())
         {
             Debug.LogError("Deck is empty, unable to refill.");
+            responsibleDeck.RefillDeckFromPool ();
             refillColumnCompleted [colIndex] = true;
             yield break;
         }

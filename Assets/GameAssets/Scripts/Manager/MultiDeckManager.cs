@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MultiDeckManager : MonoBehaviour
 {
+    public GameObject DecksParent;
     public int numberOfDecks = 5;
     public Vector3 firstDeckPosition = new Vector3(0 , 0 , 0);
     public Vector3 deckOffset = new Vector3(2 , 0 , 0);
@@ -26,13 +27,13 @@ public class MultiDeckManager : MonoBehaviour
             {
                 Vector3 newPosition = firstDeckPosition + ( deckOffset * i );
                 decks [i].transform.position = newPosition;
-                decks [i].RefillDeckFromPool();
             }
             else
             {
                 Debug.LogError("Deck " + i + " is null");
             }
         }
+        DecksParent.SetActive(true);
     }
 
     public Deck GetDeck ( int index )
