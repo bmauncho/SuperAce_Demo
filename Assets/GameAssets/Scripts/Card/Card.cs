@@ -5,18 +5,27 @@ public enum CardType { Ace, King, Queen, Jack, Spades, Clubs, Hearts, Diamonds, 
 
 public class Card : MonoBehaviour
 {
+    [Header("References")]
     public GameObject TheCard;
     public SpriteRenderer Back;
     public SpriteRenderer cardBg;
     public SpriteRenderer card;
     public SpriteRenderer Outline;
     public CardType cardType;
+    [Header("Variables")]
     public bool IsGoldenCard = false;
     public bool IsScatterCard = false;
+    public int CardSortPos = 5;
 
     private void Start ()
     {
         cardBg = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    public void SetCardSortPos(int pos )
+    {
+        CardSortPos = pos;
+        Back.sortingOrder = pos;
     }
     public void EnableCardOBJ ()
     {

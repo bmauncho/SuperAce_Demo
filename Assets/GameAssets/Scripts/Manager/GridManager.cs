@@ -127,7 +127,7 @@ public class GridManager : MonoBehaviour
                         CalculateObjectsPlaced();
                     });
                 //CommandCentre.Instance.SoundManager_.PlaySound("Card" , false , .75f);
-                currentDeck.RemnoveCardFromDeck(card);
+                currentDeck.RemnoveCardFromDeck();
             }
         }
     }
@@ -231,7 +231,10 @@ public class GridManager : MonoBehaviour
         {
             if (!Columns [colIndex].Cards [j].activeSelf)
             {
-                Columns [colIndex].Cards [j]= newCard;
+                newCard.GetComponent<Card>().CardSortPos = 
+                    Columns [colIndex].Cards [j].GetComponent<Card>().CardSortPos;
+                Columns [colIndex].Cards [j] = newCard;
+                
             }
         }
     }

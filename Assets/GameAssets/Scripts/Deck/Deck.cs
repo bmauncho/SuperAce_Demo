@@ -6,12 +6,18 @@ using System.Linq;
 
 public class Deck : MonoBehaviour
 {
-    public int cardsPerDeck = 10;
-    public Vector3 cardOffset = new Vector3(0 , -0.2f , 0);
     PoolManager poolManager;
-    public List<GameObject> DeckCards = new List<GameObject>();
+    [Header("Variables")]
+    public bool CanHaveGoldenCard = false;
+    public int cardsPerDeck = 10;
+    public int CardSortPosCounter;
+    public int DefaultCardSortCount = 5;
+    public Vector3 cardOffset = new Vector3(0 , -0.2f , 0);
     public Vector3 OriginalPos;
-    public bool CanHaveGoldenCard = false;  
+    [Space(10)]
+    [Header("Lists")]
+    public List<GameObject> DeckCards = new List<GameObject>();
+    //public List<Transform> DeckCardsPos = new List<Transform>();
 
     private void Start ()
     {
@@ -38,6 +44,8 @@ public class Deck : MonoBehaviour
 
     public void RefillDeckFromPool ()
     {
+        if (DeckCards.Count <= 0) { CardSortPosCounter = DefaultCardSortCount; }
+
         int currentCardCount = DeckCards.Count;
         int cardsNeeded = cardsPerDeck - currentCardCount;
         if (currentCardCount > cardsPerDeck)
@@ -47,6 +55,7 @@ public class Deck : MonoBehaviour
                 Transform card = transform.GetComponentInChildren<Card>().transform;
                 poolManager.ReturnCard(card.gameObject);
                 DeckCards.Remove(card.gameObject);
+                CardSortPosCounter--;
             }
         }
         else if (currentCardCount < cardsPerDeck)
@@ -58,19 +67,28 @@ public class Deck : MonoBehaviour
                 {
                     card.GetComponent<Card>().SetCard(null);
                     DeckCards.Add(card);
+                    UpdateCardSortPositions(card);
                     card.transform.SetParent(transform);
                     card.transform.localPosition = Vector3.zero;
+                    //card.transform.localPosition = new Vector3 (0,7,0);
+                    card.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
                     card.SetActive(true); 
+                    card.GetComponent<Card>().SetCardSortPos(CardSortPosCounter);
+                    CardSortPosCounter++;
                 }
             }
         }
     }
+    //IEnumerator ShuffleDeck ()
+    //{
 
+    //}
     public GameObject DrawCard ()
     {
+        Transform card = null;
         if (DeckCards.Count > 0)
         {
-            Transform card = null;
+            
             if (checkifCardsAreInTheDeckObj())
             {
                 Debug.Log($"Checkif cards are in the deck:{checkifCardsAreInTheDeckObj()}");
@@ -97,12 +115,31 @@ public class Deck : MonoBehaviour
             }
             card.SetParent(null);
             card.gameObject.SetActive(true);
+            card.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
             CommandCentre.Instance.CardManager_.GetAndAssignSprites(card);
+            CardSortPosCounter--;
             return card.gameObject;
         }
+        
         return null;
     }
 
+    public void RefreshCardPos ()
+    {
+        
+    }
+    public void UpdateCardSortPositions ( GameObject newCard )
+    {
+        Card card = DeckCards [DeckCards.Count - 1].GetComponent<Card>();
+        int newSortPos = card.CardSortPos + 1;
+        for (int i = 0 ; i < DeckCards.Count ; i++)
+        {
+            if(card != null)
+            {
+                newCard.GetComponent<Card>().SetCardSortPos(newSortPos);
+            }
+        }
+    }
 
     public bool CheckifDeckHasCards ()
     {
@@ -155,9 +192,11 @@ public class Deck : MonoBehaviour
         return false;
     }
 
-    public void RemnoveCardFromDeck (GameObject Card)
+    public void RemnoveCardFromDeck ()
     {
-        DeckCards.Remove(Card);
+        DeckCards.RemoveAt(DeckCards.Count-1);
+        CardSortPosCounter--;
+        if(CardSortPosCounter <= 5) { CardSortPosCounter = DefaultCardSortCount; }
     }
 
     void refilldeck ()
