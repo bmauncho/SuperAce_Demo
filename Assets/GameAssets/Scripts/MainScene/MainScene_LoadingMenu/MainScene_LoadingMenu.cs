@@ -18,9 +18,11 @@ public class MainScene_LoadingMenu : MonoBehaviour
 
     public void ContinueToMainGame ()
     {
+        CommandCentre.Instance.MainMenuController_.EnableStartGameMenu();
         GetComponent<CanvasGroup>().DOFade(0 , .5f);
         transform.DOScale(1.3f , .5f).OnComplete(() =>
         {
+            
             Deactivate ();
         });
     }

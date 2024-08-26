@@ -11,12 +11,49 @@ public class MainMenuController : MonoBehaviour
     public GameObject GameplayMenu;
     public GameObject StartGameMenu;
     public GameObject BetingMenu;
-
+    public GameObject WinMoreMenu;
 
 
     void Start ()
     {
         // Initialization logic if needed
+    }
+
+    public void EnableStartGameMenu ()
+    {
+        StartGameMenu.SetActive(true);
+    }
+
+    public void DisableStartGameMenu ()
+    {
+        StartGameMenu.SetActive(false);
+    }
+
+    public void EnableGameplayMenu ()
+    {
+        GameplayMenu.SetActive(true);
+    }
+
+    public void DisableGameplayMenu ()
+    {
+        GameplayMenu.SetActive(false);
+    }
+
+    public void EnableWinMoreMenu ()
+    {
+        WinMoreMenu.SetActive(true);
+    }
+
+    public void DisableWinMoreMenu ()
+    {
+        WinMoreMenu.SetActive(false);
+        Invoke(nameof(SetGrid) , .5f);
+    }
+
+    void SetGrid ()
+    {
+        CommandCentre.Instance.GridManager_.IsFirstTime = false;
+        CommandCentre.Instance.GridManager_.CheckGrid();
     }
 
     void Update ()
@@ -52,31 +89,14 @@ public class MainMenuController : MonoBehaviour
             if (CanSpin)
             {
                 EnableGameplayMenu();
+                Invoke(nameof(EnableWinMoreMenu) , .5f);
                 yield break;
             }
             yield return null;
         }
     }
 
-    public void EnableStartGameMenu ()
-    {
-        StartGameMenu.SetActive(true);
-    }
-
-    public void DisableStartGameMenu()
-    {
-        StartGameMenu.SetActive(false);
-    }
-
-    public void EnableGameplayMenu ()
-    {
-        GameplayMenu.SetActive(true);
-    }
-
-    public void DisableGameplayMenu ()
-    {
-        GameplayMenu.SetActive(false);
-    }
+   
 
     public void Spin ()
     {

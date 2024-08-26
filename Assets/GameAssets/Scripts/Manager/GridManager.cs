@@ -11,16 +11,25 @@ public class GridColumns
 
 public class GridManager : MonoBehaviour
 {
+    [Header("Refrences")]
+
     MultiDeckManager multiDeckManager;
     PoolManager poolManager;
     public GameObject CardsParent;
+
+    [Space(10)]
+    [Header("Variables")]
     public float moveDuration = 0.5f;
     public float delayBetweenMoves = 0.1f;
     public int totalObjectsToPlace;
     private int objectsPlaced;
     public bool IsResetDone;
     public bool IsReturnToPoolDone = false;
+    public bool IsFirstTime = true;
+    
+    [Header("Lists")]
     public List<GridColumns> Columns = new List<GridColumns>();
+    
 
     private void Start ()
     {
@@ -161,6 +170,15 @@ public class GridManager : MonoBehaviour
     void CalculateObjectsPlaced ()
     {
         objectsPlaced++;
+        if (IsFirstTime)
+        {
+            return;
+        }
+        CheckGrid();
+    }
+
+    public void CheckGrid ()
+    {
         if (IsGridCreationComplete())
         {
             CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CardsParent.transform);
