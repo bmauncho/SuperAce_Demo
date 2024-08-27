@@ -49,22 +49,13 @@ public class GridManager : MonoBehaviour
         IsReturnToPoolDone = false;
 
         // Clear all columns
-        for (int i = 0 ; i < Columns.Count ; i++)
+        foreach (GridColumns column in Columns)
         {
-            if (Columns [i].Cards.Count >= 0)
-            {
-                Columns [i].Cards.Clear();
-            }
+            column.Cards.Clear();
         }
 
-        // Start the grid refresh
-        StartCoroutine(Refresh());
-
-        // Refill decks from pool
-        foreach (Deck deck in multiDeckManager.decks)
-        {
-            deck.RefillDeckFromPool();
-        }
+        // Start the grid refresh after clearing columns
+        MoveGrid(new Vector3(0 , -43f , 0));
     }
 
     [ContextMenu("Create Grid")]
@@ -75,17 +66,15 @@ public class GridManager : MonoBehaviour
         objectsPlaced = 0;
 
         List<Transform> tempPos = new List<Transform>();
-        if (tempPos.Count > 0) { tempPos.Clear(); }
 
+        // Collect available positions
         foreach (Transform tr in CardsParent.transform)
         {
-            if (!tr.GetComponent<CardPos>().TheOwner)
+            if (tr.GetComponent<CardPos>()?.TheOwner == null)
             {
                 tempPos.Add(tr);
             }
         }
-
-        int deckCount = decks.Length;
 
         if (tempPos.Count < totalObjectsToPlace)
         {
@@ -93,53 +82,55 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        for (int col = 0 ; col < deckCount ; col++)
-        {
-            Deck currentDeck = decks [col];
+        float delayIncrement = 0.1f; // Delay between cards, adjust as needed
+        int rowCount = 4; // Number of rows
+        int columnCount = decks.Length; // Number of columns
 
-            for (int row = 0 ; row < 4 ; row++)
+        int positionIndex = 0; // Keeps track of the current position in tempPos
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = 0 ; row < rowCount ; row++)
             {
-                if (currentDeck == null || currentDeck.DeckCards.Count == 0)
-                {
-                    Debug.LogWarning("Deck is empty or null. Skipping.");
-                    break;
-                }
+                Deck currentDeck = decks [col];
+                if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
 
                 GameObject card = currentDeck.DrawCard();
-                
-                if (card == null)
-                {
-                    Debug.LogWarning("Card is null. Skipping.");
-                    break;
-                }
+                currentDeck.ResetDeck();
+                if (card == null) continue;
 
                 Columns [col].Cards.Add(card);
 
-                Transform targetPos = tempPos [( col * 4 ) + row];
+                Transform targetPos = tempPos [positionIndex];
+                positionIndex++;
+
                 card.transform.SetParent(targetPos);
                 card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                card.transform.DOMove(targetPos.position , moveDuration)
+
+                // Create a sequence for each card's movement
+                Sequence cardSequence = DOTween.Sequence();
+                cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
                     .SetEase(Ease.OutQuad)
-                    .SetDelay(( row * delayBetweenMoves ) + ( col *4 * delayBetweenMoves ))
                     .OnComplete(() =>
                     {
+                        // Set local position to zero explicitly after the animation
+                        card.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = card;
                         CalculateObjectsPlaced();
-                    });
-                //CommandCentre.Instance.SoundManager_.PlaySound("Card" , false , .75f);
-                currentDeck.RemnoveCardFromDeck();
+                    }));
+                cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
             }
         }
+
     }
 
     void returnToPool ()
     {
         List<Transform> tempPos = new List<Transform>();
-        if (tempPos.Count > 0) { tempPos.Clear(); }
 
         foreach (Transform tr in CardsParent.transform)
         {
-            if (tr.GetComponentInChildren<Card>()||tr.GetComponent<CardPos>().TheOwner)
+            var cardPos = tr.GetComponent<CardPos>();
+            if (cardPos && ( cardPos.TheOwner || tr.GetComponentInChildren<Card>() ))
             {
                 tempPos.Add(tr);
             }
@@ -149,17 +140,36 @@ public class GridManager : MonoBehaviour
         {
             if (tr)
             {
-                poolManager.ReturnCard(tr.GetComponent<CardPos>().TheOwner);
-                if (tr.GetComponent<CardPos>().GetComponentInChildren<Card>())
+                var cardPos = tr.GetComponent<CardPos>();
+                if (cardPos)
                 {
-                    poolManager.ReturnCard(tr.GetComponent<CardPos>().GetComponentInChildren<Card>().gameObject);
+                    var card = cardPos.TheOwner;
+                    if (card)
+                    {
+                        poolManager.ReturnCard(card);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"CardPos found but TheOwner is null: {tr.name}");
+                    }
+                    var cardInChildren = tr.GetComponentInChildren<Card>();
+                    if (cardInChildren)
+                    {
+                        poolManager.ReturnCard(cardInChildren.gameObject);
+                    }
+                    cardPos.TheOwner = null;
                 }
-                tr.GetComponent<CardPos>().TheOwner = null;
+                else
+                {
+                    Debug.LogWarning($"Transform does not have CardPos: {tr.name}");
+                }
             }
         }
 
         IsReturnToPoolDone = true;
+        Debug.Log("Return to pool process completed.");
     }
+
 
     IEnumerator Refresh ()
     {
@@ -181,6 +191,7 @@ public class GridManager : MonoBehaviour
     {
         if (IsGridCreationComplete())
         {
+            multiDeckManager.refillAllDecks();
             CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CardsParent.transform);
         }
     }

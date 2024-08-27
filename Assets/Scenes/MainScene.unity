@@ -914,12 +914,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanHaveGoldenCard: 0
-  cardsPerDeck: 10
-  CardSortPosCounter: 0
-  DefaultCardSortCount: 5
-  cardOffset: {x: 0, y: -0.2, z: 0.2}
+  deckRefilled: 0
+  cardsPerDeck: 6
+  tempDeckSize: 5
+  cardOffset: {x: 0, y: 0.2, z: -0.2}
   OriginalPos: {x: 0, y: 0, z: 0}
   DeckCards: []
+  TempDeckCards: []
+  cardPositions: []
 --- !u!1 &236762429 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7092454553281675491, guid: 69ae3a7b9ed5ebf4288563429abc126b, type: 3}
@@ -3589,7 +3591,7 @@ Transform:
   m_GameObject: {fileID: 920627657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3609,6 +3611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8527106825086873834, guid: 56c4937550b77be468d705d8f0c0e6c5, type: 3}
   poolSize: 150
+  Poolinitialized: 0
 --- !u!1 &970563427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3647077668610147919, guid: f7ad286ee1b7ec7458f3d9549bb9b49c, type: 3}
@@ -3969,7 +3972,7 @@ Transform:
   m_GameObject: {fileID: 1078225052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 178, y: 316.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5008,12 +5011,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanHaveGoldenCard: 1
-  cardsPerDeck: 10
-  CardSortPosCounter: 0
-  DefaultCardSortCount: 5
-  cardOffset: {x: 0, y: -0.2, z: 0.2}
+  deckRefilled: 0
+  cardsPerDeck: 6
+  tempDeckSize: 5
+  cardOffset: {x: 0, y: 0.2, z: -0.2}
   OriginalPos: {x: 0, y: 0, z: 0}
   DeckCards: []
+  TempDeckCards: []
+  cardPositions: []
 --- !u!1 &1289311613
 GameObject:
   m_ObjectHideFlags: 0
@@ -5665,12 +5670,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanHaveGoldenCard: 1
-  cardsPerDeck: 10
-  CardSortPosCounter: 0
-  DefaultCardSortCount: 5
-  cardOffset: {x: 0, y: -0.2, z: 0.2}
+  deckRefilled: 0
+  cardsPerDeck: 6
+  tempDeckSize: 5
+  cardOffset: {x: 0, y: 0.2, z: -0.2}
   OriginalPos: {x: 0, y: 0, z: 0}
   DeckCards: []
+  TempDeckCards: []
+  cardPositions: []
 --- !u!1 &1348047695
 GameObject:
   m_ObjectHideFlags: 0
@@ -5930,12 +5937,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanHaveGoldenCard: 1
-  cardsPerDeck: 10
-  CardSortPosCounter: 0
-  DefaultCardSortCount: 5
-  cardOffset: {x: 0, y: -0.2, z: 0.2}
+  deckRefilled: 0
+  cardsPerDeck: 6
+  tempDeckSize: 5
+  cardOffset: {x: 0, y: 0.2, z: -0.2}
   OriginalPos: {x: 0, y: 0, z: 0}
   DeckCards: []
+  TempDeckCards: []
+  cardPositions: []
 --- !u!1 &1511771319
 GameObject:
   m_ObjectHideFlags: 0
@@ -6246,7 +6255,7 @@ Transform:
   m_GameObject: {fileID: 1585043885}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.16}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6266,12 +6275,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanHaveGoldenCard: 0
-  cardsPerDeck: 10
-  CardSortPosCounter: 0
-  DefaultCardSortCount: 5
+  deckRefilled: 0
+  cardsPerDeck: 6
+  tempDeckSize: 6
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   OriginalPos: {x: 0, y: 0, z: 0}
   DeckCards: []
+  TempDeckCards: []
+  cardPositions: []
 --- !u!1001 &1612391383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9151,7 +9162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 206739835697330815, guid: 9997905e0064acc46b70db698189acd2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 528397816856317008, guid: 9997905e0064acc46b70db698189acd2, type: 3}
       propertyPath: m_Pivot.x

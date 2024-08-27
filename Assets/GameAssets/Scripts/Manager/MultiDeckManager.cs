@@ -52,4 +52,14 @@ public class MultiDeckManager : MonoBehaviour
             deck.ClearDeck();
         }
     }
+
+    public void refillAllDecks ()
+    {
+        Debug.Log("reseting all decks");
+        foreach(Deck deck in decks)
+        {
+            deck.ResetDeck();
+        }
+        Debug.Log("reseting all decks done");
+    }
 }

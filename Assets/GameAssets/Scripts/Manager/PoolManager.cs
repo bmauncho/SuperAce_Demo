@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ public class PoolManager : MonoBehaviour
     public GameObject cardPrefab;
     public int poolSize = 50;
     private Queue<GameObject> cardPool;
+
+    // Delegate and event to notify when the pool is initialized
+    public bool Poolinitialized = false;
 
     private void Awake ()
     {
@@ -18,13 +22,15 @@ public class PoolManager : MonoBehaviour
 
         for (int i = 0 ; i < poolSize ; i++)
         {
-            GameObject card = Instantiate(cardPrefab,transform);
+            GameObject card = Instantiate(cardPrefab , transform);
             card.SetActive(false);
             cardPool.Enqueue(card);
         }
+
+        //Debug.Log($"Pool initialized with {poolSize} cards.");
+        Poolinitialized = true;
     }
 
-    
     public GameObject GetCard ()
     {
         if (cardPool.Count > 0)
@@ -40,7 +46,6 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    
     public void ReturnCard ( GameObject card )
     {
         if (card)

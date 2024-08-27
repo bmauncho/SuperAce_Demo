@@ -89,23 +89,14 @@ public class GridColumnManager : MonoBehaviour
 
         List<GameObject> newCards = new List<GameObject>();
 
-        if (!responsibleDeck.CheckifDeckHasCards())
-        {
-            Debug.LogError("Deck is empty, unable to refill.");
-            responsibleDeck.RefillDeckFromPool ();
-            refillColumnCompleted [colIndex] = true;
-            yield break;
-        }
+        responsibleDeck.ResetDeck();
 
         for (int j = 0 ; j < cardsInColumn.Count ; j++)
         {
             if (!cardsInColumn [j].activeSelf)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
-                if (!responsibleDeck.CheckifDeckHasCards())
-                {
-                    responsibleDeck.RefillDeckFromPool();
-                }
+                responsibleDeck.ResetDeck();
                 if (newCard == null)
                 {
                     Debug.LogError("Deck is empty, unable to continue refilling.");
@@ -126,6 +117,7 @@ public class GridColumnManager : MonoBehaviour
                     .SetDelay(colIndex * 4 * 0.1f)
                     .OnComplete(() =>
                     {
+                        newCard.transform.localPosition = Vector3.zero;
                         ActivateNewCard(newCard);
                     });
 
