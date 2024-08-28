@@ -51,7 +51,7 @@ public class ButtonPressed : MonoBehaviour
             Bounce();
             if (CommandCentre.Instance)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
+                //CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
             }
         }
     }

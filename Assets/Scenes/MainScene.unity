@@ -3611,6 +3611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8527106825086873834, guid: 56c4937550b77be468d705d8f0c0e6c5, type: 3}
   poolSize: 150
+  CardPosholder: {fileID: 857952519}
+  InactiveCardList: []
   Poolinitialized: 0
 --- !u!1 &970563427 stripped
 GameObject:
@@ -6598,6 +6600,34 @@ MonoBehaviour:
   refillColumnCompleted: 
   columnsToRefill: 
   isRepositioning: 0
+  CardPosHolders: {fileID: 857952519}
+  CardList: []
+  Columns:
+  - CardsPos:
+    - {fileID: 631052399}
+    - {fileID: 522552196}
+    - {fileID: 1922606205}
+    - {fileID: 1662436673}
+  - CardsPos:
+    - {fileID: 2131236576}
+    - {fileID: 1942206388}
+    - {fileID: 713341190}
+    - {fileID: 1365677967}
+  - CardsPos:
+    - {fileID: 1532730792}
+    - {fileID: 1066080627}
+    - {fileID: 419706015}
+    - {fileID: 2080919563}
+  - CardsPos:
+    - {fileID: 1867127775}
+    - {fileID: 1867238658}
+    - {fileID: 1348047695}
+    - {fileID: 1126896183}
+  - CardsPos:
+    - {fileID: 1383013401}
+    - {fileID: 674686908}
+    - {fileID: 731896393}
+    - {fileID: 1555890593}
 --- !u!1 &1653753867
 GameObject:
   m_ObjectHideFlags: 0

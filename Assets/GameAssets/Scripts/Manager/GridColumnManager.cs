@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System.Collections;
 using System.Linq;
-
+[System.Serializable]
+public class  GridPosColumns
+{
+    public List<GameObject> CardsPos = new List<GameObject>();
+}
 public class GridColumnManager : MonoBehaviour
 {
     private MultiDeckManager multiDeckManager;
@@ -13,12 +17,24 @@ public class GridColumnManager : MonoBehaviour
     public bool [] columnsToRefill;
     public bool isRepositioning;
 
+    public GameObject CardPosHolders;
+    public List<GameObject> CardList = new List<GameObject>();
+    public List<GridPosColumns> Columns = new List<GridPosColumns>();
     private void Start ()
     {
         multiDeckManager = CommandCentre.Instance.MultiDeckManager_;
         refillColumnCompleted = new bool [5];
+        GetCardPositions();
     }
 
+
+    void GetCardPositions ()
+    {
+        foreach(Transform tr in CardPosHolders.transform)
+        {
+            CardList.Add(tr.gameObject);
+        }
+    }
     public void CheckAndFillColumns (int No_Of_Columns)
     {
         refreshAllRefillColumnsCompleted ();
@@ -78,21 +94,58 @@ public class GridColumnManager : MonoBehaviour
     {
         List<GameObject> cards = new List<GameObject>();
         cards = new List<GameObject>(CommandCentre.Instance.WinLoseManager_.columns [colIndex].Cards);
+        if (cards == null || cards.Count == 0)
+        {
+            Debug.LogError($"No cards found in column {colIndex}.");
+        }
+        else
+        {
+            Debug.Log($"Found {cards.Count} cards in column {colIndex}.");
+        }
+
         return cards;
     }
 
     public IEnumerator RefillColumn ( int colIndex , List<GameObject> cardsInColumn )
     {
         Deck responsibleDeck = multiDeckManager.GetDeck(colIndex);
+        if (responsibleDeck == null)
+        {
+            Debug.LogError("Responsible deck is null. Ensure the MultiDeckManager is properly initialized.");
+            yield break;
+        }
+
         WinLoseManager winLoseManager = CommandCentre.Instance.WinLoseManager_;
+        if (winLoseManager == null)
+        {
+            Debug.LogError("WinLoseManager is null. Ensure it's properly initialized.");
+            yield break;
+        }
+
         PoolManager poolManager = CommandCentre.Instance.PoolManager_;
+        if (poolManager == null)
+        {
+            Debug.LogError("PoolManager is null. Ensure it's properly initialized.");
+            yield break;
+        }
+
+        if (cardsInColumn == null || cardsInColumn.Count == 0)
+        {
+            Debug.LogError("No cards found in the column.");
+            yield break;
+        }
 
         List<GameObject> newCards = new List<GameObject>();
-
-        responsibleDeck.ResetDeck();
+        //responsibleDeck.ResetDeck();
 
         for (int j = 0 ; j < cardsInColumn.Count ; j++)
         {
+            if (cardsInColumn [j] == null)
+            {
+                Debug.LogError("Card in column is null.");
+                continue;
+            }
+
             if (!cardsInColumn [j].activeSelf)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
@@ -106,12 +159,25 @@ public class GridColumnManager : MonoBehaviour
                 Vector3 targetPosition = cardsInColumn [j].transform.localPosition;
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                 newCard.transform.SetParent(cardsInColumn [j].transform.parent);
-                CardPos cardPos = cardsInColumn [j].transform.GetComponentInParent<CardPos>();
-                cardPos.TheOwner = newCard;
+                CardPos cardPos = null;
+                for (int i = 0 ;i<CardList.Count ;i++)
+                {
+                    if (CardList [i].GetComponent<CardPos>().TheOwner == cardsInColumn [j])
+                    {
+                        cardPos = CardList [i].GetComponent<CardPos>();
+                    }
+                }
+                Debug.Log(cardPos);
+                //CardPos cardPos = cardsInColumn [j].transform.GetComponentInParent<CardPos>();
+                if (cardPos == null)
+                {
+                    Debug.LogError("CardPos component is missing in the parent.");
+                    continue;
+                }
 
+                cardPos.TheOwner = newCard;
                 newCards.Add(newCard);
 
-                // Tween the card to its target position
                 newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
                     .SetEase(Ease.OutQuad)
                     .SetDelay(colIndex * 4 * 0.1f)
@@ -121,21 +187,21 @@ public class GridColumnManager : MonoBehaviour
                         ActivateNewCard(newCard);
                     });
 
-                // Wait for the card movement to complete
                 yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration);
                 CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex , newCard);
             }
         }
 
         yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 4 * 0.1f);
-
         MarkRefillComplete(colIndex);
         if (AreAllRefillColumnsCompleted())
         {
             CheckWin();
-            CommandCentre.Instance.WinLoseManager_.enableSpin = true;
+            winLoseManager.enableSpin = true;
+            poolManager.ReturnAllInactiveCardsToPool();
         }
     }
+
 
     void CheckWin ()
     {
@@ -196,4 +262,5 @@ public class GridColumnManager : MonoBehaviour
             refillColumnCompleted [i] = false;
         }
     }
+
 }

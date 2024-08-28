@@ -8,6 +8,8 @@ public class PoolManager : MonoBehaviour
     public int poolSize = 50;
     private Queue<GameObject> cardPool;
 
+    public GameObject CardPosholder;
+    public List<GameObject> InactiveCardList;
     // Delegate and event to notify when the pool is initialized
     public bool Poolinitialized = false;
 
@@ -61,5 +63,38 @@ public class PoolManager : MonoBehaviour
             card.SetActive(false);
             cardPool.Enqueue(card);
         }
+    }
+
+    [ContextMenu("Get Inactive Cards")]
+    void GetAllInactiveCards ()
+    {
+        List <Transform> templist = new List <Transform>();
+        foreach (Transform tr in CardPosholder.transform)
+        {
+            templist.Add(tr);
+        }
+
+        for(int i = 0; i < templist.Count; i++)
+        {
+            foreach (Transform tr in templist[i])
+            {
+                if (!tr.gameObject.activeSelf && tr.GetComponent<Card>())
+                {
+
+                    InactiveCardList.Add(tr.gameObject);
+                }
+            }
+        }
+
+    }
+
+    public void ReturnAllInactiveCardsToPool ()
+    {
+        GetAllInactiveCards();
+        foreach(GameObject card in InactiveCardList)
+        {
+            ReturnCard(card);
+        }
+        InactiveCardList.Clear();
     }
 }
