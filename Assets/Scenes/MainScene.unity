@@ -6076,6 +6076,8 @@ MonoBehaviour:
   columns: []
   winCards: []
   enableSpin: 0
+  IsCheckingWin: 0
+  CardsPosHolder: {fileID: 857952519}
 --- !u!1 &1547633931
 GameObject:
   m_ObjectHideFlags: 0
@@ -6600,6 +6602,8 @@ MonoBehaviour:
   refillColumnCompleted: 
   columnsToRefill: 
   isRepositioning: 0
+  totalObjectsToPlace: 0
+  objectsPlaced: 0
   CardPosHolders: {fileID: 857952519}
   CardList: []
   Columns:

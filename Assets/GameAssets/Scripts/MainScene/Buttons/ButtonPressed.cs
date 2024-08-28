@@ -12,7 +12,7 @@ public class ButtonPressed : MonoBehaviour
         {
             if (isSpinButton)
             {
-                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
+                if (CommandCentre.Instance.WinLoseManager_.enableSpin && CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
                 {
                     //delay 
                     EnableButtonInteractvity();

@@ -11,9 +11,13 @@ public class WinLoseManager : MonoBehaviour
     public List<GridColumns> columns = new List<GridColumns>();
     public List<GameObject> winCards = new List<GameObject>();
     public bool enableSpin = false;
+    public bool IsCheckingWin = false;
+    public GameObject CardsPosHolder;
 
     public void PopulateGridChecker ( Transform parent )
     {
+        Debug.Log(enableSpin);
+        enableSpin = false;
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
         SpinEnd();
@@ -105,27 +109,34 @@ public class WinLoseManager : MonoBehaviour
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
         enableSpin = false;
+        Debug.Log(enableSpin);
+        // Convert winningCards to a HashSet for O(1) lookups
+        HashSet<GameObject> winningCardsSet = new HashSet<GameObject>(winningCards);
 
-        // Disable the winning cards and remove them from their columns
-        foreach (GameObject card in winningCards)
+        // Get all card positions from CardsPosHolder
+        var cardPositions = CardsPosHolder.GetComponentsInChildren<CardPos>();
+
+        foreach (var cardPos in cardPositions)
         {
-            card.SetActive(false);
-            card.GetComponentInParent<CardPos>().TheOwner = null;
+            var owner = cardPos.TheOwner;
+            if (owner != null && winningCardsSet.Contains(owner))
+            {
+                owner.SetActive(false);
+                cardPos.TheOwner = null;
+            }
         }
+
         CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
-        // Reorganize the columns
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 
+
     public void GetWinningCards ( List<GameObject> winningCards )
     {
-        if (winCards.Count > 0) { winCards.Clear(); }
-        winCards = new List<GameObject>();
-        foreach (GameObject card in winningCards)
-        {
-            winCards.Add(card);
-        }
+        winCards.Clear();
+        winCards.AddRange(winningCards);
     }
+
 
     public void SpinEnd ()
     {
