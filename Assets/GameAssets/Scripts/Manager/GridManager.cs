@@ -167,7 +167,7 @@ public class GridManager : MonoBehaviour
         }
 
         IsReturnToPoolDone = true;
-        Debug.Log("Return to pool process completed.");
+        //Debug.Log("Return to pool process completed.");
     }
 
 
@@ -236,16 +236,13 @@ public class GridManager : MonoBehaviour
         return -1;
     }
 
-    public void RefreshCurrentColumnCards (int colIndex,GameObject newCard)
+    public void RefreshCurrentColumnCards ( int colIndex , GameObject newCard )
     {
         for (int j = 0 ; j < Columns [colIndex].Cards.Count ; j++)
         {
             if (!Columns [colIndex].Cards [j].activeSelf)
             {
-                newCard.GetComponent<Card>().CardSortPos = 
-                    Columns [colIndex].Cards [j].GetComponent<Card>().CardSortPos;
                 Columns [colIndex].Cards [j] = newCard;
-                
             }
         }
     }

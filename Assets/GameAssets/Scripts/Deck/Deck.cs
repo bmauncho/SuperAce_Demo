@@ -78,7 +78,7 @@ public class Deck : MonoBehaviour
                     newCard.transform.SetParent(transform);
                 }
             }
-            Debug.Log("Refill complete.");
+            //Debug.Log("Refill complete.");
             UpdateDeckFromTempDeck();
         }
     }
@@ -179,18 +179,10 @@ public class Deck : MonoBehaviour
             if (i < cardPositions.Count)
             {
                 Vector3 targetPosition = cardPositions [i];
-                DeckCards [i].transform.localPosition = Vector3.MoveTowards(
-                    DeckCards [i].transform.localPosition ,
-                    targetPosition ,
-                    0.15f * Time.deltaTime
-                );
+                DeckCards [i].transform.localPosition = targetPosition;
             }
         }
     }
-
-
-
-
     public void MaintainCorrectAmountOfCardsInDeck ()
     {
         if (isMaintainingDeck || DeckCards.Count <= cardsPerDeck) return;

@@ -10,6 +10,8 @@ public class  GridPosColumns
 }
 public class GridColumnManager : MonoBehaviour
 {
+    WinLoseManager winLoseManager;
+    PoolManager poolManager;
     private MultiDeckManager multiDeckManager;
     public bool IsDoneCheckingWin;
     public bool isWinChecked = false;
@@ -22,11 +24,12 @@ public class GridColumnManager : MonoBehaviour
     public List<GridPosColumns> Columns = new List<GridPosColumns>();
     private void Start ()
     {
+        poolManager = CommandCentre.Instance.PoolManager_;
+        winLoseManager = CommandCentre.Instance.WinLoseManager_;
         multiDeckManager = CommandCentre.Instance.MultiDeckManager_;
         refillColumnCompleted = new bool [5];
         GetCardPositions();
     }
-
 
     void GetCardPositions ()
     {
@@ -35,17 +38,21 @@ public class GridColumnManager : MonoBehaviour
             CardList.Add(tr.gameObject);
         }
     }
+
     public void CheckAndFillColumns (int No_Of_Columns)
     {
         refreshAllRefillColumnsCompleted ();
         isWinChecked = false;
         IsDoneCheckingWin = false;
+
         // Get the number of columns and rows
         int columns = No_Of_Columns;
         InitializeRefillTracking(No_Of_Columns);
+
         // Iterate through each column
         StartCoroutine(ProcessColumnsSequentially(columns));
     }
+
     private IEnumerator ProcessColumnsSequentially ( int columns )
     {
         for (int col = 0 ; col <= columns-1; col++)
@@ -65,11 +72,13 @@ public class GridColumnManager : MonoBehaviour
 
     IEnumerator HandleDisabledCardInColumn ( int colIndex )
     {
-        List<GameObject> cardsInColumn = GetCardsInColumn(colIndex);
+        // Get the list of card positions in the column using the Columns list
+        List<GameObject> cardsInColumn = Columns [colIndex].CardsPos;
         bool repositioning = false;
+
         for (int i = 0 ; i < cardsInColumn.Count ; i++)
         {
-            if (!cardsInColumn [i].gameObject.activeSelf)
+            if (!cardsInColumn [i].GetComponent<CardPos>().TheOwner)
             {
                 // Mark that the column needs a refill
                 MarkColumnForRefill(colIndex);
@@ -77,135 +86,109 @@ public class GridColumnManager : MonoBehaviour
                 break;
             }
         }
+
         refillColumnCompleted [colIndex] = false;
+
         if (repositioning)
         {
             CommandCentre.Instance.WinLoseManager_.enableSpin = false;
-            StartCoroutine(RefillColumn(colIndex, cardsInColumn));
+            StartCoroutine(RefillColumn(colIndex));
         }
         else
         {
             yield break;
         }
-
     }
 
     public List<GameObject> GetCardsInColumn ( int colIndex )
     {
         List<GameObject> cards = new List<GameObject>();
-        cards = new List<GameObject>(CommandCentre.Instance.WinLoseManager_.columns [colIndex].Cards);
+        cards = new List<GameObject>(winLoseManager.columns [colIndex].Cards);
         if (cards == null || cards.Count == 0)
         {
             Debug.LogError($"No cards found in column {colIndex}.");
         }
         else
         {
-            Debug.Log($"Found {cards.Count} cards in column {colIndex}.");
+            //Debug.Log($"Found {cards.Count} cards in column {colIndex}.");
         }
 
         return cards;
     }
 
-    public IEnumerator RefillColumn ( int colIndex , List<GameObject> cardsInColumn )
+    public IEnumerator RefillColumn ( int colIndex )
     {
+        // Get the responsible deck for this column
         Deck responsibleDeck = multiDeckManager.GetDeck(colIndex);
-        if (responsibleDeck == null)
-        {
-            Debug.LogError("Responsible deck is null. Ensure the MultiDeckManager is properly initialized.");
-            yield break;
-        }
-
-        WinLoseManager winLoseManager = CommandCentre.Instance.WinLoseManager_;
-        if (winLoseManager == null)
-        {
-            Debug.LogError("WinLoseManager is null. Ensure it's properly initialized.");
-            yield break;
-        }
-
-        PoolManager poolManager = CommandCentre.Instance.PoolManager_;
-        if (poolManager == null)
-        {
-            Debug.LogError("PoolManager is null. Ensure it's properly initialized.");
-            yield break;
-        }
-
-        if (cardsInColumn == null || cardsInColumn.Count == 0)
-        {
-            Debug.LogError("No cards found in the column.");
-            yield break;
-        }
+        responsibleDeck.ResetDeck();
+        Debug.Log($"Refilling column {colIndex} using deck {responsibleDeck.name}");
 
         List<GameObject> newCards = new List<GameObject>();
-        //responsibleDeck.ResetDeck();
+        List<GameObject> cardPosInColumn = Columns [colIndex].CardsPos;  // Directly access the column from the Columns list
 
-        for (int j = 0 ; j < cardsInColumn.Count ; j++)
+        float delayIncrement = 0.1f; // Delay between cards, adjust as needed
+        int rowCount = 4; // Number of rows
+        int positionIndex = 0; // Keeps track of the current position in the column
+
+        for (int row = 0 ; row < rowCount ; row++)
         {
-            if (cardsInColumn [j] == null)
-            {
-                Debug.LogError("Card in column is null.");
-                continue;
-            }
-
-            if (!cardsInColumn [j].activeSelf)
+            GameObject currentCardPos = cardPosInColumn [positionIndex];
+            if (!currentCardPos.GetComponent<CardPos>().TheOwner)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
-                responsibleDeck.ResetDeck();
+
                 if (newCard == null)
                 {
                     Debug.LogError("Deck is empty, unable to continue refilling.");
                     break;
                 }
 
-                Vector3 targetPosition = cardsInColumn [j].transform.localPosition;
-                newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                newCard.transform.SetParent(cardsInColumn [j].transform.parent);
-                CardPos cardPos = null;
-                for (int i = 0 ;i<CardList.Count ;i++)
+                CardPos CardPos = currentCardPos.GetComponent<CardPos>();
+                if (!CardPos.TheOwner)
                 {
-                    if (CardList [i].GetComponent<CardPos>().TheOwner == cardsInColumn [j])
-                    {
-                        cardPos = CardList [i].GetComponent<CardPos>();
-                    }
+                    CardPos.TheOwner = newCard;
+                    newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                    newCard.transform.SetParent(CardPos.transform);
+                    Vector3 targetPosition = Vector3.zero;
+                    float delay = ( colIndex * rowCount + row ) * delayIncrement; // Calculate delay based on column and row
+
+                    Sequence cardSequence = DOTween.Sequence();
+                    cardSequence.Append(newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .SetDelay(delay)
+                        .OnComplete(() =>
+                        {
+                            newCard.transform.localPosition = Vector3.zero; // Ensure final position is correct
+                            ActivateNewCard(newCard);
+                        }));
+
+                    //yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration);
+                    CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex , newCard);
                 }
-                Debug.Log(cardPos);
-                //CardPos cardPos = cardsInColumn [j].transform.GetComponentInParent<CardPos>();
-                if (cardPos == null)
-                {
-                    Debug.LogError("CardPos component is missing in the parent.");
-                    continue;
-                }
-
-                cardPos.TheOwner = newCard;
-                newCards.Add(newCard);
-
-                newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
-                    .SetEase(Ease.OutQuad)
-                    .SetDelay(colIndex * 4 * 0.1f)
-                    .OnComplete(() =>
-                    {
-                        newCard.transform.localPosition = Vector3.zero;
-                        ActivateNewCard(newCard);
-                    });
-
-                yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration);
-                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex , newCard);
             }
+            positionIndex++; // Move to the next position in the column
         }
 
-        yield return new WaitForSeconds(CommandCentre.Instance.GridManager_.moveDuration + colIndex * 4 * 0.1f);
+        // Mark refill complete for this column
         MarkRefillComplete(colIndex);
+
+        // If all refills are complete, check win conditions
         if (AreAllRefillColumnsCompleted())
         {
             CheckWin();
             winLoseManager.enableSpin = true;
             poolManager.ReturnAllInactiveCardsToPool();
         }
+        yield return null;
     }
+
+
+
 
 
     void CheckWin ()
     {
-        CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
+        //CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         Debug.Log("Win condition checked.");
         isWinChecked = true;
         IsDoneCheckingWin = true;
@@ -215,6 +198,31 @@ public class GridColumnManager : MonoBehaviour
     {
         card.SetActive(true);
     }
+
+    List<CardPos> GetAvailableCardPos ( int column )
+    {
+        List<CardPos> inactiveCards = new List<CardPos>();
+
+        // Check if the column index is within range
+        if (column < 0 || column >= Columns.Count)
+        {
+            Debug.LogWarning("Invalid column index.");
+            return inactiveCards; // Return an empty list if the column index is invalid
+        }
+
+        // Loop through the specified column to find all inactive cards
+        for (int j = 0 ; j < Columns [column].CardsPos.Count ; j++)
+        {
+            CardPos cardPos = Columns [column].CardsPos [j].GetComponent<CardPos>();
+            if (!cardPos.TheOwner.activeSelf)
+            {
+                inactiveCards.Add(cardPos); // Add inactive card to the list
+            }
+        }
+
+        return inactiveCards; // Return the list of inactive cards
+    }
+
 
     void InitializeRefillTracking ( int numberOfColumns )
     {

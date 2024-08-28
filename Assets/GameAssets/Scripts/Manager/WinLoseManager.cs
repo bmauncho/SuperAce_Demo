@@ -36,20 +36,20 @@ public class WinLoseManager : MonoBehaviour
                 if (winningCards5 != null)
                 {
                     GetWinningCards(winningCards5);
-                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
+                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
                     return true;
                 }
                 else
                 {
                     GetWinningCards(winningCards4);
-                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
+                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
                     return true;
                 }
             }
             else
             {
                 GetWinningCards(winningCards);
-                Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
+                //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
                 return true;
             }
         }
@@ -105,15 +105,18 @@ public class WinLoseManager : MonoBehaviour
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
         enableSpin = false;
+
         // Disable the winning cards and remove them from their columns
         foreach (GameObject card in winningCards)
         {
             card.SetActive(false);
+            card.GetComponentInParent<CardPos>().TheOwner = null;
         }
+        CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
         // Reorganize the columns
-        Debug.Log("reorganize column cards");
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
+
     public void GetWinningCards ( List<GameObject> winningCards )
     {
         if (winCards.Count > 0) { winCards.Clear(); }
@@ -123,6 +126,7 @@ public class WinLoseManager : MonoBehaviour
             winCards.Add(card);
         }
     }
+
     public void SpinEnd ()
     {
         if (CheckWinCondition())
@@ -132,7 +136,6 @@ public class WinLoseManager : MonoBehaviour
         else
         {
             enableSpin = true;
-            Debug.Log("spin again");
         }
     }
 }
