@@ -64,7 +64,6 @@ public class GridColumnManager : MonoBehaviour
         refreshAllRefillColumnsCompleted ();
         isWinChecked = false;
         IsDoneCheckingWin = false;
-        Debug.Log(TotalNumberofEmptyCardPos());
         totalObjectsToPlace = TotalNumberofEmptyCardPos();
         objectsPlaced = 0;
         // Get the number of columns and rows
@@ -113,7 +112,6 @@ public class GridColumnManager : MonoBehaviour
 
         if (repositioning)
         {
-            Debug.Log(CommandCentre.Instance.WinLoseManager_.enableSpin);
             CommandCentre.Instance.WinLoseManager_.enableSpin = false;
             StartCoroutine(RefillColumn(colIndex));
         }
@@ -129,7 +127,7 @@ public class GridColumnManager : MonoBehaviour
         // Get the responsible deck for this column
         Deck responsibleDeck = multiDeckManager.GetDeck(colIndex);
         responsibleDeck.ResetDeck();
-        Debug.Log($"Refilling column {colIndex} using deck {responsibleDeck.name}");
+        //Debug.Log($"Refilling column {colIndex} using deck {responsibleDeck.name}");
 
         List<GameObject> newCards = new List<GameObject>();
         List<GameObject> cardPosInColumn = Columns [colIndex].CardsPos;  // Directly access the column from the Columns list
@@ -137,10 +135,8 @@ public class GridColumnManager : MonoBehaviour
         float delayIncrement = 0.05f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int positionIndex = 0; // Keeps track of the current position in the column
-        Debug.Log("1.");
         for (int row = 0 ; row < rowCount ; row++)
         {
-            Debug.Log("2.");
             GameObject currentCardPos = cardPosInColumn [positionIndex];
             if (!currentCardPos.GetComponent<CardPos>().TheOwner)
             {
@@ -151,7 +147,6 @@ public class GridColumnManager : MonoBehaviour
                     Debug.LogError("Deck is empty, unable to continue refilling.");
                     break;
                 }
-                Debug.Log("3.");
                 CardPos CardPos = currentCardPos.GetComponent<CardPos>();
                 if (!CardPos.TheOwner)
                 {
@@ -167,7 +162,6 @@ public class GridColumnManager : MonoBehaviour
                         .SetDelay(delay)
                         .OnComplete(() =>
                         {
-                            Debug.Log("4");
                             CalculateObjectsPlaced();
                             newCard.transform.localPosition = Vector3.zero; // Ensure final position is correct
                             ActivateNewCard(newCard);
@@ -179,14 +173,12 @@ public class GridColumnManager : MonoBehaviour
             }
             positionIndex++; // Move to the next position in the column
         }
-        Debug.Log("5");
         // Mark refill complete for this column
         MarkRefillComplete(colIndex);
         // If all refills are complete, check win conditions
         if (AreAllRefillColumnsCompleted())
         {
             CheckWin();
-            Debug.Log(winLoseManager.enableSpin);
             winLoseManager.enableSpin = true;
             poolManager.ReturnAllInactiveCardsToPool();
         }
@@ -196,7 +188,6 @@ public class GridColumnManager : MonoBehaviour
     void CheckWin ()
     {
         CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
-        Debug.Log("Win condition checked.");
         isWinChecked = true;
         IsDoneCheckingWin = true;
     }

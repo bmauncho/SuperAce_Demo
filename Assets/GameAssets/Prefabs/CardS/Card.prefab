@@ -28,7 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0148, z: 0.05}
   m_LocalScale: {x: 5.19112, y: 1.9500853, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7982120915414084205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,7 +115,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.0048, y: 0.0449, z: -0.1}
   m_LocalScale: {x: 5.0917625, y: 1.8889802, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7982120915414084205}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -202,7 +202,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 5.19112, y: 1.93116, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7591296409143280605}
   m_Father: {fileID: 7982120915414084205}
@@ -289,7 +289,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.0273, y: 0.0437, z: 0}
   m_LocalScale: {x: 2.7112296, y: 3.7671657, z: 0.103995994}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 290852260024142010}
   m_Father: {fileID: 7982120915414084205}
@@ -409,7 +409,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2.69, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1018615992201325831}
   - {fileID: 2084244752176579581}
@@ -437,6 +437,7 @@ MonoBehaviour:
   cardType: 0
   IsGoldenCard: 0
   IsScatterCard: 0
+  CardSortPos: 5
 --- !u!1001 &253303202112778065
 PrefabInstance:
   m_ObjectHideFlags: 0

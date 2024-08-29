@@ -14,6 +14,8 @@ public class CommandCentre : MonoBehaviour
     public SettingsManager SettingsManager_;
     public BetManager BetManager_;
     public CashManager CashManager_;
+    public CardMaskManager CardMaskManager_;
+
     private void Awake ()
     {
         //Application.targetFrameRate = 30;
