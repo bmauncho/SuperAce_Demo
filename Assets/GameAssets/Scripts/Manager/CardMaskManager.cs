@@ -12,9 +12,10 @@ public class CardMaskManager : MonoBehaviour
 {
     public GameObject CardMask;
     public List<CardMaskColumn> CardMasks = new List<CardMaskColumn>();
-    
+
     public void Activate ()
     {
+        Debug.Log("activateMasks");
         CardMask.SetActive(true);
     }
 
@@ -32,6 +33,8 @@ public class CardMaskManager : MonoBehaviour
                 if(CardMasks [i].cardMasks [j].activeSelf)
                 {
                     CardMasks [i].cardMasks [j].SetActive(false);
+                    CardMasks [i].cardMasks [j].transform.localScale = Vector3.one;
+
                 }
             }
         }

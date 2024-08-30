@@ -18,10 +18,12 @@ public class Card : MonoBehaviour
     public bool IsSmallJocker= false;
     public bool IsBigJocker = false;
     public int CardSortPos = 5;
+    public Vector3 CardScale;
 
     private void Start ()
     {
         cardBg = GetComponentInChildren<SpriteRenderer>();
+        CardScale = this.transform.localScale;
     }
 
     public void SetCardSortPos(int pos )

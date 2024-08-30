@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class CommandCentre : MonoBehaviour
@@ -27,6 +28,8 @@ public class CommandCentre : MonoBehaviour
         {
             Instance = this;
         }
+
+        DOTween.SetTweensCapacity(2000, 150);
 
     }
 }

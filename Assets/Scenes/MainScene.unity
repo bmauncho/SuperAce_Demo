@@ -8967,6 +8967,8 @@ MonoBehaviour:
   isRepositioning: 0
   totalObjectsToPlace: 0
   objectsPlaced: 0
+  totalObjectsToRotate: 0
+  objectsRotated: 0
   CardPosHolders: {fileID: 857952519}
   CardList: []
   Columns:
@@ -10932,6 +10934,32 @@ MonoBehaviour:
   - Cards: []
   - Cards: []
   - Cards: []
+  Columns_Cardpos:
+  - CardPosHolder:
+    - {fileID: 631052399}
+    - {fileID: 522552196}
+    - {fileID: 1922606205}
+    - {fileID: 1662436673}
+  - CardPosHolder:
+    - {fileID: 2131236576}
+    - {fileID: 1942206388}
+    - {fileID: 713341190}
+    - {fileID: 1365677967}
+  - CardPosHolder:
+    - {fileID: 1532730792}
+    - {fileID: 1066080627}
+    - {fileID: 419706015}
+    - {fileID: 2080919563}
+  - CardPosHolder:
+    - {fileID: 1867127775}
+    - {fileID: 1867238658}
+    - {fileID: 1348047695}
+    - {fileID: 1126896183}
+  - CardPosHolder:
+    - {fileID: 1383013401}
+    - {fileID: 674686908}
+    - {fileID: 731896393}
+    - {fileID: 1555890593}
 --- !u!1 &2049627782
 GameObject:
   m_ObjectHideFlags: 0

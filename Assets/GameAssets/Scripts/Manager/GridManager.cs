@@ -9,6 +9,13 @@ public class GridColumns
     public List<GameObject> Cards = new List<GameObject>();
 }
 
+[System.Serializable]
+public class GridColumns_CardPos
+{
+    public List<GameObject> CardPosHolder = new List<GameObject>();
+}
+
+
 public class GridManager : MonoBehaviour
 {
     [Header("Refrences")]
@@ -29,6 +36,7 @@ public class GridManager : MonoBehaviour
     
     [Header("Lists")]
     public List<GridColumns> Columns = new List<GridColumns>();
+    public List<GridColumns_CardPos> Columns_Cardpos = new List<GridColumns_CardPos>();
     
 
     private void Start ()
@@ -236,13 +244,13 @@ public class GridManager : MonoBehaviour
         return -1;
     }
 
-    public void RefreshCurrentColumnCards ( int colIndex , GameObject newCard )
+    public void RefreshCurrentColumnCards ( int colIndex)
     {
         for (int j = 0 ; j < Columns [colIndex].Cards.Count ; j++)
         {
-            if (!Columns [colIndex].Cards [j].activeSelf)
+            if (Columns [colIndex].Cards [j] != Columns_Cardpos[colIndex].CardPosHolder[j].GetComponent<CardPos>().TheOwner)
             {
-                Columns [colIndex].Cards [j] = newCard;
+                Columns [colIndex].Cards [j] = Columns_Cardpos[colIndex].CardPosHolder[j].GetComponent<CardPos>().TheOwner;
             }
         }
     }

@@ -5,6 +5,10 @@ using UnityEngine.UI;
 public class ButtonPressed : MonoBehaviour
 {
     public bool isSpinButton = false;
+    private void Start()
+    {
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -12,10 +16,17 @@ public class ButtonPressed : MonoBehaviour
         {
             if (isSpinButton)
             {
-                if (CommandCentre.Instance.WinLoseManager_.enableSpin && CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
+                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
                 {
+                    if (CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
+                    {
+                        EnableButtonInteractvity();
+                    }
+                    else
+                    {
+                        DisableButtonInteractvity ();
+                    }
                     //delay 
-                    EnableButtonInteractvity();
                 }
                 else
                 {

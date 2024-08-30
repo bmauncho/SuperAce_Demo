@@ -42,20 +42,20 @@ public class WinLoseManager : MonoBehaviour
                 if (winningCards5 != null)
                 {
                     GetWinningCards(winningCards5);
-                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
+                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
                     return true;
                 }
                 else
                 {
                     GetWinningCards(winningCards4);
-                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
+                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
                     return true;
                 }
             }
             else
             {
                 GetWinningCards(winningCards);
-                Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
+               // Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
                 return true;
             }
         }
@@ -116,12 +116,6 @@ public class WinLoseManager : MonoBehaviour
 
     private IEnumerator WaitForRepositioningAndShowWinningSequence ( List<GameObject> winningCards )
     {
-        // Wait until the grid repositioning is complete
-        while (!CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete() && !CommandCentre.Instance.GridColumnManager_.IsGridGoldenCardsRotationDone())
-        {
-            yield return null; // Wait for the next frame before checking again
-        }
-
         // Start the winning sequence once repositioning is complete
         yield return StartCoroutine(ShowWinningSequence(winningCards));
     }
@@ -326,6 +320,7 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
         CommandCentre.Instance.CardMaskManager_.Deactivate();
         yield return new WaitForSeconds(1);
+        winCards.Clear();
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 }

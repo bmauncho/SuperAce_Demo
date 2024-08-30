@@ -22,7 +22,7 @@ public class CardManager : MonoBehaviour
         {
             RandomSprite = Random.Range(0 , cardSprites.Length);
         }
-        
+
         return cardSprites [RandomSprite];
     }
 
@@ -85,13 +85,31 @@ public class CardManager : MonoBehaviour
         float randomValue = Random.value;
         if (randomValue < normalCardProbability)
         {
-            // Deal a normal card
+              // Deal a normal card
             DealNormalCards(card);
+            
+        }
+        else
+        {
+           DealScatterCards(card);
+        }
+    }
+
+    public void RandomizeDealing_Jocker ( Transform card )
+    {
+        float normalCardProbability = 0.8f;
+
+        float randomValue = Random.value;
+
+        if (randomValue < normalCardProbability)
+        {
+            // Deal a normal card
+            DealSmallJocker(card);
         }
         else
         {
             // Deal a ScatterCard
-            DealScatterCards(card);
+            DealBigJocker(card);
         }
     }
 
