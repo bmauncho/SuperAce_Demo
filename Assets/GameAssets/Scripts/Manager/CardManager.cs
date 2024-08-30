@@ -8,6 +8,10 @@ public class CardManager : MonoBehaviour
     public Sprite Normalbackground;
     public Sprite Goldbackground;
     public Sprite DefaultOutline;
+    public Sprite SmallJockerOutline;
+    public Sprite BigJockerOutline;
+    public Sprite SmallJocker;
+    public Sprite BigJocker;
     public Sprite ScatterCard;
     public Sprite [] cardSprites;
 
@@ -41,6 +45,20 @@ public class CardManager : MonoBehaviour
     public void DealScatterCards(Transform card )
     {
         card.GetComponent<Card>().SetScatterCard(ScatterCard);
+        card.GetComponent<Card>().SetCardType();
+    }
+
+    public void DealBigJocker(Transform card )
+    {
+        card.GetComponent<Card>().SetBigJocker(BigJocker);
+        card.GetComponent<Card>().SetCardOutLine(BigJockerOutline);
+        card.GetComponent<Card>().SetCardType();
+    }
+
+    public void DealSmallJocker(Transform card )
+    {
+        card.GetComponent<Card>().SetSmallJocker(SmallJocker);
+        card.GetComponent<Card>().SetCardOutLine(SmallJockerOutline);
         card.GetComponent<Card>().SetCardType();
     }
 
@@ -112,6 +130,14 @@ public class CardManager : MonoBehaviour
                         {
                             spriteRenderer.sprite = ScatterCard;
                         }
+                        else if (cardComponent.IsSmallJocker)
+                        {
+
+                        }
+                        else if (cardComponent.IsBigJocker)
+                        {
+
+                        }
                         else
                         {
                             AssignCardSprite(spriteRenderer , cardComponent.cardType);
@@ -122,6 +148,14 @@ public class CardManager : MonoBehaviour
                         if (cardComponent.IsGoldenCard)
                         {
                             spriteRenderer.sprite = DefaultOutline;
+                        }
+                        else if(cardComponent.IsGoldenCard && cardComponent.IsBigJocker)
+                        {
+                            spriteRenderer.sprite = BigJockerOutline;
+                        }
+                        else if(cardComponent.IsGoldenCard && cardComponent.IsSmallJocker)
+                        {
+                            spriteRenderer.sprite = SmallJockerOutline;
                         }
                         break;
 

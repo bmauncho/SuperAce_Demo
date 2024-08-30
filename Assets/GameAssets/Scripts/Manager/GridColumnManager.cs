@@ -21,6 +21,8 @@ public class GridColumnManager : MonoBehaviour
     public bool isRepositioning;
     public int totalObjectsToPlace;
    public int objectsPlaced;
+    public int totalObjectsToRotate;
+    public int objectsRotated;
 
     public GameObject CardPosHolders;
     public List<GameObject> CardList = new List<GameObject>();
@@ -132,6 +134,9 @@ public class GridColumnManager : MonoBehaviour
         List<GameObject> newCards = new List<GameObject>();
         List<GameObject> cardPosInColumn = Columns [colIndex].CardsPos;  // Directly access the column from the Columns list
 
+        CheckforRotatedCards();
+
+
         float delayIncrement = 0.05f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int positionIndex = 0; // Keeps track of the current position in the column
@@ -151,7 +156,7 @@ public class GridColumnManager : MonoBehaviour
                 if (!CardPos.TheOwner)
                 {
                     CardPos.TheOwner = newCard;
-                    newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                    newCard.transform.localRotation = Quaternion.Euler(0 , 180f , 0);
                     newCard.transform.SetParent(CardPos.transform);
                     Vector3 targetPosition = Vector3.zero;
                     float delay = ( colIndex * rowCount + row ) * delayIncrement; // Calculate delay based on column and row
@@ -173,6 +178,7 @@ public class GridColumnManager : MonoBehaviour
             }
             positionIndex++; // Move to the next position in the column
         }
+        
         // Mark refill complete for this column
         MarkRefillComplete(colIndex);
         // If all refills are complete, check win conditions
@@ -185,13 +191,58 @@ public class GridColumnManager : MonoBehaviour
         yield return null;
     }
 
+    void CheckforRotatedCards ()
+    {
+        List<GameObject> winningGoldenCards = new List<GameObject>(CommandCentre.Instance.WinLoseManager_.goldenCards); // Moved outside the loop
+        totalObjectsToRotate = winningGoldenCards.Count;
+        objectsRotated = 0;
+        for (int i = 0 ; i < Columns.Count ; i++)
+        {
+            for (int j = 0 ; j < Columns [i].CardsPos.Count ; j++)
+            {
+                var cardPos = Columns [i].CardsPos [j];
+                if (cardPos == null) continue; // Null check for CardsPos
+
+                var owner = cardPos.GetComponent<CardPos>().TheOwner;
+                if (owner != null && winningGoldenCards.Contains(owner))
+                {
+                    if (owner.GetComponent<Card>().IsGoldenCard)
+                    {
+                        // Target rotation: identity (0, 0, 0)
+                        Vector3 targetRotation = new Vector3(0,180,0); // Identity rotation in Euler angles
+
+                        // Duration of the rotation animation
+                        float duration = 1.0f;
+
+                        // Animate the rotation and perform an action when close to the identity rotation
+                        Sequence rotSequence = DOTween.Sequence();
+                        rotSequence.Append(owner.transform.DORotate(targetRotation , duration)
+                            .OnComplete(() =>
+                            {
+                                Debug.Log("Rotated");
+                                objectsToRotate();
+                            }));
+                    }
+                }
+            }
+        }
+    }
+
+    void objectsToRotate ()
+    {
+        objectsRotated++;
+    }
+
+    public bool IsGridGoldenCardsRotationDone ()
+    {
+        return objectsRotated >= totalObjectsToRotate;
+    }
     void CheckWin ()
     {
         CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         isWinChecked = true;
         IsDoneCheckingWin = true;
     }
-
     void CalculateObjectsPlaced ()
     {
         objectsPlaced++;

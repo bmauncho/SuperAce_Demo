@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum CardType { Ace, King, Queen, Jack, Spades, Clubs, Hearts, Diamonds, Scatter }
+public enum CardType { Ace, King, Queen, Jack, Spades, Clubs, Hearts, Diamonds, Scatter,Small_Jocker,Big_Jocker }
 
 public class Card : MonoBehaviour
 {
@@ -15,6 +15,8 @@ public class Card : MonoBehaviour
     [Header("Variables")]
     public bool IsGoldenCard = false;
     public bool IsScatterCard = false;
+    public bool IsSmallJocker= false;
+    public bool IsBigJocker = false;
     public int CardSortPos = 5;
 
     private void Start ()
@@ -105,6 +107,23 @@ public class Card : MonoBehaviour
         SetCardBackGolden();
         DisableBackCard();
         DisableCardOBJ();
+    }
+
+    public void SetSmallJocker (Sprite smallJoker = null)
+    {
+        IsScatterCard = false;
+        IsGoldenCard = true;
+        IsSmallJocker = true;
+        IsBigJocker = false;
+        SetCard(smallJoker);
+    }
+    public void SetBigJocker ( Sprite bigJoker = null )
+    {
+        IsScatterCard = false;
+        IsGoldenCard = true;
+        IsSmallJocker = true;
+        IsBigJocker = false;
+        SetCard(bigJoker);
     }
 
     private void OnDisable ()

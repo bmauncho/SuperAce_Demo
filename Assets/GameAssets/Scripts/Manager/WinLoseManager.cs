@@ -8,11 +8,14 @@ using TMPro.Examples;
 
 public class WinLoseManager : MonoBehaviour
 {
-    public List<GridColumns> columns = new List<GridColumns>();
-    public List<GameObject> winCards = new List<GameObject>();
     public bool enableSpin = false;
     public bool IsCheckingWin = false;
     public GameObject CardsPosHolder;
+    [Space(10)]
+    [Header("Lists")]
+    public List<GridColumns> columns = new List<GridColumns>();
+    public List<GameObject> winCards = new List<GameObject>();
+    public List<GameObject> goldenCards = new List<GameObject>();
 
     public void PopulateGridChecker ( Transform parent )
     {
@@ -39,20 +42,20 @@ public class WinLoseManager : MonoBehaviour
                 if (winningCards5 != null)
                 {
                     GetWinningCards(winningCards5);
-                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
+                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards5.Select(card => GetCardType(card))));
                     return true;
                 }
                 else
                 {
                     GetWinningCards(winningCards4);
-                    //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
+                    Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards4.Select(card => GetCardType(card))));
                     return true;
                 }
             }
             else
             {
                 GetWinningCards(winningCards);
-                //Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
+                Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
                 return true;
             }
         }
@@ -107,13 +110,14 @@ public class WinLoseManager : MonoBehaviour
 
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
+        // Start the coroutine to handle the winning sequence and golden card rotation
         StartCoroutine(WaitForRepositioningAndShowWinningSequence(winningCards));
     }
 
     private IEnumerator WaitForRepositioningAndShowWinningSequence ( List<GameObject> winningCards )
     {
         // Wait until the grid repositioning is complete
-        while (!CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
+        while (!CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete() && !CommandCentre.Instance.GridColumnManager_.IsGridGoldenCardsRotationDone())
         {
             yield return null; // Wait for the next frame before checking again
         }
@@ -126,7 +130,11 @@ public class WinLoseManager : MonoBehaviour
     public void GetWinningCards ( List<GameObject> winningCards )
     {
         winCards.Clear();
-        winCards.AddRange(winningCards);
+
+        // Use a HashSet to ensure unique cards
+        HashSet<GameObject> uniqueWinningCards = new HashSet<GameObject>(winningCards);
+
+        winCards.AddRange(uniqueWinningCards);
     }
 
 
@@ -250,6 +258,56 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
+    public bool IsGoldenCard(GameObject card )
+    {
+        if (card)
+        {
+            if (card.GetComponent<Card>().IsGoldenCard)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void RotateGoldenCards ()
+    {
+        foreach (GameObject goldenCard in goldenCards)
+        {
+            //.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            goldenCard.transform.DORotate(Vector3.zero , .5f, RotateMode.FastBeyond360);
+            Debug.Log($"Rotated golden card {goldenCard.name} by 180 degrees.");
+        }
+    }
+
+    public void GetGoldenCards ( List<GameObject> winningCards )
+    {
+        goldenCards.Clear();
+        // Use a HashSet to track added cards and avoid duplicates
+        HashSet<GameObject> uniqueGoldenCards = new HashSet<GameObject>();
+        List<GameObject> cardsToRemove = new List<GameObject>();
+
+        // Check for golden cards
+        foreach (GameObject card in winningCards)
+        {
+            if (IsGoldenCard(card)) // Assuming IsGoldenCard is a function that checks if a card is golden
+            {
+                if (!uniqueGoldenCards.Contains(card))
+                {
+                    uniqueGoldenCards.Add(card);
+                    goldenCards.Add(card);
+                    cardsToRemove.Add(card);
+                }
+            }
+        }
+        // Remove golden cards from the winning cards list
+        foreach (GameObject card in cardsToRemove)
+        {
+            winningCards.Remove(card);
+        }
+    }
+
+
     public IEnumerator ShowWinningSequence( List<GameObject> winningCards )
     {
         CommandCentre.Instance.CardMaskManager_.Activate();
@@ -257,11 +315,17 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         WinningCardsDoPunchScale(winningCards);
         PunchScaleActiveCardMasks(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f);
-        yield return new WaitForSeconds(1);
+        GetGoldenCards(winningCards);
+        if (goldenCards.Count > 0)
+        {
+            yield return new WaitForSeconds(1);
+            RotateGoldenCards();
+        }
+        yield return new WaitForSeconds(.5f);
         DeactivateWinningCards(winningCards);
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
-        yield return new WaitForSeconds(1);
         CommandCentre.Instance.CardMaskManager_.Deactivate();
+        yield return new WaitForSeconds(1);
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 }
