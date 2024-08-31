@@ -246,7 +246,6 @@ public class WinLoseManager : MonoBehaviour
                 if (cardMask != null && cardMask.activeInHierarchy)
                 {
                     cardMask.transform.DOPunchScale(punchScale , duration , vibrato , elasticity);
-                    //Debug.Log($"Applied DOPunchScale to CardMask at index {maskIndex} in column {colIndex}.");
                 }
             }
         }
@@ -268,9 +267,7 @@ public class WinLoseManager : MonoBehaviour
     {
         foreach (GameObject goldenCard in goldenCards)
         {
-            //.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             goldenCard.transform.DORotate(Vector3.zero , .5f, RotateMode.FastBeyond360);
-            Debug.Log($"Rotated golden card {goldenCard.name} by 180 degrees.");
         }
     }
 

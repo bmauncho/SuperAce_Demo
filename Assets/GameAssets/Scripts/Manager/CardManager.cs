@@ -26,6 +26,19 @@ public class CardManager : MonoBehaviour
         return cardSprites [RandomSprite];
     }
 
+    public Sprite WhichCard (int which)
+    {
+        return cardSprites [which];
+    }
+
+    public void DealSpecificCardType(Transform card,int which)
+    {
+        card.GetComponent<Card>().SetCardBack(Normalbackground);
+
+        card.GetComponent<Card>().SetCard(WhichCard(which));
+        card.GetComponent<Card>().SetCardType();
+    }
+
     public void DealNormalCards(Transform card )
     {
         card.GetComponent<Card>().SetCardBack(Normalbackground);

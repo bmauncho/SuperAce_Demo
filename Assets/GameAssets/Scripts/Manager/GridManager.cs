@@ -101,8 +101,16 @@ public class GridManager : MonoBehaviour
             {
                 Deck currentDeck = decks [col];
                 if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
-
-                GameObject card = currentDeck.DrawCard();
+                GameObject card = null;
+                if (IsFirstTime)
+                {
+                    card = currentDeck.DrawSpecificCard(col);
+                }
+                else
+                {
+                    card = currentDeck.DrawCard();
+                }
+                
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 

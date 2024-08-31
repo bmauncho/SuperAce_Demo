@@ -170,6 +170,27 @@ public class Deck : MonoBehaviour
         return null;
     }
 
+    public GameObject DrawSpecificCard (int col)
+    {
+        if (DeckCards.Count <= 0)
+        {
+            ResetDeck();
+        }
+
+        if (DeckCards.Count > 0)
+        {
+            GameObject drawnCard = DeckCards [0];
+            DeckCards.RemoveAt(0);
+            CommandCentre.Instance.CardManager_.DealSpecificCardType(drawnCard.transform , col);
+            drawnCard.transform.SetParent(null);
+            drawnCard.SetActive(true);
+            drawnCard.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
+            CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
+            return drawnCard;
+        }
+        return null;
+    }
+
     public void RepositionCards ()
     {
         if (DeckCards.Count == 0 || DeckCards.Count > cardsPerDeck) return;
