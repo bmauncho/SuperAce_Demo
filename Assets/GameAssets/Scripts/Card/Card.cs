@@ -137,7 +137,7 @@ public class Card : MonoBehaviour
     CardType CompareEnumToString ()
     {
         string stringValue = CommandCentre.Instance.CardManager_.CheckCardSpriteAndSetCardType(this.transform);
-        if (Enum.TryParse(stringValue , out cardType))
+        if (Enum.TryParse(stringValue ,true, out cardType))
         {
             switch (cardType)
             {
@@ -158,6 +158,10 @@ public class Card : MonoBehaviour
                 case CardType.Diamonds:
                     return cardType;
                 case CardType.Scatter:
+                    return cardType;
+                case CardType.Big_Jocker:
+                    return cardType;
+                case CardType.Small_Jocker:
                     return cardType;
                 default:
                     return cardType;

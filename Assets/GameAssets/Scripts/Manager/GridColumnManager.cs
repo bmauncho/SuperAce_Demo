@@ -26,6 +26,9 @@ public class GridColumnManager : MonoBehaviour
     public int totalObjectsToRotate;
     public int objectsRotated;
 
+    public int totalObjectsToShake;
+    public int objectsShaked;
+
     public GameObject CardPosHolders;
     public List<GameObject> CardList = new List<GameObject>();
     public List<GridPosColumns> Columns = new List<GridPosColumns>();
@@ -81,24 +84,30 @@ public class GridColumnManager : MonoBehaviour
         StartCoroutine(ProcessColumnsSequentially(columns));
     }
 
-    private IEnumerator ProcessColumnsSequentially(int columns)
+    private IEnumerator ProcessColumnsSequentially ( int columns )
     {
-        for (int col = 0; col <= columns - 1; col++)
+        for (int col = 0 ; col <= columns - 1 ; col++)
         {
             yield return StartCoroutine(HandleDisabledCardInColumn(col));
         }
 
-        // Check win condition only when both repositioning and rotations are complete
+        // Wait until all cards are repositioned and rotations are complete
         while (!IsGridRepositioningComplete() || !IsGridGoldenCardsRotationDone())
         {
-            yield return null; // Wait until all cards are repositioned and all rotations are complete
+            yield return null;
         }
 
-        // After all columns are processed and conditions met, check win conditions
+        if (CheckForCardsToShake())
+        {
+            yield return StartCoroutine(ShakeCards());
+        }
+
+        // After shaking animation or if no cards to shake, check win conditions
         CheckWin();
     }
 
-    IEnumerator HandleDisabledCardInColumn(int colIndex)
+
+    IEnumerator HandleDisabledCardInColumn (int colIndex)
     {
         List<GameObject> cardsInColumn = Columns[colIndex].CardsPos;
         bool repositioning = false;
@@ -184,13 +193,30 @@ public class GridColumnManager : MonoBehaviour
         // If all refills are complete, check win conditions
         if (AreAllRefillColumnsCompleted())
         {
-            CheckWinConditions();
-        }
+            //CheckWinConditions();
+            StartCoroutine(ShakeCards());
+            bool IsDone = false;
+            while (!IsObjectShakedComplete())
+            {
+                if (IsObjectShakedComplete())
+                {
+                    IsDone = true;
+                    if (IsDone) { CheckWin(); }
+                    Debug.Log("Shaking done");
+                    // After shaking animation or if no cards to shake, check win conditions
+                    Debug.Log("Proceed to checkWin");
+                    CheckWin();
+                    break;
 
-        yield return null;
+                }
+                yield return null;
+            }
+
+           
+        }
     }
 
-    void CheckforRotatedCards()
+    private void CheckforRotatedCards ()
     {
         List<GameObject> winningGoldenCards = new List<GameObject>(CommandCentre.Instance.WinLoseManager_.goldenCards);
         CommandCentre.Instance.WinLoseManager_.goldenCards.Clear();
@@ -208,24 +234,14 @@ public class GridColumnManager : MonoBehaviour
                 var owner = cardPos.GetComponent<CardPos>().TheOwner;
                 if (owner != null && winningGoldenCards.Contains(owner) && owner.GetComponent<Card>().IsGoldenCard)
                 {
-                    Vector3 targetRotation = new Vector3(0, 180, 0);
+                    Vector3 targetRotation = new Vector3(0 , 180 , 0);
                     float duration = 1.0f;
                     float delayIncrement = 0.05f;
-                    float delay = (columnIndex * 4 + cardIndex) * delayIncrement;
+                    float delay = ( columnIndex * 4 + cardIndex ) * delayIncrement;
                     CommandCentre.Instance.CardManager_.RandomizeDealing_Jocker(owner.transform);
 
-                    Sequence rotSequence = DOTween.Sequence();
-                    rotSequence.Append(owner.transform.DORotate(targetRotation, duration)
-                        .SetEase(Ease.OutQuad)
-                        .SetDelay(delay)
-                        .OnComplete(() =>
-                        {
-                            objectsRotated++;
-                            if (objectsRotated == totalObjectsToRotate)
-                            {
-                                EnableSpin();
-                            }
-                        }));
+                    // Start rotation coroutine for each card
+                    StartCoroutine(RotateCardAndWait(owner.transform , targetRotation , duration , delay));
 
                     cardIndex++;
                 }
@@ -233,6 +249,35 @@ public class GridColumnManager : MonoBehaviour
             columnIndex++;
         }
     }
+
+    private IEnumerator RotateCardAndWait ( Transform target , Vector3 targetRotation , float duration , float delay )
+    {
+        // Wait for delay before starting rotation
+        yield return new WaitForSeconds(delay);
+
+        // Create a rotation tween and wait for it to complete
+        Tween rotationTween = target.DORotate(targetRotation , duration).SetEase(Ease.OutQuad);
+        yield return rotationTween.WaitForCompletion();
+
+        // Ensure the rotation is set correctly at the end
+        target.rotation = Quaternion.Euler(0 , 180 , 0);
+        objectsRotated++;
+
+        // Check if all rotations are done
+        if (objectsRotated == totalObjectsToRotate)
+        {
+            StartCoroutine(DelayWinCheck(0.5f));
+        }
+    }
+
+    // Coroutine to delay the win check by a given delay time
+    private IEnumerator DelayWinCheck ( float delay )
+    {
+        yield return new WaitForSeconds(delay);
+        EnableSpin(); // This is your win check logic
+    }
+
+
 
     public bool IsGridGoldenCardsRotationDone()
     {
@@ -328,7 +373,112 @@ public class GridColumnManager : MonoBehaviour
         // Wait for any ongoing animations to complete before checking the win condition
         if (IsGridRepositioningComplete() && IsGridGoldenCardsRotationDone())
         {
-            CheckWin();
+            bool hasCardsToShake = CheckForCardsToShake();
+
+            if (hasCardsToShake)
+            {
+                // Shake the cards if any exist
+                StartCoroutine(ShakeCards());
+                bool IsDone = false;
+                while (!IsObjectShakedComplete())
+                {
+                    if (IsObjectShakedComplete())
+                    {
+                        IsDone = true;
+                    }
+                    return;
+                }
+
+                Debug.Log("Proceed to checkWin");
+                if (IsDone) { CheckWin(); }
+            }
+            else
+            {
+                // After shaking animation or if no cards to shake, check win conditions
+                CheckWin();
+            }
         }
+    }
+
+    private IEnumerator ShakeCards ()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        totalObjectsToShake = CardsToShake().Count;
+        objectsShaked = 0;
+        HashSet<GameObject> cards = new HashSet<GameObject>(CardsToShake());
+
+        foreach (GameObject card in cards)
+        {
+            // Wait until any active rotation tween is complete
+            yield return StartCoroutine(WaitForTweenToComplete(card.transform));
+
+            // Create a sequence for each card to handle the shake
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 10 , 90 , true , ShakeRandomnessMode.Harmonic))
+                .OnComplete(() =>
+                {
+                    objectsShaked++;
+                    card.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                    Debug.Log($"Card {card.name} finished shaking.");
+                });
+        }
+
+        // Wait until all shake animations are complete
+        yield return new WaitUntil(() => IsObjectShakedComplete());
+
+        Debug.Log("Shaking complete");
+    }
+
+    private IEnumerator WaitForTweenToComplete ( Transform target )
+    {
+        // Wait until there is no active tween on the card's transform
+        while (DOTween.IsTweening(target , true))
+        {
+            yield return null; // Wait for the next frame
+        }
+
+        // Once the tween completes, ensure the final rotation is set correctly
+        target.rotation = Quaternion.Euler(0 , 180 , 0);
+        Debug.Log($"Card {target.name} rotation tween completed, rotation set to (0, 180, 0).");
+    }
+
+    List<GameObject> CardsToShake ()
+    {
+        List<GameObject> cards = new List<GameObject>();
+        foreach (GridPosColumns column in Columns)
+        {
+            foreach (GameObject cardPos in column.CardsPos)
+            {
+                CardPos cardPosScript = cardPos.GetComponent<CardPos>();
+
+                if (cardPosScript != null && cardPosScript.TheOwner != null)
+                {
+                    GameObject card = cardPosScript.TheOwner;
+                    Card cardScript = card.GetComponent<Card>();
+
+                    if (cardScript != null && cardScript.cardType == CardType.Big_Jocker)
+                    {
+                        cards.Add(card);
+                    }
+
+                }
+            }
+        }
+        return cards;
+    }
+
+    public bool IsObjectShakedComplete ()
+    {
+        return objectsShaked >= totalObjectsToShake;
+    }
+
+    private bool CheckForCardsToShake ()
+    {
+        if (CardsToShake().Count > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
