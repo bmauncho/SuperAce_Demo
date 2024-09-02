@@ -6,6 +6,8 @@ public class MainMenuController : MonoBehaviour
     [Header("Variables")]
     public bool CanSpin = false;
     public bool isBtnPressed = false;
+
+    public bool IsFreeGame = false;
     [Space(10)]
     [Header("Menus")]
     public GameObject GameplayMenu;

@@ -16,6 +16,7 @@ public class CommandCentre : MonoBehaviour
     public BetManager BetManager_;
     public CashManager CashManager_;
     public CardMaskManager CardMaskManager_;
+    public FreeIntroManager FreeIntroManager_;
 
     private void Awake ()
     {
