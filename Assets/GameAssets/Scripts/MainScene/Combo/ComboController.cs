@@ -6,7 +6,7 @@ public class ComboController : MonoBehaviour
     public int whichCombo;
 
     [ContextMenu("Activate Combo")]
-    public void Test ()
+    public void ShowCombo ()
     {
         ActivateCombo(whichCombo);
     }
@@ -36,8 +36,10 @@ public class ComboController : MonoBehaviour
         }
     }
 
+    [ContextMenu("Reset Combo")]
     public void ResetCombos()
     {
         refresh();
+        whichCombo = 0;
     }
 }

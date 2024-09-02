@@ -7478,17 +7478,17 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5839387844977906688}
-  - {fileID: 371885468}
   - {fileID: 1753619059}
   - {fileID: 404313982}
-  - {fileID: 1612391384}
-  - {fileID: 528397815747367488}
-  - {fileID: 815396005}
   - {fileID: 236762430}
-  - {fileID: 2106826034}
   - {fileID: 1037889108}
   - {fileID: 1309665142}
   - {fileID: 1327504413}
+  - {fileID: 371885468}
+  - {fileID: 1612391384}
+  - {fileID: 2106826034}
+  - {fileID: 528397815747367488}
+  - {fileID: 815396005}
   m_Father: {fileID: 564760786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9134,6 +9134,7 @@ MonoBehaviour:
   ComboCounter: 0
   ComboText: {fileID: 1941841649}
   ComboVisual: {fileID: 1327504412}
+  ComboUI_: {fileID: 371885469}
 --- !u!1 &2049627782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7893977729425633727, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
@@ -9664,6 +9665,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WinMoreScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 5624629511753285849, guid: f7ad286ee1b7ec7458f3d9549bb9b49c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8412669413033365199, guid: f7ad286ee1b7ec7458f3d9549bb9b49c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9767,6 +9772,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 935680592636841176, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2945066764678927211, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
       propertyPath: m_Name
       value: ComboUI
@@ -9849,6 +9858,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4296891148670754285, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4456979591167020206, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5014069555038016920, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -9966,22 +9983,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
-    - target: {fileID: 264613874403873749, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2292969944504846269, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2304947797818879868, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356346544268213169, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.07
-      objectReference: {fileID: 0}
     - target: {fileID: 4608225363351526796, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -10065,10 +10066,6 @@ PrefabInstance:
     - target: {fileID: 8039842159026082810, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
       propertyPath: m_Name
       value: CardMask
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544157727394709361, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 6.07
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
