@@ -10,6 +10,7 @@ public class WinLoseManager : MonoBehaviour
 {
     public bool enableSpin = false;
     public bool IsCheckingWin = false;
+    public bool IsScatterWin = false;
     public GameObject CardsPosHolder;
     [Space(10)]
     [Header("Lists")]
@@ -29,6 +30,17 @@ public class WinLoseManager : MonoBehaviour
 
     public bool CheckWinCondition ()
     {
+        // Check for scatter win condition in columns 1, 3, and 5
+        List<GameObject> scatterWinningCards = CheckSimilarScatterCards(columns [0].Cards , columns [2].Cards , columns [4].Cards);
+        if (scatterWinningCards != null)
+        {
+            IsScatterWin =true;
+            GetWinningCards(scatterWinningCards);
+            Debug.Log("Scatter Win! Cards that made the win: " + string.Join(", ", scatterWinningCards.Select(card => GetCardType(card))));
+            return true;
+        }
+
+
         // Check if the first 3 columns have a similar card
         List<GameObject> winningCards = CheckSimilarCards(columns [0].Cards , columns [1].Cards , columns [2].Cards);
         if (winningCards != null)
@@ -78,7 +90,7 @@ public class WinLoseManager : MonoBehaviour
             for (int i = 1 ; i < columns.Length ; i++)
             {
                 // Get all cards in the current column that match the card type
-                List<GameObject> matchingCards = columns [i].Where(c => GetCardType(c) == GetCardType(card)).ToList();
+                List<GameObject> matchingCards = columns [i].Where(c => IsSimilarCardType(card , c)).ToList();
 
                 if (matchingCards.Count > 0)
                 {
@@ -103,6 +115,79 @@ public class WinLoseManager : MonoBehaviour
         return winningCards.Count > 0 ? winningCards : null;
     }
 
+
+    private bool IsSimilarCardType ( GameObject card1 , GameObject card2 )
+    {
+        string cardType1 = GetCardType(card1);
+        string cardType2 = GetCardType(card2);
+
+        // Check if the card types are the same
+        if (cardType1 == cardType2)
+        {
+            return true;
+        }
+        // Check if one of the cards is a joker (big or small) and the other is any type
+        else if (( cardType1 == "Big_Jocker" || cardType1 == "Small_Jocker" ) || ( cardType2 == "Big_Jocker" || cardType2 == "Small_Jocker" ))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private List<GameObject> CheckSimilarScatterCards ( params List<GameObject> [] columns )
+    {
+        // Create a list to store all winning scatter cards
+        List<GameObject> winningScatterCards = new List<GameObject>();
+
+        // Iterate through each card in the first column
+        foreach (GameObject card in columns [0])
+        {
+            // Check if the card is a scatter card
+            if (IsScatterCard(card))
+            {
+                bool foundInAllColumns = true;
+                // Create a temporary list for this iteration
+                List<GameObject> tempWinningScatterCards = new List<GameObject> { card };
+
+                // Check for matching scatter cards in all other columns
+                for (int i = 1 ; i < columns.Length ; i++)
+                {
+                    // Get all scatter cards in the current column that match the card type
+                    List<GameObject> matchingScatterCards = columns [i].Where(c => IsScatterCard(c) && GetCardType(c) == GetCardType(card)).ToList();
+
+                    if (matchingScatterCards.Count > 0)
+                    {
+                        // Add all matching scatter cards to the temporary list
+                        tempWinningScatterCards.AddRange(matchingScatterCards);
+                    }
+                    else
+                    {
+                        foundInAllColumns = false;
+                        break;
+                    }
+                }
+
+                // If matching scatter cards were found in all columns, add them to the winningScatterCards list
+                if (foundInAllColumns)
+                {
+                    winningScatterCards.AddRange(tempWinningScatterCards);
+                }
+            }
+        }
+
+        // Return the list of winning scatter cards if any were found, otherwise return null
+        return winningScatterCards.Count > 0 ? winningScatterCards : null;
+    }
+
+    private bool IsScatterCard ( GameObject card )
+    {
+        // Check if the card type is CardType.Scatter
+        return card.GetComponent<Card>().cardType == CardType.Scatter;
+    }
+
     private string GetCardType ( GameObject card )
     {
         return card.GetComponent<Card>().cardType.ToString();
@@ -116,8 +201,16 @@ public class WinLoseManager : MonoBehaviour
 
     private IEnumerator WaitForRepositioningAndShowWinningSequence ( List<GameObject> winningCards )
     {
-        // Start the winning sequence once repositioning is complete
-        yield return StartCoroutine(ShowWinningSequence(winningCards));
+        if (IsScatterWin)
+        {
+            yield return StartCoroutine(ShowScatterWinSequence(winningCards));
+        }
+        else
+        {
+            // Start the winning sequence once repositioning is complete
+            yield return StartCoroutine(ShowWinningSequence(winningCards));
+        }
+
     }
 
 
@@ -319,5 +412,18 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         winCards.Clear();
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
+    }
+
+
+    public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
+    {
+        //Scatter cards rotate
+        //screen
+        //clear wining cards
+        //enable spin
+        enableSpin=true;
+        IsScatterWin = false;
+        winCards.Clear();
+        yield return null;
     }
 }
