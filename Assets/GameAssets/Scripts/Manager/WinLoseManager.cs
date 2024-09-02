@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
 using DG.Tweening;
-using TMPro.Examples;
 
 public class WinLoseManager : MonoBehaviour
 {
@@ -31,7 +29,7 @@ public class WinLoseManager : MonoBehaviour
     public bool CheckWinCondition ()
     {
         // Check for scatter win condition in columns 1, 3, and 5
-        List<GameObject> scatterWinningCards = CheckSimilarScatterCards(columns [0].Cards , columns [2].Cards , columns [4].Cards);
+        List<GameObject> scatterWinningCards = CheckSimilarScatterCards(columns [0].Cards , columns [1].Cards , columns [2].Cards , columns [3].Cards , columns [4].Cards);
         if (scatterWinningCards != null)
         {
             IsScatterWin =true;
@@ -139,9 +137,26 @@ public class WinLoseManager : MonoBehaviour
 
     private List<GameObject> CheckSimilarScatterCards ( params List<GameObject> [] columns )
     {
-        // Create a list to store all winning scatter cards
-        List<GameObject> winningScatterCards = new List<GameObject>();
+        // Get all possible combinations of 3 or more columns, always including the first column
+        var combinations = GetCombinations(columns.ToList() , 3 , includeFirstColumn: true)
+            .Select(combination => combination.ToList()); // Convert IEnumerable<T> to List<T>
 
+        foreach (var combination in combinations)
+        {
+            // Check for scatter cards in this combination of columns
+            var scatterCards = CheckScatterCardsInColumns(combination.ToArray());
+
+            if (scatterCards != null)
+            {
+                return scatterCards;
+            }
+        }
+
+        return null;
+    }
+
+    private List<GameObject> CheckScatterCardsInColumns ( List<GameObject> [] columns )
+    {
         // Iterate through each card in the first column
         foreach (GameObject card in columns [0])
         {
@@ -149,8 +164,9 @@ public class WinLoseManager : MonoBehaviour
             if (IsScatterCard(card))
             {
                 bool foundInAllColumns = true;
+
                 // Create a temporary list for this iteration
-                List<GameObject> tempWinningScatterCards = new List<GameObject> { card };
+                List<GameObject> tempScatterCards = new List<GameObject> { card };
 
                 // Check for matching scatter cards in all other columns
                 for (int i = 1 ; i < columns.Length ; i++)
@@ -161,7 +177,7 @@ public class WinLoseManager : MonoBehaviour
                     if (matchingScatterCards.Count > 0)
                     {
                         // Add all matching scatter cards to the temporary list
-                        tempWinningScatterCards.AddRange(matchingScatterCards);
+                        tempScatterCards.AddRange(matchingScatterCards);
                     }
                     else
                     {
@@ -170,16 +186,44 @@ public class WinLoseManager : MonoBehaviour
                     }
                 }
 
-                // If matching scatter cards were found in all columns, add them to the winningScatterCards list
+                // If matching scatter cards were found in all columns, return the list
                 if (foundInAllColumns)
                 {
-                    winningScatterCards.AddRange(tempWinningScatterCards);
+                    return tempScatterCards;
                 }
             }
         }
 
-        // Return the list of winning scatter cards if any were found, otherwise return null
-        return winningScatterCards.Count > 0 ? winningScatterCards : null;
+        return null;
+    }
+
+    private IEnumerable<IEnumerable<T>> GetCombinations<T> ( IEnumerable<T> list , int length , bool includeFirstColumn )
+    {
+        if (length == 1)
+        {
+            if (includeFirstColumn)
+            {
+                return list.Take(1).Select(t => new List<T> { t });
+            }
+            else
+            {
+                return list.Select(t => new List<T> { t });
+            }
+        }
+
+        if (includeFirstColumn)
+        {
+            var firstColumn = list.First();
+            var rest = list.Skip(1);
+
+            return GetCombinations(rest , length - 1 , includeFirstColumn: false)
+                .Select(t => t.Prepend(firstColumn).ToList());
+        }
+        else
+        {
+            return GetCombinations(list , length - 1 , includeFirstColumn: includeFirstColumn)
+                 .Select(t => t.Concat(list.Where(o => !t.Contains(o)))).Cast<IEnumerable<T>>();
+        }
     }
 
     private bool IsScatterCard ( GameObject card )
@@ -356,6 +400,18 @@ public class WinLoseManager : MonoBehaviour
         return false;
     }
 
+    public bool IsJockerCards(GameObject card )
+    {
+        if (card)
+        {
+            if (card.GetComponent<Card>().IsBigJocker|| card.GetComponent<Card>().IsSmallJocker)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void RotateGoldenCards ()
     {
         foreach (GameObject goldenCard in goldenCards)
@@ -374,7 +430,7 @@ public class WinLoseManager : MonoBehaviour
         // Check for golden cards
         foreach (GameObject card in winningCards)
         {
-            if (IsGoldenCard(card)) // Assuming IsGoldenCard is a function that checks if a card is golden
+            if (IsGoldenCard(card) && !IsJockerCards(card)) // Assuming IsGoldenCard is a function that checks if a card is golden
             {
                 if (!uniqueGoldenCards.Contains(card))
                 {

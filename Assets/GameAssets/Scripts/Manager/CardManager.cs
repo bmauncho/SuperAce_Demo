@@ -94,7 +94,7 @@ public class CardManager : MonoBehaviour
     }
     public void RandomizeDealing_Scatter ( Transform card )
     {
-        float normalCardProbability = 0.8f;
+        float normalCardProbability = 0.5f;
         float randomValue = Random.value;
         if (randomValue < normalCardProbability)
         {
@@ -110,7 +110,7 @@ public class CardManager : MonoBehaviour
 
     public void RandomizeDealing_Jocker ( Transform card )
     {
-        float normalCardProbability = 0.8f;
+        float normalCardProbability = 0.9f;
 
         float randomValue = Random.value;
 

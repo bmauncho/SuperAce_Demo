@@ -518,7 +518,8 @@ public class GridColumnManager : MonoBehaviour
                             // Get two new cards from the pool manager
                             GameObject newCard1 = poolManager.GetCard();
                             GameObject newCard2 = poolManager.GetCard();
-
+                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
+                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
                             if (newCard1 != null && newCard2 != null)
                             {
                                 Vector3 initialPosition = cardPosScript.TheOwner.transform.position;
