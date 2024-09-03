@@ -1,5 +1,15 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+[System.Serializable]
+public class ComboAmount
+{
+    public List<int> NormalAmount = new List<int>();
+    public List<int> FreeGameAmount = new List<int>();
+}
+
 
 public class ComboManager : MonoBehaviour
 {
@@ -7,6 +17,9 @@ public class ComboManager : MonoBehaviour
     public TMP_Text ComboText;
     public GameObject ComboVisual;
     public ComboUI ComboUI_;
+
+    public ComboAmount ComboAmount; 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,11 +50,13 @@ public class ComboManager : MonoBehaviour
         {
             ComboUI_.FreeGameCombo.ShowCombo();
             ComboCounter += 2;
+            if(ComboCounter >= 10) { ComboCounter = 10; }
         }
         else
         {
             ComboUI_.NormalCombo.ShowCombo();
             ComboCounter++;
+            if (ComboCounter >3) { ComboCounter = 5; }
         }
         
     }
@@ -60,8 +75,29 @@ public class ComboManager : MonoBehaviour
         }
     }
 
-    public void SetCombo ()
+    public int GetCombo()
     {
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            for (int i = 0 ; i < ComboAmount.FreeGameAmount.Count ; i++)
+            {
+                if (i == ComboCounter)
+                {
+                    return ComboAmount.FreeGameAmount [i];
+                }
+            }
+        }
+        else
+        {
 
+            for (int i = 0 ; i < ComboAmount.NormalAmount.Count ; i++)
+            {
+                if (i == ComboCounter)
+                {
+                    return ComboAmount.NormalAmount [i];
+                }
+            }
+        }
+        return 1;
     }
 }

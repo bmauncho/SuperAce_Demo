@@ -10,36 +10,58 @@ public class ComboController : MonoBehaviour
     {
         ActivateCombo(whichCombo);
     }
-
-    public void ActivateCombo (int which)
+    private void Start ()
     {
-        refresh ();
-        for(int i = 0; i < TheCombos.Length; i++)
+        if (whichCombo == 0)
         {
-            if (i== which)
+            TheCombos [whichCombo].gameObject.SetActive(true);
+        }
+    }
+    private void Update ()
+    {
+
+    }
+
+    public void ActivateCombo ( int which )
+    {
+        refresh();
+        for (int i = 0 ; i < TheCombos.Length ; i++)
+        {
+            if (i == which)
             {
-                TheCombos [which].gameObject.SetActive (true);
+                TheCombos [which].gameObject.SetActive(true);
             }
         }
         whichCombo++;
-        if (whichCombo > TheCombos.Length)
+        if (whichCombo > 5)
         {
-            whichCombo = 0;
+            whichCombo = 5; // Cap the value at 5
         }
+        TheCombos [whichCombo - 1].gameObject.SetActive(true); // Adjust the index to avoid out-of-bounds
     }
 
     public void refresh ()
     {
-        foreach (Combo combo in TheCombos)
+        foreach(Combo combo in TheCombos)
         {
-            combo.gameObject.SetActive(false);
+            combo.gameObject.SetActive (false);
         }
     }
 
     [ContextMenu("Reset Combo")]
     public void ResetCombos()
     {
-        refresh();
+        for (int i = 0 ; i < TheCombos.Length ; i++)
+        {
+            if (i == 0)
+            {
+                TheCombos [i].gameObject.SetActive(true);
+            }
+            else
+            {
+                TheCombos [i].gameObject.SetActive(false);
+            }
+        }
         whichCombo = 0;
     }
 }

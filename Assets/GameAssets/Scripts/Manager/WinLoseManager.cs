@@ -239,6 +239,7 @@ public class WinLoseManager : MonoBehaviour
 
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
+        Debug.Log(GetPayLines(winningCards));
         // Start the coroutine to handle the winning sequence and golden card rotation
         StartCoroutine(WaitForRepositioningAndShowWinningSequence(winningCards));
     }
@@ -483,5 +484,39 @@ public class WinLoseManager : MonoBehaviour
         IsScatterWin = false;
         winCards.Clear();
         yield return null;
+    }
+
+    public int GetPayLines ( List<GameObject> winningCards )
+    {
+        int payLines = 0;
+        int columnsToCheck = GetNumberOfColumnsWithWinningCards(winningCards);
+        Debug.Log($"Columns to check : {columnsToCheck}");
+
+        // Check for row-based paylines across columns
+        // Check if the first 3 columns have a similar card
+        if (columnsToCheck >= 3 && CheckSimilarCards(columns [0].Cards , columns [1].Cards , columns [2].Cards) != null)
+        {
+            payLines++;
+
+            // Check if the first 4 columns have a similar card
+            if (columnsToCheck >= 4 && CheckSimilarCards(columns [0].Cards , columns [1].Cards , columns [2].Cards , columns [3].Cards) != null)
+            {
+                payLines++;
+
+                // Check if the first 5 columns have a similar card
+                if (columnsToCheck == 5 && CheckSimilarCards(columns [0].Cards , columns [1].Cards , columns [2].Cards , columns [3].Cards , columns [4].Cards) != null)
+                {
+                    payLines++;
+                }
+            }
+        }
+
+        // Return the total number of pay lines detected
+        return payLines;
+    }
+
+    private int GetNumberOfColumnsWithWinningCards ( List<GameObject> winningCards )
+    {
+        return columns.Count(col => col.Cards.Any(card => winningCards.Contains(card)));
     }
 }
