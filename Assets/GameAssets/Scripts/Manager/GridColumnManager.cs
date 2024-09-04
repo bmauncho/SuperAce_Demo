@@ -432,8 +432,14 @@ public class GridColumnManager : MonoBehaviour
         yield return new WaitUntil(() => IsObjectShakedComplete());
         
         Debug.Log("Shaking complete");
-
-        yield return StartCoroutine(CheckForBigJokerAndAnimate());
+        while (!IsObjectShakedComplete())
+        {
+            if (IsObjectShakedComplete())
+            {
+                yield return StartCoroutine(CheckForBigJokerAndAnimate());
+            }
+            yield return null;
+        }
     }
 
     private IEnumerator WaitForTweenToComplete ( Transform target )

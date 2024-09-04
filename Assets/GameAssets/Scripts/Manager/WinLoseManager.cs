@@ -288,7 +288,7 @@ public class WinLoseManager : MonoBehaviour
                 CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             }
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
-            Debug.Log("SpinAgain");
+            //Debug.Log("SpinAgain");
             enableSpin = true;
         }
     }
@@ -501,7 +501,7 @@ public class WinLoseManager : MonoBehaviour
     {
         int payLines = 0;
         int columnsToCheck = GetNumberOfColumnsWithWinningCards();
-        Debug.Log($"Columns to check : {columnsToCheck}");
+        //Debug.Log($"Columns to check : {columnsToCheck}");
 
         // Check for row-based paylines across columns
         // Check if the first 3 columns have a similar card
@@ -536,7 +536,7 @@ public class WinLoseManager : MonoBehaviour
         List<int> similarWinningCardCounts = new List<int>();
         if (winCards.Count == 0)
         {
-            Debug.Log("No Winning Cards");
+            //Debug.Log("No Winning Cards");
             return similarWinningCardCounts;
         }
         int wildCardCount = 0; 
@@ -585,7 +585,7 @@ public class WinLoseManager : MonoBehaviour
                 Debug.Log($"{entry.Key}: {entry.Value + wildCardCount} cards");
             }
 
-            Debug.Log("Mixed Winning Card Types:" + string.Join(", " , similarWinningCardCounts));
+            //Debug.Log("Mixed Winning Card Types:" + string.Join(", " , similarWinningCardCounts));
 
             return similarWinningCardCounts;
         }
@@ -595,7 +595,7 @@ public class WinLoseManager : MonoBehaviour
         {
             CardType singleType = cardTypeCounts.Keys.First();
             similarWinningCardCounts.Add(cardTypeCounts [singleType] + wildCardCount);
-            Debug.Log($"Single Winning Card Type: {singleType} : {cardTypeCounts [singleType]} cards");
+            //Debug.Log($"Single Winning Card Type: {singleType} : {cardTypeCounts [singleType]} cards");
 
             return similarWinningCardCounts;
         }
@@ -610,7 +610,7 @@ public class WinLoseManager : MonoBehaviour
 
         if (winCards.Count == 0)
         {
-            Debug.Log("No Winning Cards");
+            //Debug.Log("No Winning Cards");
             return result;
         }
 
@@ -643,7 +643,7 @@ public class WinLoseManager : MonoBehaviour
         // Check if all cards are wild cards
         if (cardTypeCounts.Count == 0 && wildCardCount == winCards.Count)
         {
-            Debug.Log("No Winning Card Type"); // All cards are wild, not a winning set
+            //Debug.Log("No Winning Card Type"); // All cards are wild, not a winning set
             return result;
         }
 
@@ -652,10 +652,10 @@ public class WinLoseManager : MonoBehaviour
         {
             
             result.AddRange(cardTypeCounts.Keys.Select(cardType => cardType.ToString()));
-            Debug.Log("Mixed Winning Card Types:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
+           // Debug.Log("Mixed Winning Card Types:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
             if (wildCardCount > 0)
             {
-                Debug.Log($"{wildCardCount} wild card(s) included");
+                //Debug.Log($"{wildCardCount} wild card(s) included");
             }
             return result;
         }
@@ -667,13 +667,13 @@ public class WinLoseManager : MonoBehaviour
             result.Add(singleType.ToString());
             if (wildCardCount > 0)
             {
-                Debug.Log($"{wildCardCount} wild card(s) included");
+               // Debug.Log($"{wildCardCount} wild card(s) included");
             }
-            Debug.Log("Single Winning Card Type:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
+           // Debug.Log("Single Winning Card Type:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
             return result;
         }
 
-        Debug.Log("No Winning Card Type");
+        //Debug.Log("No Winning Card Type");
         return result;
     }
 

@@ -15,7 +15,7 @@ public class CardMaskManager : MonoBehaviour
 
     public void Activate ()
     {
-        Debug.Log("activateMasks");
+        //Debug.Log("activateMasks");
         CardMask.SetActive(true);
     }
 

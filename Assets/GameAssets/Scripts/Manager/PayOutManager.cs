@@ -88,12 +88,12 @@ public class PayOutManager : MonoBehaviour
                 if (payoutIndex >= 0 && payoutIndex < PayList [index].Payouts.Count)
                 {
                     result.Add(PayList [index].Payouts [payoutIndex]);
-                    Debug.Log(card [i] + " : " + string.Join(", " , result));
+                    //Debug.Log(card [i] + " : " + string.Join(", " , result));
                 }
                 else if(payoutIndex >= 0 && payoutIndex >= PayList [index].Payouts.Count)
                 {
                     result.Add(PayList [index].Payouts [PayList [index].Payouts.Count-1]);
-                    Debug.Log(string.Join(", " , result));
+                   // Debug.Log(string.Join(", " , result));
                     Debug.LogWarning($"Invalid payout index for card {card [i]} with {No_ofCards [i]} cards.");
                 }
             }
