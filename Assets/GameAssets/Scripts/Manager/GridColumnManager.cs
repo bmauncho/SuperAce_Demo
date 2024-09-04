@@ -33,6 +33,7 @@ public class GridColumnManager : MonoBehaviour
     public List<GameObject> CardList = new List<GameObject>();
     public List<GridPosColumns> Columns = new List<GridPosColumns>();
     public bool [] bigJokerCardsProcessed = new bool [5];
+    public bool [] bigJokerCardsToBeProcessed = new bool [5];
 
     private void Start()
     {
@@ -331,12 +332,14 @@ public class GridColumnManager : MonoBehaviour
         refillColumnCompleted = new bool[numberOfColumns];
         columnsToRefill = new bool[numberOfColumns];
         bigJokerCardsProcessed = new bool[numberOfColumns];
+        bigJokerCardsToBeProcessed = new bool[numberOfColumns];
 
         for (int i = 0; i < numberOfColumns; i++)
         {
             columnsToRefill[i] = false;
             refillColumnCompleted[i] = false;
             bigJokerCardsProcessed[i] = false;
+            bigJokerCardsToBeProcessed [i] = false;
         }
     }
 
@@ -369,41 +372,6 @@ public class GridColumnManager : MonoBehaviour
             refillColumnCompleted[i] = false;
         }
     }
- #region
-    //unsed code
-    //void CheckWinConditions ()
-    //{
-    //    // Wait for any ongoing animations to complete before checking the win condition
-    //    if (IsGridRepositioningComplete() && IsGridGoldenCardsRotationDone())
-    //    {
-    //        bool hasCardsToShake = CheckForCardsToShake();
-
-    //        if (hasCardsToShake)
-    //        {
-    //            // Shake the cards if any exist
-    //            StartCoroutine(ShakeCards());
-    //            bool IsDone = false;
-    //            while (!IsObjectShakedComplete())
-    //            {
-    //                if (IsObjectShakedComplete())
-    //                {
-    //                    IsDone = true;
-    //                }
-    //                return;
-    //            }
-
-    //            Debug.Log("Proceed to checkWin");
-    //            if (IsDone) { CheckWin(); }
-    //        }
-    //        else
-    //        {
-    //            // After shaking animation or if no cards to shake, check win conditions
-    //            CheckWin();
-    //        }
-    //    }
-    //}
-    //end of unused code
-#endregion
     private IEnumerator ShakeCards ()
     {
         yield return new WaitForSeconds(0.5f);
@@ -434,11 +402,12 @@ public class GridColumnManager : MonoBehaviour
         Debug.Log("Shaking complete");
         while (!IsObjectShakedComplete())
         {
-            if (IsObjectShakedComplete())
-            {
-                yield return StartCoroutine(CheckForBigJokerAndAnimate());
-            }
             yield return null;
+        }
+
+        if (IsObjectShakedComplete())
+        {
+            yield return StartCoroutine(CheckForBigJokerAndAnimate());
         }
     }
 
@@ -494,9 +463,36 @@ public class GridColumnManager : MonoBehaviour
         return false;
     }
 
+    public IEnumerator MarkAllCardsToBeProcessed ()
+    {
+        foreach (GridPosColumns column in Columns)
+        {
+            
+            foreach (GameObject cardPos in column.CardsPos)
+            {
+                CardPos cardPosScript = cardPos.GetComponent<CardPos>();
+
+                if (cardPosScript?.TheOwner != null)
+                {
+                    Card cardScript = cardPosScript.TheOwner.GetComponent<Card>();
+                    int columnIndex = Columns.IndexOf(column);
+                    if (cardScript != null && cardScript.cardType == CardType.Big_Jocker)
+                    {
+                        bigJokerCardsToBeProcessed [columnIndex] = true;
+                    }
+                }
+            }
+        }
+
+        yield return null;
+    }
+
     private IEnumerator CheckForBigJokerAndAnimate ()
     {
+        yield return StartCoroutine(MarkAllCardsToBeProcessed());
+
         Debug.Log(" CheckForBigJokerAndAnimate");
+
         // Wait for any ongoing tweens to complete
         while (DOTween.TotalPlayingTweens() > 0)
         {
@@ -518,20 +514,24 @@ public class GridColumnManager : MonoBehaviour
                     if (cardScript != null && cardScript.cardType == CardType.Big_Jocker)
                     {
                         int columnIndex = Columns.IndexOf(column);
-                        if (!bigJokerCardsProcessed [columnIndex])
+                        if (!bigJokerCardsProcessed [columnIndex] && bigJokerCardsToBeProcessed [columnIndex])
                         {
                             bigJokerCardsProcessed [columnIndex] = true;
+
                             // Get two new cards from the pool manager
                             GameObject newCard1 = poolManager.GetCard();
                             GameObject newCard2 = poolManager.GetCard();
+
                             CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
                             CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
+
                             if (newCard1 != null && newCard2 != null)
                             {
+                                // Set initial positions
                                 Vector3 initialPosition = cardPosScript.TheOwner.transform.position;
                                 Quaternion initialRotation = cardPosScript.TheOwner.transform.rotation;
 
-                                // Select random positions for the new cards
+                                // Random positions for the new cards
                                 int randomColumnIndex1 = Random.Range(0 , 5);
                                 int randomPositionIndex1 = Random.Range(0 , Columns [randomColumnIndex1].CardsPos.Count);
 
@@ -542,32 +542,43 @@ public class GridColumnManager : MonoBehaviour
                                     randomPositionIndex2 = Random.Range(0 , Columns [randomColumnIndex2].CardsPos.Count);
                                 } while (randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2);
 
-                                // Position and rotate the new cards at the "Big Joker" card's position
+                                // Position and parent new cards
                                 newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
                                 newCard2.transform.SetPositionAndRotation(initialPosition , initialRotation);
 
-                                // DOTween jump animations to move the new cards to their random positions
+                                newCard1.SetActive(true);
+                                newCard2.SetActive(true);
+
+                                newCard1.transform.SetParent(Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform);
+                                newCard2.transform.SetParent(Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform);
+
+                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
+                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
+
+                                CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
+
+                                // DOTween jump animations
                                 activeTweens.Add(newCard1.transform.DOJump(
                                     Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform.position ,
-                                    2.0f , 1 , 1.0f)
-                                    .OnComplete(() =>
+                                    2.0f , 1 , 1.0f).OnComplete(() =>
                                     {
-                                        Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform.rotation = Quaternion.Euler(0 , 180 , 0);
-
+                                        newCard1.transform.localPosition = Vector3.zero;
+                                        newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                                        Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
+                                        CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
                                     }));
-                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
-                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
 
                                 activeTweens.Add(newCard2.transform.DOJump(
                                     Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform.position ,
-                                    2.0f , 1 , 1.0f)
-                                    .OnComplete(() =>
+                                    2.0f , 1 , 1.0f).OnComplete(() =>
                                     {
-                                        Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                                        newCard2.transform.localPosition = Vector3.zero;
+                                        newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+
+                                        Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
+                                        CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
 
                                     }));
-                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
-                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
                             }
                         }
                     }
@@ -580,6 +591,8 @@ public class GridColumnManager : MonoBehaviour
         {
             yield return tween.WaitForCompletion();
         }
-        yield return new WaitForSeconds (.5f);
+        yield return new WaitForSeconds(.5f);
+
     }
+
 }
