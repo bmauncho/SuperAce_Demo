@@ -239,7 +239,9 @@ public class WinLoseManager : MonoBehaviour
 
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
-        Debug.Log(GetPayLines(winningCards));
+        Debug.Log(string.Join(", " , GetWinningCardType()));
+
+        Debug.Log(GetPayLines());
         // Start the coroutine to handle the winning sequence and golden card rotation
         StartCoroutine(WaitForRepositioningAndShowWinningSequence(winningCards));
     }
@@ -456,6 +458,7 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.CardMaskManager_.Activate();
         ActivateCardMaskForWinningCards();
         yield return new WaitForSeconds(1);
+        CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         WinningCardsDoPunchScale(winningCards);
         PunchScaleActiveCardMasks(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f);
         GetGoldenCards(winningCards);
@@ -464,7 +467,8 @@ public class WinLoseManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             RotateGoldenCards();
         }
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1);
+        CommandCentre.Instance.PayOutManager_.HideCurrentWin();
         DeactivateWinningCards(winningCards);
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
         CommandCentre.Instance.CardMaskManager_.Deactivate();
@@ -486,10 +490,10 @@ public class WinLoseManager : MonoBehaviour
         yield return null;
     }
 
-    public int GetPayLines ( List<GameObject> winningCards )
+    public int GetPayLines ()
     {
         int payLines = 0;
-        int columnsToCheck = GetNumberOfColumnsWithWinningCards(winningCards);
+        int columnsToCheck = GetNumberOfColumnsWithWinningCards();
         Debug.Log($"Columns to check : {columnsToCheck}");
 
         // Check for row-based paylines across columns
@@ -515,8 +519,134 @@ public class WinLoseManager : MonoBehaviour
         return payLines;
     }
 
-    private int GetNumberOfColumnsWithWinningCards ( List<GameObject> winningCards )
+    public int GetNumberOfColumnsWithWinningCards ()
     {
-        return columns.Count(col => col.Cards.Any(card => winningCards.Contains(card)));
+        return columns.Count(col => col.Cards.Any(card => winCards.Contains(card)));
     }
+
+    public List<string> GetWinningCardType ()
+    {
+        List<string> result = new List<string>();
+
+        if (winCards.Count == 0)
+        {
+            Debug.Log("No Winning Cards");
+            return result;
+        }
+
+        int wildCardCount = 0; // To count the number of wild cards
+        Dictionary<CardType , int> cardTypeCounts = new Dictionary<CardType , int>(); // To store counts of each card type
+
+        foreach (GameObject cardObj in winCards)
+        {
+            Card card = cardObj.GetComponent<Card>();
+            CardType cardType = card.cardType;
+
+            // Check if the card is a wild card
+            if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
+            {
+                wildCardCount++; // Count the wild card
+                continue; // Move to the next card
+            }
+
+            // Count the occurrence of each card type
+            if (cardTypeCounts.ContainsKey(cardType))
+            {
+                cardTypeCounts [cardType]++;
+            }
+            else
+            {
+                cardTypeCounts [cardType] = 1;
+            }
+        }
+
+        // Check if all cards are wild cards
+        if (cardTypeCounts.Count == 0 && wildCardCount == winCards.Count)
+        {
+            Debug.Log("No Winning Card Type"); // All cards are wild, not a winning set
+            return result;
+        }
+
+        // If there are multiple card types, return them as mixed types
+        if (cardTypeCounts.Count > 1)
+        {
+            
+            result.AddRange(cardTypeCounts.Keys.Select(cardType => cardType.ToString()));
+            Debug.Log("Mixed Winning Card Types:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
+            if (wildCardCount > 0)
+            {
+                Debug.Log($"{wildCardCount} wild card(s) included");
+            }
+            return result;
+        }
+
+        // If there is only one card type, return it along with any wild cards
+        if (cardTypeCounts.Count == 1)
+        {
+            CardType singleType = cardTypeCounts.Keys.First();
+            result.Add(singleType.ToString());
+            if (wildCardCount > 0)
+            {
+                Debug.Log($"{wildCardCount} wild card(s) included");
+            }
+            Debug.Log("Single Winning Card Type:" + string.Join(", " , result.Select(cardType => cardType.ToString())));
+            return result;
+        }
+
+        Debug.Log("No Winning Card Type");
+        return result;
+    }
+
+
+    #region
+    //public string GetWinningCardType ()
+    //{
+    //    if (winCards.Count == 0)
+    //    {
+    //        return "No Winning Cards";
+    //    }
+
+    //    CardType? referenceType = null; // To hold the reference type of non-wild cards
+    //    int wildCardCount = 0; // To count the number of wild cards
+
+    //    foreach (GameObject cardObj in winCards)
+    //    {
+    //        Card card = cardObj.GetComponent<Card>();
+    //        CardType cardType = card.cardType;
+
+    //        // Check if the card is a wild card
+    //        if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
+    //        {
+    //            wildCardCount++; // Count the wild card
+    //            continue; // Move to the next card
+    //        }
+
+    //        // Set the reference type if not set, or check for consistency
+    //        if (referenceType == null)
+    //        {
+    //            referenceType = cardType; // First non-wild card sets the reference type
+    //        }
+    //        else if (cardType != referenceType)
+    //        {
+    //            // If there's a mismatch with the reference type, it's a mixed type
+    //            return "Mixed Winning Card Types";
+    //        }
+    //    }
+
+    //    // Check if all cards are wild cards
+    //    if (referenceType == null && wildCardCount == winCards.Count)
+    //    {
+    //        return "No Winning Card Type"; // All cards are wild, not a winning set
+    //    }
+
+    //    // If referenceType is set, include the wild cards in the winning type
+    //    if (referenceType != null)
+    //    {
+    //        return $"{referenceType} (with {wildCardCount} wild cards)";
+    //    }
+
+    //    return "No Winning Card Type";
+    //}
+    #endregion
+
 }

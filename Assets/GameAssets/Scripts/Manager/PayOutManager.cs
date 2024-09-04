@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -10,8 +11,13 @@ public class Pay
 }
 public class PayOutManager : MonoBehaviour
 {
+    WinLoseManager winLoseManager;
+    BetManager betManager;
+    ComboManager comboManager;
     public List<Pay> PayList = new List<Pay>();
-
+    public float CurrentWin;
+    public TMP_Text CurrentWinAmount;
+    public WinUI WinUI_;
     private Dictionary<string , int> cardToIndex = new Dictionary<string , int>()
     {
         {"Ace", 0},
@@ -24,28 +30,65 @@ public class PayOutManager : MonoBehaviour
         {"Clubs", 7}
     };
 
+    private void Start ()
+    {
+        winLoseManager = CommandCentre.Instance.WinLoseManager_;
+        betManager = CommandCentre.Instance.BetManager_;
+        comboManager = CommandCentre.Instance.ComboManager_;
+    }
+
     [ContextMenu("Get PayOutAmount")]
     public void Test ()
     {
-        GetCardPayOut("Jack" , 4);
+       // GetCardPayOut("Jack" , 4);
+    }
+    private void Update ()
+    {
+        CurrentWinAmount.text = $"{CurrentWin.ToString("F2")}";
     }
 
-    public float GetCardPayOut ( string card , int column )
+    public void ShowCurrentWin ()
     {
-        
-        if (cardToIndex.TryGetValue(card , out int index))
+        CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfColumnsWithWinningCards()) 
+            , winLoseManager.GetPayLines(),betManager.BetAmount,comboManager.GetCombo());
+        WinUI_.ActivateCurrentWinings();
+        CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
+    }
+
+    public void HideCurrentWin ()
+    {
+        WinUI_.DeactivateCurrentWinings();
+    }
+
+    public List<float> GetCardPayOut ( List<string> card , int column )
+    {
+        List<float> result = new List<float>();
+        for( int i = 0;i<card.Count ; i++)
         {
-            if (column >= 3 && column <= 5)
+            if (cardToIndex.TryGetValue(card [i] , out int index))
             {
-                Debug.Log(card + " : " + PayList [index].Payouts [column - 3]);
-                return PayList [index].Payouts [column - 3];
+                if (column >= 3 && column <= 5)
+                {
+                    result.Add(PayList [index].Payouts [column - 3]);
+                    Debug.Log(card [i] + " : " + string.Join(", " , result));
+                }
             }
         }
-        return 0;
+     
+
+        // If no payout is found, return an empty list
+        return result;
     }
 
-    public float TotalWinings (float Payout,int PayLines,float Bet,float Combo)
+
+    public float TotalWinnings ( List<float> Payout , int PayLines , float Bet , int Combo )
     {
-        return Payout*PayLines*Bet*Combo;
+        float Total = 0;
+        for (int i = 0 ; i < Payout.Count ; i++)
+        {
+            Total += Payout [i] * PayLines * Bet * Combo;
+        }
+        return Total;
     }
+
 }

@@ -37,7 +37,7 @@ public class ComboController : MonoBehaviour
         {
             whichCombo = 5; // Cap the value at 5
         }
-        TheCombos [whichCombo - 1].gameObject.SetActive(true); // Adjust the index to avoid out-of-bounds
+        TheCombos [TheCombos.Length - 1].gameObject.SetActive(true); // Adjust the index to avoid out-of-bounds
     }
 
     public void refresh ()

@@ -9,6 +9,7 @@ public class CashManager : MonoBehaviour
     public TextMeshProUGUI CashAmountText;
     public TextMeshProUGUI WinCashAmountText;
     public float CashAmount = 0;
+    public float CurrentWinings;
 
     // Start is called before the first frame update
     void Start()
@@ -67,5 +68,16 @@ public class CashManager : MonoBehaviour
     {
         DecreaseCash(50);
         SaveCashAmount();
+    }
+
+    public void IncreaseWinings (float Amount)
+    {
+        CurrentWinings = CurrentWinings + Amount;
+        WinCashAmountText.text = CurrentWinings.ToString();
+    }
+
+    public void ResetWinings ()
+    {
+        CurrentWinings = 0;
     }
 }
