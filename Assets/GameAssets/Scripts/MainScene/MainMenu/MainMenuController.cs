@@ -115,6 +115,7 @@ public class MainMenuController : MonoBehaviour
     IEnumerator SpinReel ()
     {
         CommandCentre.Instance.CashManager_.DecreaseCash(CommandCentre.Instance.BetManager_.BetAmount);
+        CommandCentre.Instance.CashManager_.ResetWinings();
         CommandCentre.Instance.WinLoseManager_.enableSpin = false;
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;

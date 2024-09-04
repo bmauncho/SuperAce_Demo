@@ -281,7 +281,14 @@ public class WinLoseManager : MonoBehaviour
         }
         else
         {
+            //if Combo >= 3 && <= 5 show win screen
+            if(CommandCentre.Instance.ComboManager_.GetCombo()>= 3)
+            {
+                Debug.Log("ShowTotalWinings");
+                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+            }
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
+            Debug.Log("SpinAgain");
             enableSpin = true;
         }
     }
@@ -523,6 +530,79 @@ public class WinLoseManager : MonoBehaviour
     {
         return columns.Count(col => col.Cards.Any(card => winCards.Contains(card)));
     }
+
+    public List<int> GetNumberOfWinningCards ()
+    {
+        List<int> similarWinningCardCounts = new List<int>();
+        if (winCards.Count == 0)
+        {
+            Debug.Log("No Winning Cards");
+            return similarWinningCardCounts;
+        }
+        int wildCardCount = 0; 
+        Dictionary<CardType , int> cardTypeCounts = new Dictionary<CardType , int>();
+
+        foreach (GameObject cardObj in winCards)
+        {
+            Card card = cardObj.GetComponent<Card>();
+            CardType cardType = card.cardType;
+
+            // Count the occurrence of each card type, including wild cards
+            if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
+            {
+                // If it's a wild card, increment a wild card count
+                wildCardCount++;
+            }
+            else
+            {
+                // Count the occurrence of each card type
+                if (cardTypeCounts.TryGetValue(cardType , out int count))
+                {
+                    cardTypeCounts [cardType] = count + 1;
+                }
+                else
+                {
+                    cardTypeCounts [cardType] = 1;
+                }
+            }
+        }
+
+        // If there are multiple card types, return the count of each type
+        if (cardTypeCounts.Count > 1)
+        {
+            foreach (var entry in cardTypeCounts)
+            {
+                if(entry.Key == CardType.Big_Jocker || entry.Key == CardType.Small_Jocker)
+                {
+                    cardTypeCounts.Remove(entry.Key);
+                }
+                similarWinningCardCounts.Add(entry.Value + wildCardCount);
+            }
+
+            
+            foreach (var entry in cardTypeCounts)
+            {
+                Debug.Log($"{entry.Key}: {entry.Value + wildCardCount} cards");
+            }
+
+            Debug.Log("Mixed Winning Card Types:" + string.Join(", " , similarWinningCardCounts));
+
+            return similarWinningCardCounts;
+        }
+
+        // If there's only one card type, return its count
+        if (cardTypeCounts.Count == 1)
+        {
+            CardType singleType = cardTypeCounts.Keys.First();
+            similarWinningCardCounts.Add(cardTypeCounts [singleType] + wildCardCount);
+            Debug.Log($"Single Winning Card Type: {singleType} : {cardTypeCounts [singleType]} cards");
+
+            return similarWinningCardCounts;
+        }
+
+        return similarWinningCardCounts;
+    }
+
 
     public List<string> GetWinningCardType ()
     {

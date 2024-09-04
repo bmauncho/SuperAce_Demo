@@ -79,5 +79,6 @@ public class CashManager : MonoBehaviour
     public void ResetWinings ()
     {
         CurrentWinings = 0;
+        WinCashAmountText.text = CurrentWinings.ToString();
     }
 }

@@ -33,11 +33,12 @@ public class ComboController : MonoBehaviour
             }
         }
         whichCombo++;
-        if (whichCombo > 5)
+        if (whichCombo >= 5)
         {
             whichCombo = 5; // Cap the value at 5
+            TheCombos [TheCombos.Length - 1].gameObject.SetActive(true); // Adjust the index to avoid out-of-bounds
         }
-        TheCombos [TheCombos.Length - 1].gameObject.SetActive(true); // Adjust the index to avoid out-of-bounds
+        
     }
 
     public void refresh ()

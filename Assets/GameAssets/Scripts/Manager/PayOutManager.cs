@@ -44,12 +44,19 @@ public class PayOutManager : MonoBehaviour
     }
     private void Update ()
     {
-        CurrentWinAmount.text = $"{CurrentWin.ToString("F2")}";
+        if (CurrentWin % 1 == 0)
+        {
+            CurrentWinAmount.text = CurrentWin.ToString();
+        }
+        else
+        {
+            CurrentWinAmount.text = $"{CurrentWin.ToString("F2")}";
+        }
     }
 
     public void ShowCurrentWin ()
     {
-        CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfColumnsWithWinningCards()) 
+        CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfWinningCards()) 
             , winLoseManager.GetPayLines(),betManager.BetAmount,comboManager.GetCombo());
         WinUI_.ActivateCurrentWinings();
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
@@ -60,25 +67,42 @@ public class PayOutManager : MonoBehaviour
         WinUI_.DeactivateCurrentWinings();
     }
 
-    public List<float> GetCardPayOut ( List<string> card , int column )
+
+    public void ShowTotalWinings ()
+    {
+        WinUI_.ActivateTotalWinnings();
+    }
+
+    public void HideTotalWinnings ()
+    {
+        WinUI_.DeactivateTotalWinnings();
+    }
+    public List<float> GetCardPayOut ( List<string> card , List<int> No_ofCards )
     {
         List<float> result = new List<float>();
-        for( int i = 0;i<card.Count ; i++)
+        for (int i = 0 ; i < card.Count ; i++)
         {
             if (cardToIndex.TryGetValue(card [i] , out int index))
             {
-                if (column >= 3 && column <= 5)
+                int payoutIndex = No_ofCards [i] - 3;
+                if (payoutIndex >= 0 && payoutIndex < PayList [index].Payouts.Count)
                 {
-                    result.Add(PayList [index].Payouts [column - 3]);
+                    result.Add(PayList [index].Payouts [payoutIndex]);
                     Debug.Log(card [i] + " : " + string.Join(", " , result));
+                }
+                else if(payoutIndex >= 0 && payoutIndex >= PayList [index].Payouts.Count)
+                {
+                    result.Add(PayList [index].Payouts [PayList [index].Payouts.Count-1]);
+                    Debug.Log(string.Join(", " , result));
+                    Debug.LogWarning($"Invalid payout index for card {card [i]} with {No_ofCards [i]} cards.");
                 }
             }
         }
-     
 
         // If no payout is found, return an empty list
         return result;
     }
+
 
 
     public float TotalWinnings ( List<float> Payout , int PayLines , float Bet , int Combo )
