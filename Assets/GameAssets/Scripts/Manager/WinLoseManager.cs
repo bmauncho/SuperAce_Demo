@@ -282,10 +282,12 @@ public class WinLoseManager : MonoBehaviour
         else
         {
             //if Combo >= 3 && <= 5 show win screen
-            if(CommandCentre.Instance.ComboManager_.GetCombo()>= 3)
+            Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
+            if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
             {
                 Debug.Log("ShowTotalWinings");
                 CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+                CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
             }
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             //Debug.Log("SpinAgain");

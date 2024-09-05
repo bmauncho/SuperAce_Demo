@@ -26,6 +26,14 @@ public class Card : MonoBehaviour
         CardScale = this.transform.localScale;
     }
 
+    private void Update ()
+    {
+        if(IsGoldenCard && (IsBigJocker || IsSmallJocker ))
+        {
+            cardBg.sprite = CommandCentre.Instance.CardManager_.Goldbackground;
+        }
+    }
+
     public void SetCardSortPos(int pos )
     {
         CardSortPos = pos;

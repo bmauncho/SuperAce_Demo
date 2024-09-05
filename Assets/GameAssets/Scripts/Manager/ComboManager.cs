@@ -49,14 +49,14 @@ public class ComboManager : MonoBehaviour
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             ComboUI_.FreeGameCombo.ShowCombo();
-            ComboCounter++;
-            if (ComboCounter >= 5) { ComboCounter = 5; }
+            ComboCounter= ComboCounter+2;
+            if (ComboCounter >= 10) { ComboCounter = 10; }
         }
         else
         {
             ComboUI_.NormalCombo.ShowCombo();
             ComboCounter++;
-            if (ComboCounter >= 5) { ComboCounter = 5; }
+            if (ComboCounter > 3) { ComboCounter = 5; }
         }
         
     }

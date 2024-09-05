@@ -56,6 +56,7 @@ public class PayOutManager : MonoBehaviour
 
     public void ShowCurrentWin ()
     {
+        Debug.Log($"the combo is X{comboManager.GetCombo()} the real combo is{comboManager.ComboCounter}");
         CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfWinningCards()) 
             , winLoseManager.GetPayLines(),betManager.BetAmount,comboManager.GetCombo());
         WinUI_.ActivateCurrentWinings();

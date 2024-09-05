@@ -153,7 +153,18 @@ public class CardManager : MonoBehaviour
                         break;
 
                     case "cardBg":
-                        spriteRenderer.sprite = cardComponent.IsGoldenCard ? Goldbackground : Normalbackground;
+                        if (cardComponent.IsGoldenCard) 
+                        {
+                            spriteRenderer.sprite = Goldbackground;
+                        }
+                        else if (( cardComponent.IsBigJocker || cardComponent.IsSmallJocker ) && cardComponent.IsGoldenCard)
+                        {
+                            spriteRenderer.sprite = Goldbackground;
+                        }
+                        else
+                        {
+                            spriteRenderer.sprite = Normalbackground;
+                        }
                         break;
 
                     case "card":
@@ -163,11 +174,11 @@ public class CardManager : MonoBehaviour
                         }
                         else if (cardComponent.IsSmallJocker)
                         {
-
+                            spriteRenderer.sprite = SmallJocker;
                         }
                         else if (cardComponent.IsBigJocker)
                         {
-
+                            spriteRenderer.sprite= BigJocker;
                         }
                         else
                         {
