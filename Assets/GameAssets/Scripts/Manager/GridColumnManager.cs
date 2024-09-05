@@ -540,7 +540,10 @@ public class GridColumnManager : MonoBehaviour
                                 {
                                     randomColumnIndex2 = Random.Range(0 , 5);
                                     randomPositionIndex2 = Random.Range(0 , Columns [randomColumnIndex2].CardsPos.Count);
-                                } while (randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2);
+                                } while (
+                                         ( randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2 ) ||
+                                         ( randomColumnIndex1 == Columns.IndexOf(column) && randomPositionIndex1 == column.CardsPos.IndexOf(cardPos) ) ||
+                                         ( randomColumnIndex2 == Columns.IndexOf(column) && randomPositionIndex2 == column.CardsPos.IndexOf(cardPos) ));
 
                                 // Position and parent new cards
                                 newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
