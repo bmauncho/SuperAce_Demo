@@ -28,16 +28,10 @@ public class WinLoseManager : MonoBehaviour
 
     public bool CheckWinCondition ()
     {
-        // Check for scatter win condition in columns 1, 3, and 5
-        List<GameObject> scatterWinningCards = CheckSimilarScatterCards(columns [0].Cards , columns [1].Cards , columns [2].Cards , columns [3].Cards , columns [4].Cards);
-        if (scatterWinningCards != null)
+        if (CheckScatterWin())
         {
-            IsScatterWin =true;
-            GetWinningCards(scatterWinningCards);
-            Debug.Log("Scatter Win! Cards that made the win: " + string.Join(", ", scatterWinningCards.Select(card => GetCardType(card))));
             return true;
         }
-
 
         // Check if the first 3 columns have a similar card
         List<GameObject> winningCards = CheckSimilarCards(columns [0].Cards , columns [1].Cards , columns [2].Cards);
@@ -68,6 +62,20 @@ public class WinLoseManager : MonoBehaviour
                // Debug.Log("Win! Cards that made the win: " + string.Join(", " , winningCards.Select(card => GetCardType(card))));
                 return true;
             }
+        }
+        return false;
+    }
+
+    public bool CheckScatterWin ()
+    {
+        // Check if the first 3 columns have a similar card
+        List<GameObject> winningScatterCards = CheckScatterCardsInColumns(columns [0].Cards , columns [1].Cards , columns [2].Cards , columns [3].Cards , columns [4].Cards);
+        if (winningScatterCards != null)
+        {
+            IsScatterWin = true;
+            GetWinningCards(winningScatterCards);
+            Debug.Log("Scatter Win! Cards that made the win: " + string.Join(", " , winningScatterCards.Select(card => GetCardType(card))));
+            return true;
         }
         return false;
     }
@@ -135,67 +143,117 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
-    private List<GameObject> CheckSimilarScatterCards ( params List<GameObject> [] columns )
+    //private List<GameObject> CheckSimilarScatterCards ( params List<GameObject> [] columns )
+    //{
+    //    // Get all possible combinations of 3 or more columns, always including the first column
+    //    var combinations = GetCombinations(columns.ToList() , 3 , includeFirstColumn: true)
+    //        .Select(combination => combination.ToList()); // Convert IEnumerable<T> to List<T>
+
+    //    foreach (var combination in combinations)
+    //    {
+    //        // Check for scatter cards in this combination of columns
+    //        var scatterCards = CheckScatterCardsInColumns(combination.ToArray());
+
+    //        if (scatterCards != null)
+    //        {
+    //            return scatterCards;
+    //        }
+    //    }
+
+    //    return null;
+    //}
+
+    //private List<GameObject> CheckScatterCardsInColumns ( params List<GameObject> [] columns )
+    //{
+    //    // Iterate through each card in the first column
+    //    foreach (GameObject card in columns [0])
+    //    {
+    //        // Check if the card is a scatter card
+    //        if (IsScatterCard(card))
+    //        {
+    //            bool foundInAllColumns = true;
+
+    //            // Create a temporary list for this iteration
+    //            List<GameObject> tempScatterCards = new List<GameObject> { card };
+
+    //            // Check for matching scatter cards in all other columns
+    //            for (int i = 1 ; i < columns.Length ; i++)
+    //            {
+    //                // Get all scatter cards in the current column that match the card type
+    //                List<GameObject> matchingScatterCards = columns [i].Where(c => IsScatterCard(c) && GetCardType(c) == GetCardType(card)).ToList();
+
+    //                if (matchingScatterCards.Count > 0)
+    //                {
+    //                    // Add all matching scatter cards to the temporary list
+    //                    tempScatterCards.AddRange(matchingScatterCards);
+    //                }
+    //                else
+    //                {
+    //                    foundInAllColumns = false;
+    //                    break;
+    //                }
+    //            }
+
+    //            // If matching scatter cards were found in all columns, return the list
+    //            if (foundInAllColumns)
+    //            {
+    //                return tempScatterCards;
+    //            }
+    //        }
+    //    }
+
+    //    return null;
+    //}
+
+    private List<GameObject> CheckScatterCardsInColumns ( params List<GameObject> [] columns )
     {
-        // Get all possible combinations of 3 or more columns, always including the first column
-        var combinations = GetCombinations(columns.ToList() , 3 , includeFirstColumn: true)
-            .Select(combination => combination.ToList()); // Convert IEnumerable<T> to List<T>
-
-        foreach (var combination in combinations)
+        // Ensure there are at least three columns to check
+        if (columns.Length < 3)
         {
-            // Check for scatter cards in this combination of columns
-            var scatterCards = CheckScatterCardsInColumns(combination.ToArray());
-
-            if (scatterCards != null)
-            {
-                return scatterCards;
-            }
+            Debug.LogWarning("Not enough columns to check for scatter cards.");
+            return null;
         }
 
-        return null;
-    }
-
-    private List<GameObject> CheckScatterCardsInColumns ( List<GameObject> [] columns )
-    {
         // Iterate through each card in the first column
         foreach (GameObject card in columns [0])
         {
             // Check if the card is a scatter card
             if (IsScatterCard(card))
             {
-                bool foundInAllColumns = true;
-
-                // Create a temporary list for this iteration
+                CardType cardType = card.GetComponent<Card>().cardType;
+                int matchingColumnCount = 1; // Start with the first column
                 List<GameObject> tempScatterCards = new List<GameObject> { card };
 
-                // Check for matching scatter cards in all other columns
+                // Check for matching scatter cards in the remaining columns
                 for (int i = 1 ; i < columns.Length ; i++)
                 {
                     // Get all scatter cards in the current column that match the card type
-                    List<GameObject> matchingScatterCards = columns [i].Where(c => IsScatterCard(c) && GetCardType(c) == GetCardType(card)).ToList();
+                    List<GameObject> matchingScatterCards = columns [i]
+                        .Where(c => IsScatterCard(c) && GetCardType(c) == GetCardType(card)).ToList();
 
                     if (matchingScatterCards.Count > 0)
                     {
                         // Add all matching scatter cards to the temporary list
                         tempScatterCards.AddRange(matchingScatterCards);
+                        matchingColumnCount++;
                     }
-                    else
+
+                    // If scatter cards are found in at least three columns, return the list
+                    if (matchingColumnCount >= 3)
                     {
-                        foundInAllColumns = false;
-                        break;
+                        return tempScatterCards;
                     }
                 }
 
-                // If matching scatter cards were found in all columns, return the list
-                if (foundInAllColumns)
-                {
-                    return tempScatterCards;
-                }
+                // Optionally, if you want to collect scatter cards from all columns even after reaching the threshold,
+                // you can continue the loop instead of returning immediately.
             }
         }
 
+        // If no scatter card is found in three or more columns, return null
         return null;
     }
+
 
     private IEnumerable<IEnumerable<T>> GetCombinations<T> ( IEnumerable<T> list , int length , bool includeFirstColumn )
     {
@@ -282,7 +340,7 @@ public class WinLoseManager : MonoBehaviour
         else
         {
             //if Combo >= 3 && <= 5 show win screen
-            Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
+            //Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
             if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
             {
                 Debug.Log("ShowTotalWinings");
@@ -489,14 +547,19 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
+        CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
         //Scatter cards rotate
         //screen
         //clear wining cards
         //enable spin
-        enableSpin=true;
-        IsScatterWin = false;
+        Debug.Log("free Game Enabled");
         winCards.Clear();
-        yield return null;
+        yield return new WaitForSeconds(3);
+
+        CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
+        enableSpin = true;
+        IsScatterWin = false;
+        Debug.Log("free Game Disabled");
     }
 
     public int GetPayLines ()

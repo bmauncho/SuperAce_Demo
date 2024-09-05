@@ -15,6 +15,11 @@ public class CardManager : MonoBehaviour
     public Sprite ScatterCard;
     public Sprite [] cardSprites;
 
+    [SerializeField]float normalCardProbability = 0.6f; // Adjust this value as needed to prioritize normal cards
+    [SerializeField] float goldenCardProbability = 0.1f;
+    [SerializeField] float scatterCardProbability = 0.1f;
+
+
     public Sprite RamomizeCards ()
     {
         int RandomSprite = 0;
@@ -94,7 +99,7 @@ public class CardManager : MonoBehaviour
     }
     public void RandomizeDealing_Scatter ( Transform card )
     {
-        float normalCardProbability = 0.85f;
+        float normalCardProbability = 0.4f;
         float randomValue = Random.value;
         if (randomValue < normalCardProbability)
         {
@@ -125,6 +130,32 @@ public class CardManager : MonoBehaviour
             DealBigJocker(card);
         }
     }
+
+    public void RandomizeDealing ( Transform card )
+    {
+        float randomValue = Random.value;
+
+        // Precompute thresholds to avoid redundant calculations
+        float goldenThreshold = normalCardProbability + goldenCardProbability;
+        float scatterThreshold = goldenThreshold + scatterCardProbability;
+
+        if (randomValue < normalCardProbability)
+        {
+            // Deal a normal card
+            DealNormalCards(card);
+        }
+        else if (randomValue < goldenThreshold)
+        {
+            // Deal a golden card
+            DealGoldenCards(card);
+        }
+        else if (randomValue < scatterThreshold)
+        {
+            // Deal a scatter card
+            DealScatterCards(card);
+        }
+    }
+
 
     public string CheckCardSpriteAndSetCardType (Transform Card)
     {

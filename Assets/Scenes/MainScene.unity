@@ -1124,6 +1124,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3cbaf162ddc61d94d850ea1d0123f25f, type: 3}
   - {fileID: 21300000, guid: 254a4e53cc263c14893268526927049b, type: 3}
   - {fileID: 21300000, guid: dec7c7ebbb3f4a24bbf835a8ebac82e1, type: 3}
+  normalCardProbability: 0.6
+  goldenCardProbability: 0.1
+  scatterCardProbability: 0.1
 --- !u!1 &274176216
 GameObject:
   m_ObjectHideFlags: 0
@@ -8365,10 +8368,10 @@ RectTransform:
   - {fileID: 1753619059}
   - {fileID: 404313982}
   - {fileID: 1037889108}
-  - {fileID: 1309665142}
   - {fileID: 1327504413}
   - {fileID: 371885468}
   - {fileID: 1612391384}
+  - {fileID: 1309665142}
   - {fileID: 236762430}
   - {fileID: 1449056811}
   - {fileID: 2106826034}

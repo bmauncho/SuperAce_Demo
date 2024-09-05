@@ -153,11 +153,13 @@ public class Deck : MonoBehaviour
             if (CanHaveGoldenCard)
             {
                 // Randomize between golden and normal card
-                CommandCentre.Instance.CardManager_.RandomizeDealing_golden(drawnCard.transform);
+                CommandCentre.Instance.CardManager_.RandomizeDealing(drawnCard.transform);
+                //CommandCentre.Instance.CardManager_.RandomizeDealing_golden(drawnCard.transform);
             }
             else
             {
-                CommandCentre.Instance.CardManager_.RandomizeDealing_Scatter(drawnCard.transform);
+                CommandCentre.Instance.CardManager_.RandomizeDealing(drawnCard.transform);
+                //CommandCentre.Instance.CardManager_.RandomizeDealing_Scatter(drawnCard.transform);
             }
 
             drawnCard.transform.SetParent(null);

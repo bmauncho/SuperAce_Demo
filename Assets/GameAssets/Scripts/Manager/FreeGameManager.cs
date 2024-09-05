@@ -56,6 +56,7 @@ public class FreeGameManager : MonoBehaviour
     {
         ToggleFreeGame(false);
         ToggleComboBanner(false);
+        DeactivateFreeGameIntro();
     }
 
 }
