@@ -22,6 +22,7 @@ public class WinLoseManager : MonoBehaviour
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
         SpinEnd();
+        Debug.Log("Polulate Grid Checker");
     }
 
    
@@ -245,6 +246,7 @@ public class WinLoseManager : MonoBehaviour
 
     private IEnumerator WaitForRepositioningAndShowWinningSequence ( List<GameObject> winningCards )
     {
+
         if (IsScatterWin)
         {
             yield return StartCoroutine(ShowScatterWinSequence(winningCards));
@@ -462,6 +464,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator ShowWinningSequence( List<GameObject> winningCards )
     {
+        yield return new WaitForSeconds(.25f);
         CommandCentre.Instance.CardMaskManager_.Activate();
         ActivateCardMaskForWinningCards();
         yield return new WaitForSeconds(1);
@@ -487,6 +490,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
+        yield return new WaitForSeconds(.25f);
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();

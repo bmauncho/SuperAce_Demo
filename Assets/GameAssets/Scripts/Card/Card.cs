@@ -131,8 +131,8 @@ public class Card : MonoBehaviour
     {
         IsScatterCard = false;
         IsGoldenCard = true;
-        IsSmallJocker = true;
-        IsBigJocker = false;
+        IsSmallJocker = false;
+        IsBigJocker = true;
         SetCard(bigJoker);
     }
 

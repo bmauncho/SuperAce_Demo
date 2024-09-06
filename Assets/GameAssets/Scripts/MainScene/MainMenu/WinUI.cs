@@ -8,6 +8,7 @@ public class WinUI : MonoBehaviour
 
     public void ActivateCurrentWinings ()
     {
+        CurrentWinnings.GetComponent<CanvasGroup>().alpha = 1.0f;
         CurrentWinnings.SetActive (true);
     }
 
@@ -21,6 +22,7 @@ public class WinUI : MonoBehaviour
 
     public void ActivateTotalWinnings ()
     {
+        TotalWinnings.GetComponent<CanvasGroup>().alpha = 1.0f;
         TotalWinnings.SetActive (true);
     }
 

@@ -19,16 +19,36 @@ public class CardManager : MonoBehaviour
     [SerializeField] float goldenCardProbability = 0.1f;
     [SerializeField] float scatterCardProbability = 0.1f;
 
+    [SerializeField] float [] cardProbabilities;
 
-    public Sprite RamomizeCards ()
+    public Sprite RandomizeCardWithProbability ()
     {
-        int RandomSprite = 0;
-        for (int i = 0 ; i < cardSprites.Length ; i++)
+        // Compute the cumulative distribution
+        float total = 0f;
+        for (int i = 0 ; i < cardProbabilities.Length ; i++)
         {
-            RandomSprite = Random.Range(0 , cardSprites.Length);
+            total += cardProbabilities [i];
         }
 
-        return cardSprites [RandomSprite];
+        // Generate a random number between 0 and total
+        float randomPoint = Random.value * total;
+
+        // Select a card based on the cumulative distribution
+        for (int i = 0 ; i < cardProbabilities.Length ; i++)
+        {
+            if (randomPoint < cardProbabilities [i])
+            {
+                return cardSprites [i];
+            }
+            else
+            {
+                randomPoint -= cardProbabilities [i];
+            }
+        }
+
+        // Fallback in case no card is selected
+        Debug.LogWarning("No card was selected. Check the probabilities.");
+        return cardSprites [0];
     }
 
     public Sprite WhichCard (int which)
@@ -48,7 +68,7 @@ public class CardManager : MonoBehaviour
     {
         card.GetComponent<Card>().SetCardBack(Normalbackground);
 
-        card.GetComponent<Card>().SetCard(RamomizeCards());
+        card.GetComponent<Card>().SetCard(RandomizeCardWithProbability());
         card.GetComponent<Card>().SetCardType();
     }
 
@@ -56,7 +76,7 @@ public class CardManager : MonoBehaviour
     {
         card.GetComponent<Card>().SetCardBackGolden(Goldbackground);
         card.GetComponent<Card>().SetCardOutLine(DefaultOutline);
-        card.GetComponent<Card>().SetCard(RamomizeCards());
+        card.GetComponent<Card>().SetCard(RandomizeCardWithProbability());
         card.GetComponent<Card>().SetCardType();
     }
 

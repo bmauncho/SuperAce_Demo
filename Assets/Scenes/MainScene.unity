@@ -1158,7 +1158,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dec7c7ebbb3f4a24bbf835a8ebac82e1, type: 3}
   normalCardProbability: 0.6
   goldenCardProbability: 0.1
-  scatterCardProbability: 0.1
+  scatterCardProbability: 0.05
+  cardProbabilities:
+  - 0.125
+  - 0.125
+  - 0.125
+  - 0.125
+  - 0.125
+  - 0.125
+  - 0.125
+  - 0.125
 --- !u!1 &274176216
 GameObject:
   m_ObjectHideFlags: 0
@@ -11043,8 +11052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardsParent: {fileID: 857952519}
-  moveDuration: 0.25
-  delayBetweenMoves: 0.1
+  moveDuration: 0.15
+  delayBetweenMoves: 0.05
   totalObjectsToPlace: 20
   IsResetDone: 0
   IsReturnToPoolDone: 0
@@ -12264,7 +12273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1947250316371600815, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 51.870014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2804309263993677661, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_Pivot.x
@@ -12356,13 +12365,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32
-      objectReference: {fileID: 0}
-    - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
-      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -12376,7 +12385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717381342297252358, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717381342297252358, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -12396,7 +12405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6639573650136488801, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6639573650136488801, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -12416,7 +12425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7347009498525214245, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7347009498525214245, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x

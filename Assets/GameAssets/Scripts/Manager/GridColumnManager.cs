@@ -96,6 +96,11 @@ public class GridColumnManager : MonoBehaviour
         // Wait until all cards are repositioned and rotations are complete
         while (!IsGridRepositioningComplete() || !IsGridGoldenCardsRotationDone())
         {
+
+            if(IsGridRepositioningComplete() || IsGridGoldenCardsRotationDone())
+            {
+                break;
+            }
             yield return null;
         }
 
@@ -125,7 +130,6 @@ public class GridColumnManager : MonoBehaviour
         }
 
         refillColumnCompleted[colIndex] = false;
-
         if (repositioning)
         {
             CommandCentre.Instance.WinLoseManager_.enableSpin = false;
@@ -171,19 +175,18 @@ public class GridColumnManager : MonoBehaviour
                     newCard.transform.localRotation = Quaternion.Euler(0, 180f, 0);
                     newCard.transform.SetParent(CardPos.transform);
                     Vector3 targetPosition = Vector3.zero;
-                    float delay = (colIndex * rowCount + row) * delayIncrement;
-
+                    float delay = (colIndex *rowCount+ row) * delayIncrement;
+                        
                     Sequence cardSequence = DOTween.Sequence();
                     cardSequence.Append(newCard.transform.DOLocalMove(targetPosition, CommandCentre.Instance.GridManager_.moveDuration)
                         .SetEase(Ease.OutQuad)
-                        .SetDelay(delay)
                         .OnComplete(() =>
                         {
-                            CalculateObjectsPlaced();
                             newCard.transform.localPosition = Vector3.zero;
                             ActivateNewCard(newCard);
+                            CalculateObjectsPlaced();
                         }));
-
+                    cardSequence.PrependInterval(delay);
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
                 }
             }
@@ -192,7 +195,6 @@ public class GridColumnManager : MonoBehaviour
 
         MarkRefillComplete(colIndex);
 
-        // If all refills are complete, check win conditions
         // If all refills are complete, check win conditions
         if (AreAllRefillColumnsCompleted())
         {
@@ -236,7 +238,7 @@ public class GridColumnManager : MonoBehaviour
                 if (owner != null && winningGoldenCards.Contains(owner) && owner.GetComponent<Card>().IsGoldenCard)
                 {
                     Vector3 targetRotation = new Vector3(0 , 180 , 0);
-                    float duration = 1.0f;
+                    float duration = .5f;
                     float delayIncrement = 0.05f;
                     float delay = ( columnIndex * 4 + cardIndex ) * delayIncrement;
                     CommandCentre.Instance.CardManager_.RandomizeDealing_Jocker(owner.transform);
@@ -263,12 +265,12 @@ public class GridColumnManager : MonoBehaviour
         // Ensure the rotation is set correctly at the end
         target.rotation = Quaternion.Euler(0 , 180 , 0);
         objectsRotated++;
-
         // Check if all rotations are done
         if (objectsRotated == totalObjectsToRotate)
         {
             StartCoroutine(DelayWinCheck(0.5f));
         }
+
     }
 
     // Coroutine to delay the win check by a given delay time
@@ -278,11 +280,17 @@ public class GridColumnManager : MonoBehaviour
         EnableSpin(); // This is your win check logic
     }
 
-
-
     public bool IsGridGoldenCardsRotationDone()
     {
-        return objectsRotated >= totalObjectsToRotate;
+        if (objectsRotated <= 0)
+        {
+            return false;
+        }
+        else if(objectsRotated >= totalObjectsToRotate) 
+        {
+            return true;
+        }
+        return false;
     }
 
     void CheckWin()
@@ -387,7 +395,7 @@ public class GridColumnManager : MonoBehaviour
 
             // Create a sequence for each card to handle the shake
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 10 , 90 , true , ShakeRandomnessMode.Harmonic))
+            sequence.Append(card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true , ShakeRandomnessMode.Harmonic))
                 .OnComplete(() =>
                 {
                     objectsShaked++;
@@ -395,27 +403,35 @@ public class GridColumnManager : MonoBehaviour
                     Debug.Log($"Card {card.name} finished shaking.");
                 });
         }
+        int safetyCounter = 10000; // or any appropriate limit
+        // Use a while loop to wait until all shake animations are complete
+        while (!IsObjectShakedComplete() && safetyCounter > 0)
+        {
+            Debug.Log("Waiting for all objects to finish shaking...");
+            safetyCounter--;
+            yield return null; // Wait for the next frame
+        }
 
-        // Wait until all shake animations are complete
-        yield return new WaitUntil(() => IsObjectShakedComplete());
-        
+        if(safetyCounter == 0)
+        {
+            Debug.LogWarning("Loop exited due to safety");
+        }
         Debug.Log("Shaking complete");
-        while (!IsObjectShakedComplete())
-        {
-            yield return null;
-        }
 
-        if (IsObjectShakedComplete())
-        {
-            yield return StartCoroutine(CheckForBigJokerAndAnimate());
-        }
+        // Proceed with the next animation
+        yield return StartCoroutine(CheckForBigJokerAndAnimate());
     }
 
     private IEnumerator WaitForTweenToComplete ( Transform target )
     {
+        bool isTweening = DOTween.IsTweening(target , true);
         // Wait until there is no active tween on the card's transform
-        while (DOTween.IsTweening(target , true))
+        while (isTweening)
         {
+            if (!isTweening)
+            {
+                break ;
+            }
             yield return null; // Wait for the next frame
         }
 
@@ -492,10 +508,14 @@ public class GridColumnManager : MonoBehaviour
         yield return StartCoroutine(MarkAllCardsToBeProcessed());
 
         Debug.Log(" CheckForBigJokerAndAnimate");
-
+        bool totalTweensPlaying = DOTween.TotalPlayingTweens() > 0;
         // Wait for any ongoing tweens to complete
-        while (DOTween.TotalPlayingTweens() > 0)
+        while (totalTweensPlaying)
         {
+            if (!totalTweensPlaying)
+            {
+                break;
+            }
             yield return null;
         }
 

@@ -213,11 +213,22 @@ public class Deck : MonoBehaviour
         isMaintainingDeck = true;
 
         List<GameObject> excessCards = new List<GameObject>();
-        while (DeckCards.Count > cardsPerDeck)
+
+        // Set a safety limit for the loop
+        int safetyCounter = 10000; // or any appropriate limit
+
+        while (DeckCards.Count > cardsPerDeck && safetyCounter > 0)
         {
             GameObject excessCard = DeckCards [DeckCards.Count - 1];
             DeckCards.RemoveAt(DeckCards.Count - 1);
             excessCards.Add(excessCard);
+
+            safetyCounter--; // Decrease safety counter
+        }
+
+        if (safetyCounter == 0)
+        {
+            Debug.LogWarning("MaintainCorrectAmountOfCardsInDeck exited due to safety limit.");
         }
 
         StartCoroutine(ReturnExcessCards(excessCards));
