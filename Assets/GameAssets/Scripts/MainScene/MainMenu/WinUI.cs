@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class WinUI : MonoBehaviour
@@ -12,7 +13,10 @@ public class WinUI : MonoBehaviour
 
     public void DeactivateCurrentWinings ()
     {
-        CurrentWinnings.SetActive (false);
+        CurrentWinnings.GetComponent<CanvasGroup>().DOFade(0 , .5f).OnComplete(() =>
+        {
+            CurrentWinnings.SetActive(false);
+        });
     }
 
     public void ActivateTotalWinnings ()
@@ -22,6 +26,9 @@ public class WinUI : MonoBehaviour
 
     public void DeactivateTotalWinnings ()
     {
-        TotalWinnings.SetActive (false);
+        TotalWinnings.GetComponent<CanvasGroup>().DOFade(0 , .5f).OnComplete(() =>
+        {
+            TotalWinnings.SetActive(false);
+        });
     }
 }

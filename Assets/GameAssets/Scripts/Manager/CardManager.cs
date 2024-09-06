@@ -137,7 +137,7 @@ public class CardManager : MonoBehaviour
 
         // Precompute thresholds to avoid redundant calculations
         float goldenThreshold = normalCardProbability + goldenCardProbability;
-        float scatterThreshold = goldenCardProbability + scatterCardProbability;
+        float scatterThreshold = goldenThreshold + scatterCardProbability;
 
         if (randomValue < normalCardProbability)
         {
