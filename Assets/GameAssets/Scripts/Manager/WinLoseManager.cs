@@ -143,67 +143,6 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
-    //private List<GameObject> CheckSimilarScatterCards ( params List<GameObject> [] columns )
-    //{
-    //    // Get all possible combinations of 3 or more columns, always including the first column
-    //    var combinations = GetCombinations(columns.ToList() , 3 , includeFirstColumn: true)
-    //        .Select(combination => combination.ToList()); // Convert IEnumerable<T> to List<T>
-
-    //    foreach (var combination in combinations)
-    //    {
-    //        // Check for scatter cards in this combination of columns
-    //        var scatterCards = CheckScatterCardsInColumns(combination.ToArray());
-
-    //        if (scatterCards != null)
-    //        {
-    //            return scatterCards;
-    //        }
-    //    }
-
-    //    return null;
-    //}
-
-    //private List<GameObject> CheckScatterCardsInColumns ( params List<GameObject> [] columns )
-    //{
-    //    // Iterate through each card in the first column
-    //    foreach (GameObject card in columns [0])
-    //    {
-    //        // Check if the card is a scatter card
-    //        if (IsScatterCard(card))
-    //        {
-    //            bool foundInAllColumns = true;
-
-    //            // Create a temporary list for this iteration
-    //            List<GameObject> tempScatterCards = new List<GameObject> { card };
-
-    //            // Check for matching scatter cards in all other columns
-    //            for (int i = 1 ; i < columns.Length ; i++)
-    //            {
-    //                // Get all scatter cards in the current column that match the card type
-    //                List<GameObject> matchingScatterCards = columns [i].Where(c => IsScatterCard(c) && GetCardType(c) == GetCardType(card)).ToList();
-
-    //                if (matchingScatterCards.Count > 0)
-    //                {
-    //                    // Add all matching scatter cards to the temporary list
-    //                    tempScatterCards.AddRange(matchingScatterCards);
-    //                }
-    //                else
-    //                {
-    //                    foundInAllColumns = false;
-    //                    break;
-    //                }
-    //            }
-
-    //            // If matching scatter cards were found in all columns, return the list
-    //            if (foundInAllColumns)
-    //            {
-    //                return tempScatterCards;
-    //            }
-    //        }
-    //    }
-
-    //    return null;
-    //}
 
     private List<GameObject> CheckScatterCardsInColumns ( params List<GameObject> [] columns )
     {
@@ -336,6 +275,7 @@ public class WinLoseManager : MonoBehaviour
         if (CheckWinCondition())
         {
             HandleWinCondition(winCards);
+            IsScatterWin = false;
         }
         else
         {
@@ -547,19 +487,29 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
-        CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
-        //Scatter cards rotate
-        //screen
-        //clear wining cards
-        //enable spin
-        Debug.Log("free Game Enabled");
-        winCards.Clear();
-        yield return new WaitForSeconds(3);
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
+            //Scatter cards rotate
+            //screen
+            //clear wining cards
+            //enable spin
+            Debug.Log("free Game Enabled");
+            winCards.Clear();
+            yield return new WaitForSeconds(3);
 
-        CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
-        enableSpin = true;
-        IsScatterWin = false;
-        Debug.Log("free Game Disabled");
+            CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+            enableSpin = true;
+            //PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
+            Debug.Log("free Game Disabled");
+        }
+        else
+        {
+            CommandCentre.Instance.FreeGameManager_.resetFreeSpins();
+            winCards.Clear();
+            enableSpin = true;
+            Debug.Log("free Game Disabled");
+        }
     }
 
     public int GetPayLines ()
@@ -741,57 +691,4 @@ public class WinLoseManager : MonoBehaviour
         //Debug.Log("No Winning Card Type");
         return result;
     }
-
-
-    #region
-    //public string GetWinningCardType ()
-    //{
-    //    if (winCards.Count == 0)
-    //    {
-    //        return "No Winning Cards";
-    //    }
-
-    //    CardType? referenceType = null; // To hold the reference type of non-wild cards
-    //    int wildCardCount = 0; // To count the number of wild cards
-
-    //    foreach (GameObject cardObj in winCards)
-    //    {
-    //        Card card = cardObj.GetComponent<Card>();
-    //        CardType cardType = card.cardType;
-
-    //        // Check if the card is a wild card
-    //        if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
-    //        {
-    //            wildCardCount++; // Count the wild card
-    //            continue; // Move to the next card
-    //        }
-
-    //        // Set the reference type if not set, or check for consistency
-    //        if (referenceType == null)
-    //        {
-    //            referenceType = cardType; // First non-wild card sets the reference type
-    //        }
-    //        else if (cardType != referenceType)
-    //        {
-    //            // If there's a mismatch with the reference type, it's a mixed type
-    //            return "Mixed Winning Card Types";
-    //        }
-    //    }
-
-    //    // Check if all cards are wild cards
-    //    if (referenceType == null && wildCardCount == winCards.Count)
-    //    {
-    //        return "No Winning Card Type"; // All cards are wild, not a winning set
-    //    }
-
-    //    // If referenceType is set, include the wild cards in the winning type
-    //    if (referenceType != null)
-    //    {
-    //        return $"{referenceType} (with {wildCardCount} wild cards)";
-    //    }
-
-    //    return "No Winning Card Type";
-    //}
-    #endregion
-
 }

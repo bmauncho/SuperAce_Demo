@@ -557,8 +557,11 @@ public class GridColumnManager : MonoBehaviour
 
                                 Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
                                 Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
-
+                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
+                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
                                 CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
+                                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex1);
+                                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex2);
 
                                 // DOTween jump animations
                                 activeTweens.Add(newCard1.transform.DOJump(
@@ -567,7 +570,6 @@ public class GridColumnManager : MonoBehaviour
                                     {
                                         newCard1.transform.localPosition = Vector3.zero;
                                         newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                                        Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
                                         CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
                                     }));
 
@@ -577,10 +579,7 @@ public class GridColumnManager : MonoBehaviour
                                     {
                                         newCard2.transform.localPosition = Vector3.zero;
                                         newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-
-                                        Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
                                         CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
-
                                     }));
                             }
                         }

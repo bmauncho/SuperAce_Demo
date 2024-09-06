@@ -1156,8 +1156,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3cbaf162ddc61d94d850ea1d0123f25f, type: 3}
   - {fileID: 21300000, guid: 254a4e53cc263c14893268526927049b, type: 3}
   - {fileID: 21300000, guid: dec7c7ebbb3f4a24bbf835a8ebac82e1, type: 3}
-  normalCardProbability: 0.6
-  goldenCardProbability: 0.1
+  normalCardProbability: 0.7
+  goldenCardProbability: 0.2
   scatterCardProbability: 0.1
 --- !u!1 &274176216
 GameObject:
@@ -4036,6 +4036,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: 0
+--- !u!114 &892455978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5740650318584355527, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
+  m_PrefabInstance: {fileID: 1264933883769534078}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &903507517
 GameObject:
   m_ObjectHideFlags: 0
@@ -6344,6 +6355,8 @@ MonoBehaviour:
   BannerController_: {fileID: 6934845788130006837}
   FreeGameIntro_: {fileID: 1309665144}
   IsFreeGame: 0
+  FreeSpinCounter: 10
+  FreeSpinsAmount: {fileID: 892455978}
 --- !u!1 &1327504412
 GameObject:
   m_ObjectHideFlags: 0
@@ -7698,7 +7711,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 9e62c4e279b688c4ab5407d1da2af8a1, type: 2}
   m_TargetDisplay: 0
@@ -11381,6 +11394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 6124640721608833683, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6849003444931401215, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12151,6 +12168,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 473730811647057810, guid: 066c2d6232aa2cb4abd74f855ddcf21b, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2365148482854429132, guid: 066c2d6232aa2cb4abd74f855ddcf21b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12230,6 +12251,10 @@ PrefabInstance:
     - target: {fileID: 2365148482854429132, guid: 066c2d6232aa2cb4abd74f855ddcf21b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500815380696829791, guid: 066c2d6232aa2cb4abd74f855ddcf21b, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7292562850944273351, guid: 066c2d6232aa2cb4abd74f855ddcf21b, type: 3}
       propertyPath: m_Name

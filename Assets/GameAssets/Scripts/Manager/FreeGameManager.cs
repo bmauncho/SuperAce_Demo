@@ -1,4 +1,7 @@
+using TMPro;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class FreeGameManager : MonoBehaviour
 {
@@ -6,6 +9,9 @@ public class FreeGameManager : MonoBehaviour
     public BannerController BannerController_;
     public FreeGameIntro FreeGameIntro_;
     public bool IsFreeGame = false;
+
+    public int FreeSpinCounter = 10;
+    public TMP_Text FreeSpinsAmount;
 
     public void ActivateFreeGameIntro ()
     {
@@ -27,7 +33,7 @@ public class FreeGameManager : MonoBehaviour
 
     public void ToggleComboBanner(bool toggle )
     {
-        if ( !toggle)
+        if ( toggle)
         {
             Combos.DeactivateNormalCombo();
             BannerController_.DeactivateNormalBanner();
@@ -56,7 +62,29 @@ public class FreeGameManager : MonoBehaviour
     {
         ToggleFreeGame(false);
         ToggleComboBanner(false);
-        DeactivateFreeGameIntro();
+        resetFreeSpins();
+        CommandCentre.Instance.WinLoseManager_.enableSpin = true;
     }
 
+
+    public void DecreaseFreespins ()
+    {
+        if ( IsFreeGame )
+        {
+            FreeSpinCounter--;
+            FreeSpinsAmount.text = FreeSpinCounter.ToString();
+
+            if( FreeSpinCounter <= 0) 
+            {
+                CommandCentre.Instance.WinLoseManager_.enableSpin = false;
+                Invoke(nameof(DeactivateFreeGame),.5f);
+            }
+        }
+    }
+
+    public void resetFreeSpins ()
+    {
+        FreeSpinCounter = 10;
+        FreeSpinsAmount.text = FreeSpinCounter.ToString();
+    }
 }
