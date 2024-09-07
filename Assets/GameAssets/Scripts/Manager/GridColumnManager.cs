@@ -29,6 +29,7 @@ public class GridColumnManager : MonoBehaviour
     public int totalObjectsToShake;
     public int objectsShaked;
 
+
     public GameObject CardPosHolders;
     public List<GameObject> CardList = new List<GameObject>();
     public List<GridPosColumns> Columns = new List<GridPosColumns>();
@@ -403,7 +404,7 @@ public class GridColumnManager : MonoBehaviour
                     Debug.Log($"Card {card.name} finished shaking.");
                 });
         }
-        int safetyCounter = 10000; // or any appropriate limit
+        int safetyCounter = 100; // or any appropriate limit
         // Use a while loop to wait until all shake animations are complete
         while (!IsObjectShakedComplete() && safetyCounter > 0)
         {
@@ -424,15 +425,18 @@ public class GridColumnManager : MonoBehaviour
 
     private IEnumerator WaitForTweenToComplete ( Transform target )
     {
+        int safetyCounter = 100; // or any appropriate limit
         bool isTweening = DOTween.IsTweening(target , true);
         // Wait until there is no active tween on the card's transform
-        while (isTweening)
+        while (isTweening && safetyCounter > 0)
         {
-            if (!isTweening)
-            {
-                break ;
-            }
+            safetyCounter--;
             yield return null; // Wait for the next frame
+        }
+
+        if (safetyCounter == 0)
+        {
+            Debug.LogWarning("Loop exited due to safety");
         }
 
         // Once the tween completes, ensure the final rotation is set correctly
@@ -507,11 +511,14 @@ public class GridColumnManager : MonoBehaviour
     {
         yield return StartCoroutine(MarkAllCardsToBeProcessed());
 
-        Debug.Log(" CheckForBigJokerAndAnimate");
+        Debug.Log("Check For BigJokerAndAnimate");
         bool totalTweensPlaying = DOTween.TotalPlayingTweens() > 0;
+        int safetyCounter = 100; // or any appropriate limit
         // Wait for any ongoing tweens to complete
-        while (totalTweensPlaying)
+        while (totalTweensPlaying && safetyCounter > 0)
         {
+            //Debug.Log("Waiting for all objects to finish tweening...");
+            safetyCounter--;
             if (!totalTweensPlaying)
             {
                 break;
@@ -519,6 +526,12 @@ public class GridColumnManager : MonoBehaviour
             yield return null;
         }
 
+        if (safetyCounter == 0)
+        {
+            Debug.LogWarning("Loop exited due to safety");
+        }
+
+        Debug.Log("start Animation");
         List<Tween> activeTweens = new List<Tween>();
 
         foreach (GridPosColumns column in Columns)
@@ -543,7 +556,7 @@ public class GridColumnManager : MonoBehaviour
                             GameObject newCard2 = poolManager.GetCard();
 
                             CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
-                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
+                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard2.transform);
 
                             if (newCard1 != null && newCard2 != null)
                             {
@@ -560,8 +573,8 @@ public class GridColumnManager : MonoBehaviour
                                 {
                                     randomColumnIndex2 = Random.Range(0 , 5);
                                     randomPositionIndex2 = Random.Range(0 , Columns [randomColumnIndex2].CardsPos.Count);
-                                } while (
-                                         ( randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2 ) ||
+                                }
+                                while (( randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2 ) ||
                                          ( randomColumnIndex1 == Columns.IndexOf(column) && randomPositionIndex1 == column.CardsPos.IndexOf(cardPos) ) ||
                                          ( randomColumnIndex2 == Columns.IndexOf(column) && randomPositionIndex2 == column.CardsPos.IndexOf(cardPos) ));
 
@@ -611,8 +624,10 @@ public class GridColumnManager : MonoBehaviour
         // Wait for all animations to complete
         foreach (Tween tween in activeTweens)
         {
+            Debug.Log("Waiting for all objects to finish jump tweening...");
             yield return tween.WaitForCompletion();
         }
+        Debug.Log("jump complete");
         yield return new WaitForSeconds(.5f);
 
     }

@@ -21,6 +21,11 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] float [] cardProbabilities;
 
+    float originalScatterprobability = 0.0f;
+    private void Start ()
+    {
+        originalScatterprobability = scatterCardProbability;
+    }
     public Sprite RandomizeCardWithProbability ()
     {
         // Compute the cumulative distribution
@@ -74,10 +79,10 @@ public class CardManager : MonoBehaviour
 
     public void DealGoldenCards(Transform card )
     {
-        card.GetComponent<Card>().SetCardBackGolden(Goldbackground);
-        card.GetComponent<Card>().SetCardOutLine(DefaultOutline);
         card.GetComponent<Card>().SetCard(RandomizeCardWithProbability());
         card.GetComponent<Card>().SetCardType();
+        card.GetComponent<Card>().SetCardBackGolden(Goldbackground);
+        card.GetComponent<Card>().SetCardOutLine(DefaultOutline);
     }
 
     public void DealScatterCards(Transform card )
@@ -157,6 +162,14 @@ public class CardManager : MonoBehaviour
 
         // Precompute thresholds to avoid redundant calculations
         float goldenThreshold = normalCardProbability + goldenCardProbability;
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            scatterCardProbability = 0.01f;
+        }
+        else
+        {
+            scatterCardProbability = originalScatterprobability;
+        }
         float scatterThreshold = goldenThreshold + scatterCardProbability;
 
         if (randomValue < normalCardProbability)

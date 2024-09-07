@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
     public bool isBtnPressed = false;
 
     public bool IsFreeGame = false;
+    public bool IsFirstTimeDone = false;
     [Space(10)]
     [Header("Menus")]
     public GameObject GameplayMenu;
@@ -65,8 +66,12 @@ public class MainMenuController : MonoBehaviour
             CanSpin = CommandCentre.Instance.GridManager_.IsGridCreationComplete();
             if (CanSpin)
             {
-
                 EnableGameplayMenu();
+                if (!IsFirstTimeDone)
+                {
+                    Invoke(nameof(EnableWinMoreMenu) , .5f);
+                    IsFirstTimeDone = true;
+                }
             }
         }
     }

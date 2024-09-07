@@ -74,7 +74,12 @@ public class Card : MonoBehaviour
     public void SetCardType ()
     {
         cardType = CompareEnumToString();
-        if (cardType == CardType.Scatter) { IsGoldenCard = false; }
+        if (cardType == CardType.Scatter)
+        {
+            IsGoldenCard = false;
+            //this is a safety net
+            IsScatterCard = true;
+        }
     }
 
     public void SetCardBack ( Sprite backSprite = null )
@@ -109,14 +114,14 @@ public class Card : MonoBehaviour
 
     public void SetScatterCard ( Sprite scatterCardSprite = null )
     {
-        IsScatterCard = true;
-        IsGoldenCard = false;
         SetCardBack();
         SetCard(scatterCardSprite);
         SetCardOutLine();
         SetCardBackGolden();
         DisableBackCard();
         DisableCardOBJ();
+        IsScatterCard = true;
+        IsGoldenCard = false;
     }
 
     public void SetSmallJocker (Sprite smallJoker = null)
