@@ -19,6 +19,8 @@ public class CommandCentre : MonoBehaviour
     public FreeGameManager FreeGameManager_;
     public ComboManager ComboManager_;
     public PayOutManager PayOutManager_;
+    public HintManager HintManager_;
+    public CommentaryManager CommentaryManager_;
 
     private void Awake ()
     {

@@ -6,7 +6,10 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource> PossibleAudioSource = new List<AudioSource>();
     public AudioSource AmbientSound;
     public float minSound, maxSound;
-
+    private void Start ()
+    {
+        LowerAmbientSound();
+    }
     public void LowerAmbientSound ()
     {
         AmbientSound.volume = minSound;

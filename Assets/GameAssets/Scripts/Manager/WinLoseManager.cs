@@ -512,6 +512,7 @@ public class WinLoseManager : MonoBehaviour
         ActivateCardMaskForWinningCards();
         yield return new WaitForSeconds(1);
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+        CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
         WinningCardsDoPunchScale(winningCards);
         PunchScaleActiveCardMasks(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f);
         GetGoldenCards(winningCards);

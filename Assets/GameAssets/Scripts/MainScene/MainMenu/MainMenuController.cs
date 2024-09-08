@@ -115,6 +115,7 @@ public class MainMenuController : MonoBehaviour
             }
             isBtnPressed = true;
         }
+        CommandCentre.Instance.HintManager_.CanShowHints = true;    
     }
 
     IEnumerator SpinReel ()
