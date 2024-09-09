@@ -1,16 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class UISettingController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    Toggle SoundToogle;
+    public bool TheSound;
+
+    public void Start ()
     {
-        
+        SoundToogle = GetComponentInChildren<Toggle>();
+        CommandCentre.Instance.SettingsManager_.RefreshSettings();
+        RefreshSound();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable ()
     {
-        
+        RefreshSound();
+    }
+
+    public void SoundPressed ()
+    {
+        if (SoundToogle != null)
+        {
+            CommandCentre.Instance.SettingsManager_.ToogleSound(SoundToogle.isOn);
+            TheSound = CommandCentre.Instance.SettingsManager_.Sound;
+        }
+    }
+
+    public void RefreshSound ()
+    {
+        if (SoundToogle != null)
+        {
+            TheSound = CommandCentre.Instance.SettingsManager_.Sound;
+            SoundToogle.isOn = TheSound;
+        }
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-
     public bool Sound = false;
 
     private void OnEnable ()

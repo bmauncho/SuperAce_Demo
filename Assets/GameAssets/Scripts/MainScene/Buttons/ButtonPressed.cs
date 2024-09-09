@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ButtonPressed : MonoBehaviour
 {
     public bool isSpinButton = false;
+    public bool IsToggle = false;
     private void Start()
     {
 
@@ -40,12 +41,27 @@ public class ButtonPressed : MonoBehaviour
 
     void EnableButtonInteractvity ()
     {
-        CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
-        GetComponent<Button>().interactable = true;
+        if (IsToggle)
+        {
+            GetComponent<Toggle>().interactable = true;
+        }
+        else
+        {
+            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+            GetComponent<Button>().interactable = true;
+        }
+
     }
     public void DisableButtonInteractvity ()
     {
-        GetComponent<Button>().interactable = false;
+        if (IsToggle)
+        {
+            GetComponent<Toggle>().interactable = false;
+        }
+        else
+        {
+            GetComponent<Button>().interactable = false;
+        }
     }
 
     public void BounceBtn ()

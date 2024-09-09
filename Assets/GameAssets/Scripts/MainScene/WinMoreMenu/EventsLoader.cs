@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventsLoader : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class EventsLoader : MonoBehaviour
     float timer;
 
     private Tweener rotationTweener;
-
+    public UnityEvent onComplete;
     private void OnEnable ()
     {
         timer = 0;
@@ -40,7 +41,7 @@ public class EventsLoader : MonoBehaviour
             { 
                 timer = interval;
                 Deactivate();
-               
+                onComplete.Invoke();
             });
     }
 
