@@ -20,7 +20,18 @@ public class ButtonPressed : MonoBehaviour
                 {
                     if (CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
                     {
-                        EnableButtonInteractvity();
+                        if (CommandCentre.Instance.GridColumnManager_.CardsToShake().Count > 0)
+                        {
+                            if(CommandCentre.Instance.GridColumnManager_.IsObjectShakedComplete()
+                                && CommandCentre.Instance.GridColumnManager_.IsObjectsJumpComplete())
+                            {
+                                EnableButtonInteractvity();
+                            }
+                        }
+                        else if(CommandCentre.Instance.GridColumnManager_.CardsToShake().Count <= 0)
+                        {
+                            EnableButtonInteractvity();
+                        }
                     }
                     else
                     {
@@ -60,6 +71,7 @@ public class ButtonPressed : MonoBehaviour
         if (this.gameObject.activeSelf)
         {
             Bounce();
+            DisableButtonInteractvity() ;
             if (CommandCentre.Instance)
             {
                 //CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
@@ -75,5 +87,9 @@ public class ButtonPressed : MonoBehaviour
     void Debounce ()
     {
         transform.DOScale(1f , .25f).SetUpdate(true);
+        if (!isSpinButton)
+        {
+            EnableButtonInteractvity();
+        }
     }
 }

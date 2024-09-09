@@ -215,7 +215,7 @@ public class Deck : MonoBehaviour
         List<GameObject> excessCards = new List<GameObject>();
 
         // Set a safety limit for the loop
-        int safetyCounter = 100; // or any appropriate limit
+        int safetyCounter = 10; // or any appropriate limit
 
         while (DeckCards.Count > cardsPerDeck && safetyCounter > 0)
         {

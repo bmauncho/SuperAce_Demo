@@ -406,15 +406,42 @@ public class WinLoseManager : MonoBehaviour
         // Get all card positions from CardsPosHolder
         var cardPositions = CardsPosHolder.GetComponentsInChildren<CardPos>();
 
+        int totalAnimations = 0;
+        int completedAnimations = 0;
+
         foreach (var cardPos in cardPositions)
         {
             var owner = cardPos.TheOwner;
             if (owner != null && winningCardsSet.Contains(owner))
             {
-                cardPos.TheOwner.transform.DOPunchScale(new Vector3(.2f,.2f,.2f) , .5f , 0 , .2f);
+                totalAnimations++; // Increment the total animation count
+
+                Transform ownerTransform = owner.transform; // Store a local reference
+                ownerTransform.DOPunchScale(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f).OnComplete(() =>
+                {
+                    if (ownerTransform != null)
+                    {
+                        ownerTransform.localScale = owner.GetComponent<Card>().CardScale;
+                    }
+
+                    completedAnimations++; // Increment the completed animation count
+
+                    // Check if all animations are done
+                    if (completedAnimations == totalAnimations)
+                    {
+                        AllWinningCardAnimationsComplete();
+                    }
+                });
             }
         }
     }
+
+    // Method to call when all winning card animations are complete
+    private bool AllWinningCardAnimationsComplete ()
+    {
+        return true;
+    }
+
 
     public void PunchScaleActiveCardMasks ( Vector3 punchScale , float duration , int vibrato = 10 , float elasticity = 1f )
     {
@@ -425,6 +452,9 @@ public class WinLoseManager : MonoBehaviour
             Debug.LogError("CardMaskManager or CardMasks not set up correctly.");
             return;
         }
+
+        int totalAnimations = 0;
+        int completedAnimations = 0;
 
         // Loop through each column in the CardMaskManager
         for (int colIndex = 0 ; colIndex < cardMaskManager.CardMasks.Count ; colIndex++)
@@ -439,11 +469,30 @@ public class WinLoseManager : MonoBehaviour
                 // Apply punch scale animation to active card masks
                 if (cardMask != null && cardMask.activeInHierarchy)
                 {
-                    cardMask.transform.DOPunchScale(punchScale , duration , vibrato , elasticity);
+                    totalAnimations++; // Increment the total animation count
+
+                    cardMask.transform.DOPunchScale(punchScale , duration , vibrato , elasticity).OnComplete(() =>
+                    {
+                        cardMask.transform.localScale = Vector3.one;
+                        completedAnimations++; // Increment the completed animation count
+
+                        // Check if all animations are done
+                        if (completedAnimations == totalAnimations)
+                        {
+                            AllPunchScaleActiveCardMasksAnimationsComplete();
+                        }
+                    });
                 }
             }
         }
     }
+
+    // Method to call when all animations are complete
+    private bool AllPunchScaleActiveCardMasksAnimationsComplete ()
+    {
+        return true;
+    }
+
 
     public bool IsGoldenCard(GameObject card )
     {
@@ -504,7 +553,6 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
-
     public IEnumerator ShowWinningSequence( List<GameObject> winningCards )
     {
         yield return new WaitForSeconds(.25f);
@@ -513,8 +561,15 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
+        // Start WinningCardsDoPunchScale and mark it as complete when done
         WinningCardsDoPunchScale(winningCards);
+        // Start PunchScaleActiveCardMasks and mark it as complete when done
         PunchScaleActiveCardMasks(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f);
+        while(!AllPunchScaleActiveCardMasksAnimationsComplete() && !AllWinningCardAnimationsComplete())
+        {
+            yield return null;
+        }
+
         GetGoldenCards(winningCards);
         if (goldenCards.Count > 0)
         {
