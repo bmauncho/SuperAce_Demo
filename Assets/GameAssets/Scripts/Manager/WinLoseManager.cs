@@ -299,6 +299,7 @@ public class WinLoseManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("IncreaseComboCounter");
             CommandCentre.Instance.ComboManager_.IncreaseComboCounter();
             // Start the winning sequence once repositioning is complete
             yield return StartCoroutine(ShowWinningSequence(winningCards));

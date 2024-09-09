@@ -6,6 +6,7 @@ public class FreeGameIntro : MonoBehaviour
     public void Activate ()
     {
         this.gameObject.SetActive (true);
+        GetComponent<CanvasGroup>().alpha = 1.0f;
     }
 
     void FadeOut ()

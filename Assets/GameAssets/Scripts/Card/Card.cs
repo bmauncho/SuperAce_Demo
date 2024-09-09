@@ -28,10 +28,40 @@ public class Card : MonoBehaviour
 
     private void Update ()
     {
-        if(IsGoldenCard && (IsBigJocker || IsSmallJocker ))
+        if (cardType == CardType.Scatter)
         {
+            IsScatterCard = true;
+        }
+        else
+        {
+            IsScatterCard = false ;
+        }
+
+        if (IsGoldenCard)
+        {
+            if (IsBigJocker)
+            {
+                Outline.sprite = CommandCentre.Instance.CardManager_.BigJockerOutline;
+            }
+            else if (IsSmallJocker)
+            {
+                Outline.sprite = CommandCentre.Instance.CardManager_.SmallJockerOutline;
+            }
+            else
+            {
+                Outline.sprite = CommandCentre.Instance.CardManager_.DefaultOutline;
+            }
             cardBg.sprite = CommandCentre.Instance.CardManager_.Goldbackground;
         }
+        else
+        {
+            cardBg.sprite = CommandCentre.Instance.CardManager_.Normalbackground;
+            if (IsScatterCard)
+            {
+                cardBg.sprite = null;
+            }
+        }
+       
     }
 
     public void SetCardSortPos(int pos )
@@ -120,8 +150,8 @@ public class Card : MonoBehaviour
         SetCardBackGolden();
         DisableBackCard();
         DisableCardOBJ();
-        IsScatterCard = true;
         IsGoldenCard = false;
+        IsScatterCard = true;
     }
 
     public void SetSmallJocker (Sprite smallJoker = null)

@@ -42,7 +42,7 @@ public class ComboManager : MonoBehaviour
     {
        ComboVisual.SetActive(false);
     }
-
+    [ContextMenu("IncreaseComboCounter")]
     public void IncreaseComboCounter ()
     {
         ActivateComboUI ();

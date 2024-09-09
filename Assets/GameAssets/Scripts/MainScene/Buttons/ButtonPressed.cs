@@ -18,25 +18,7 @@ public class ButtonPressed : MonoBehaviour
             {
                 if (CommandCentre.Instance.WinLoseManager_.enableSpin)
                 {
-                    if (CommandCentre.Instance.GridColumnManager_.IsGridRepositioningComplete())
-                    {
-                        if (CommandCentre.Instance.GridColumnManager_.CardsToShake().Count > 0)
-                        {
-                            if(CommandCentre.Instance.GridColumnManager_.IsObjectShakedComplete()
-                                && CommandCentre.Instance.GridColumnManager_.IsObjectsJumpComplete())
-                            {
-                                EnableButtonInteractvity();
-                            }
-                        }
-                        else if(CommandCentre.Instance.GridColumnManager_.CardsToShake().Count <= 0)
-                        {
-                            EnableButtonInteractvity();
-                        }
-                    }
-                    else
-                    {
-                        DisableButtonInteractvity ();
-                    }
+                    EnableButtonInteractvity();
                     //delay 
                 }
                 else

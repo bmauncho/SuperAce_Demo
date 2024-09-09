@@ -17,10 +17,6 @@ public class ComboController : MonoBehaviour
             TheCombos [whichCombo].gameObject.SetActive(true);
         }
     }
-    private void Update ()
-    {
-
-    }
 
     public void ActivateCombo ( int which )
     {

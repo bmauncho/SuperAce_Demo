@@ -21,6 +21,7 @@ public class GridColumnManager : MonoBehaviour
     public bool[] refillColumnCompleted;
     public bool[] columnsToRefill;
     public bool isRepositioning;
+    public bool hasCheckedWin = false;
     public int totalObjectsToPlace;
     public int objectsPlaced;
     public int totalObjectsToRotate;
@@ -76,6 +77,7 @@ public class GridColumnManager : MonoBehaviour
         refreshAllRefillColumnsCompleted();
         isWinChecked = false;
         IsDoneCheckingWin = false;
+        hasCheckedWin = false;
         totalObjectsToPlace = TotalNumberofEmptyCardPos();
         objectsPlaced = 0;
         totalObjectsToRotate = CommandCentre.Instance.WinLoseManager_.goldenCards.Count;
@@ -270,7 +272,7 @@ public class GridColumnManager : MonoBehaviour
         objectsPlaced++;
         if (IsGridRepositioningComplete())
         {
-            EnableSpin();
+            //EnableSpin();
         }
     }
 
@@ -612,10 +614,9 @@ public class GridColumnManager : MonoBehaviour
             }
             Debug.Log("jump complete");
             yield return new WaitForSeconds(.5f);
-            if (IsObjectsJumpComplete())
+            if (IsObjectsJumpComplete() && !hasCheckedWin)
             {
-                //checkwin
-                //enable spin
+                hasCheckedWin = true;
                 CheckWin();
                 //    Debug.Log("Proceed to checkWin");
             }
@@ -623,10 +624,9 @@ public class GridColumnManager : MonoBehaviour
         else if(totalObjectstojump <= 0 )
         {
             yield return new WaitForSeconds(.5f);
-            if (IsObjectsJumpComplete())
+            if (IsObjectsJumpComplete() && !hasCheckedWin)
             {
-                //checkwin
-                //enable spin
+                hasCheckedWin = true;
                 CheckWin();
                 //    Debug.Log("Proceed to checkWin");
             }
