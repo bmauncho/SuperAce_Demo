@@ -182,25 +182,7 @@ public class GridColumnManager : MonoBehaviour
         // If all refills are complete, check win conditions
         if (AreAllRefillColumnsCompleted())
         {
-
             yield return StartCoroutine(ShakeCards());
-            //if (IsGridGoldenCardsRotationDone())
-            //{
-            //    if (CheckForCardsToShake())
-            //    {
-                    
-            //    }
-            //    else
-            //    {
-
-            //    }
-            //}
-            //else
-            //{
-            //    yield return new WaitForSeconds(0.5f); // delay by 0.5 seconds
-            //    CheckWin();
-            //    Debug.Log("Proceed to checkWin");
-            //}
         }
     }
     public bool CanRotate ()

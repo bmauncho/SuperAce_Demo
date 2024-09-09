@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class WinLoseManager : MonoBehaviour
 {
     public bool enableSpin = false;
     public bool IsCheckingWin = false;
     public bool IsScatterWin = false;
+    public bool WinningCardAnimationsComplete_ = false;
+    private bool isPunchScaleActiveCardMasksRunning = false;
+    private bool isWinningCardsDoPunchScaleRunning = false;
+    public bool PunchScaleActiveCardMasksAnimationsComplete_ = false;
     public GameObject CardsPosHolder;
     [Space(10)]
     [Header("Lists")]
@@ -167,9 +172,6 @@ public class WinLoseManager : MonoBehaviour
         return winningCards.Count > 0 ? winningCards : null;
     }
 
-
-
-
     private bool IsSimilarCardType ( string cardType1 , string cardType2 )
     {
         // Check if the card types are the same
@@ -188,7 +190,6 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
-
     private List<GameObject> CheckScatterCardsInColumns ( params List<GameObject> [] columns )
     {
         // Ensure there are at least three columns to check
@@ -204,7 +205,7 @@ public class WinLoseManager : MonoBehaviour
         // Iterate through each column
         for (int i = 0 ; i < columns.Length ; i++)
         {
-            Debug.Log($"Checking column {i} with {columns [i].Count} cards.");
+            //Debug.Log($"Checking column {i} with {columns [i].Count} cards.");
 
             foreach (GameObject card in columns [i])
             {
@@ -212,19 +213,19 @@ public class WinLoseManager : MonoBehaviour
                 if (IsScatterCard(card))
                 {
                     CardType cardType = card.GetComponent<Card>().cardType;
-                    Debug.Log($"Found scatter card of type {cardType} in column {i}.");
+                    //Debug.Log($"Found scatter card of type {cardType} in column {i}.");
 
                     // If the scatter card type is already tracked, add this card to the list
                     if (scatterCards.ContainsKey(cardType))
                     {
                         scatterCards [cardType].Add(card);
-                        Debug.Log($"Added card to existing list for type {cardType}. Total count: {scatterCards [cardType].Count}");
+                        //Debug.Log($"Added card to existing list for type {cardType}. Total count: {scatterCards [cardType].Count}");
                     }
                     else
                     {
                         // Otherwise, start a new list for this scatter card type
                         scatterCards [cardType] = new List<GameObject> { card };
-                        Debug.Log($"Started new list for scatter card type {cardType}.");
+                        //Debug.Log($"Started new list for scatter card type {cardType}.");
                     }
                 }
             }
@@ -237,17 +238,17 @@ public class WinLoseManager : MonoBehaviour
 
             // Group the cards by column and count distinct columns
             int distinctColumns = scatterCardList.Select(card => GetColumn(card , columns)).Distinct().Count();
-            Debug.Log($"Scatter card type {entry.Key} found in {distinctColumns} distinct columns.");
+            //Debug.Log($"Scatter card type {entry.Key} found in {distinctColumns} distinct columns.");
 
             if (distinctColumns >= 3)
             {
-                Debug.Log($"Scatter card type {entry.Key} found in three or more columns. Returning the list of cards.");
+                //Debug.Log($"Scatter card type {entry.Key} found in three or more columns. Returning the list of cards.");
                 return scatterCardList;
             }
         }
 
         // If no scatter card is found in three or more columns, return null
-        Debug.Log("No scatter card found in three or more columns.");
+       // Debug.Log("No scatter card found in three or more columns.");
         return null;
     }
 
@@ -262,6 +263,7 @@ public class WinLoseManager : MonoBehaviour
         }
         return -1;
     }
+
     private bool IsScatterCard ( GameObject card )
     {
         // Check if the card type is CardType.Scatter
@@ -398,8 +400,10 @@ public class WinLoseManager : MonoBehaviour
         
     }
 
-    public void WinningCardsDoPunchScale ( List<GameObject> winningCards )
+    public IEnumerator WinningCardsDoPunchScale ( List<GameObject> winningCards )
     {
+        if (isWinningCardsDoPunchScaleRunning) yield break; // Prevent multiple calls
+        isWinningCardsDoPunchScaleRunning = true;
         // Convert winningCards to a HashSet for O(1) lookups
         HashSet<GameObject> winningCardsSet = new HashSet<GameObject>(winningCards);
 
@@ -408,32 +412,33 @@ public class WinLoseManager : MonoBehaviour
 
         int totalAnimations = 0;
         int completedAnimations = 0;
-
+        List<Tween> activeTweens = new List<Tween>();
         foreach (var cardPos in cardPositions)
         {
             var owner = cardPos.TheOwner;
             if (owner != null && winningCardsSet.Contains(owner))
             {
                 totalAnimations++; // Increment the total animation count
-
-                Transform ownerTransform = owner.transform; // Store a local reference
-                ownerTransform.DOPunchScale(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f).OnComplete(() =>
-                {
-                    if (ownerTransform != null)
+                activeTweens.Add(cardPos.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 0 , .2f)
+                    .OnComplete(() =>
                     {
-                        ownerTransform.localScale = owner.GetComponent<Card>().CardScale;
-                    }
-
-                    completedAnimations++; // Increment the completed animation count
-
-                    // Check if all animations are done
-                    if (completedAnimations == totalAnimations)
-                    {
-                        AllWinningCardAnimationsComplete();
-                    }
-                });
+                        cardPos.transform.localScale = Vector3.one;
+                        completedAnimations++; // Increment the completed animation count
+                    }));
             }
         }
+        foreach (Tween tween in activeTweens)
+        {
+            Debug.Log("Waiting for all objects to finish PunchScale tweening...");
+            yield return tween.WaitForCompletion();
+        }
+        Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
+        // Check if all animations are done
+        if (completedAnimations == totalAnimations)
+        {
+             WinningCardAnimationsComplete_=AllWinningCardAnimationsComplete();
+        }
+        isWinningCardsDoPunchScaleRunning = false; // Reset the flag
     }
 
     // Method to call when all winning card animations are complete
@@ -443,19 +448,21 @@ public class WinLoseManager : MonoBehaviour
     }
 
 
-    public void PunchScaleActiveCardMasks ( Vector3 punchScale , float duration , int vibrato = 10 , float elasticity = 1f )
+    public IEnumerator PunchScaleActiveCardMasks ()
     {
+        if (isPunchScaleActiveCardMasksRunning) yield break; // Prevent multiple calls
+        isPunchScaleActiveCardMasksRunning = true;
         // Ensure that the CardMaskManager is available
         var cardMaskManager = CommandCentre.Instance.CardMaskManager_;
         if (cardMaskManager == null || cardMaskManager.CardMasks.Count == 0)
         {
             Debug.LogError("CardMaskManager or CardMasks not set up correctly.");
-            return;
+            yield break;
         }
 
         int totalAnimations = 0;
         int completedAnimations = 0;
-
+        List<Tween> activeTweens = new List<Tween>();
         // Loop through each column in the CardMaskManager
         for (int colIndex = 0 ; colIndex < cardMaskManager.CardMasks.Count ; colIndex++)
         {
@@ -471,20 +478,27 @@ public class WinLoseManager : MonoBehaviour
                 {
                     totalAnimations++; // Increment the total animation count
 
-                    cardMask.transform.DOPunchScale(punchScale , duration , vibrato , elasticity).OnComplete(() =>
-                    {
-                        cardMask.transform.localScale = Vector3.one;
-                        completedAnimations++; // Increment the completed animation count
-
-                        // Check if all animations are done
-                        if (completedAnimations == totalAnimations)
-                        {
-                            AllPunchScaleActiveCardMasksAnimationsComplete();
-                        }
-                    });
+                   activeTweens.Add(cardMask.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 0 , .2f)
+                       .OnComplete(() =>
+                       {
+                           cardMask.transform.localScale = Vector3.one;
+                           completedAnimations++; // Increment the completed animation count
+                       }));
                 }
             }
         }
+        foreach (Tween tween in activeTweens)
+        {
+            Debug.Log("Waiting for all objects to finish PunchScale tweening...");
+            yield return tween.WaitForCompletion();
+        }
+        Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
+        // Check if all animations are done
+        if (completedAnimations == totalAnimations)
+        {
+            PunchScaleActiveCardMasksAnimationsComplete_=AllPunchScaleActiveCardMasksAnimationsComplete();
+        }
+        isPunchScaleActiveCardMasksRunning = false; // Reset the flag
     }
 
     // Method to call when all animations are complete
@@ -562,10 +576,11 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
         // Start WinningCardsDoPunchScale and mark it as complete when done
-        WinningCardsDoPunchScale(winningCards);
+        StartCoroutine(WinningCardsDoPunchScale(winningCards));
         // Start PunchScaleActiveCardMasks and mark it as complete when done
-        PunchScaleActiveCardMasks(new Vector3(.2f , .2f , .2f) , .5f , 0 , .2f);
-        while(!AllPunchScaleActiveCardMasksAnimationsComplete() && !AllWinningCardAnimationsComplete())
+        StartCoroutine(PunchScaleActiveCardMasks());
+
+        while(!PunchScaleActiveCardMasksAnimationsComplete_ && !WinningCardAnimationsComplete_)
         {
             yield return null;
         }
@@ -577,6 +592,8 @@ public class WinLoseManager : MonoBehaviour
             RotateGoldenCards();
         }
         yield return new WaitForSeconds(1);
+        PunchScaleActiveCardMasksAnimationsComplete_ = false;
+        WinningCardAnimationsComplete_ = false;
         CommandCentre.Instance.PayOutManager_.HideCurrentWin();
         DeactivateWinningCards(winningCards);
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();

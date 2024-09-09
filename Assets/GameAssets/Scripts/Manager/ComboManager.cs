@@ -14,6 +14,7 @@ public class ComboAmount
 public class ComboManager : MonoBehaviour
 {
     public int ComboCounter = 0;
+    public int freeGameComboCounter = 0;
     public TMP_Text ComboText;
     public GameObject ComboVisual;
     public ComboUI ComboUI_;
@@ -50,7 +51,9 @@ public class ComboManager : MonoBehaviour
         {
             ComboUI_.FreeGameCombo.ShowCombo();
             ComboCounter= ComboCounter+2;
-            if (ComboCounter >= 10) { ComboCounter = 10; }
+            freeGameComboCounter++;
+            if (ComboCounter > 6) { ComboCounter = 10; }
+            if(freeGameComboCounter>3) { ComboCounter = 5; }
         }
         else
         {
@@ -65,6 +68,7 @@ public class ComboManager : MonoBehaviour
     {
         DeactivateComboUI ();
         ComboCounter = 0;
+        freeGameComboCounter = 0;
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             ComboUI_.FreeGameCombo.ResetCombos ();
@@ -81,7 +85,7 @@ public class ComboManager : MonoBehaviour
         {
             for (int i = 0 ; i < ComboAmount.FreeGameAmount.Count ; i++)
             {
-                if (i == ComboCounter)
+                if (i == freeGameComboCounter)
                 {
                     return ComboAmount.FreeGameAmount [i];
                 }
