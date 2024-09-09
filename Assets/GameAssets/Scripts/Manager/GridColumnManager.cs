@@ -183,30 +183,34 @@ public class GridColumnManager : MonoBehaviour
         if (AreAllRefillColumnsCompleted())
         {
 
-            if (objectsRotated >= totalObjectsToRotate)
-            {
-                //check if we proceed to wincheck or another aninmation
+            yield return StartCoroutine(ShakeCards());
+            //if (IsGridGoldenCardsRotationDone())
+            //{
+            //    if (CheckForCardsToShake())
+            //    {
+                    
+            //    }
+            //    else
+            //    {
 
-                if(CardsToShake().Count > 0)
-                {
-                    StartCoroutine(ShakeCards());
-                }
-                else if(CardsToShake().Count <= 0)
-                {
-                    yield return new WaitForSeconds(0.5f); // delay by 0.5 seconds
-                    CheckWin();
-                    Debug.Log("Proceed to checkWin");
-                }
-            }
-            else if (objectsRotated <= 0)
-            {
-                yield return new WaitForSeconds(0.5f); // delay by 0.5 seconds
-                CheckWin();
-                Debug.Log("Proceed to checkWin");
-            }
+            //    }
+            //}
+            //else
+            //{
+            //    yield return new WaitForSeconds(0.5f); // delay by 0.5 seconds
+            //    CheckWin();
+            //    Debug.Log("Proceed to checkWin");
+            //}
         }
     }
-
+    public bool CanRotate ()
+    {
+        if (totalObjectsToRotate > 0)
+        {
+            return true;
+        }
+        return false;
+    }
     private void CheckforRotatedCards ()
     {
         List<GameObject> winningGoldenCards = new List<GameObject>(CommandCentre.Instance.WinLoseManager_.goldenCards);
@@ -376,46 +380,53 @@ public class GridColumnManager : MonoBehaviour
 
         totalObjectsToShake = CardsToShake().Count;
         objectsShaked = 0;
-        HashSet<GameObject> cards = new HashSet<GameObject>(CardsToShake());
 
-        foreach (GameObject card in cards)
+        if (totalObjectsToShake >= 1)
         {
-            // Wait until any active rotation tween is complete
-            yield return StartCoroutine(WaitForTweenToComplete(card.transform));
-
-            // Create a sequence for each card to handle the shake
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true))
-                .OnComplete(() =>
-                {
-                    objectsShaked++;
-                    card.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                    Debug.Log($"Card {card.name} finished shaking.");
-                });
-        }
-        int safetyCounter = 10; // or any appropriate limit
-        // Use a while loop to wait until all shake animations are complete
-        bool IsDone = false;
-        while (!IsObjectShakedComplete() && safetyCounter > 0)
-        {
-            Debug.Log("Waiting for all objects to finish shaking...");
-            safetyCounter--;
-            if (IsObjectShakedComplete())
+            HashSet<GameObject> cards = new HashSet<GameObject>(CardsToShake());
+            foreach (GameObject card in cards)
             {
-                IsDone = true;
-                break;
-            }
-            yield return null; // Wait for the next frame
-        }
+                // Wait until any active rotation tween is complete
+                yield return StartCoroutine(WaitForTweenToComplete(card.transform));
 
-        if(safetyCounter == 0)
-        {
-            Debug.LogWarning("Loop exited due to safety");
+                // Create a sequence for each card to handle the shake
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true))
+                    .OnComplete(() =>
+                    {
+                        objectsShaked++;
+                        card.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                        Debug.Log($"Card {card.name} finished shaking.");
+                    });
+            }
+            int safetyCounter = 10; // or any appropriate limit
+                                    // Use a while loop to wait until all shake animations are complete
+            bool IsDone = false;
+            while (!IsObjectShakedComplete() && safetyCounter > 0)
+            {
+                Debug.Log("Waiting for all objects to finish shaking...");
+                safetyCounter--;
+                if (IsObjectShakedComplete())
+                {
+                    IsDone = true;
+                    break;
+                }
+                yield return null; // Wait for the next frame
+            }
+
+            if (safetyCounter == 0)
+            {
+                Debug.LogWarning("Loop exited due to safety");
+            }
+            Debug.Log("Shaking complete");
+            if (IsDone)
+            {
+                // Proceed with the next animation
+                yield return StartCoroutine(CheckForBigJokerAndAnimate());
+            }
         }
-        Debug.Log("Shaking complete");
-        if (IsDone)
+        else if( totalObjectsToShake <= 0 )
         {
-            // Proceed with the next animation
             yield return StartCoroutine(CheckForBigJokerAndAnimate());
         }
     }
@@ -489,7 +500,6 @@ public class GridColumnManager : MonoBehaviour
     {
         foreach (GridPosColumns column in Columns)
         {
-            
             foreach (GameObject cardPos in column.CardsPos)
             {
                 CardPos cardPosScript = cardPos.GetComponent<CardPos>();
@@ -514,134 +524,130 @@ public class GridColumnManager : MonoBehaviour
         yield return StartCoroutine(MarkAllCardsToBeProcessed());
 
         Debug.Log("Check For BigJokerAndAnimate");
-        //bool totalTweensPlaying = DOTween.TotalPlayingTweens() > 0;
-        //int safetyCounter = 20; // or any appropriate limit
-        //// Wait for any ongoing tweens to complete
-        //while (totalTweensPlaying && safetyCounter > 0)
-        //{
-        //    //Debug.Log("Waiting for all objects to finish tweening...");
-        //    safetyCounter--;
-        //    if (!totalTweensPlaying)
-        //    {
-        //        break;
-        //    }
-        //    yield return null;
-        //}
-
-        //if (safetyCounter == 0)
-        //{
-        //    Debug.LogWarning("Loop exited due to safety");
-        //}
 
         totalObjectstojump = cardsToJump();
         objectsjumped = 0;
 
-        Debug.Log("start Animation");
-        List<Tween> activeTweens = new List<Tween>();
-
-        foreach (GridPosColumns column in Columns)
+        if (totalObjectstojump >= 1)
         {
-            foreach (GameObject cardPos in column.CardsPos)
+            Debug.Log("start Animation");
+            List<Tween> activeTweens = new List<Tween>();
+
+            foreach (GridPosColumns column in Columns)
             {
-                CardPos cardPosScript = cardPos.GetComponent<CardPos>();
-
-                if (cardPosScript?.TheOwner != null)
+                foreach (GameObject cardPos in column.CardsPos)
                 {
-                    Card cardScript = cardPosScript.TheOwner.GetComponent<Card>();
+                    CardPos cardPosScript = cardPos.GetComponent<CardPos>();
 
-                    if (cardScript != null && cardScript.cardType == CardType.Big_Jocker)
+                    if (cardPosScript?.TheOwner != null)
                     {
-                        int columnIndex = Columns.IndexOf(column);
-                        if (!bigJokerCardsProcessed [columnIndex] && bigJokerCardsToBeProcessed [columnIndex])
+                        Card cardScript = cardPosScript.TheOwner.GetComponent<Card>();
+
+                        if (cardScript != null && cardScript.cardType == CardType.Big_Jocker)
                         {
-
-                            bigJokerCardsProcessed [columnIndex] = true;
-                            // Get two new cards from the pool manager
-                            GameObject newCard1 = poolManager.GetCard();
-                            GameObject newCard2 = poolManager.GetCard();
-
-                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
-                            CommandCentre.Instance.CardManager_.DealBigJocker(newCard2.transform);
-
-                            if (newCard1 != null && newCard2 != null)
+                            int columnIndex = Columns.IndexOf(column);
+                            if (!bigJokerCardsProcessed [columnIndex] && bigJokerCardsToBeProcessed [columnIndex])
                             {
-                                // Set initial positions
-                                Vector3 initialPosition = cardPosScript.TheOwner.transform.position;
-                                Quaternion initialRotation = cardPosScript.TheOwner.transform.rotation;
 
-                                // Random positions for the new cards
-                                int randomColumnIndex1 = Random.Range(0 , 5);
-                                int randomPositionIndex1 = Random.Range(0 , Columns [randomColumnIndex1].CardsPos.Count);
+                                bigJokerCardsProcessed [columnIndex] = true;
+                                // Get two new cards from the pool manager
+                                GameObject newCard1 = poolManager.GetCard();
+                                GameObject newCard2 = poolManager.GetCard();
 
-                                int randomColumnIndex2, randomPositionIndex2;
-                                do
+                                CommandCentre.Instance.CardManager_.DealBigJocker(newCard1.transform);
+                                CommandCentre.Instance.CardManager_.DealBigJocker(newCard2.transform);
+
+                                if (newCard1 != null && newCard2 != null)
                                 {
-                                    randomColumnIndex2 = Random.Range(0 , 5);
-                                    randomPositionIndex2 = Random.Range(0 , Columns [randomColumnIndex2].CardsPos.Count);
+                                    // Set initial positions
+                                    Vector3 initialPosition = cardPosScript.TheOwner.transform.position;
+                                    Quaternion initialRotation = cardPosScript.TheOwner.transform.rotation;
+
+                                    // Random positions for the new cards
+                                    int randomColumnIndex1 = Random.Range(0 , 5);
+                                    int randomPositionIndex1 = Random.Range(0 , Columns [randomColumnIndex1].CardsPos.Count);
+
+                                    int randomColumnIndex2, randomPositionIndex2;
+                                    do
+                                    {
+                                        randomColumnIndex2 = Random.Range(0 , 5);
+                                        randomPositionIndex2 = Random.Range(0 , Columns [randomColumnIndex2].CardsPos.Count);
+                                    }
+                                    while (( randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2 ) ||
+                                             ( randomColumnIndex1 == Columns.IndexOf(column) && randomPositionIndex1 == column.CardsPos.IndexOf(cardPos) ) ||
+                                             ( randomColumnIndex2 == Columns.IndexOf(column) && randomPositionIndex2 == column.CardsPos.IndexOf(cardPos) ));
+
+                                    // Position and parent new cards
+                                    newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
+                                    newCard2.transform.SetPositionAndRotation(initialPosition , initialRotation);
+
+                                    newCard1.SetActive(true);
+                                    newCard2.SetActive(true);
+
+                                    newCard1.transform.SetParent(Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform);
+                                    newCard2.transform.SetParent(Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform);
+
+                                    Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
+                                    Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
+                                    Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
+                                    Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
+                                    CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
+                                    CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex1);
+                                    CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex2);
+
+                                    // DOTween jump animations
+                                    activeTweens.Add(newCard1.transform.DOJump(
+                                        Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform.position ,
+                                        2.0f , 1 , 1.0f).OnComplete(() =>
+                                        {
+                                            newCard1.transform.localPosition = Vector3.zero;
+                                            newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                                            CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
+                                        }));
+
+                                    activeTweens.Add(newCard2.transform.DOJump(
+                                        Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform.position ,
+                                        2.0f , 1 , 1.0f).OnComplete(() =>
+                                        {
+                                            newCard2.transform.localPosition = Vector3.zero;
+                                            newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                                            CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
+
+                                        }));
                                 }
-                                while (( randomColumnIndex1 == randomColumnIndex2 && randomPositionIndex1 == randomPositionIndex2 ) ||
-                                         ( randomColumnIndex1 == Columns.IndexOf(column) && randomPositionIndex1 == column.CardsPos.IndexOf(cardPos) ) ||
-                                         ( randomColumnIndex2 == Columns.IndexOf(column) && randomPositionIndex2 == column.CardsPos.IndexOf(cardPos) ));
-
-                                // Position and parent new cards
-                                newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
-                                newCard2.transform.SetPositionAndRotation(initialPosition , initialRotation);
-
-                                newCard1.SetActive(true);
-                                newCard2.SetActive(true);
-
-                                newCard1.transform.SetParent(Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform);
-                                newCard2.transform.SetParent(Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform);
-
-                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
-                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
-                                Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].GetComponent<CardPos>().TheOwner = newCard1;
-                                Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].GetComponent<CardPos>().TheOwner = newCard2;
-                                CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
-                                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex1);
-                                CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(randomColumnIndex2);
-
-                                // DOTween jump animations
-                                activeTweens.Add(newCard1.transform.DOJump(
-                                    Columns [randomColumnIndex1].CardsPos [randomPositionIndex1].transform.position ,
-                                    2.0f , 1 , 1.0f).OnComplete(() =>
-                                    {
-                                        newCard1.transform.localPosition = Vector3.zero;
-                                        newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                                        CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
-                                    }));
-
-                                activeTweens.Add(newCard2.transform.DOJump(
-                                    Columns [randomColumnIndex2].CardsPos [randomPositionIndex2].transform.position ,
-                                    2.0f , 1 , 1.0f).OnComplete(() =>
-                                    {
-                                        newCard2.transform.localPosition = Vector3.zero;
-                                        newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                                        CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
-
-                                    }));
                             }
                         }
                     }
                 }
             }
-        }
 
-        // Wait for all animations to complete
-        foreach (Tween tween in activeTweens)
-        {
-            objectsjumped++;
-            Debug.Log("Waiting for all objects to finish jump tweening...");
-            yield return tween.WaitForCompletion();
+            // Wait for all animations to complete
+            foreach (Tween tween in activeTweens)
+            {
+                objectsjumped++;
+                Debug.Log("Waiting for all objects to finish jump tweening...");
+                yield return tween.WaitForCompletion();
+            }
+            Debug.Log("jump complete");
+            yield return new WaitForSeconds(.5f);
+            if (IsObjectsJumpComplete())
+            {
+                //checkwin
+                //enable spin
+                CheckWin();
+                //    Debug.Log("Proceed to checkWin");
+            }
         }
-        Debug.Log("jump complete");
-        yield return new WaitForSeconds(.5f);
-        if(IsObjectsJumpComplete())
+        else if(totalObjectstojump <= 0 )
         {
-            //checkwin
-            //enable spin
-            CheckWin();
-            //    Debug.Log("Proceed to checkWin");
+            yield return new WaitForSeconds(.5f);
+            if (IsObjectsJumpComplete())
+            {
+                //checkwin
+                //enable spin
+                CheckWin();
+                //    Debug.Log("Proceed to checkWin");
+            }
         }
     }
 
