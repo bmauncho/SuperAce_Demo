@@ -37,6 +37,20 @@ public class Card : MonoBehaviour
             IsScatterCard = false ;
         }
 
+        if(cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
+        {
+            IsGoldenCard=true;
+        }
+        else if(cardType != CardType.Small_Jocker)
+        {
+            IsSmallJocker = false ;
+        }
+        else if (cardType != CardType.Big_Jocker)
+        {
+            IsBigJocker = false ;
+        }
+
+
         if (IsGoldenCard)
         {
             if (IsBigJocker)
