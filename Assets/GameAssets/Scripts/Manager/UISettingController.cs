@@ -28,6 +28,14 @@ public class UISettingController : MonoBehaviour
         {
             CommandCentre.Instance.SettingsManager_.ToogleSound(SoundToogle.isOn);
             TheSound = CommandCentre.Instance.SettingsManager_.Sound;
+            if (SoundToogle.isOn)
+            {
+                SoundToogle.GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                SoundToogle.GetComponent<Image>().enabled = true;
+            }
         }
     }
 
@@ -37,6 +45,14 @@ public class UISettingController : MonoBehaviour
         {
             TheSound = CommandCentre.Instance.SettingsManager_.Sound;
             SoundToogle.isOn = TheSound;
+            if (SoundToogle.isOn)
+            {
+                SoundToogle.GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                SoundToogle.GetComponent<Image>().enabled = true;
+            }
         }
     }
 }
