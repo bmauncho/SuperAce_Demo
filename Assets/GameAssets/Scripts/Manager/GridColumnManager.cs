@@ -139,13 +139,26 @@ public class GridColumnManager : MonoBehaviour
 
         CheckforRotatedCards();
 
+        if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+        {
+            StartCoroutine(TurboRefill(colIndex , responsibleDeck , newCards , cardPosInColumn));
+        }
+        else
+        {
+            StartCoroutine ( NormalRefill ( colIndex , responsibleDeck , newCards , cardPosInColumn));
+        }
+        yield return null;
+    }
+
+    IEnumerator NormalRefill (int colIndex , Deck responsibleDeck , List<GameObject> newCards , List<GameObject> cardPosInColumn  )
+    {
         float delayIncrement = 0.05f;
         int rowCount = 4;
         int positionIndex = 0;
 
-        for (int row = 0; row < rowCount; row++)
+        for (int row = 0 ; row < rowCount ; row++)
         {
-            GameObject currentCardPos = cardPosInColumn[positionIndex];
+            GameObject currentCardPos = cardPosInColumn [positionIndex];
             if (!currentCardPos.GetComponent<CardPos>().TheOwner)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
@@ -159,13 +172,13 @@ public class GridColumnManager : MonoBehaviour
                 if (!CardPos.TheOwner)
                 {
                     CardPos.TheOwner = newCard;
-                    newCard.transform.localRotation = Quaternion.Euler(0, 180f, 0);
+                    newCard.transform.localRotation = Quaternion.Euler(0 , 180f , 0);
                     newCard.transform.SetParent(CardPos.transform);
                     Vector3 targetPosition = Vector3.zero;
-                    float delay = (colIndex *rowCount+ row) * delayIncrement;
-                        
+                    float delay = ( colIndex * rowCount + row ) * delayIncrement;
+
                     Sequence cardSequence = DOTween.Sequence();
-                    cardSequence.Append(newCard.transform.DOLocalMove(targetPosition, CommandCentre.Instance.GridManager_.moveDuration)
+                    cardSequence.Append(newCard.transform.DOLocalMove(targetPosition , CommandCentre.Instance.GridManager_.moveDuration)
                         .SetEase(Ease.OutQuad)
                         .OnComplete(() =>
                         {
@@ -178,6 +191,48 @@ public class GridColumnManager : MonoBehaviour
                 }
             }
             positionIndex++;
+        }
+
+        MarkRefillComplete(colIndex);
+
+        // If all refills are complete, check win conditions
+        if (AreAllRefillColumnsCompleted())
+        {
+            yield return StartCoroutine(ShakeCards());
+        }
+    }
+
+    IEnumerator TurboRefill ( int colIndex , Deck responsibleDeck , List<GameObject> newCards , List<GameObject> cardPosInColumn )
+    {
+        for (int i = 0 ; i < cardPosInColumn.Count ; i++)
+        {
+            if (!cardPosInColumn [i].GetComponent<CardPos>().TheOwner)
+            {
+                GameObject newCard = responsibleDeck.DrawCard();
+
+                if (newCard == null)
+                {
+                    Debug.LogError("Deck is empty, unable to continue refilling.");
+                    break;
+                }
+                CardPos CardPos = cardPosInColumn [i].GetComponent<CardPos>();
+                if (!CardPos.TheOwner)
+                {
+                    CardPos.TheOwner = newCard;
+                    newCard.transform.localRotation = Quaternion.Euler(0 , 180f , 0);
+                    newCard.transform.SetParent(CardPos.transform);
+                    Vector3 targetPosition = Vector3.zero;
+
+                    newCard.transform.DOLocalMove(targetPosition , 0.01f)
+                        .OnComplete(() =>
+                        {
+                            newCard.transform.localPosition = Vector3.zero;
+                            ActivateNewCard(newCard);
+                            CalculateObjectsPlaced();
+                        });
+                    CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
+                }
+            }
         }
 
         MarkRefillComplete(colIndex);
