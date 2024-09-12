@@ -21,7 +21,8 @@ public class CommandCentre : MonoBehaviour
     public PayOutManager PayOutManager_;
     public HintManager HintManager_;
     public CommentaryManager CommentaryManager_;
-
+    public AutoSpinManager AutoSpinManager_;
+    public TurboManager TurboManager_; 
     private void Awake ()
     {
         //Application.targetFrameRate = 30;

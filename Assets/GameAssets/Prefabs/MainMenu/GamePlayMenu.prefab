@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 4802740159808196310}
   - component: {fileID: 5927100473055577790}
   - component: {fileID: 5782801717794668326}
-  - component: {fileID: 5467921573217286279}
+  - component: {fileID: 1884584889305238372}
   - component: {fileID: 5890625697242152211}
   m_Layer: 5
   m_Name: Btn
@@ -650,7 +650,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5467921573217286279
+--- !u!114 &1884584889305238372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2265032425111496314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -689,9 +689,12 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 5782801717794668326}
-  m_OnClick:
+  toggleTransition: 1
+  graphic: {fileID: 0}
+  m_Group: {fileID: 0}
+  onValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5890625697242152211}
@@ -706,6 +709,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_IsOn: 0
 --- !u!114 &5890625697242152211
 MonoBehaviour:
   m_ObjectHideFlags: 0
