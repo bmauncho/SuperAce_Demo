@@ -90,16 +90,28 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+        {
+            TurboGrid(decks, tempPos);
+        }
+        else
+        {
+            normalGrid(decks , tempPos);
+        }
+    }
+
+    void normalGrid (Deck [] Decks, List<Transform> tempPos )
+    {
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
-        int columnCount = decks.Length; // Number of columns
+        int columnCount = Decks.Length; // Number of columns
 
         int positionIndex = 0; // Keeps track of the current position in tempPos
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = 0 ; row < rowCount ; row++)
             {
-                Deck currentDeck = decks [col];
+                Deck currentDeck = Decks [col];
                 if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
                 GameObject card = null;
                 if (IsFirstTime)
@@ -110,7 +122,7 @@ public class GridManager : MonoBehaviour
                 {
                     card = currentDeck.DrawCard();
                 }
-                
+
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -136,7 +148,51 @@ public class GridManager : MonoBehaviour
                 cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
             }
         }
+    }
 
+    void TurboGrid ( Deck [] Decks , List<Transform> tempPos )
+    {
+        int rowCount = 4; // Number of rows
+        int columnCount = Decks.Length; // Number of columns
+        int positionIndex = 0; // Keeps track of the current position in tempPos
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = 0 ; row < rowCount ; row++)
+            {
+                Deck currentDeck = Decks [col];
+                if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
+                GameObject card = null;
+                if (IsFirstTime)
+                {
+                    card = currentDeck.DrawSpecificCard(col);
+                }
+                else
+                {
+                    card = currentDeck.DrawCard();
+                }
+
+                currentDeck.ResetDeck();
+                if (card == null) continue;
+
+                Columns [col].Cards.Add(card);
+
+                Transform targetPos = tempPos [positionIndex];
+                positionIndex++;
+
+                card.transform.SetParent(targetPos);
+                card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+
+               card.transform.DOLocalMove(Vector3.zero , moveDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+                        // Set local position to zero explicitly after the animation
+                        card.transform.localPosition = Vector3.zero;
+                        targetPos.GetComponent<CardPos>().TheOwner = card;
+                        CalculateObjectsPlaced();
+                    });
+            }
+        }
     }
 
     void returnToPool ()
