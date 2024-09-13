@@ -5,6 +5,7 @@ public class WinUI : MonoBehaviour
 {
     public GameObject CurrentWinnings;
     public GameObject TotalWinnings;
+    public bool IsShowingTotalWinings;
 
     public void ActivateCurrentWinings ()
     {
@@ -22,6 +23,7 @@ public class WinUI : MonoBehaviour
 
     public void ActivateTotalWinnings ()
     {
+        IsShowingTotalWinings = true;
         TotalWinnings.GetComponent<CanvasGroup>().alpha = 1.0f;
         TotalWinnings.SetActive (true);
     }
@@ -30,6 +32,7 @@ public class WinUI : MonoBehaviour
     {
         TotalWinnings.GetComponent<CanvasGroup>().DOFade(0 , .5f).OnComplete(() =>
         {
+            IsShowingTotalWinings= false;
             TotalWinnings.SetActive(false);
         });
     }

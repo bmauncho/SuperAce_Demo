@@ -26,7 +26,7 @@ public class WinLoseManager : MonoBehaviour
         enableSpin = false;
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
-        SpinEnd();
+        StartCoroutine(SpinEnd());
         Debug.Log("Polulate Grid Checker");
     }
 
@@ -318,7 +318,7 @@ public class WinLoseManager : MonoBehaviour
     }
 
 
-    public void SpinEnd ()
+    public IEnumerator SpinEnd ()
     {
         if (CheckWinCondition())
         {
@@ -329,16 +329,66 @@ public class WinLoseManager : MonoBehaviour
         {
             //if Combo >= 3 && <= 5 show win screen
             //Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
-            if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
-            {
-                Debug.Log("ShowTotalWinings");
-                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
-                CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
-            }
+            yield return StartCoroutine(ShowTotalWins());
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
-            //Debug.Log("SpinAgain");
+            Debug.Log("SpinAgain");
             enableSpin = true;
+
+            float timeout = 5f; // Maximum time to wait in seconds
+            float timer = 0f;
+
+            while (CommandCentre.Instance.MainMenuController_.isBtnPressed && timer < timeout)
+            {
+                yield return null;
+                timer += Time.deltaTime;
+            }
+
+            if (timer >= timeout)
+            {
+                Debug.LogWarning("Button was not pressed within the timeout period.");
+                // Handle timeout case here, like forcing a spin or showing a message to the player
+            }
+
+            if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+            {
+                Debug.Log("AutoSpin");
+                CommandCentre.Instance.MainMenuController_.Spin();
+            }
+            else
+            {
+                yield return null;
+            }
+
         }
+    }
+
+    IEnumerator ShowTotalWins ()
+    {
+        if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
+        {
+            Debug.Log("ShowTotalWinings");
+            CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+            CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
+        }
+
+        // Timeout settings
+        float timeout = 5f; // Maximum time to wait (in seconds)
+        float timer = 0f;
+
+        // Wait until the WinUI is no longer showing or until the timeout occurs
+        while (CommandCentre.Instance.PayOutManager_.WinUI_.IsShowingTotalWinings && timer < timeout)
+        {
+            yield return null;  // Wait for the next frame
+            timer += Time.deltaTime;  // Increase the timer
+        }
+
+        if (timer >= timeout)
+        {
+            Debug.LogWarning("Timeout reached while waiting for WinUI to close.");
+            // Handle timeout case here, if necessary
+            // e.g., Force close WinUI or proceed regardless of the UI state.
+        }
+
     }
 
     public void ActivateCardMaskForWinningCards ()
@@ -621,7 +671,7 @@ public class WinLoseManager : MonoBehaviour
 
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
             enableSpin = true;
-            //PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
+            PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
             Debug.Log("free Game Disabled");
         }
         else
@@ -630,6 +680,7 @@ public class WinLoseManager : MonoBehaviour
             winCards.Clear();
             enableSpin = true;
             Debug.Log("free Game Disabled");
+            PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         }
     }
 

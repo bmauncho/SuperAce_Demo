@@ -43,6 +43,7 @@ public class ButtonPressed : MonoBehaviour
     {
         if (IsToggle)
         {
+            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
             GetComponent<Toggle>().interactable = true;
         }
         else

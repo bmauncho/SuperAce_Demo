@@ -1,16 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AutoSpin : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool IsAutoSpin = false;
 
-    // Update is called once per frame
-    void Update()
+    public void IsAutoSpinPressed ()
     {
-        
+        if (GetComponentInChildren<Toggle>().isOn)
+        {
+            CommandCentre.Instance.AutoSpinManager_.EnableAutoSpin();
+        }
+        else
+        {
+            CommandCentre.Instance.AutoSpinManager_.DisableAutoSpin();
+        }
+        IsAutoSpin = GetComponentInChildren<Toggle>().isOn;
     }
 }

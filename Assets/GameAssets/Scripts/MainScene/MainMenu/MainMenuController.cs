@@ -107,6 +107,8 @@ public class MainMenuController : MonoBehaviour
 
     public void Spin ()
     {
+        Debug.Log("Spin");
+        Debug.Log(isBtnPressed);
         if (!isBtnPressed)
         {
             if (CanSpin /*&& CommandCentre.Instance.WinLoseManager_.enableSpin*/)
@@ -120,6 +122,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator SpinReel ()
     {
+        Debug.Log("Spinning");
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
