@@ -14,6 +14,7 @@ public class WinLoseManager : MonoBehaviour
     private bool isPunchScaleActiveCardMasksRunning = false;
     private bool isWinningCardsDoPunchScaleRunning = false;
     public bool PunchScaleActiveCardMasksAnimationsComplete_ = false;
+    private bool isScatterWinSequenceRunning = false;
     public GameObject CardsPosHolder;
     [Space(10)]
     [Header("Lists")]
@@ -334,7 +335,7 @@ public class WinLoseManager : MonoBehaviour
             Debug.Log("SpinAgain");
             enableSpin = true;
 
-            float timeout = 5f; // Maximum time to wait in seconds
+            float timeout = 10f; // Maximum time to wait in seconds
             float timer = 0f;
 
             while (CommandCentre.Instance.MainMenuController_.isBtnPressed && timer < timeout)
@@ -351,8 +352,16 @@ public class WinLoseManager : MonoBehaviour
 
             if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
             {
-                Debug.Log("AutoSpin");
-                CommandCentre.Instance.MainMenuController_.Spin();
+                if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_>=1)
+                {
+                    Debug.Log("AutoSpin");
+                    CommandCentre.Instance.MainMenuController_.Spin();
+                }
+                else
+                {
+                    CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
+                }
+               
             }
             else
             {
@@ -372,7 +381,7 @@ public class WinLoseManager : MonoBehaviour
         }
 
         // Timeout settings
-        float timeout = 5f; // Maximum time to wait (in seconds)
+        float timeout = 10f; // Maximum time to wait (in seconds)
         float timer = 0f;
 
         // Wait until the WinUI is no longer showing or until the timeout occurs
@@ -657,31 +666,41 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
+        // Check if the coroutine is already running
+        if (isScatterWinSequenceRunning)
+            yield break;
+
+        isScatterWinSequenceRunning = true;
+
         yield return new WaitForSeconds(.25f);
+
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
             //Scatter cards rotate
             //screen
-            //clear wining cards
+            //clear winning cards
             //enable spin
-            Debug.Log("free Game Enabled");
+            Debug.Log("Free Game Enabled");
             winCards.Clear();
             yield return new WaitForSeconds(3);
 
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
             enableSpin = true;
             PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
-            Debug.Log("free Game Disabled");
+            Debug.Log("Free Game Disabled");
         }
         else
         {
             CommandCentre.Instance.FreeGameManager_.resetFreeSpins();
             winCards.Clear();
             enableSpin = true;
-            Debug.Log("free Game Disabled");
+            Debug.Log("Free Game Disabled");
             PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         }
+
+        // Reset the flag once the coroutine has finished
+        isScatterWinSequenceRunning = false;
     }
 
     public int GetPayLines ()

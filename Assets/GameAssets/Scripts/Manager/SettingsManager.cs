@@ -3,6 +3,7 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     public bool Sound = false;
+    public SettingsController SettingsController_;
 
     private void OnEnable ()
     {

@@ -7,9 +7,12 @@ public class AutoSpinManager : MonoBehaviour
     public bool IsAutoSpin = false;
     public GameObject AutoSpinUI;
     public TMP_Text AutoSpinText;
+    public AutoSpinSettings AutoSpinSettings_;
+    public int AutoSpinIndex_;
 
     public void EnableAutoSpin ()
     {
+        ResetAutoSpins ();
         ActivateAutoSpinUI();
 
         IsAutoSpin = true;
@@ -48,5 +51,19 @@ public class AutoSpinManager : MonoBehaviour
          {
              AutoSpinUI.SetActive(false);
          });
+    }
+
+    public void DecreaseAutoSpins ()
+    {
+        AutoSpinIndex_--;
+        if (AutoSpinIndex_ <= 0)
+        {
+            AutoSpinIndex_ = 0;
+        }
+    }
+
+    public void ResetAutoSpins ()
+    {
+        AutoSpinIndex_ = 10;
     }
 }

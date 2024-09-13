@@ -132,6 +132,7 @@ public class MainMenuController : MonoBehaviour
         {
             CommandCentre.Instance.CashManager_.DecreaseCash(CommandCentre.Instance.BetManager_.BetAmount);
         }
+        DecreaseAutoSpins();
         CommandCentre.Instance.ComboManager_.ResetComboCounter();
         CommandCentre.Instance.CashManager_.ResetWinings();
         CommandCentre.Instance.WinLoseManager_.enableSpin = false;
@@ -139,6 +140,14 @@ public class MainMenuController : MonoBehaviour
         yield break;
     }
 
+
+    void DecreaseAutoSpins ()
+    {
+        if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+        {
+            CommandCentre.Instance.AutoSpinManager_.DecreaseAutoSpins();
+        }
+    }
     public void OpenBets ()
     {
         BetingMenu.SetActive(true);
