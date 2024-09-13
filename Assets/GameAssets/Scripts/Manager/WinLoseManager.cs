@@ -335,7 +335,7 @@ public class WinLoseManager : MonoBehaviour
             Debug.Log("SpinAgain");
             enableSpin = true;
 
-            float timeout = 10f; // Maximum time to wait in seconds
+            float timeout = 12f; // Maximum time to wait in seconds
             float timer = 0f;
 
             while (CommandCentre.Instance.MainMenuController_.isBtnPressed && timer < timeout)
@@ -381,7 +381,7 @@ public class WinLoseManager : MonoBehaviour
         }
 
         // Timeout settings
-        float timeout = 10f; // Maximum time to wait (in seconds)
+        float timeout = 12f; // Maximum time to wait (in seconds)
         float timer = 0f;
 
         // Wait until the WinUI is no longer showing or until the timeout occurs
