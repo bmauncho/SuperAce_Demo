@@ -6,6 +6,7 @@ public class ButtonPressed : MonoBehaviour
 {
     public bool isSpinButton = false;
     public bool IsToggle = false;
+    public bool IsContinuebutton = false;
     private void Start()
     {
 
@@ -35,6 +36,34 @@ public class ButtonPressed : MonoBehaviour
                     
                 }
             }
+            else
+            {
+                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
+                {
+                    EnableButtonInteractvity();
+                    //delay 
+                }
+                else
+                {
+                    if (IsContinuebutton)
+                    {
+                        EnableButtonInteractvity();
+                    }
+                    else
+                    {
+                        if (CommandCentre.Instance.MainMenuController_.isBtnPressed)
+                        {
+                            DisableButtonInteractvity();
+                        }
+                        else
+                        {
+                            DisableButtonInteractvity();
+                        }
+                    }
+
+                }
+            }
+
         }
        
     }

@@ -906,6 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c455da0de8cd146a17a0789bf47511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpinsController_: {fileID: 2534481916627750793}
 --- !u!1 &568668111767389225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,6 +2792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &1071383504068214508
 GameObject:
   m_ObjectHideFlags: 0
@@ -5168,6 +5170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &1903763591010105776
 GameObject:
   m_ObjectHideFlags: 0
@@ -7691,6 +7694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &3082949759761075174
 GameObject:
   m_ObjectHideFlags: 0
@@ -8652,6 +8656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &3304416768684966059
 GameObject:
   m_ObjectHideFlags: 0
@@ -8978,6 +8983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &3481919471776277468
 GameObject:
   m_ObjectHideFlags: 0
@@ -10041,6 +10047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &3797914967254075698
 GameObject:
   m_ObjectHideFlags: 0
@@ -11766,6 +11773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &4492686694594427749
 GameObject:
   m_ObjectHideFlags: 0
@@ -12394,7 +12402,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3522802586131079999}
   m_HandleRect: {fileID: 906308840807284669}
   m_Direction: 2
-  m_Value: 0.55967444
+  m_Value: 1
   m_Size: 0.10274078
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -15123,6 +15131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &5627859332465326681
 GameObject:
   m_ObjectHideFlags: 0
@@ -17281,6 +17290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!114 &4361123376010437675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19317,6 +19327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 0
 --- !u!1 &7000227361352574739
 GameObject:
   m_ObjectHideFlags: 0
@@ -19856,6 +19867,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 1
+  IsContinuebutton: 1
 --- !u!1 &7257975190812725748
 GameObject:
   m_ObjectHideFlags: 0
@@ -20608,6 +20620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &7490748521692723165
 GameObject:
   m_ObjectHideFlags: 0
@@ -21874,6 +21887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &7838500685028332244
 GameObject:
   m_ObjectHideFlags: 0
@@ -22301,6 +22315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!114 &878038962782605620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24795,6 +24810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSpinButton: 0
   IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &8901756904404632148
 GameObject:
   m_ObjectHideFlags: 0
@@ -25172,8 +25188,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5213135399273586335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.50217307}
-  m_AnchorMax: {x: 1, y: 0.60491383}
+  m_AnchorMin: {x: 0, y: 0.89725924}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

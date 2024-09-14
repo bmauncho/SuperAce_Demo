@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &528397816856317008
 RectTransform:
   m_ObjectHideFlags: 0
@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 4169176619282438710}
   - component: {fileID: 5798983510587962971}
   - component: {fileID: 2948793647216650035}
+  - component: {fileID: 7152353135044962800}
   m_Layer: 5
   m_Name: PlayBtn
   m_TagString: Untagged
@@ -307,6 +308,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7152353135044962800}
+        m_TargetAssemblyTypeName: ButtonPressed, Assembly-CSharp
+        m_MethodName: BounceBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7152353135044962800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759624135091829866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a117680a237e5541a1efc269e3823d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSpinButton: 0
+  IsToggle: 0
+  IsContinuebutton: 1
 --- !u!1 &2309900983789884892
 GameObject:
   m_ObjectHideFlags: 0
