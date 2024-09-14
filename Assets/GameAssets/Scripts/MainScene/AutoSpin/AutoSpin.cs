@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,9 +16,17 @@ public class AutoSpin : MonoBehaviour
     public float holdTime = 0f;
     public bool isHolding = false;
     public bool isPointerDown = false;
+
+    public AutoSpinFx AutospinFx_;
+
+    public float timerDuration = 10f;  // Set the timer duration (10 seconds)
+    private float timer;
+    bool showfx = false;
+
     private void Start ()
     {
        AutoSpinToggle = GetComponentInChildren<Toggle>();
+        timer = timerDuration;
     }
     public void IsAutoSpinPressed ()
     {
@@ -67,9 +76,36 @@ public class AutoSpin : MonoBehaviour
             holdTime = 0f;
             isPointerDown = false;
         }
+        // Countdown timer
+        timer -= Time.deltaTime;
+
+        // When timer reaches zero
+        if (timer <= 0f)
+        {
+            if (!showfx)
+            {
+                showfx = true;
+                PerformAction();
+            }
+            
+        }
     }
 
-  
+    void PerformAction ()
+    {
+        // Add your logic here
+        StartCoroutine(PerformTask());
+    }
+   
+    public IEnumerator PerformTask ()
+    {
+        AutospinFx_.Activate();
+        yield return new WaitForSeconds(10);
+        AutospinFx_.Deactivate();
+        timer = timerDuration;
+        showfx = false;
+    }
+
     private void TriggerAlternateAction ()
     {
         Debug.Log("Alternate Action Triggered");
