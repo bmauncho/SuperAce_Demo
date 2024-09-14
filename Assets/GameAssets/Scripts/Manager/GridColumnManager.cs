@@ -446,14 +446,11 @@ public class GridColumnManager : MonoBehaviour
                 activeTweens.Add(shakeTween);
             }
 
-            // Wait for all tweens to complete using DOTween's Join
-            yield return DOTween.Sequence().AppendCallback(() =>
+            // Wait for all tweens to complete using Coroutine and WaitForCompletion
+            foreach (Tween tween in activeTweens)
             {
-                foreach (Tween tween in activeTweens)
-                {
-                    Debug.Log("Waiting for all objects to finish shaking...");
-                }
-            }).Join(activeTweens [0]).WaitForCompletion();
+                yield return tween.WaitForCompletion(); // Wait for each individual tween to complete
+            }
 
             Debug.Log("Shaking complete");
             Debug.Log($"IsObjectShakedComplete : {IsObjectShakedComplete()}");
@@ -468,8 +465,10 @@ public class GridColumnManager : MonoBehaviour
         {
             yield return StartCoroutine(CheckForBigJokerAndAnimate());
         }
+
         isShaking = false;
     }
+
 
     private IEnumerator WaitForTweenToComplete ( Transform target )
     {

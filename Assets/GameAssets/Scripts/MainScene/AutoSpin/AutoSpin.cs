@@ -9,7 +9,7 @@ public class AutoSpin : MonoBehaviour
     public bool IsPressingBtn = false;
     public GameObject AutospinHolder;
     public TMP_Text AutoSpinText;
-    Toggle AutoSpinToggle;
+    public Toggle AutoSpinToggle;
 
     public float holdDuration = 2.0f; // Duration in seconds for holding the toggle
     public float holdTime = 0f;
@@ -76,20 +76,6 @@ public class AutoSpin : MonoBehaviour
         // Add your custom logic here
         CommandCentre.Instance.SettingsManager_.SettingsController_.ActivateAutoSpinSetting();
     }
-
-    //public void OnPointerDown ( PointerEventData eventData )
-    //{
-    //    isPointerDown = true;
-    //    isHolding = true;
-    //    holdTime = 0f;
-    //}
-
-    //public void OnPointerUp ( PointerEventData eventData )
-    //{
-    //    isPointerDown = false;
-    //    isHolding = false;
-    //    holdTime = 0f;
-    //}
 }
 
 

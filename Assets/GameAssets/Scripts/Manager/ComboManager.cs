@@ -53,7 +53,7 @@ public class ComboManager : MonoBehaviour
             ComboCounter= ComboCounter+2;
             freeGameComboCounter++;
             if (ComboCounter > 6) { ComboCounter = 10; }
-            if(freeGameComboCounter>3) { ComboCounter = 5; }
+            if(freeGameComboCounter>3) { freeGameComboCounter = 5; }
         }
         else
         {

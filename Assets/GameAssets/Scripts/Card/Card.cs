@@ -28,27 +28,14 @@ public class Card : MonoBehaviour
 
     private void Update ()
     {
-        if (cardType == CardType.Scatter)
-        {
-            IsScatterCard = true;
-        }
-        else
-        {
-            IsScatterCard = false ;
-        }
+        IsScatterCard = (cardType == CardType.Scatter);
 
-        if(cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
+        if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
         {
             IsGoldenCard=true;
         }
-        else if(cardType != CardType.Small_Jocker)
-        {
-            IsSmallJocker = false ;
-        }
-        else if (cardType != CardType.Big_Jocker)
-        {
-            IsBigJocker = false ;
-        }
+        IsBigJocker = ( cardType == CardType.Big_Jocker );
+        IsSmallJocker = ( cardType == CardType.Small_Jocker );
 
 
         if (IsGoldenCard)

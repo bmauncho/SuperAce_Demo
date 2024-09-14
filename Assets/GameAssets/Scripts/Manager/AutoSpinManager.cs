@@ -9,6 +9,7 @@ public class AutoSpinManager : MonoBehaviour
     public TMP_Text AutoSpinText;
     public AutoSpinSettings AutoSpinSettings_;
     public int AutoSpinIndex_;
+    public AutoSpin Autospin;
 
     public void EnableAutoSpin ()
     {

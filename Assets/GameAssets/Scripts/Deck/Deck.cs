@@ -165,7 +165,7 @@ public class Deck : MonoBehaviour
             drawnCard.transform.SetParent(null);
             drawnCard.SetActive(true);
             drawnCard.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
-            CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
+            //CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
             return drawnCard;
         }
 

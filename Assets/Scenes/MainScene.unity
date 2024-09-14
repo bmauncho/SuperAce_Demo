@@ -3857,6 +3857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sound: 1
+  SettingsController_: {fileID: 1145935061}
 --- !u!114 &892455978 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5740650318584355527, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
@@ -4447,6 +4448,8 @@ MonoBehaviour:
   AutoSpinUI: {fileID: 167781603}
   AutoSpinText: {fileID: 1578879740}
   AutoSpinSettings_: {fileID: 1371828360}
+  AutoSpinIndex_: 0
+  Autospin: {fileID: 1449365414}
 --- !u!4 &989973741
 Transform:
   m_ObjectHideFlags: 0
@@ -5301,6 +5304,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1208380931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1910424596748478592, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 1612391383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1208380937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208380931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d343a855c7d38ca4dbb79d8105308ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1211873393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6809,6 +6829,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39c41e7d6eb87f49a7d0cad23fb93ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1449365414 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6377052655028046808, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 1612391383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c201e2bf7d6ef274d9aab0fe14966543, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1450368301
 GameObject:
   m_ObjectHideFlags: 0
@@ -7534,7 +7565,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1910424596748478592, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1208380937}
   m_SourcePrefab: {fileID: 100100000, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
 --- !u!224 &1612391384 stripped
 RectTransform:

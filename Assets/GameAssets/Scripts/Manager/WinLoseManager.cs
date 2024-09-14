@@ -27,6 +27,7 @@ public class WinLoseManager : MonoBehaviour
         enableSpin = false;
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
+        Debug.Log("Start Spin End");
         StartCoroutine(SpinEnd());
         Debug.Log("Polulate Grid Checker");
     }
@@ -321,8 +322,10 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator SpinEnd ()
     {
+        Debug.Log("SpinEnd");
         if (CheckWinCondition())
         {
+            Debug.Log("Spin Won");
             HandleWinCondition(winCards);
             IsScatterWin = false;
         }
@@ -350,16 +353,19 @@ public class WinLoseManager : MonoBehaviour
                 // Handle timeout case here, like forcing a spin or showing a message to the player
             }
 
+            
             if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
             {
                 if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_>=1)
                 {
+                    yield return new WaitForSeconds(1f);
                     Debug.Log("AutoSpin");
                     CommandCentre.Instance.MainMenuController_.Spin();
                 }
                 else
                 {
                     CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
+                    CommandCentre.Instance.AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
                 }
                
             }
@@ -677,28 +683,55 @@ public class WinLoseManager : MonoBehaviour
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
-            //Scatter cards rotate
-            //screen
-            //clear winning cards
-            //enable spin
             Debug.Log("Free Game Enabled");
             winCards.Clear();
             yield return new WaitForSeconds(3);
-
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
-            enableSpin = true;
-            PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
-            Debug.Log("Free Game Disabled");
+
         }
         else
         {
             CommandCentre.Instance.FreeGameManager_.resetFreeSpins();
             winCards.Clear();
-            enableSpin = true;
-            Debug.Log("Free Game Disabled");
-            PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
+        }
+        PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
+        Debug.Log("Free Game Disabled");
+        enableSpin = true;
+
+        float timeout = 12f; // Maximum time to wait in seconds
+        float timer = 0f;
+
+        while (CommandCentre.Instance.MainMenuController_.isBtnPressed && timer < timeout)
+        {
+            yield return null;
+            timer += Time.deltaTime;
         }
 
+        if (timer >= timeout)
+        {
+            Debug.LogWarning("Button was not pressed within the timeout period.");
+            // Handle timeout case here, like forcing a spin or showing a message to the player
+        }
+
+        if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+        {
+            if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ >= 1)
+            {
+                yield return new WaitForSeconds(1f);
+                Debug.Log("AutoSpin");
+                CommandCentre.Instance.MainMenuController_.Spin();
+            }
+            else
+            {
+                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
+                CommandCentre.Instance.AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+            }
+
+        }
+        else
+        {
+            yield return null;
+        }
         // Reset the flag once the coroutine has finished
         isScatterWinSequenceRunning = false;
     }
