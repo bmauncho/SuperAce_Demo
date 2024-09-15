@@ -162,7 +162,7 @@ public class GridColumnManager : MonoBehaviour
             if (!currentCardPos.GetComponent<CardPos>().TheOwner)
             {
                 GameObject newCard = responsibleDeck.DrawCard();
-
+                newCard.GetComponent<Card>().ScatterCardAnim.enabled = false;
                 if (newCard == null)
                 {
                     Debug.LogError("Deck is empty, unable to continue refilling.");
@@ -185,6 +185,10 @@ public class GridColumnManager : MonoBehaviour
                             newCard.transform.localPosition = Vector3.zero;
                             ActivateNewCard(newCard);
                             CalculateObjectsPlaced();
+                            if (newCard.GetComponent<Card>().cardType == CardType.Scatter)
+                            {
+                                newCard.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                            }
                         }));
                     cardSequence.PrependInterval(delay);
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
@@ -229,6 +233,7 @@ public class GridColumnManager : MonoBehaviour
                             newCard.transform.localPosition = Vector3.zero;
                             ActivateNewCard(newCard);
                             CalculateObjectsPlaced();
+                           
                         });
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
                 }

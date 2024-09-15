@@ -20,6 +20,9 @@ public class Card : MonoBehaviour
     public int CardSortPos = 5;
     public Vector3 CardScale;
 
+    public GameObject ScatterWords;
+    public Animator ScatterCardAnim;
+
     private void Start ()
     {
         cardBg = GetComponentInChildren<SpriteRenderer>();
@@ -60,6 +63,12 @@ public class Card : MonoBehaviour
             if (IsScatterCard)
             {
                 cardBg.sprite = null;
+                ScatterWords.SetActive(true);
+            }
+            else
+            {
+                ScatterWords.SetActive(false);
+                ScatterCardAnim.enabled = false;
             }
         }
        
@@ -110,6 +119,7 @@ public class Card : MonoBehaviour
             IsGoldenCard = false;
             //this is a safety net
             IsScatterCard = true;
+            ScatterCardAnim.enabled = false;
         }
     }
 

@@ -122,7 +122,7 @@ public class GridManager : MonoBehaviour
                 {
                     card = currentDeck.DrawCard();
                 }
-
+                card.GetComponent<Card>().ScatterCardAnim.enabled = false;
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -133,7 +133,7 @@ public class GridManager : MonoBehaviour
 
                 card.transform.SetParent(targetPos);
                 card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-
+               
                 // Create a sequence for each card's movement
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
@@ -144,6 +144,10 @@ public class GridManager : MonoBehaviour
                         card.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = card;
                         CalculateObjectsPlaced();
+                        if (card.GetComponent<Card>().cardType == CardType.Scatter)
+                        {
+                            card.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                        }
                     }));
                 cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
             }

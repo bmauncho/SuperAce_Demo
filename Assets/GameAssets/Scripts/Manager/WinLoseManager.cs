@@ -485,7 +485,7 @@ public class WinLoseManager : MonoBehaviour
             if (owner != null && winningCardsSet.Contains(owner))
             {
                 totalAnimations++; // Increment the total animation count
-                activeTweens.Add(cardPos.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 0 , .2f)
+                activeTweens.Add(cardPos.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 8 , 1)
                     .OnComplete(() =>
                     {
                         cardPos.transform.localScale = Vector3.one;
@@ -544,7 +544,7 @@ public class WinLoseManager : MonoBehaviour
                 {
                     totalAnimations++; // Increment the total animation count
 
-                   activeTweens.Add(cardMask.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 0 , .2f)
+                   activeTweens.Add(cardMask.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 8 , 1)
                        .OnComplete(() =>
                        {
                            cardMask.transform.localScale = Vector3.one;
