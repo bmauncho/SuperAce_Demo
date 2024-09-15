@@ -485,10 +485,10 @@ public class WinLoseManager : MonoBehaviour
             if (owner != null && winningCardsSet.Contains(owner))
             {
                 totalAnimations++; // Increment the total animation count
-                activeTweens.Add(cardPos.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 8 , 1)
+                activeTweens.Add(owner.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1)
                     .OnComplete(() =>
                     {
-                        cardPos.transform.localScale = Vector3.one;
+                        owner.transform.localScale = owner.GetComponent<Card>().CardScale;
                         completedAnimations++; // Increment the completed animation count
                     }));
             }
@@ -544,7 +544,7 @@ public class WinLoseManager : MonoBehaviour
                 {
                     totalAnimations++; // Increment the total animation count
 
-                   activeTweens.Add(cardMask.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 8 , 1)
+                   activeTweens.Add(cardMask.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1)
                        .OnComplete(() =>
                        {
                            cardMask.transform.localScale = Vector3.one;
@@ -602,8 +602,18 @@ public class WinLoseManager : MonoBehaviour
     {
         foreach (GameObject goldenCard in goldenCards)
         {
-            goldenCard.transform.DORotate(Vector3.zero , .5f, RotateMode.FastBeyond360);
+            goldenCard.transform.DORotate(Vector3.zero , .5f, RotateMode.FastBeyond360).OnComplete(() =>
+            {
+                StartCoroutine(PunchScaleRotatedCards(goldenCard.transform));
+            });
         }
+    }
+    public IEnumerator PunchScaleRotatedCards ( Transform target )
+    {
+        yield return new WaitForSeconds(.25f);
+        Tween PunchScale = target.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1).SetEase(Ease.OutQuad);
+        yield return PunchScale.WaitForCompletion();
+        target.localScale = target.GetComponent<Card>().CardScale;
     }
 
     public void GetGoldenCards ( List<GameObject> winningCards )

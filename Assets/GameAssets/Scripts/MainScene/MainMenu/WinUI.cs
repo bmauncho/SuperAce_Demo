@@ -5,12 +5,17 @@ public class WinUI : MonoBehaviour
 {
     public GameObject CurrentWinnings;
     public GameObject TotalWinnings;
+    public GameObject CurrentWiningsTextHolder;
     public bool IsShowingTotalWinings;
 
     public void ActivateCurrentWinings ()
     {
         CurrentWinnings.GetComponent<CanvasGroup>().alpha = 1.0f;
         CurrentWinnings.SetActive (true);
+        CurrentWiningsTextHolder.transform.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 8 , 1)
+            .OnComplete(() => {
+              CurrentWiningsTextHolder.transform.localScale = Vector3.one;
+          });
     }
 
     public void DeactivateCurrentWinings ()
