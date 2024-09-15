@@ -661,11 +661,12 @@ public class WinLoseManager : MonoBehaviour
         PunchScaleActiveCardMasksAnimationsComplete_ = false;
         WinningCardAnimationsComplete_ = false;
         CommandCentre.Instance.PayOutManager_.HideCurrentWin();
+        CommandCentre.Instance.CardMaskManager_.DeactivateNormalcards();
         DeactivateWinningCards(winningCards);
-        CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
-        CommandCentre.Instance.CardMaskManager_.Deactivate();
         yield return new WaitForSeconds(1);
         winCards.Clear();
+        CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
+        CommandCentre.Instance.CardMaskManager_.Deactivate();
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 

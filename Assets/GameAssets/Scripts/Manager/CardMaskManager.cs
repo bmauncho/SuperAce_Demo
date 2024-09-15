@@ -12,7 +12,7 @@ public class CardMaskManager : MonoBehaviour
 {
     public GameObject CardMask;
     public List<CardMaskColumn> CardMasks = new List<CardMaskColumn>();
-
+    public List<GridPosColumns> Columns = new List<GridPosColumns>();
     public void Activate ()
     {
         //Debug.Log("activateMasks");
@@ -22,6 +22,40 @@ public class CardMaskManager : MonoBehaviour
     public void Deactivate ()
     {
         CardMask.SetActive(false);
+    }
+
+    public void DeactivateNormalcards ()
+    {
+        for (int columnIndex = 0 ; columnIndex < Columns.Count ; columnIndex++)
+        {
+            GridPosColumns column = Columns [columnIndex];
+
+            for (int cardIndex = 0 ; cardIndex < column.CardsPos.Count ; cardIndex++)
+            {
+                GameObject cardPos = column.CardsPos [cardIndex];
+                CardPos cardPosScript = cardPos.GetComponent<CardPos>();
+
+                if (cardPosScript != null && cardPosScript.TheOwner != null)
+                {
+                    // Check if the card has a rotation of 180 degrees on the Y-axis
+                    if (cardPosScript.TheOwner.transform.rotation == Quaternion.Euler(0 , 180 , 0))
+                    {
+                        // Assuming the mask is in the same position in the CardMasks list as the card in the Columns
+                        if (columnIndex < CardMasks.Count && cardIndex < CardMasks [columnIndex].cardMasks.Count)
+                        {
+                            GameObject cardMask = CardMasks [columnIndex].cardMasks [cardIndex];
+
+                            if (cardMask.activeSelf)
+                            {
+                                // Deactivate the card mask
+                                cardMask.SetActive(false);
+                                cardMask.transform.localScale = Vector3.one;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void DeactivateAllCardMasks ()
