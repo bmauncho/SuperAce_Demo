@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 118111206}
   - component: {fileID: 118111208}
   - component: {fileID: 118111207}
+  - component: {fileID: 118111209}
   m_Layer: 5
   m_Name: TextImg
   m_TagString: Untagged
@@ -193,6 +194,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118111205}
   m_CullTransparentMesh: 1
+--- !u!114 &118111209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118111205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19b7e2285c104f6ca47d583f3e5444f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectFactor: 0.3
+  m_Width: 0.117
+  m_Rotation: 135
+  m_Softness: 1
+  m_Brightness: 0.194
+  m_Gloss: 1
+  m_EffectArea: 0
+  m_Player:
+    play: 1
+    initialPlayDelay: 0
+    duration: 1
+    loop: 0
+    loopDelay: 0
+    updateMode: 0
 --- !u!1001 &271073310
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,13 +15,15 @@ public class Card : MonoBehaviour
     [Header("Variables")]
     public bool IsGoldenCard = false;
     public bool IsScatterCard = false;
-    public bool IsSmallJocker= false;
+    public bool IsSmallJocker = false;
     public bool IsBigJocker = false;
     public int CardSortPos = 5;
     public Vector3 CardScale;
 
     public GameObject ScatterWords;
     public Animator ScatterCardAnim;
+
+    public ParticleSystem ScatterRotate;
 
     private void Start ()
     {
@@ -31,11 +33,11 @@ public class Card : MonoBehaviour
 
     private void Update ()
     {
-        IsScatterCard = (cardType == CardType.Scatter);
+        IsScatterCard = ( cardType == CardType.Scatter );
 
         if (cardType == CardType.Big_Jocker || cardType == CardType.Small_Jocker)
         {
-            IsGoldenCard=true;
+            IsGoldenCard = true;
         }
         IsBigJocker = ( cardType == CardType.Big_Jocker );
         IsSmallJocker = ( cardType == CardType.Small_Jocker );
@@ -71,10 +73,10 @@ public class Card : MonoBehaviour
                 ScatterCardAnim.enabled = false;
             }
         }
-       
+
     }
 
-    public void SetCardSortPos(int pos )
+    public void SetCardSortPos ( int pos )
     {
         CardSortPos = pos;
         Back.sortingOrder = pos;
@@ -83,7 +85,7 @@ public class Card : MonoBehaviour
     {
         if (!TheCard.activeSelf)
         {
-            TheCard.SetActive (true);
+            TheCard.SetActive(true);
         }
     }
 
@@ -165,7 +167,7 @@ public class Card : MonoBehaviour
         IsScatterCard = true;
     }
 
-    public void SetSmallJocker (Sprite smallJoker = null)
+    public void SetSmallJocker ( Sprite smallJoker = null )
     {
         IsScatterCard = false;
         IsGoldenCard = true;
@@ -191,7 +193,7 @@ public class Card : MonoBehaviour
     CardType CompareEnumToString ()
     {
         string stringValue = CommandCentre.Instance.CardManager_.CheckCardSpriteAndSetCardType(this.transform);
-        if (Enum.TryParse(stringValue ,true, out cardType))
+        if (Enum.TryParse(stringValue , true , out cardType))
         {
             switch (cardType)
             {
@@ -226,5 +228,19 @@ public class Card : MonoBehaviour
             Debug.Log("The string could not be converted to an enum.");
             return default(CardType);
         }
+    }
+
+    public void EnableScatterRotate ()
+    {
+        card.sprite = null;
+        ScatterRotate.gameObject.SetActive(true);
+        ScatterCardAnim.enabled = false;
+    }
+
+    public void DisableScatterRotate ()
+    {
+        card.sprite = CommandCentre.Instance.CardManager_.ScatterCard;
+        ScatterCardAnim.enabled = true;
+        ScatterRotate.gameObject.SetActive(false);
     }
 }

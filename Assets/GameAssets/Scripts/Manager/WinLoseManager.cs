@@ -688,15 +688,29 @@ public class WinLoseManager : MonoBehaviour
             yield break;
 
         isScatterWinSequenceRunning = true;
+        CommandCentre.Instance.CardMaskManager_.Activate();
+        ActivateCardMaskForWinningCards();
 
         yield return new WaitForSeconds(.25f);
+        foreach (GameObject winningCard in winningCards)
+        {
+            winningCard.GetComponent<Card>().EnableScatterRotate();
+        }
+        yield return new WaitForSeconds(3f);
 
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
             Debug.Log("Free Game Enabled");
+            foreach (GameObject winningCard in winningCards)
+            {
+                winningCard.GetComponent<Card>().DisableScatterRotate();
+            }
             winCards.Clear();
+            CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
+            CommandCentre.Instance.CardMaskManager_.Deactivate();
             yield return new WaitForSeconds(3);
+            
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
 
         }
@@ -704,6 +718,8 @@ public class WinLoseManager : MonoBehaviour
         {
             CommandCentre.Instance.FreeGameManager_.resetFreeSpins();
             winCards.Clear();
+            CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
+            CommandCentre.Instance.CardMaskManager_.Deactivate();
         }
         PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         Debug.Log("Free Game Disabled");
