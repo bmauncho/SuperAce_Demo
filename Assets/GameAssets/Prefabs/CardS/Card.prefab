@@ -756,6 +756,7 @@ MonoBehaviour:
   CardScale: {x: 0, y: 0, z: 0}
   ScatterWords: {fileID: 7700534434025468827}
   ScatterCardAnim: {fileID: 895845832016793594}
+  ScatterRotate: {fileID: 6786070511970399731}
 --- !u!1001 &253303202112778065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -898,5 +899,10 @@ PrefabInstance:
 --- !u!4 &3291979314549241413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4608580315760037099, guid: c57d0e7b3cf9b984d9dfc307292e668f, type: 3}
+  m_PrefabInstance: {fileID: 1322794812203088558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6786070511970399731 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5510002354082516829, guid: c57d0e7b3cf9b984d9dfc307292e668f, type: 3}
   m_PrefabInstance: {fileID: 1322794812203088558}
   m_PrefabAsset: {fileID: 0}

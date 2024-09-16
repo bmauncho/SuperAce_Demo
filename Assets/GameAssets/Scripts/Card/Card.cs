@@ -58,6 +58,7 @@ public class Card : MonoBehaviour
                 Outline.sprite = CommandCentre.Instance.CardManager_.DefaultOutline;
             }
             cardBg.sprite = CommandCentre.Instance.CardManager_.Goldbackground;
+            ScatterWords.SetActive(false);
         }
         else
         {
