@@ -54,7 +54,7 @@ public class CashManager : MonoBehaviour
 
     public void updateThecashUi ()
     {
-        CashAmountText.SetText("$" + Mathf.FloorToInt(CashAmount).ToString());
+        CashAmountText.SetText(Mathf.FloorToInt(CashAmount).ToString());
     }
     [ContextMenu("IncreaseCash")]
     public void TestIncreasecash ()
