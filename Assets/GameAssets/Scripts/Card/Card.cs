@@ -66,11 +66,15 @@ public class Card : MonoBehaviour
             if (IsScatterCard)
             {
                 cardBg.sprite = null;
-                ScatterWords.SetActive(true);
             }
             else
             {
                 ScatterWords.SetActive(false);
+                if (ScatterCardAnim.enabled == true)
+                {
+                    ScatterCardAnim.Play("ScatterCardIdle");
+                }
+                
                 ScatterCardAnim.enabled = false;
             }
         }
@@ -166,6 +170,7 @@ public class Card : MonoBehaviour
         DisableCardOBJ();
         IsGoldenCard = false;
         IsScatterCard = true;
+        ScatterWords.SetActive(true);
     }
 
     public void SetSmallJocker ( Sprite smallJoker = null )
@@ -236,6 +241,7 @@ public class Card : MonoBehaviour
         card.sprite = null;
         ScatterRotate.gameObject.SetActive(true);
         ScatterCardAnim.enabled = false;
+        ScatterWords.SetActive(false);
     }
 
     public void DisableScatterRotate ()
@@ -243,5 +249,6 @@ public class Card : MonoBehaviour
         card.sprite = CommandCentre.Instance.CardManager_.ScatterCard;
         ScatterCardAnim.enabled = true;
         ScatterRotate.gameObject.SetActive(false);
+        ScatterWords.SetActive(true);
     }
 }

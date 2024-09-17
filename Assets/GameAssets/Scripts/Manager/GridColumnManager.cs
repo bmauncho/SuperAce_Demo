@@ -660,6 +660,7 @@ public class GridColumnManager : MonoBehaviour
                                     2.0f , 1 , 1.0f).OnComplete(() =>
                                     {
                                         objectsjumped++;
+                                        Debug.Log($"Card 1 jumped: {objectsjumped}/{totalObjectstojump}");
                                         newCard1.transform.localPosition = Vector3.zero;
                                         newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                         CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
@@ -670,6 +671,7 @@ public class GridColumnManager : MonoBehaviour
                                     2.0f , 1 , 1.0f).OnComplete(() =>
                                     {
                                         objectsjumped++;
+                                        Debug.Log($"Card 2 jumped: {objectsjumped}/{totalObjectstojump}");
                                         newCard2.transform.localPosition = Vector3.zero;
                                         newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                         CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
@@ -690,6 +692,15 @@ public class GridColumnManager : MonoBehaviour
             Debug.Log("Jump complete");
             yield return new WaitForSeconds(0.5f);
             Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
+            
+            if (!IsObjectsJumpComplete())
+            {
+                while (!IsObjectsJumpComplete())
+                {
+                    objectsjumped++;
+                }
+            }
+           
             if (IsObjectsJumpComplete() && !hasCheckedWin)
             {
                 Debug.Log("wincheck");
