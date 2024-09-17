@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 28.1}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 275, y: 275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &118111207
 MonoBehaviour:
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Player:
     play: 1
     initialPlayDelay: 0
-    duration: 1
+    duration: 2
     loop: 0
     loopDelay: 0
     updateMode: 0
@@ -537,6 +537,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!114 &987544248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,18 +659,6 @@ PrefabInstance:
     - target: {fileID: 3071273450383392572, guid: fa4805cda3302d34ebae9ca89f935931, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3973318122783547200, guid: fa4805cda3302d34ebae9ca89f935931, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3973318122783547200, guid: fa4805cda3302d34ebae9ca89f935931, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8983371199515922632, guid: fa4805cda3302d34ebae9ca89f935931, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 22.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
