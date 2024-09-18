@@ -64,6 +64,7 @@ public class FreeGameManager : MonoBehaviour
         ToggleComboBanner(false);
         resetFreeSpins();
         CommandCentre.Instance.WinLoseManager_.enableSpin = true;
+        CommandCentre.Instance.SoundManager_.PlayAmbientSound("FunkCasino");
     }
 
 

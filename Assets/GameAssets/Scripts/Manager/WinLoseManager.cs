@@ -712,6 +712,7 @@ public class WinLoseManager : MonoBehaviour
             yield return new WaitForSeconds(3);
             
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+            
 
         }
         else
@@ -721,6 +722,7 @@ public class WinLoseManager : MonoBehaviour
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
             CommandCentre.Instance.CardMaskManager_.Deactivate();
         }
+        CommandCentre.Instance.SoundManager_.PlayAmbientSound("Funk_2");
         PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         Debug.Log("Free Game Disabled");
         enableSpin = true;

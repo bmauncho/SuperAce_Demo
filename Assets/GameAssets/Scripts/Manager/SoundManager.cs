@@ -30,6 +30,13 @@ public class SoundManager : MonoBehaviour
         AS.Play();
     }
 
+    public void PlayAmbientSound ( string AudioFile)
+    {
+        AudioClip _Clip = (AudioClip)Resources.Load("Sounds/" + AudioFile);
+        AmbientSound.clip = _Clip;
+        AmbientSound.Play();
+    }
+
     public void StopAudio ( string ClipName )
     {
         for (int i = 0 ; i < PossibleAudioSource.Count ; i++)
