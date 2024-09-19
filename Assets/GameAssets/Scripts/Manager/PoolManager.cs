@@ -13,11 +13,16 @@ public class PoolManager : MonoBehaviour
     // Delegate and event to notify when the pool is initialized
     public bool Poolinitialized = false;
 
+    public GameObject cardfx;
+    public int fxPoolSize = 20;
+    private Queue<GameObject> cardfxPool;
+
     private void Awake ()
     {
         InitializePool();
+        InitializeCardFxPool();
     }
-
+    #region
     void InitializePool ()
     {
         cardPool = new Queue<GameObject>();
@@ -47,6 +52,8 @@ public class PoolManager : MonoBehaviour
             return null;
         }
     }
+    
+
 
     public void ReturnCard ( GameObject card )
     {
@@ -64,6 +71,8 @@ public class PoolManager : MonoBehaviour
             cardPool.Enqueue(card);
         }
     }
+
+  
 
     [ContextMenu("Get Inactive Cards")]
     void GetAllInactiveCards ()
@@ -97,4 +106,51 @@ public class PoolManager : MonoBehaviour
         }
         InactiveCardList.Clear();
     }
+    #endregion 
+
+    #region
+    //cardfx
+    void InitializeCardFxPool ()
+    {
+        cardfxPool = new Queue<GameObject>();
+
+        for (int i = 0 ; i < fxPoolSize ; i++)
+        {
+            GameObject cardfx_ = Instantiate(cardfx , transform);
+            cardfx_.SetActive(false);
+            cardfxPool.Enqueue(cardfx_);
+        }
+    }
+
+    public GameObject GetCardFx ()
+    {
+        if (cardfxPool.Count > 0)
+        {
+            GameObject cardfx_ = cardfxPool.Dequeue();
+            cardfx_.SetActive(true);
+            return cardfx_;
+        }
+        else
+        {
+            Debug.LogWarning("fxPool is empty! Consider increasing fxpool size.");
+            return null;
+        }
+    }
+
+    public void ReturnFx ( GameObject cardfx_ )
+    {
+        if (cardfx_)
+        {
+            cardfx_.transform.SetParent(transform);
+            cardfx_.SetActive(false);
+            cardfxPool.Enqueue(cardfx_);
+        }
+    }
+
+    public void GetAllFx ()
+    {
+
+    }
+
+    #endregion 
 }

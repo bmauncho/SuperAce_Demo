@@ -443,6 +443,46 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
+
+    public void Activatecardfx ()
+    {
+        var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+        if (cardFxManager_ == null || cardFxManager_.CardFx.Count == 0)
+        {
+            Debug.LogError("CardfxManager or Cardfx not set up correctly.");
+            return;
+        }
+
+        // Loop through each column in the WinLoseManager
+        for (int colIndex = 0 ; colIndex < columns.Count ; colIndex++)
+        {
+            var gridColumn = columns [colIndex];
+            var cardFxColumn = cardFxManager_.CardFx [colIndex];
+
+            // Loop through each card in the grid column
+            for (int cardIndex = 0 ; cardIndex < gridColumn.Cards.Count ; cardIndex++)
+            {
+                GameObject card = gridColumn.Cards [cardIndex];
+                GameObject cardfx = cardFxColumn.cardFxPos [cardIndex];
+
+                // Check if the card is a winning card and has a corresponding cardfx
+                if (winCards.Contains(card) && cardfx != null)
+                {
+                    // Activate the card mask
+                    cardfx.SetActive(true);
+                    GameObject TheCardfx = CommandCentre.Instance.PoolManager_.GetCardFx();
+                    TheCardfx.transform.SetParent(cardfx.transform);
+                    TheCardfx.transform.localPosition = Vector3.zero;
+                }
+                else if (cardfx != null)
+                {
+                    // Deactivate the card mask if it's not a winning card
+                    cardfx.SetActive(false);
+                }
+            }
+        }
+    }
+
     public void DeactivateWinningCards ( List<GameObject> winningCards )
     {
         enableSpin = false;
@@ -660,7 +700,7 @@ public class WinLoseManager : MonoBehaviour
         {
             yield return null;
         }
-
+        
         GetGoldenCards(winningCards);
         if (goldenCards.Count > 0)
         {
@@ -673,13 +713,28 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.PayOutManager_.HideCurrentWin();
         CommandCentre.Instance.CardMaskManager_.DeactivateNormalcards();
         DeactivateWinningCards(winningCards);
+        CommandCentre.Instance.CardFxManager_.Activate();
+        Activatecardfx();
         yield return new WaitForSeconds(1);
         winCards.Clear();
+        StopWinningfx();
+        CommandCentre.Instance.CardFxManager_.ReturnToPool();
+        CommandCentre.Instance.CardFxManager_.Deactivate();
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
         CommandCentre.Instance.CardMaskManager_.Deactivate();
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 
+
+    public void playWiningFx ()
+    {
+       
+    }
+
+    public void StopWinningfx ()
+    {
+        
+    }
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
