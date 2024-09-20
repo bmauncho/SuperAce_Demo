@@ -241,7 +241,7 @@ public class Card : MonoBehaviour
         card.sprite = null;
         ScatterRotate.gameObject.SetActive(true);
         ScatterCardAnim.enabled = false;
-        ScatterWords.SetActive(false);
+        //ScatterWords.SetActive(false);
     }
 
     public void DisableScatterRotate ()
@@ -250,5 +250,15 @@ public class Card : MonoBehaviour
         ScatterCardAnim.enabled = true;
         ScatterRotate.gameObject.SetActive(false);
         ScatterWords.SetActive(true);
+    }
+
+    public void resetCard ()
+    {
+        cardType = CardType.Ace;
+        SetBigJocker();
+        SetSmallJocker();
+        SetCardOutLine();
+        SetCardOutLine();
+
     }
 }

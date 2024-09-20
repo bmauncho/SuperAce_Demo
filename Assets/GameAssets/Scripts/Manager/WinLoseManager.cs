@@ -32,7 +32,7 @@ public class WinLoseManager : MonoBehaviour
         Debug.Log("Polulate Grid Checker");
     }
 
-   
+    #region
 
     public bool CheckWinCondition ()
     {
@@ -253,7 +253,9 @@ public class WinLoseManager : MonoBehaviour
        // Debug.Log("No scatter card found in three or more columns.");
         return null;
     }
+    #endregion
 
+    #region
     private int GetColumn ( GameObject card , List<GameObject> [] columns )
     {
         for (int i = 0 ; i < columns.Length ; i++)
@@ -282,7 +284,9 @@ public class WinLoseManager : MonoBehaviour
         return card.GetComponent<Card>().cardType == CardType.Big_Jocker ||
             card.GetComponent<Card>().cardType == CardType.Small_Jocker;
     }
+    #endregion
 
+    #region
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
         Debug.Log(string.Join(", " , GetWinningCardType()));
@@ -405,7 +409,9 @@ public class WinLoseManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+    
     public void ActivateCardMaskForWinningCards ()
     {
         // Ensure that the CardMaskManager is available
@@ -483,6 +489,45 @@ public class WinLoseManager : MonoBehaviour
         }
     }
 
+    public void ActivateScatterCardfx ()
+    {
+        var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+        if (cardFxManager_ == null || cardFxManager_.CardFx.Count == 0)
+        {
+            Debug.LogError("CardfxManager or Cardfx not set up correctly.");
+            return;
+        }
+
+        // Loop through each column in the WinLoseManager
+        for (int colIndex = 0 ; colIndex < columns.Count ; colIndex++)
+        {
+            var gridColumn = columns [colIndex];
+            var cardFxColumn = cardFxManager_.CardFx [colIndex];
+
+            // Loop through each card in the grid column
+            for (int cardIndex = 0 ; cardIndex < gridColumn.Cards.Count ; cardIndex++)
+            {
+                GameObject card = gridColumn.Cards [cardIndex];
+                GameObject cardfx = cardFxColumn.cardFxPos [cardIndex];
+
+                // Check if the card is a winning card and has a corresponding cardfx
+                if (winCards.Contains(card) && cardfx != null)
+                {
+                    // Activate the card mask
+                    cardfx.SetActive(true);
+                    GameObject TheCardfx = CommandCentre.Instance.PoolManager_.GetScatterCardFx();
+                    TheCardfx.transform.SetParent(cardfx.transform);
+                    TheCardfx.transform.localPosition = Vector3.zero;
+                }
+                else if (cardfx != null)
+                {
+                    // Deactivate the card mask if it's not a winning card
+                    cardfx.SetActive(false);
+                }
+            }
+        }
+    }
+
     public void DeactivateWinningCards ( List<GameObject> winningCards )
     {
         enableSpin = false;
@@ -505,7 +550,7 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
         
     }
-
+    #region
     public IEnumerator WinningCardsDoPunchScale ( List<GameObject> winningCards )
     {
         if (isWinningCardsDoPunchScaleRunning) yield break; // Prevent multiple calls
@@ -612,8 +657,9 @@ public class WinLoseManager : MonoBehaviour
     {
         return true;
     }
+    #endregion
 
-
+    #region
     public bool IsGoldenCard(GameObject card )
     {
         if (card)
@@ -642,12 +688,14 @@ public class WinLoseManager : MonoBehaviour
     {
         foreach (GameObject goldenCard in goldenCards)
         {
-            goldenCard.transform.DORotate(Vector3.zero , .5f, RotateMode.FastBeyond360).OnComplete(() =>
+            goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
             {
                 StartCoroutine(PunchScaleRotatedCards(goldenCard.transform));
             });
         }
     }
+    #endregion
+
     public IEnumerator PunchScaleRotatedCards ( Transform target )
     {
         yield return new WaitForSeconds(.25f);
@@ -717,7 +765,6 @@ public class WinLoseManager : MonoBehaviour
         Activatecardfx();
         yield return new WaitForSeconds(1);
         winCards.Clear();
-        StopWinningfx();
         CommandCentre.Instance.CardFxManager_.ReturnToPool();
         CommandCentre.Instance.CardFxManager_.Deactivate();
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
@@ -725,16 +772,6 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
     }
 
-
-    public void playWiningFx ()
-    {
-       
-    }
-
-    public void StopWinningfx ()
-    {
-        
-    }
 
     public IEnumerator ShowScatterWinSequence ( List<GameObject> winningCards )
     {
@@ -744,8 +781,9 @@ public class WinLoseManager : MonoBehaviour
 
         isScatterWinSequenceRunning = true;
         CommandCentre.Instance.CardMaskManager_.Activate();
+        CommandCentre.Instance.CardFxManager_.Activate();
         ActivateCardMaskForWinningCards();
-
+        ActivateScatterCardfx();
         yield return new WaitForSeconds(.25f);
         foreach (GameObject winningCard in winningCards)
         {
@@ -762,6 +800,8 @@ public class WinLoseManager : MonoBehaviour
                 winningCard.GetComponent<Card>().DisableScatterRotate();
             }
             winCards.Clear();
+            CommandCentre.Instance.CardFxManager_.ReturnScatterCardsToPool();
+            CommandCentre.Instance.CardFxManager_.Deactivate();
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
             CommandCentre.Instance.CardMaskManager_.Deactivate();
             yield return new WaitForSeconds(3);
@@ -774,6 +814,8 @@ public class WinLoseManager : MonoBehaviour
         {
             CommandCentre.Instance.FreeGameManager_.resetFreeSpins();
             winCards.Clear();
+            CommandCentre.Instance.CardFxManager_.ReturnScatterCardsToPool();
+            CommandCentre.Instance.CardFxManager_.Deactivate();
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
             CommandCentre.Instance.CardMaskManager_.Deactivate();
         }

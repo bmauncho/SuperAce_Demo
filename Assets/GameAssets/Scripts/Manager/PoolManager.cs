@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
+    [Header("Cards")]
+    [Space(10)]
     public GameObject cardPrefab;
     public int poolSize = 50;
     private Queue<GameObject> cardPool;
@@ -12,15 +14,23 @@ public class PoolManager : MonoBehaviour
     public List<GameObject> InactiveCardList;
     // Delegate and event to notify when the pool is initialized
     public bool Poolinitialized = false;
-
+    [Header("Cards fx")]
+    [Space(10)]
     public GameObject cardfx;
     public int fxPoolSize = 20;
     private Queue<GameObject> cardfxPool;
+
+    [Header("Scatter Cards fx")]
+    [Space(10)]
+    public GameObject ScatterCardfx;
+    public int ScatterCardfxPoolSize = 20;
+    private Queue<GameObject> ScatterCardfxPool;
 
     private void Awake ()
     {
         InitializePool();
         InitializeCardFxPool();
+        InitializeScatterCardFxPool();
     }
     #region
     void InitializePool ()
@@ -109,7 +119,6 @@ public class PoolManager : MonoBehaviour
     #endregion 
 
     #region
-    //cardfx
     void InitializeCardFxPool ()
     {
         cardfxPool = new Queue<GameObject>();
@@ -146,11 +155,44 @@ public class PoolManager : MonoBehaviour
             cardfxPool.Enqueue(cardfx_);
         }
     }
+    #endregion
 
-    public void GetAllFx ()
+    #region
+    void InitializeScatterCardFxPool ()
     {
+        ScatterCardfxPool = new Queue<GameObject>();
 
+        for (int i = 0 ; i < ScatterCardfxPoolSize ; i++)
+        {
+            GameObject ScatterCardfx_ = Instantiate(ScatterCardfx , transform);
+            ScatterCardfx_.SetActive(false);
+            ScatterCardfxPool.Enqueue(ScatterCardfx_);
+        }
     }
 
-    #endregion 
+    public GameObject GetScatterCardFx ()
+    {
+        if (ScatterCardfxPool.Count > 0)
+        {
+            GameObject ScatterCardfx_ = ScatterCardfxPool.Dequeue();
+            ScatterCardfx_.SetActive(true);
+            return ScatterCardfx_;
+        }
+        else
+        {
+            Debug.LogWarning("fxPool is empty! Consider increasing fxpool size.");
+            return null;
+        }
+    }
+
+    public void ReturnScatterFx ( GameObject ScatterCardfx_ )
+    {
+        if (ScatterCardfx_)
+        {
+            ScatterCardfx_.transform.SetParent(transform);
+            ScatterCardfx_.SetActive(false);
+            ScatterCardfxPool.Enqueue(ScatterCardfx_);
+        }
+    }
+    #endregion
 }

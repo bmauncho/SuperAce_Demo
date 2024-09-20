@@ -39,4 +39,22 @@ public class CardFxManager : MonoBehaviour
             }
         }
     }
+
+    public void ReturnScatterCardsToPool ()
+    {
+        foreach (CardfxColumn c in CardFx)
+        {
+            foreach (GameObject obj in c.cardFxPos)
+            {
+                if (obj != null)
+                {
+                    ScatterCardFx thefx = obj.GetComponentInChildren<ScatterCardFx>();
+                    if (thefx)
+                    {
+                        CommandCentre.Instance.PoolManager_.ReturnFx(thefx.gameObject);
+                    }
+                }
+            }
+        }
+    }
 }
