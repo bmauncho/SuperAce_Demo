@@ -819,10 +819,13 @@ public class WinLoseManager : MonoBehaviour
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
             CommandCentre.Instance.CardMaskManager_.Deactivate();
         }
-        CommandCentre.Instance.SoundManager_.PlayAmbientSound("Funk_2");
+       CommandCentre.Instance.SoundManager_.PlayAmbientSound("Funk_2");
         PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         Debug.Log("Free Game Disabled");
         enableSpin = true;
+        yield return new WaitForSeconds(1);
+        CommandCentre.Instance.FreeGameManager_.Combos.FreeGameCombo.ShowUi();
+        yield return new WaitForSeconds(1.2f);
 
         float timeout = 12f; // Maximum time to wait in seconds
         float timer = 0f;
