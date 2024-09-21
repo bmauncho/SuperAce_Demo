@@ -147,6 +147,7 @@ public class GridManager : MonoBehaviour
                         if (card.GetComponent<Card>().cardType == CardType.Scatter)
                         {
                             card.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                            CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                         }
                     }));
                 cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position

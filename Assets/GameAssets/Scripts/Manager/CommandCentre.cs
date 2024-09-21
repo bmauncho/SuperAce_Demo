@@ -24,6 +24,8 @@ public class CommandCentre : MonoBehaviour
     public AutoSpinManager AutoSpinManager_;
     public TurboManager TurboManager_;
     public CardFxManager CardFxManager_;
+    public DemoManager DemoManager_;
+
     private void Awake ()
     {
         //Application.targetFrameRate = 30;

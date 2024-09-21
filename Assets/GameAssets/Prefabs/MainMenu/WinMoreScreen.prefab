@@ -6700,6 +6700,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -6934,6 +6938,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -7049,6 +7057,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466126, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
@@ -7168,6 +7180,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -7285,6 +7301,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.maxCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -7400,6 +7428,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466126, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
@@ -7519,6 +7551,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -7635,6 +7671,10 @@ PrefabInstance:
     - target: {fileID: 466126, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19859158, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 19912528, guid: b043edfe6ed22be46b3d939fd3f3e5bb, type: 3}
       propertyPath: m_Enabled

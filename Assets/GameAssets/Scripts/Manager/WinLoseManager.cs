@@ -789,6 +789,7 @@ public class WinLoseManager : MonoBehaviour
         {
             winningCard.GetComponent<Card>().EnableScatterRotate();
         }
+        CommandCentre.Instance.SoundManager_.PlaySound("Bell" , false , .3f);
         yield return new WaitForSeconds(3f);
 
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
@@ -800,6 +801,7 @@ public class WinLoseManager : MonoBehaviour
                 winningCard.GetComponent<Card>().DisableScatterRotate();
             }
             winCards.Clear();
+            CommandCentre.Instance.SoundManager_.PlaySound("scatterWin" , false , .3f);
             CommandCentre.Instance.CardFxManager_.ReturnScatterCardsToPool();
             CommandCentre.Instance.CardFxManager_.Deactivate();
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();

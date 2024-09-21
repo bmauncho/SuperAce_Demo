@@ -189,6 +189,7 @@ public class GridColumnManager : MonoBehaviour
                             if (newCard.GetComponent<Card>().cardType == CardType.Scatter)
                             {
                                 newCard.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                             }
                         }));
                     cardSequence.PrependInterval(delay);

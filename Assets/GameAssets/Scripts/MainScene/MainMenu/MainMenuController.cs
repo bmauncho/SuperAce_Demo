@@ -109,11 +109,14 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Spin");
         Debug.Log(isBtnPressed);
+
         if (!isBtnPressed)
         {
             if (CanSpin /*&& CommandCentre.Instance.WinLoseManager_.enableSpin*/)
             {
+                
                 StartCoroutine(SpinReel());
+                
             }
             isBtnPressed = true;
         }

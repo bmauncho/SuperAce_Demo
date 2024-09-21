@@ -80,6 +80,7 @@ public class ButtonPressed : MonoBehaviour
             CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
             GetComponent<Button>().interactable = true;
         }
+        
 
     }
     public void DisableButtonInteractvity ()
@@ -102,7 +103,7 @@ public class ButtonPressed : MonoBehaviour
             DisableButtonInteractvity() ;
             if (CommandCentre.Instance)
             {
-                //CommandCentre.Instance.SoundManager_.PlaySound("ButtonPress" , false , .75f);
+                CommandCentre.Instance.SoundManager_.PlaySound("BtnClick" , false , .3f);
             }
         }
     }
