@@ -33,6 +33,7 @@ public class GridManager : MonoBehaviour
     public bool IsResetDone;
     public bool IsReturnToPoolDone = false;
     public bool IsFirstTime = true;
+    public bool IsDemoFirstTime = true;
     
     [Header("Lists")]
     public List<GridColumns> Columns = new List<GridColumns>();
@@ -90,13 +91,88 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            TurboGrid(decks, tempPos);
+            DemoGrid(decks , tempPos);
         }
         else
         {
-            normalGrid(decks , tempPos);
+            if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+            {
+                TurboGrid(decks , tempPos);
+            }
+            else
+            {
+                normalGrid(decks , tempPos);
+            }
+        }
+
+   
+    }
+
+    void DemoGrid( Deck [] Decks , List<Transform> tempPos )
+    {
+        float delayIncrement = 0.1f; // Delay between cards, adjust as needed
+        int rowCount = 4; // Number of rows
+        int columnCount = Decks.Length; // Number of columns
+
+        int positionIndex = 0; // Keeps track of the current position in tempPos
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = 0 ; row < rowCount ; row++)
+            {
+                int index = row * columnCount + col;
+
+                Deck currentDeck = Decks [col];
+                if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
+                GameObject card = null;
+                if (IsFirstTime)
+                {
+                    card = currentDeck.DrawSpecificCard(col);
+                }
+                else
+                {
+                    if (IsDemoFirstTime)
+                    {
+                        card = currentDeck.DrawSpecificDemoCard(col,row);
+                        //Debug.Log(positionIndex);
+                    }
+                    else
+                    {
+                        card = currentDeck.DrawCard();
+                    }
+                    
+                }
+                card.GetComponent<Card>().ScatterCardAnim.enabled = false;
+                currentDeck.ResetDeck();
+                if (card == null) continue;
+
+                Columns [col].Cards.Add(card);
+
+                Transform targetPos = tempPos [positionIndex];
+                positionIndex++;
+                
+                card.transform.SetParent(targetPos);
+                card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+
+                // Create a sequence for each card's movement
+                Sequence cardSequence = DOTween.Sequence();
+                cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+                        // Set local position to zero explicitly after the animation
+                        card.transform.localPosition = Vector3.zero;
+                        targetPos.GetComponent<CardPos>().TheOwner = card;
+                        CalculateObjectsPlaced();
+                        if (card.GetComponent<Card>().cardType == CardType.Scatter)
+                        {
+                            card.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                            CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
+                        }
+                    }));
+                cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
+            }
         }
     }
 
@@ -111,6 +187,8 @@ public class GridManager : MonoBehaviour
         {
             for (int row = 0 ; row < rowCount ; row++)
             {
+                int index = row * columnCount + col;
+                
                 Deck currentDeck = Decks [col];
                 if (currentDeck == null || currentDeck.DeckCards.Count == 0) continue;
                 GameObject card = null;
@@ -130,7 +208,7 @@ public class GridManager : MonoBehaviour
 
                 Transform targetPos = tempPos [positionIndex];
                 positionIndex++;
-
+                Debug.Log(positionIndex);
                 card.transform.SetParent(targetPos);
                 card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                
@@ -262,6 +340,7 @@ public class GridManager : MonoBehaviour
             return;
         }
         CheckGrid();
+        IsDemoFirstTime = false;
     }
 
     public void CheckGrid ()

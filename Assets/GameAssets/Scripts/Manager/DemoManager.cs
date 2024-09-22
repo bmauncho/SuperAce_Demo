@@ -9,6 +9,7 @@ public class DemoManager : MonoBehaviour
     [Header("References")]
     [Space(10)]
     public MainScene_LoadingMenu MainScene_LoadingMenu_;
+    public DemoSequence DemoSequence_;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

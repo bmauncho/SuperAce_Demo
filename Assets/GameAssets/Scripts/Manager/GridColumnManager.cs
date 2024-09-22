@@ -24,6 +24,7 @@ public class GridColumnManager : MonoBehaviour
     public bool isRepositioning;
     public bool hasCheckedWin = false;
     private bool isShaking = false;
+    public bool IsDemoFirstRefill = true;
     public int totalObjectsToPlace;
     public int objectsPlaced;
     public int totalObjectsToRotate;
@@ -280,7 +281,40 @@ public class GridColumnManager : MonoBehaviour
                     float duration = .5f;
                     float delayIncrement = 0.05f;
                     float delay = ( columnIndex * 4 + cardIndex ) * delayIncrement;
-                    CommandCentre.Instance.CardManager_.RandomizeDealing_Jocker(owner.transform);
+                    Debug.Log(columnIndex +" : " +cardIndex);
+                    if (CommandCentre.Instance.DemoManager_.IsDemo)
+                    {
+                        if (IsDemoFirstRefill)
+                        {
+                            switch (columnIndex)
+                            {
+                                case 1:
+                                    switch (cardIndex)
+                                    {
+                                        case 0:
+                                            CommandCentre.Instance.CardManager_.DealBigJocker(owner.transform);
+                                            Debug.Log("BigJocker");
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    switch (cardIndex)
+                                    {
+                                        case 0:
+                                            CommandCentre.Instance.CardManager_.DealSmallJocker(owner.transform);
+                                            Debug.Log("SmallJocker");
+                                            break;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Random Jocker");
+                        CommandCentre.Instance.CardManager_.RandomizeDealing_Jocker(owner.transform);
+                    }
+                    
 
                     // Start rotation coroutine for each card
                     StartCoroutine(RotateCardAndWait(owner.transform , targetRotation , duration , delay));
@@ -290,6 +324,8 @@ public class GridColumnManager : MonoBehaviour
             }
             columnIndex++;
         }
+
+        IsDemoFirstRefill = false;
     }
 
     private IEnumerator RotateCardAndWait ( Transform target , Vector3 targetRotation , float duration , float delay )
@@ -626,7 +662,6 @@ public class GridColumnManager : MonoBehaviour
                                 // Set initial positions
                                 Vector3 initialPosition = cardPosScript.TheOwner.transform.position;
                                 Quaternion initialRotation = cardPosScript.TheOwner.transform.rotation;
-
                                 // Random positions for the new cards
                                 int randomColumnIndex1 = Random.Range(0 , 5);
                                 int randomPositionIndex1 = Random.Range(0 , Columns [randomColumnIndex1].CardsPos.Count);

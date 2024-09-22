@@ -193,6 +193,28 @@ public class Deck : MonoBehaviour
         return null;
     }
 
+    public GameObject DrawSpecificDemoCard (int col,int row)
+    {
+        DemoManager DemoManager_ = CommandCentre.Instance.DemoManager_;
+        if (DeckCards.Count <= 0)
+        {
+            ResetDeck();
+        }
+
+        if (DeckCards.Count > 0)
+        {
+            GameObject drawnCard = DeckCards [0];
+            DeckCards.RemoveAt(0);
+            DemoManager_.DemoSequence_.Spin_1(drawnCard.transform,col,row);
+            drawnCard.transform.SetParent(null);
+            drawnCard.SetActive(true);
+            drawnCard.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
+            CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
+            return drawnCard;
+        }
+        return null;
+    }
+
     public void RepositionCards ()
     {
         if (DeckCards.Count == 0 || DeckCards.Count > cardsPerDeck) return;

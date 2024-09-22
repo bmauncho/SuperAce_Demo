@@ -82,12 +82,63 @@ public class CardManager : MonoBehaviour
         return cardSprites [which];
     }
 
+    public Sprite GetSpecificCard (string Name)
+    {
+        foreach (Sprite cardSprite in cardSprites)
+        {
+            if (cardSprite.name == Name)
+            {
+                //Debug.Log(cardSprite.name);
+               return cardSprite;
+            }
+        }
+        return null;
+    }
+
     public void DealSpecificCardType(Transform card,int which)
     {
         card.GetComponent<Card>().SetCardBack(Normalbackground);
 
         card.GetComponent<Card>().SetCard(WhichCard(which));
         card.GetComponent<Card>().SetCardType();
+    }
+
+    public void DealSpecificDemoCardType ( Transform card , string Name = "", bool IsScatter = false,bool IsGolden =false, bool IsBigJocker = false,bool IsSmallJocker = false )
+    {
+        if (IsScatter)
+        {
+            DealScatterCards(card);
+        }
+        else
+        {
+            if (IsGolden)
+            {
+
+                if (IsBigJocker)
+                {
+                    DealBigJocker(card);
+                }
+                else if (IsSmallJocker)
+                {
+                    DealSmallJocker(card);
+                }
+                else
+                {
+                    card.GetComponent<Card>().IsGoldenCard = true;
+                    card.GetComponent<Card>().SetCardBack(Goldbackground);
+                    card.GetComponent<Card>().SetCard(GetSpecificCard(Name));
+                    card.GetComponent<Card>().SetCardOutLine(DefaultOutline);
+                }
+
+            }
+            else
+            {
+                card.GetComponent<Card>().SetCardBack(Normalbackground);
+                card.GetComponent<Card>().SetCard(GetSpecificCard(Name));
+            }
+
+            card.GetComponent<Card>().SetCardType();
+        }
     }
 
     public void DealNormalCards(Transform card )
