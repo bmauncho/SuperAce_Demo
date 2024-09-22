@@ -26,6 +26,9 @@ public class CardManager : MonoBehaviour
     [Range(0.0f , 1.0f)]
     public float probabilityFactor; // This is the actual float value
 
+    [Range(0.0f , 1.0f)]
+    public float winRate;
+
     private void Start ()
     {
         originalScatterprobability = scatterCardProbability;
@@ -123,24 +126,6 @@ public class CardManager : MonoBehaviour
         card.GetComponent<Card>().SetCardType();
     }
 
-    public void RandomizeDealing_golden ( Transform card )
-    {
-        float normalCardProbability = 0.8f;
-
-        float randomValue = Random.value;
-
-        if (randomValue < normalCardProbability)
-        {
-            // Deal a normal card
-            DealNormalCards(card);
-        }
-        else
-        {
-            // Deal a golden card
-            DealGoldenCards(card);
-        }
-    }
-
     public void RandomizeDealing_Jocker ( Transform card )
     {
         float normalCardProbability = 0.9f;
@@ -159,25 +144,35 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void RandomizeDealing ( Transform card )
+    public void RandomizeDealing ( Transform card)
     {
         float randomValue = Random.value;
 
-        // Precompute thresholds to avoid redundant calculations
-        float goldenThreshold = normalCardProbability + goldenCardProbability;
-        float scatterThreshold = goldenThreshold + scatterCardProbability;
+        // Adjust probabilities based on win rate
+        float adjustedNormalCardProbability = normalCardProbability + ( winRate * 0.2f ); // Increase normal card probability
+        float adjustedGoldenCardProbability = goldenCardProbability - ( winRate * 0.1f ); // Decrease golden card probability
+        float adjustedScatterCardProbability = scatterCardProbability - ( winRate * 0.1f ); // Decrease scatter card probability
+
+        // Ensure probabilities are clamped between 0 and 1
+        adjustedNormalCardProbability = Mathf.Clamp(adjustedNormalCardProbability , 0 , 1);
+        adjustedGoldenCardProbability = Mathf.Clamp(adjustedGoldenCardProbability , 0 , 1);
+        adjustedScatterCardProbability = Mathf.Clamp(adjustedScatterCardProbability , 0 , 1);
+
+        // Precompute thresholds
+        float goldenThreshold = adjustedNormalCardProbability + adjustedGoldenCardProbability;
+        float scatterThreshold = goldenThreshold + adjustedScatterCardProbability;
 
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            scatterCardProbability = 0.01f;
+            adjustedScatterCardProbability = 0.01f;
         }
         else
         {
-            scatterCardProbability = originalScatterprobability;
+            adjustedScatterCardProbability = originalScatterprobability;
         }
-      
 
-        if (randomValue < normalCardProbability)
+        // Determine the card to deal based on random value
+        if (randomValue < adjustedNormalCardProbability)
         {
             // Deal a normal card
             DealNormalCards(card);
