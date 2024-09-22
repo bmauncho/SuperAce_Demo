@@ -34,6 +34,8 @@ public class GridManager : MonoBehaviour
     public bool IsReturnToPoolDone = false;
     public bool IsFirstTime = true;
     public bool IsDemoFirstTime = true;
+    public bool IsDemoSecondTime = false;
+    public bool IsDemoManipulationComplete= false;
     
     [Header("Lists")]
     public List<GridColumns> Columns = new List<GridColumns>();
@@ -139,7 +141,15 @@ public class GridManager : MonoBehaviour
                     }
                     else
                     {
-                        card = currentDeck.DrawCard();
+                        if (IsDemoSecondTime)
+                        {
+                            card = currentDeck.DrawSpecificDemoCard_2(col , row);
+                        }
+                        else
+                        {
+                            card = currentDeck.DrawCard();
+                        }
+                        
                     }
                     
                 }
@@ -208,7 +218,7 @@ public class GridManager : MonoBehaviour
 
                 Transform targetPos = tempPos [positionIndex];
                 positionIndex++;
-                Debug.Log(positionIndex);
+               // Debug.Log(positionIndex);
                 card.transform.SetParent(targetPos);
                 card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                

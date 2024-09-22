@@ -15,6 +15,7 @@ public class WinLoseManager : MonoBehaviour
     private bool isWinningCardsDoPunchScaleRunning = false;
     public bool PunchScaleActiveCardMasksAnimationsComplete_ = false;
     private bool isScatterWinSequenceRunning = false;
+    public bool CanAutoSpinOnce = true;
     public GameObject CardsPosHolder;
     [Space(10)]
     [Header("Lists")]
@@ -378,6 +379,17 @@ public class WinLoseManager : MonoBehaviour
                 yield return null;
             }
 
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                if (CanAutoSpinOnce)
+                {
+                    yield return new WaitForSeconds(1f);
+                    Debug.Log("AutoSpin");
+                    CommandCentre.Instance.MainMenuController_.Spin();
+                    CanAutoSpinOnce = false;
+                }
+            }
+
         }
     }
 
@@ -388,6 +400,7 @@ public class WinLoseManager : MonoBehaviour
             Debug.Log("ShowTotalWinings");
             CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
+            CanAutoSpinOnce = true;
         }
 
         // Timeout settings
@@ -809,7 +822,10 @@ public class WinLoseManager : MonoBehaviour
             yield return new WaitForSeconds(3);
             
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
-            
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                CommandCentre.Instance.GridManager_.IsDemoSecondTime = false;
+            }
 
         }
         else
@@ -829,7 +845,7 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.FreeGameManager_.Combos.FreeGameCombo.ShowUi();
         yield return new WaitForSeconds(1.2f);
 
-        float timeout = 12f; // Maximum time to wait in seconds
+        float timeout = 3f; // Maximum time to wait in seconds
         float timer = 0f;
 
         while (CommandCentre.Instance.MainMenuController_.isBtnPressed && timer < timeout)
@@ -843,6 +859,8 @@ public class WinLoseManager : MonoBehaviour
             Debug.LogWarning("Button was not pressed within the timeout period.");
             // Handle timeout case here, like forcing a spin or showing a message to the player
         }
+
+       
 
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
