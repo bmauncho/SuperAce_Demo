@@ -4314,9 +4314,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4181016368136395820}
-        m_TargetAssemblyTypeName: MainScene_LoadingMenu, Assembly-CSharp
-        m_MethodName: ContinueToMainGame
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DemoManager, Assembly-CSharp
+        m_MethodName: StartDemo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 public class BetManager : MonoBehaviour
 {
-    public TMP_Text CurrentBetAmount;
+    public TMP_Text []CurrentBetAmount;
     public BetMenu BetMenu_;
     public float BetAmount;
 
     private void Start ()
     {
-        CurrentBetAmount.text = BetAmount.ToString();
+       refreshBetSlip();
     }
     void DeactivateAllBets ()
     {
@@ -31,8 +31,33 @@ public class BetManager : MonoBehaviour
     public void SetCurrentbetAmount (float Amount)
     {
         BetAmount = Amount;
-        CurrentBetAmount.SetText(Amount.ToString());
+        UpdateBetAmount();
         DeactivateAllBets ();
     }
 
+    public void UpdateBetAmount ()
+    {
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            CurrentBetAmount [1].text = BetAmount.ToString();
+        }
+        else
+        {
+            CurrentBetAmount [0].text = BetAmount.ToString();
+        }
+    }
+
+    public void refreshBetSlip ()
+    {
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            BetAmount = 10;
+        }
+        else
+        {
+            BetAmount = 2;
+        }
+
+        UpdateBetAmount();
+    }
 }

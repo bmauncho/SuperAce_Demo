@@ -2,16 +2,28 @@ using UnityEngine;
 
 public class GamePlayMenuController : MonoBehaviour
 {
-    public BetButton betsBtn;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public BetButton []betsBtn;
+    public GameObject NormalGamePlay;
+    public GameObject DemoGamePlay;
+   
+
+    public void ShowNormalGamePlayMenu ()
     {
-        
+        NormalGamePlay.SetActive (true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HideNormalGamePlayMenu ()
     {
-        
+        NormalGamePlay.SetActive(false);
+    }
+
+    public void ShowDemoGamePlayMenu ()
+    {
+        DemoGamePlay.SetActive(true);
+    }
+
+    public void HideDemoGamePlayMenu ()
+    {
+        DemoGamePlay.SetActive(false);
     }
 }

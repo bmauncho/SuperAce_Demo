@@ -9,6 +9,7 @@ public class MainMenuController : MonoBehaviour
 
     public bool IsFreeGame = false;
     public bool IsFirstTimeDone = false;
+    public bool IsDemo = false;
     [Space(10)]
     [Header("Menus")]
     public GameObject GameplayMenu;
@@ -35,6 +36,17 @@ public class MainMenuController : MonoBehaviour
     public void EnableGameplayMenu ()
     {
         GameplayMenu.SetActive(true);
+        GamePlayMenuController GPMC = GameplayMenu.GetComponent<GamePlayMenuController>();
+        if (IsDemo)
+        {
+            GPMC.ShowDemoGamePlayMenu();
+            GPMC.HideNormalGamePlayMenu();
+        }
+        else
+        {
+            GPMC.HideDemoGamePlayMenu();
+            GPMC.ShowNormalGamePlayMenu();
+        }
     }
 
     public void DisableGameplayMenu ()
@@ -64,12 +76,21 @@ public class MainMenuController : MonoBehaviour
         if (CommandCentre.Instance)
         {
             CanSpin = CommandCentre.Instance.GridManager_.IsGridCreationComplete();
+            IsDemo = CommandCentre.Instance.DemoManager_.IsDemo;
             if (CanSpin)
             {
                 EnableGameplayMenu();
                 if (!IsFirstTimeDone)
                 {
-                    Invoke(nameof(EnableWinMoreMenu) , .5f);
+                    if (!IsDemo)
+                    {
+                        Invoke(nameof(EnableWinMoreMenu) , .5f);
+                    }
+                    else
+                    {
+                        SetGrid();
+                        CommandCentre.Instance.WinLoseManager_.enableSpin = true;
+                    }
                     IsFirstTimeDone = true;
                 }
             }
@@ -93,10 +114,19 @@ public class MainMenuController : MonoBehaviour
         while (!CanSpin)
         {
             CanSpin = CommandCentre.Instance.GridManager_.IsGridCreationComplete();
+            IsDemo = CommandCentre.Instance.DemoManager_.IsDemo;
             if (CanSpin)
             {
                 EnableGameplayMenu();
-                Invoke(nameof(EnableWinMoreMenu) , .5f);
+                if (!IsDemo) 
+                { 
+                    Invoke(nameof(EnableWinMoreMenu) , .5f); 
+                }
+                else
+                {
+                    SetGrid() ;
+                    CommandCentre.Instance.WinLoseManager_.enableSpin = true;
+                }
                 yield break;
             }
             yield return null;
@@ -158,19 +188,43 @@ public class MainMenuController : MonoBehaviour
 
     public void CloseBets ()
     {
+        GamePlayMenuController gpmc = GameplayMenu.GetComponent<GamePlayMenuController>();
+        if (IsDemo)
+        {
+            gpmc.betsBtn [1].BetsButton.isOn = false;   
+        }
+        else
+        {
+            gpmc.betsBtn [0].BetsButton.isOn = false;
+        }
         BetingMenu.SetActive(false);
     }
 
     public void Bet ()
     {
         GamePlayMenuController gpmc = GameplayMenu.GetComponent<GamePlayMenuController>();
-        if (gpmc.betsBtn.BetsButton.isOn)
+        if (IsDemo)
         {
-            OpenBets();
+            if (gpmc.betsBtn [1].BetsButton.isOn)
+            {
+                OpenBets();
+            }
+            else
+            {
+                CloseBets();
+            }
         }
         else
         {
-            CloseBets();
+            if (gpmc.betsBtn [0].BetsButton.isOn)
+            {
+                OpenBets();
+            }
+            else
+            {
+                CloseBets();
+            }
         }
+       
     }
 }

@@ -6,8 +6,8 @@ using DG.Tweening;
 
 public class CashManager : MonoBehaviour
 {
-    public TextMeshProUGUI CashAmountText;
-    public TextMeshProUGUI WinCashAmountText;
+    public List<TextMeshProUGUI> CashAmountText = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> WinCashAmountText = new List<TextMeshProUGUI>();
     public float CashAmount = 0;
     public float CurrentWinings;
 
@@ -54,8 +54,29 @@ public class CashManager : MonoBehaviour
 
     public void updateThecashUi ()
     {
-        CashAmountText.SetText(Mathf.FloorToInt(CashAmount).ToString());
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            CashAmountText [1].SetText(Mathf.FloorToInt(CashAmount).ToString());
+        }
+        else
+        {
+            CashAmountText [0].SetText(Mathf.FloorToInt(CashAmount).ToString());
+        }
+        
     }
+
+    public void UpdateWinnings ()
+    {
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            WinCashAmountText [1].text = CurrentWinings.ToString();
+        }
+        else
+        {
+            WinCashAmountText [0].text = CurrentWinings.ToString();
+        }
+    }
+
     [ContextMenu("IncreaseCash")]
     public void TestIncreasecash ()
     {
@@ -73,12 +94,12 @@ public class CashManager : MonoBehaviour
     public void IncreaseWinings (float Amount)
     {
         CurrentWinings = CurrentWinings + Amount;
-        WinCashAmountText.text = CurrentWinings.ToString();
+        UpdateWinnings();
     }
 
     public void ResetWinings ()
     {
         CurrentWinings = 0;
-        WinCashAmountText.text = CurrentWinings.ToString();
+        UpdateWinnings ();
     }
 }
