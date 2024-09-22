@@ -22,6 +22,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] float [] cardProbabilities;
 
     float originalScatterprobability = 0.0f;
+
     private void Start ()
     {
         originalScatterprobability = scatterCardProbability;

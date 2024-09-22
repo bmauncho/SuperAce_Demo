@@ -440,19 +440,9 @@ public class GridColumnManager : MonoBehaviour
 
             foreach (GameObject card in cards)
             {
-                // Wait until any active rotation tween is complete
-                yield return StartCoroutine(WaitForTweenToComplete(card.transform));
-
                 // Create a sequence for each card to handle the shake
-                Tween shakeTween = card.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true , ShakeRandomnessMode.Harmonic)
-                    .OnComplete(() =>
-                    {
-                        objectsShaked++;
-                        card.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                        Debug.Log($"Card {card.name} finished shaking.");
-                    });
-
-                activeTweens.Add(shakeTween);
+                // Wait until any active rotation tween is complete
+                yield return StartCoroutine(WaitForTweenToComplete(card.transform,activeTweens));
             }
 
             // Wait for all tweens to complete using Coroutine and WaitForCompletion
@@ -479,26 +469,41 @@ public class GridColumnManager : MonoBehaviour
     }
 
 
-    private IEnumerator WaitForTweenToComplete ( Transform target )
+    private IEnumerator WaitForTweenToComplete ( Transform target , List<Tween> activeTweens )
     {
-        int safetyCounter = 10; // or any appropriate limit
-        bool isTweening = DOTween.IsTweening(target , true);
-        // Wait until there is no active tween on the card's transform
-        while (isTweening && safetyCounter > 0)
+        int safetyCounter = 10; // Maximum number of checks
+        while (DOTween.IsTweening(target , true) && safetyCounter > 0)
         {
             safetyCounter--;
-            yield return null; // Wait for the next frame
+            yield return new WaitForSeconds(0.1f); // Wait slightly longer between checks to prevent CPU overload
         }
 
         if (safetyCounter == 0)
         {
-            Debug.LogWarning("Loop exited due to safety");
+            Debug.LogWarning($"Loop exited due to safety for card {target.name}, rotation may not be completed.");
         }
-
-        // Once the tween completes, ensure the final rotation is set correctly
-        target.rotation = Quaternion.Euler(0 , 180 , 0);
-        Debug.Log($"Card {target.name} rotation tween completed, rotation set to (0, 180, 0).");
+        else
+        {
+            // Set the final rotation if the tween completed successfully
+            target.rotation = Quaternion.Euler(0 , 180 , 0);
+            Debug.Log($"Card {target.name} rotation tween completed, rotation set to (0, 180, 0).");
+        }
+       yield return StartCoroutine(ShakingAction(target , activeTweens));
     }
+
+    public IEnumerator ShakingAction (Transform Target , List<Tween> activeTweens)
+    {
+        Tween shakeTween = Target.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true , ShakeRandomnessMode.Harmonic)
+                   .OnComplete(() =>
+                   {
+                       objectsShaked++;
+                       Target.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                       Debug.Log($"Card {Target.name} finished shaking.");
+                   });
+        activeTweens.Add(shakeTween);
+        yield return new WaitForSeconds(0.1f);
+    }
+
 
     public List<GameObject> CardsToShake ()
     {

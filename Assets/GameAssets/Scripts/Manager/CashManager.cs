@@ -56,7 +56,7 @@ public class CashManager : MonoBehaviour
     {
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            CashAmountText [1].SetText(Mathf.FloorToInt(CashAmount).ToString());
+            CashAmountText [1].SetText("DEMO MODE");
         }
         else
         {
