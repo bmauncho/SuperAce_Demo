@@ -19,43 +19,60 @@ public class CardManager : MonoBehaviour
     [SerializeField] float goldenCardProbability = 0.1f;
     [SerializeField] float scatterCardProbability = 0.1f;
 
-    [SerializeField] float [] cardProbabilities;
+    public List<int> RandomSprite = new List<int>();
 
     float originalScatterprobability = 0.0f;
+
+    [Range(0.0f , 1.0f)]
+    public float probabilityFactor; // This is the actual float value
 
     private void Start ()
     {
         originalScatterprobability = scatterCardProbability;
     }
+
+    //selecting a random Card
     public Sprite RandomizeCardWithProbability ()
     {
-        // Compute the cumulative distribution
-        float total = 0f;
-        for (int i = 0 ; i < cardProbabilities.Length ; i++)
-        {
-            total += cardProbabilities [i];
-        }
-
-        // Generate a random number between 0 and total
-        float randomPoint = Random.value * total;
-
-        // Select a card based on the cumulative distribution
-        for (int i = 0 ; i < cardProbabilities.Length ; i++)
-        {
-            if (randomPoint < cardProbabilities [i])
-            {
-                return cardSprites [i];
-            }
-            else
-            {
-                randomPoint -= cardProbabilities [i];
-            }
-        }
-
-        // Fallback in case no card is selected
-        Debug.LogWarning("No card was selected. Check the probabilities.");
-        return cardSprites [0];
+        return cardSprites [GetRandomSprite(probabilityFactor)];
     }
+
+    int GetRandomSprite ( float probabilityFactor )
+    {
+        int random;
+
+        // Ensure we only generate a new random index if we haven't selected enough unique sprites
+        if (RandomSprite.Count >= cardSprites.Length)
+        {
+            RandomSprite.Clear();
+        }
+
+        // Adjust the selection process based on the probability factor
+        if (RandomSprite.Count > 0 && Random.Range(0f , 1f) < probabilityFactor)
+        {
+            // Prefer a similar card from the last selected
+            random = RandomSprite [Random.Range(0 , RandomSprite.Count)];
+        }
+        else
+        {
+            do
+            {
+                random = Random.Range(0 , cardSprites.Length);
+            } while (RandomSprite.Contains(random));
+
+            RandomSprite.Add(random); // Add the selected random index to the list
+
+            // Limit the size of the RandomSprite list to the last 5 selected indices
+            if (RandomSprite.Count > 7)
+            {
+                RandomSprite.RemoveAt(0); // Remove the oldest index
+            }
+        }
+
+        return random; // Return the randomly picked sprite index
+    }
+
+
 
     public Sprite WhichCard (int which)
     {
@@ -123,21 +140,6 @@ public class CardManager : MonoBehaviour
             DealGoldenCards(card);
         }
     }
-    public void RandomizeDealing_Scatter ( Transform card )
-    {
-        float normalCardProbability = 0.4f;
-        float randomValue = Random.value;
-        if (randomValue < normalCardProbability)
-        {
-              // Deal a normal card
-            DealNormalCards(card);
-            
-        }
-        else
-        {
-           DealScatterCards(card);
-        }
-    }
 
     public void RandomizeDealing_Jocker ( Transform card )
     {
@@ -163,6 +165,8 @@ public class CardManager : MonoBehaviour
 
         // Precompute thresholds to avoid redundant calculations
         float goldenThreshold = normalCardProbability + goldenCardProbability;
+        float scatterThreshold = goldenThreshold + scatterCardProbability;
+
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             scatterCardProbability = 0.01f;
@@ -171,7 +175,7 @@ public class CardManager : MonoBehaviour
         {
             scatterCardProbability = originalScatterprobability;
         }
-        float scatterThreshold = goldenThreshold + scatterCardProbability;
+      
 
         if (randomValue < normalCardProbability)
         {
