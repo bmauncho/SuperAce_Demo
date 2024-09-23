@@ -17,6 +17,10 @@ public class MainMenuController : MonoBehaviour
     public GameObject BetingMenu;
     public GameObject WinMoreMenu;
 
+    [Space(10)]
+    [Header("References")]
+    public StartFx Startfx_;
+
 
     void Start ()
     {
@@ -106,6 +110,7 @@ public class MainMenuController : MonoBehaviour
     public void ManualStart ()
     {
         CommandCentre.Instance.GridManager_.ManualStart();
+        Startfx_.Activate();
         StartCoroutine(CheckIfGridReady());
     }
 
