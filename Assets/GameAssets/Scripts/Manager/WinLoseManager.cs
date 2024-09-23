@@ -379,17 +379,20 @@ public class WinLoseManager : MonoBehaviour
                 yield return null;
             }
 
+
+
             if (CommandCentre.Instance.DemoManager_.IsDemo)
             {
                 if (CanAutoSpinOnce)
                 {
-                    yield return new WaitForSeconds(1f);
-                    Debug.Log("AutoSpin");
-                    CommandCentre.Instance.MainMenuController_.Spin();
+                    if (CommandCentre.Instance.DemoManager_.CanShowDemoFeature)
+                    {
+                        CommandCentre.Instance.DemoManager_.ActivateDemoFeature();
+                        CommandCentre.Instance.DemoManager_.CanShowDemoFeature = false;
+                    }
                     CanAutoSpinOnce = false;
                 }
             }
-
         }
     }
 

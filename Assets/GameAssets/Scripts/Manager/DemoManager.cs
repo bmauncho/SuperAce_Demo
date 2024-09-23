@@ -4,6 +4,9 @@ using UnityEngine;
 public class DemoManager : MonoBehaviour
 {
     public bool IsDemo = false;
+    public bool CanShowDemoFeature;
+    public bool IsDemoFeatureActive; 
+    public GameObject DemoFeature;
     public GameObject DemoUi;
 
     [Header("References")]
@@ -36,6 +39,10 @@ public class DemoManager : MonoBehaviour
     {
         CommandCentre.Instance.MainMenuController_.Spin();
         Debug.Log("DemoSpin");
+        if(IsDemoFeatureActive)
+        {
+            DeactivateDemoFeature();
+        }
     }
 
     public void StartDemoFromWinMoreMenu ()
@@ -65,5 +72,17 @@ public class DemoManager : MonoBehaviour
             {
                 DemoUi.SetActive(false);
             });
+    }
+
+    public void ActivateDemoFeature ()
+    {
+        DemoFeature.SetActive(true);
+        IsDemoFeatureActive = true;
+    }
+
+    public void DeactivateDemoFeature ()
+    {
+        DemoFeature.SetActive(false) ;
+        IsDemoFeatureActive= false;
     }
 }
