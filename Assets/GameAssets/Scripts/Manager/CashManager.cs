@@ -20,7 +20,16 @@ public class CashManager : MonoBehaviour
         updateThecashUi();
     }
 
-
+    private void Update ()
+    {
+        if (CommandCentre.Instance)
+        {
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                CashAmount = 2000;
+            }
+        }
+    }
     public void IncreaseCash(float amount)
     {
         CashAmount += amount;
