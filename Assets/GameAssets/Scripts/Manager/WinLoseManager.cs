@@ -340,13 +340,19 @@ public class WinLoseManager : MonoBehaviour
             //Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
             if (CommandCentre.Instance.DemoManager_.IsDemo)
             {
-                float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
-                CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+                {
+                    float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
+                    CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                }
             }
             else
             {
-                float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
-                CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+                {
+                    float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
+                    CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                }
             }
             
            
@@ -895,7 +901,8 @@ public class WinLoseManager : MonoBehaviour
             CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
             if (CommandCentre.Instance.DemoManager_.IsDemo)
             {
-                CommandCentre.Instance.GridManager_.IsDemoSecondTime = false;
+                CommandCentre.Instance.GridManager_.IsDemoSecondTime_ = false;
+                CommandCentre.Instance.GridManager_.IsDemoManipulationComplete = true;
             }
 
         }
@@ -907,6 +914,11 @@ public class WinLoseManager : MonoBehaviour
             CommandCentre.Instance.CardFxManager_.Deactivate();
             CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
             CommandCentre.Instance.CardMaskManager_.Deactivate();
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                CommandCentre.Instance.GridManager_.IsDemoSecondTime_ = false;
+                CommandCentre.Instance.GridManager_.IsDemoManipulationComplete =true;
+            }
         }
        CommandCentre.Instance.SoundManager_.PlayAmbientSound("Funk_2");
         PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);

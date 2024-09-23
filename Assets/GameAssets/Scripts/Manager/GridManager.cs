@@ -34,7 +34,7 @@ public class GridManager : MonoBehaviour
     public bool IsReturnToPoolDone = false;
     public bool IsFirstTime = true;
     public bool IsDemoFirstTime = true;
-    public bool IsDemoSecondTime = false;
+    public bool IsDemoSecondTime_ = false;
     public bool IsDemoManipulationComplete= false;
     
     [Header("Lists")]
@@ -141,7 +141,7 @@ public class GridManager : MonoBehaviour
                     }
                     else
                     {
-                        if (IsDemoSecondTime)
+                        if (IsDemoSecondTime_)
                         {
                             card = currentDeck.DrawSpecificDemoCard_2(col , row);
                         }

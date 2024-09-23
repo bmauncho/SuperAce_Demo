@@ -13,6 +13,7 @@ public class FreeGameManager : MonoBehaviour
 
     public int FreeSpinCounter = 10;
     public TMP_Text FreeSpinsAmount;
+    public WinMoreMenu winMoreMenu_;
 
     public void ActivateFreeGameIntro ()
     {
@@ -62,12 +63,14 @@ public class FreeGameManager : MonoBehaviour
 
     public void DeactivateFreeGame ()
     {
-        FreeGameUi.SetActive (false);
+        
         ToggleFreeGame(false);
         ToggleComboBanner(false);
         resetFreeSpins();
         CommandCentre.Instance.WinLoseManager_.enableSpin = true;
         CommandCentre.Instance.SoundManager_.PlayAmbientSound("FunkCasino");
+        CommandCentre.Instance.PayOutManager_.WinUI_.ShowFreeGameWinUi_win();
+        FreeGameUi.SetActive(false);
     }
 
 

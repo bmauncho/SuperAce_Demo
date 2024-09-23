@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class WinMoreMenu : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject DemoBtn;
+    public GameObject Suggestion_1;
+
+    public void DeactivateSuggestion_1 ()
     {
-        
+        Suggestion_1.SetActive (false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ActivateSuggestion_1 ()
     {
-        
+        Suggestion_1.SetActive(true);
+    }
+
+    public void DeactivateDemoBtn ()
+    {
+        DemoBtn.SetActive(false);
+    }
+
+    public void ActivateDemoBtn ()
+    {
+        DemoBtn.SetActive (true);
     }
 }

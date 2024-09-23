@@ -471,6 +471,11 @@ public class GridColumnManager : MonoBehaviour
                                     break;
                             }
                         }
+                        else
+                        {
+                            Debug.Log("Random Jocker");
+                            CommandCentre.Instance.CardManager_.RandomizeDealing_Jocker(owner.transform);
+                        }
                     }
                     else
                     {
@@ -1058,7 +1063,11 @@ public class GridColumnManager : MonoBehaviour
         }
         else
         {
-            CommandCentre.Instance.GridManager_.IsDemoSecondTime = true;
+            if (!CommandCentre.Instance.GridManager_.IsDemoManipulationComplete)
+            {
+                CommandCentre.Instance.GridManager_.IsDemoSecondTime_ = true;
+            }
+            
         }
         
        

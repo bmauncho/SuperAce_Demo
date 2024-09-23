@@ -172,7 +172,11 @@ public class MainMenuController : MonoBehaviour
         }
         DecreaseAutoSpins();
         CommandCentre.Instance.ComboManager_.ResetComboCounter();
-        CommandCentre.Instance.CashManager_.ResetWinings();
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.CashManager_.ResetWinings();
+        }
+       
         CommandCentre.Instance.WinLoseManager_.enableSpin = false;
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
