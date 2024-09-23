@@ -856,6 +856,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentBalance: 798
   Balance: {fileID: 5895136915211358230}
+  holdDuration: 0.25
+  holdTime: 0
+  isHolding: 0
+  isPointerDown: 0
+  timerDuration: 10
 --- !u!1 &551262075835928150
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +912,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpinsController_: {fileID: 2534481916627750793}
+  WinRatioController_: {fileID: 4879042246806871031}
+  BalanceController_LessThan: {fileID: 6406049210620274054}
+  BalanceController_GreaterThan: {fileID: 7579542171211530104}
+  StopIfFreeGameController_: {fileID: 7772670101127595851}
 --- !u!1 &568668111767389225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,6 +2414,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentBalance: 2994
   Balance: {fileID: 5935907153850226805}
+  holdDuration: 0.25
+  holdTime: 0
+  isHolding: 0
+  isPointerDown: 0
+  timerDuration: 10
 --- !u!1 &1018026452121813389
 GameObject:
   m_ObjectHideFlags: 0
@@ -5023,6 +5037,7 @@ GameObject:
   - component: {fileID: 4453304082178766177}
   - component: {fileID: 5963575037600655634}
   - component: {fileID: 3173701826441055458}
+  - component: {fileID: 4235041512368500340}
   m_Layer: 5
   m_Name: IncreaseBtn
   m_TagString: Untagged
@@ -5132,6 +5147,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6406049210620274054}
+        m_TargetAssemblyTypeName: BalanceController, Assembly-CSharp
+        m_MethodName: TriggerIncreaseBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 3173701826441055458}
         m_TargetAssemblyTypeName: ButtonPressed, Assembly-CSharp
         m_MethodName: BounceBtn
@@ -5183,6 +5210,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &4235041512368500340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872355145516233485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1903763591010105776
 GameObject:
   m_ObjectHideFlags: 0
@@ -7559,6 +7598,7 @@ GameObject:
   - component: {fileID: 6933116806968230561}
   - component: {fileID: 8068466837732637757}
   - component: {fileID: 8824493952032675675}
+  - component: {fileID: 3311860494057291287}
   m_Layer: 5
   m_Name: DecreaseBtn
   m_TagString: Untagged
@@ -7668,6 +7708,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7579542171211530104}
+        m_TargetAssemblyTypeName: BalanceController, Assembly-CSharp
+        m_MethodName: TriggerDecreaseBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 8824493952032675675}
         m_TargetAssemblyTypeName: ButtonPressed, Assembly-CSharp
         m_MethodName: BounceBtn
@@ -7719,6 +7771,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &3311860494057291287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080766545976770681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3082949759761075174
 GameObject:
   m_ObjectHideFlags: 0
@@ -8062,6 +8126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 938284739363715034}
+  - component: {fileID: 7772670101127595851}
   m_Layer: 5
   m_Name: Setting_StopIfFreeGame
   m_TagString: Finish
@@ -8090,6 +8155,19 @@ RectTransform:
   m_AnchoredPosition: {x: 214, y: -142.68001}
   m_SizeDelta: {x: 428, y: 35}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &7772670101127595851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3145382381223146458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efce844953746a840bf86cda5586f5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Toggle: {fileID: 5744894275927127588}
 --- !u!1 &3182136971329137976
 GameObject:
   m_ObjectHideFlags: 0
@@ -9924,6 +10002,7 @@ GameObject:
   - component: {fileID: 5782177917492370761}
   - component: {fileID: 4028905963502011725}
   - component: {fileID: 1153431681164300444}
+  - component: {fileID: 1162383973190823982}
   m_Layer: 5
   m_Name: IncreaseBtn
   m_TagString: Untagged
@@ -10033,13 +10112,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1153431681164300444}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 7579542171211530104}
+        m_TargetAssemblyTypeName: BalanceController, Assembly-CSharp
+        m_MethodName: TriggerIncreaseBtn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1153431681164300444}
+        m_TargetAssemblyTypeName: ButtonPressed, Assembly-CSharp
+        m_MethodName: BounceBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10084,6 +10175,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &1162383973190823982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785376117164708758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3797914967254075698
 GameObject:
   m_ObjectHideFlags: 0
@@ -11662,6 +11765,7 @@ GameObject:
   - component: {fileID: 1280882445008245398}
   - component: {fileID: 6295021013299216811}
   - component: {fileID: 8281038306119368735}
+  - component: {fileID: 5335574801532366246}
   m_Layer: 5
   m_Name: DecreaseBtn
   m_TagString: Untagged
@@ -11771,6 +11875,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 6406049210620274054}
+        m_TargetAssemblyTypeName: BalanceController, Assembly-CSharp
+        m_MethodName: TriggerDecreaseBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 8281038306119368735}
         m_TargetAssemblyTypeName: ButtonPressed, Assembly-CSharp
         m_MethodName: BounceBtn
@@ -11822,6 +11938,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &5335574801532366246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4486333447741159843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4492686694594427749
 GameObject:
   m_ObjectHideFlags: 0
@@ -21739,6 +21867,7 @@ GameObject:
   - component: {fileID: 8077627325621512118}
   - component: {fileID: 4810729200916288247}
   - component: {fileID: 8137529156965876507}
+  - component: {fileID: 8079367781316434261}
   m_Layer: 5
   m_Name: DecreaseBtn
   m_TagString: Untagged
@@ -21899,6 +22028,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &8079367781316434261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7814313743289766295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7838500685028332244
 GameObject:
   m_ObjectHideFlags: 0
@@ -24686,6 +24827,7 @@ GameObject:
   - component: {fileID: 1465952245163186928}
   - component: {fileID: 7586956798410781365}
   - component: {fileID: 7768877525575416738}
+  - component: {fileID: 9178619599814954480}
   m_Layer: 5
   m_Name: IncreaseBtn
   m_TagString: Untagged
@@ -24846,6 +24988,18 @@ MonoBehaviour:
   isSpinButton: 0
   IsToggle: 0
   IsContinuebutton: 1
+--- !u!114 &9178619599814954480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8871741313479036109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f279755e0984342951b1e035f3af86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8901756904404632148
 GameObject:
   m_ObjectHideFlags: 0

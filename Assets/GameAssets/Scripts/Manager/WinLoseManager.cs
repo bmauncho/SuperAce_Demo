@@ -357,20 +357,76 @@ public class WinLoseManager : MonoBehaviour
                 Debug.LogWarning("Button was not pressed within the timeout period.");
                 // Handle timeout case here, like forcing a spin or showing a message to the player
             }
+            CashManager CashManager_ = CommandCentre.Instance.CashManager_;
+            AutoSpinManager AutoSpinManager_ = CommandCentre.Instance.AutoSpinManager_;
+            FreeGameManager freeGameManager_ = CommandCentre.Instance.FreeGameManager_;
+            MainMenuController mainMenuController_ = CommandCentre.Instance.MainMenuController_;
 
-            
-            if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+            if (AutoSpinManager_.IsAutoSpin)
             {
-                if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_>=1)
+                if (AutoSpinManager_.AutoSpinIndex_>=1)
                 {
                     yield return new WaitForSeconds(1f);
                     Debug.Log("AutoSpin");
-                    CommandCentre.Instance.MainMenuController_.Spin();
+
+                    if (freeGameManager_.IsFreeGame)
+                    {
+                        if (AutoSpinManager_.AutoSpinSettings_.StopIfFreeGameController_.Toggle.isOn == true)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else if(CashManager_.CashAmount > AutoSpinManager_.AutoSpinSettings_.BalanceController_GreaterThan.CurrentBalance)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else if (CashManager_.CashAmount < AutoSpinManager_.AutoSpinSettings_.BalanceController_GreaterThan.CurrentBalance)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+
+                        else
+                        {
+                            mainMenuController_.Spin();
+                        }
+                    }
+                    else
+                    {
+                        if (AutoSpinManager_.AutoSpinSettings_.StopIfFreeGameController_.Toggle.isOn == true)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else if (CashManager_.CashAmount > AutoSpinManager_.AutoSpinSettings_.BalanceController_GreaterThan.CurrentBalance)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else if (CashManager_.CashAmount < AutoSpinManager_.AutoSpinSettings_.BalanceController_GreaterThan.CurrentBalance)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else
+                        {
+                            mainMenuController_.Spin();
+                        }
+                    }
+                    
                 }
                 else
                 {
-                    CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
-                    CommandCentre.Instance.AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                    AutoSpinManager_.DisableAutoSpin();
+                    AutoSpinManager_.IsAutoSpin = false;
+                    AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
                 }
                
             }
@@ -378,6 +434,7 @@ public class WinLoseManager : MonoBehaviour
             {
                 yield return null;
             }
+
 
 
 
@@ -401,8 +458,8 @@ public class WinLoseManager : MonoBehaviour
         if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
         {
             Debug.Log("ShowTotalWinings");
-            CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
+            CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             CanAutoSpinOnce = true;
         }
 
