@@ -20,7 +20,7 @@ public class TotalSpinsController : MonoBehaviour
     public void DecreaseSpins ()
     {
         CurrentSpns--;
-        if (CurrentSpns <= 0) { CurrentSpns = 0; }
+        if (CurrentSpns <= 5) { CurrentSpns = 5; }
         Spins.text = CurrentSpns.ToString();
     }
 

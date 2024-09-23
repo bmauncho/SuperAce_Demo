@@ -8,14 +8,14 @@ public class BalanceController : MonoBehaviour
 
     public void IncreaseBalance ()
     {
-        CurrentBalance++;
+        CurrentBalance+=10;
 
         Balance.text = $"{CurrentBalance}";
     }
 
     public void DecreaseBalance ()
     {
-        CurrentBalance--;
+        CurrentBalance-=10;
         if (CurrentBalance <= 1) { CurrentBalance = 1; }
         Balance.text = $"{CurrentBalance}";
     }
