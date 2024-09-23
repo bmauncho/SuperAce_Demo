@@ -8,6 +8,7 @@ public class FreeGameManager : MonoBehaviour
     public ComboUI Combos;
     public BannerController BannerController_;
     public FreeGameIntro FreeGameIntro_;
+    public GameObject FreeGameUi;
     public bool IsFreeGame = false;
 
     public int FreeSpinCounter = 10;
@@ -23,6 +24,7 @@ public class FreeGameManager : MonoBehaviour
     public void DeactivateFreeGameIntro ()
     {
         FreeGameIntro_.Deactivate();
+        FreeGameUi.SetActive(true);
     }
 
     public void ToggleFreeGame(bool toggle )
@@ -60,6 +62,7 @@ public class FreeGameManager : MonoBehaviour
 
     public void DeactivateFreeGame ()
     {
+        FreeGameUi.SetActive (false);
         ToggleFreeGame(false);
         ToggleComboBanner(false);
         resetFreeSpins();
