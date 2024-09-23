@@ -338,6 +338,18 @@ public class WinLoseManager : MonoBehaviour
         {
             //if Combo >= 3 && <= 5 show win screen
             //Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
+                CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+            }
+            else
+            {
+                float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
+                CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+            }
+            
+           
             yield return StartCoroutine(ShowTotalWins());
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             Debug.Log("SpinAgain");
@@ -458,7 +470,6 @@ public class WinLoseManager : MonoBehaviour
         if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
         {
             Debug.Log("ShowTotalWinings");
-            CommandCentre.Instance.CashManager_.IncreaseCash(CommandCentre.Instance.PayOutManager_.CurrentWin);
             CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             CanAutoSpinOnce = true;
         }
