@@ -84,7 +84,6 @@ public class FreeGameManager : MonoBehaviour
             if( FreeSpinCounter <= 0) 
             {
                 CommandCentre.Instance.WinLoseManager_.enableSpin = false;
-                Invoke(nameof(DeactivateFreeGame),.5f);
             }
         }
     }

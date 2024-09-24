@@ -354,9 +354,20 @@ public class WinLoseManager : MonoBehaviour
                     CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
                 }
             }
+
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+            {
+                yield return StartCoroutine(ShowTotalWins());
+            }
+            else
+            {
+                if (CommandCentre.Instance.FreeGameManager_.FreeSpinCounter<=0)
+                {
+                    DeactivateFreeGame();
+                }
+                
+            }
             
-           
-            yield return StartCoroutine(ShowTotalWins());
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             Debug.Log("SpinAgain");
             enableSpin = true;
@@ -470,7 +481,10 @@ public class WinLoseManager : MonoBehaviour
             }
         }
     }
-
+    void DeactivateFreeGame ()
+    {
+        CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
+    }
     IEnumerator ShowTotalWins ()
     {
         if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)

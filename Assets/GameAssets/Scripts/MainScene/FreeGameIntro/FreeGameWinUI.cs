@@ -3,25 +3,28 @@ using UnityEngine;
 
 public class FreeGameWinUI : MonoBehaviour
 {
-    public float totalAmount;
-    public TMP_Text CurrentWinAmount;
-    public float increaseDuration = 1f; // Duration of the increase
+    public float targetAmount; // Change to 10 or any target number
+    public float currentAmount; // Change to 10 or any target number
+    public TMP_Text CurrentWinAmount; // TextMeshPro component to show the value
+    public float Duration = 2f; // Duration of the number counting animation
     private float startTime;
-
-    public bool canUpdateWinnings = false;
+    public bool canUpdateWinnings = false; // Control when to start updating
     public GameObject TheWinAmountText;
+    private float elapsedTime;  // To track the elapsed time
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start ()
     {
+        Refresh();
         startTime = Time.time;
-        totalAmount = GetTotalAmount();
+        targetAmount = GetTotalAmount();
     }
 
     private void OnEnable ()
     {
+        Refresh();
         startTime = Time.time;
-        totalAmount = GetTotalAmount();
+        targetAmount = GetTotalAmount();
     }
 
     private void Update ()
@@ -39,11 +42,21 @@ public class FreeGameWinUI : MonoBehaviour
 
     public void UpdateFreeGameTotalWinnings ()
     {
-        float t = ( Time.time - startTime ) / increaseDuration;
-        float currentValue = Mathf.Lerp(0f , totalAmount , t);
+        // Increment elapsed time based on real time passed
+        elapsedTime += Time.deltaTime;
+        // Calculate the current value using Mathf.Lerp
+        float currentValue = Mathf.Lerp(0f , targetAmount , elapsedTime / Duration);
+        // Update the text with the formatted value
         CurrentWinAmount.text = currentValue.ToString("F2");
-        
+
+        // Reset or cap elapsed time once the duration is reached
+        if (elapsedTime >= Duration)
+        {
+            elapsedTime = Duration;  // Ensure it doesn't go beyond the duration
+            CurrentWinAmount.text = targetAmount.ToString("F2");  // Set to the final target value
+        }
     }
+
 
     float GetTotalAmount ()
     {
@@ -58,5 +71,11 @@ public class FreeGameWinUI : MonoBehaviour
             theAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
         }
         return theAmount;
+    }
+
+    void Refresh ()
+    {
+        targetAmount = 0;
+        currentAmount = 0;
     }
 }
