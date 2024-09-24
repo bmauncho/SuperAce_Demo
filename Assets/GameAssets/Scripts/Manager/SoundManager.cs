@@ -65,4 +65,33 @@ public class SoundManager : MonoBehaviour
 
         return PossibleAudioSource [0];
     }
+
+    public void PauseAllSounds ()
+    {
+        for (int i = 0 ; i < PossibleAudioSource.Count ; i++)
+        {
+            if (PossibleAudioSource [i].clip)
+            {
+                PossibleAudioSource [i].Pause();
+            }
+        }
+
+        AmbientSound.Pause();
+    }
+
+
+    public void UnPauseAllSounds ()
+    {
+        for (int i = 0 ; i < PossibleAudioSource.Count ; i++)
+        {
+            if (PossibleAudioSource [i].clip)
+            {
+                PossibleAudioSource [i].UnPause();
+            }
+        }
+
+        AmbientSound.UnPause();
+    }
+
+
 }
