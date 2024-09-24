@@ -23,7 +23,7 @@ public class CardManager : MonoBehaviour
 
     float originalScatterprobability = 0.0f;
 
-    [Range(0.0f , 1.0f)]
+    [Range(0.0f , .5f)]
     public float probabilityFactor; // This is the actual float value
 
     [Range(0.0f , 1.0f)]
@@ -198,7 +198,6 @@ public class CardManager : MonoBehaviour
     public void RandomizeDealing ( Transform card)
     {
         float randomValue = Random.value;
-
         // Adjust probabilities based on win rate
         float adjustedNormalCardProbability = normalCardProbability + ( winRate * 0.2f ); // Increase normal card probability
         float adjustedGoldenCardProbability = goldenCardProbability - ( winRate * 0.1f ); // Decrease golden card probability

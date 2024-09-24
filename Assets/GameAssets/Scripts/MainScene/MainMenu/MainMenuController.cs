@@ -178,6 +178,10 @@ public class MainMenuController : MonoBehaviour
         }
        
         CommandCentre.Instance.WinLoseManager_.enableSpin = false;
+        CommandCentre.Instance.FetchValues_winRate.FetchData();
+        CommandCentre.Instance.LargeBets_FetchValues.FetchData();
+        CommandCentre.Instance.CardManager_.winRate = CommandCentre.Instance.FetchValues_winRate.GetWinRate();
+        Debug.Log(CommandCentre.Instance.FetchValues_winRate.GetWinRate());
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
     }
