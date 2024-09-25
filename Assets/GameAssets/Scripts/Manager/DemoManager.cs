@@ -52,7 +52,7 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance .MainMenuController_.EnableGameplayMenu();
         CommandCentre.Instance.BetManager_.refreshBetSlip();
         ActivateDemoUI ();
-        Invoke(nameof(DemoSpin) , 3f);
+        Invoke(nameof(DemoSpin) , 1f);
     }
 
     public void ActivateDemoUI ()

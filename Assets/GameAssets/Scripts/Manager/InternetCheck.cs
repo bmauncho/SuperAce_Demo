@@ -52,6 +52,7 @@ public class InternetCheck : MonoBehaviour
         {
             internetErrorPanel.SetActive(true); // Display an error message (UI panel)
         }
+        CommandCentre.Instance.SoundManager_.PauseAllSounds();
         // Disable gameplay by pausing or stopping player input, etc.
         Time.timeScale = 0; // Pause the game
         IsOffLine = true; // Update offline status
@@ -68,6 +69,7 @@ public class InternetCheck : MonoBehaviour
         {
             Time.timeScale = 1; // Resume the game
             IsOffLine = false; // Update online status
+            CommandCentre.Instance.SoundManager_.UnPauseAllSounds();
             Debug.Log("Internet connection restored. Game is resumed.");
         }
     }
