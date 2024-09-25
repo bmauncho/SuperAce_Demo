@@ -331,15 +331,16 @@ public class WinLoseManager : MonoBehaviour
         Debug.Log("SpinEnd");
         if (CheckWinCondition())
         {
-            IsLastRoundWon = true;
+            
             Debug.Log("Spin Won");
             HandleWinCondition(winCards);
             IsScatterWin = false;
-            CommandCentre.Instance.BetManager_.ProgressiveBetting(false);
+            CommandCentre.Instance.BetManager_.ProgressiveBetting(IsLastRoundWon);
+            IsLastRoundWon = true;
         }
         else
         {
-            CommandCentre.Instance.BetManager_.ProgressiveBetting(false);
+            CommandCentre.Instance.BetManager_.ProgressiveBetting(IsLastRoundWon);
             CommandCentre.Instance.BetManager_.LargeBetSystem( IsLastRoundWon);
             //if Combo >= 3 && <= 5 show win screen
             //Debug.Log($"the combo is X{CommandCentre.Instance.ComboManager_.GetCombo()} the real combo is{CommandCentre.Instance.ComboManager_.ComboCounter}");

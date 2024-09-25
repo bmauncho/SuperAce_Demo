@@ -18,7 +18,19 @@ public class BetManager : MonoBehaviour
     private void Start ()
     {
         refreshBetSlip();
-        rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
+       
+    }
+    private void Update ()
+    {
+        if (CommandCentre.Instance)
+        {
+            rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
+        }
+
+        if (rounds <= 1)
+        {
+            rounds = 1;
+        }
     }
 
     // Deactivates all bets without clearing the list
