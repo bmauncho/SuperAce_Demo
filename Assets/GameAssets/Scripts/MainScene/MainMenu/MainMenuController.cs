@@ -16,6 +16,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject StartGameMenu;
     public GameObject BetingMenu;
     public GameObject WinMoreMenu;
+    public GameObject InsufficientAmount;
 
     [Space(10)]
     [Header("References")]
@@ -147,6 +148,11 @@ public class MainMenuController : MonoBehaviour
 
         if (!isBtnPressed)
         {
+            if (CommandCentre.Instance.CashManager_.CashAmount <= 0)
+            {
+                InsufficientAmount.SetActive(true);
+                return;
+            }
             if (CanSpin /*&& CommandCentre.Instance.WinLoseManager_.enableSpin*/)
             {
                 

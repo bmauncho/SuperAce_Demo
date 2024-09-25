@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     public float minSound, maxSound;
     private void Start ()
     {
+        PlayAmbientSound("FunkCasino");
         LowerAmbientSound();
     }
     public void LowerAmbientSound ()

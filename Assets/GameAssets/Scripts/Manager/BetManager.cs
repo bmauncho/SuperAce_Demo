@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using DG.Tweening.Core.Easing;
 
 public class BetManager : MonoBehaviour
 {
@@ -24,14 +26,21 @@ public class BetManager : MonoBehaviour
     {
         if (CommandCentre.Instance)
         {
-            rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
-        }
+            if (BetAmount >=50)
+            {
+                rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
+            }
+            else
+            {
+                rtp = .95f;
+            }
+            
 
-        if (rounds <= 1)
-        {
-            rounds = 1;
+            if (rounds <= 1)
+            {
+                rounds = 1;
+            }
         }
-        Debug.Log(AdjustedBetAmount);
     }
 
     // Deactivates all bets without clearing the list
@@ -48,21 +57,37 @@ public class BetManager : MonoBehaviour
     public void SetCurrentBetAmount ( float amount )
     {
         BetAmount = amount;
-        UpdateBetAmount();
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            UpdateBetAmount(1);
+        }
+        else
+        {
+            UpdateBetAmount(0);
+        }
         DeactivateAllBets();
     }
 
-    public void UpdateBetAmount ()
+    public void UpdateBetAmount (int index)
     {
-        int index = CommandCentre.Instance.DemoManager_.IsDemo ? 1 : 0;
         CurrentBetAmount [index].text = BetAmount.ToString();
     }
 
     public void refreshBetSlip ()
     {
-        BetAmount = CommandCentre.Instance.DemoManager_.IsDemo ? 10f : 2f;
+        int index = 0;
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            index = 1;
+            BetAmount = 10f;
+        }
+        else
+        {
+            index = 0;
+            BetAmount = 2;
+        }
         AdjustedBetAmount = BetAmount;
-        UpdateBetAmount();
+        UpdateBetAmount(index);
     }
 
     // Adjust bet based on round number, adding variance to larger bets
@@ -72,77 +97,88 @@ public class BetManager : MonoBehaviour
         rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue/100;
         // Scale variance with the round number, allowing for an increase over time
         float betMultiplier = Mathf.Clamp(1 + ( highVariance * round / 10 ) , 1 , maxBetMultiplier);
-        return baseAmount * betMultiplier* rtp;
+        return baseAmount * betMultiplier * rtp;
     }
-
-    // Add a more complex betting logic here (progressive betting system)
-    public void ProgressiveBetting ( bool isLoss)
-    {
-        // Base bet amount
-        float baseBetAmount = BetAmount;  // Change this to your desired base bet amount
-        if (isLoss)
-        {
-            // Increase bet on loss
-            AdjustedBetAmount = Mathf.Min(AdjustBet(BetAmount * 1.5f , 100) , 100);  // Apply AdjustBet to scale with round
-        }
-        else
-        {
-            // Decrease bet on win
-            AdjustedBetAmount = AdjustBet(Mathf.Max(BetAmount / 2f , 2) , 100);  // Apply AdjustBet to scale with round
-        }
-
-        UpdateBetAmount();
-    }
-
 
     // Large bet system logic 
     public void LargeBetSystem ( bool lastRoundWon )
     {
-        int round = rounds;
-        float playerBalance = CommandCentre.Instance.CashManager_.CashAmount;
-        // Determine the risk profile based on the player's current betting behavior
-        string riskProfile = DetermineRiskProfile(BetAmount , CommandCentre.Instance.CardManager_.winRate , CommandCentre.Instance.CashManager_.CashAmount);
-        rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
-        float baseBet = 10;
-        float maxBet = playerBalance * 0.1f; // 10% max of player balance
-        float aggressiveMultiplier = riskProfile == "aggressive" ? 1.5f : 1.1f;
-        float moderateMultiplier = riskProfile == "moderate" ? 1.2f : 1.1f; // Moderate risk multiplier
-        float conservativeMinBet = riskProfile == "conservative" ? Mathf.Min(5 , baseBet) : baseBet;
+        // Access managers
+        CardManager cardManager = CommandCentre.Instance.CardManager_;
+        CashManager cashManager = CommandCentre.Instance.CashManager_;
 
-        // Adjust the bet based on the outcome of the last round
+        // Initialize variables
+        string riskProfile = DetermineRiskProfile(BetAmount , cardManager.winRate , cashManager.CashAmount);
+        float baseBet = 10f;
+        float playerBalance = cashManager.CashAmount;
+        float maxBet = playerBalance * 0.1f; // 10% of player balance
+        float aggressiveMultiplier = 1.5f;
+        float moderateMultiplier = 1.2f;
+        float conservativeMinBet = Mathf.Min(5f , baseBet);
+        float adjustedBetAmount = BetAmount; // Default to current bet amount
+        float rtp_ = rtp; // Assuming you have this function for RTP calculation
+
+        // Risk profile adjustment
+        switch (riskProfile)
+        {
+            case "aggressive":
+                aggressiveMultiplier = 1.5f;
+                break;
+            case "moderate":
+                moderateMultiplier = 1.2f;
+                break;
+            case "conservative":
+                conservativeMinBet = baseBet;
+                break;
+            default:
+                Debug.LogError("Unknown risk profile: " + riskProfile);
+                return;
+        }
+
+        // Bet adjustment logic based on last round outcome
         if (lastRoundWon)
         {
-            // Increase bet based on risk profile after a win
-            if (riskProfile == "aggressive")
+            // Win scenario
+            switch (riskProfile)
             {
-                AdjustedBetAmount = Mathf.Min(BetAmount * aggressiveMultiplier * rtp, maxBet); // More aggressive scaling on win
-            }
-            else if (riskProfile == "moderate")
-            {
-                AdjustedBetAmount = Mathf.Min(BetAmount * moderateMultiplier *rtp, maxBet); // Moderate scaling on win
+                case "aggressive":
+                    adjustedBetAmount = BetAmount * aggressiveMultiplier * rtp;
+                    break;
+
+                case "moderate":
+                    adjustedBetAmount = BetAmount * moderateMultiplier * rtp;
+                    break;
+
+                default:
+                    adjustedBetAmount = baseBet; // No change for other profiles
+                    break;
             }
         }
         else
         {
-            // Enter recovery mode on loss streak, smaller bets
-            AdjustedBetAmount = Mathf.Max(conservativeMinBet , BetAmount * 0.75f);
+            // Loss scenario with conservative approach
+            adjustedBetAmount = Mathf.Max(conservativeMinBet , BetAmount * 0.75f);
 
-            // Additional recovery logic for every 3 losses
-            if (!lastRoundWon && round % 3 == 0)
+            // Recovery mode for every 3 losses
+            if (rounds % 3 == 0)
             {
-                AdjustedBetAmount *= 0.5f; // Recovery mode every 3 losses
+                adjustedBetAmount *= 0.5f; // Halve the bet every 3 losses
             }
         }
 
-        // Additional aggressive betting logic for high player balances
-        if (playerBalance > 1000 && round % 5 == 0)
+        // Aggressive betting logic for high player balance
+        if (playerBalance >= 1000f && rounds % 5 == 0)
         {
-            AdjustedBetAmount *= aggressiveMultiplier; // Bet boost every 5th round for high-risk players
+            adjustedBetAmount *= aggressiveMultiplier;
         }
 
-        Debug.Log($"Adjusted Bet Amount for {riskProfile} profile: {AdjustedBetAmount}");
-        UpdateBetAmount();
+        // Debug log to track bet changes
+        Debug.Log($"Risk Profile: {riskProfile}, Adjusted Bet Amount: {adjustedBetAmount}, Player Balance: {playerBalance}");
+
+        // Assign final adjusted bet amount
+        AdjustedBetAmount = adjustedBetAmount;
     }
+
 
 
     public string DetermineRiskProfile ( float averageBet , float winRate , float balance )
@@ -161,4 +197,36 @@ public class BetManager : MonoBehaviour
         }
     }
 
+    public float GetBetAmount ()
+    {
+        if (BetAmount > 0 && BetAmount<50)
+        {
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                float betMultiplier = ( 1 + ( highVariance * rounds / 10 ) );
+                BetAmount *= 2;
+                AdjustedBetAmount = BetAmount * betMultiplier * rtp;
+            }
+            else
+            {
+                float betMultiplier = ( 1 + ( highVariance * rounds / 10 ) );
+                //progressive betting
+                if (CommandCentre.Instance.WinLoseManager_.IsLastRoundWon)
+                {
+                    BetAmount /= 2f;
+                }
+                else
+                {
+                    BetAmount *= 1.5f;
+                }
+                AdjustedBetAmount = BetAmount * betMultiplier * rtp;
+            }
+            
+        }
+        else
+        {
+            LargeBetSystem(CommandCentre.Instance.WinLoseManager_.IsLastRoundWon);
+        }
+        return AdjustedBetAmount;
+    }
 }

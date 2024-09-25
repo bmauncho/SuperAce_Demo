@@ -64,7 +64,7 @@ public class PayOutManager : MonoBehaviour
     {
         Debug.Log($"the combo is X{comboManager.GetCombo()} the real combo is{comboManager.ComboCounter}");
         CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfWinningCards()) 
-            , winLoseManager.GetPayLines(),betManager.AdjustedBetAmount ,comboManager.GetCombo());
+            , winLoseManager.GetPayLines(),betManager.GetBetAmount() ,comboManager.GetCombo());
         WinUI_.ActivateCurrentWinings();
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
     }
@@ -117,17 +117,10 @@ public class PayOutManager : MonoBehaviour
     {
         float Total = 0;
 
-
+        Debug.Log(Bet);
         for (int i = 0 ; i < Payout.Count ; i++)
         {
-            if (Bet > 50)
-            {
-                Total += Payout [i] * PayLines * Bet * Combo * CommandCentre.Instance.BetManager_.rtp;
-            }
-            else
-            {
-                Total += Payout [i] * PayLines * Bet * Combo;
-            }
+            Total += Payout [i] * PayLines * Bet * Combo;
         }
         return Total;
     }
