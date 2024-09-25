@@ -299,6 +299,11 @@ public class GridColumnManager : MonoBehaviour
                                 newCard.GetComponent<Card>().ScatterCardAnim.enabled = true;
                                 CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                             }
+
+                            if (newCard.GetComponent<Card>().IsGoldenCard)
+                            {
+                                newCard.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                            }
                         }));
                     cardSequence.PrependInterval(delay);
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
@@ -356,6 +361,10 @@ public class GridColumnManager : MonoBehaviour
                                 newCard.GetComponent<Card>().ScatterCardAnim.enabled = true;
                                 CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                             }
+                            if (newCard.GetComponent<Card>().IsGoldenCard)
+                            {
+                                newCard.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                            }
                         }));
                     cardSequence.PrependInterval(delay);
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
@@ -400,7 +409,11 @@ public class GridColumnManager : MonoBehaviour
                             newCard.transform.localPosition = Vector3.zero;
                             ActivateNewCard(newCard);
                             CalculateObjectsPlaced();
-                           
+                            if (newCard.GetComponent<Card>().IsGoldenCard)
+                            {
+                                newCard.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                            }
+
                         });
                     CommandCentre.Instance.GridManager_.RefreshCurrentColumnCards(colIndex);
                 }
@@ -705,6 +718,10 @@ public class GridColumnManager : MonoBehaviour
                        objectsShaked++;
                        Target.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                        Debug.Log($"Card {Target.name} finished shaking.");
+                       if (Target.GetComponent<Card>().IsGoldenCard)
+                       {
+                           Target.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                       }
                    });
         activeTweens.Add(shakeTween);
         yield return new WaitForSeconds(0.1f);
@@ -991,6 +1008,10 @@ public class GridColumnManager : MonoBehaviour
                                             newCard1.transform.localPosition = Vector3.zero;
                                             newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                             CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
+                                            if (newCard1.GetComponent<Card>().IsGoldenCard)
+                                            {
+                                                newCard1.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                                            }
                                         }));
 
                                     jumpSequence.Join(newCard2.transform.DOJump(
@@ -1002,6 +1023,10 @@ public class GridColumnManager : MonoBehaviour
                                             newCard2.transform.localPosition = Vector3.zero;
                                             newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                             CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
+                                            if (newCard2.GetComponent<Card>().IsGoldenCard)
+                                            {
+                                                newCard2.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                                            }
                                         }));
                                 }
                             }

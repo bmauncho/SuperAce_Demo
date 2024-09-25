@@ -180,6 +180,11 @@ public class GridManager : MonoBehaviour
                             card.GetComponent<Card>().ScatterCardAnim.enabled = true;
                             CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                         }
+
+                        if (card.GetComponent<Card>().IsGoldenCard)
+                        {
+                            card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                        }
                     }));
                 cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
             }
@@ -237,6 +242,11 @@ public class GridManager : MonoBehaviour
                             card.GetComponent<Card>().ScatterCardAnim.enabled = true;
                             CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
                         }
+
+                        if (card.GetComponent<Card>().IsGoldenCard)
+                        {
+                            card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                        }
                     }));
                 cardSequence.PrependInterval(( col * rowCount + row ) * delayIncrement); // Delay based on column and row position
             }
@@ -283,6 +293,10 @@ public class GridManager : MonoBehaviour
                         card.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = card;
                         CalculateObjectsPlaced();
+                        if(card.GetComponent<Card>().IsGoldenCard)
+                        {
+                            card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                        }
                     });
             }
         }

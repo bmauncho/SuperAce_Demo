@@ -24,6 +24,8 @@ public class Card : MonoBehaviour
     public Animator ScatterCardAnim;
 
     public ParticleSystem ScatterRotate;
+    public GameObject GoldenCardeffect;
+    public GameObject ScatterGoldenCardeffect;
 
     private void Start ()
     {
@@ -66,6 +68,7 @@ public class Card : MonoBehaviour
             if (IsScatterCard)
             {
                 cardBg.sprite = null;
+                ScatterGoldenCardeffect.SetActive(true) ;
             }
             else
             {
@@ -74,9 +77,11 @@ public class Card : MonoBehaviour
                 {
                     ScatterCardAnim.Play("ScatterCardIdle");
                 }
-                
+
                 ScatterCardAnim.enabled = false;
+                GoldenCardeffect.SetActive(false);
             }
+           
         }
 
     }
@@ -128,6 +133,10 @@ public class Card : MonoBehaviour
             IsScatterCard = true;
             ScatterCardAnim.enabled = false;
         }
+        else
+        {
+            ScatterGoldenCardeffect.SetActive(false);
+        }
     }
 
     public void SetCardBack ( Sprite backSprite = null )
@@ -175,7 +184,9 @@ public class Card : MonoBehaviour
 
     public void SetSmallJocker ( Sprite smallJoker = null )
     {
+
         IsScatterCard = false;
+        ScatterGoldenCardeffect.SetActive(false);
         IsGoldenCard = true;
         IsSmallJocker = true;
         IsBigJocker = false;
@@ -184,6 +195,7 @@ public class Card : MonoBehaviour
     public void SetBigJocker ( Sprite bigJoker = null )
     {
         IsScatterCard = false;
+        ScatterGoldenCardeffect.SetActive(false);
         IsGoldenCard = true;
         IsSmallJocker = false;
         IsBigJocker = true;
@@ -238,6 +250,7 @@ public class Card : MonoBehaviour
 
     public void EnableScatterRotate ()
     {
+        ScatterGoldenCardeffect.SetActive(false);
         card.sprite = null;
         ScatterRotate.gameObject.SetActive(true);
         ScatterCardAnim.enabled = false;
@@ -246,6 +259,7 @@ public class Card : MonoBehaviour
 
     public void DisableScatterRotate ()
     {
+        ScatterGoldenCardeffect.SetActive(true);
         card.sprite = CommandCentre.Instance.CardManager_.ScatterCard;
         ScatterCardAnim.enabled = true;
         ScatterRotate.gameObject.SetActive(false);

@@ -795,6 +795,7 @@ public class WinLoseManager : MonoBehaviour
             goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
             {
                 StartCoroutine(PunchScaleRotatedCards(goldenCard.transform));
+                goldenCard.GetComponent<Card>().GoldenCardeffect.SetActive(false);
             });
         }
     }
