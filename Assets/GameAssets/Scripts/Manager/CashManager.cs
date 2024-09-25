@@ -69,7 +69,7 @@ public class CashManager : MonoBehaviour
         }
         else
         {
-            CashAmountText [0].SetText(Mathf.FloorToInt(CashAmount).ToString());
+            CashAmountText [0].SetText(Mathf.FloorToInt(CashAmount).ToString("F2"));
         }
         
     }
@@ -78,11 +78,11 @@ public class CashManager : MonoBehaviour
     {
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            WinCashAmountText [1].text = CurrentWinings.ToString();
+            WinCashAmountText [1].text = CurrentWinings.ToString("F2");
         }
         else
         {
-            WinCashAmountText [0].text = CurrentWinings.ToString();
+            WinCashAmountText [0].text = CurrentWinings.ToString("F2");
         }
     }
 

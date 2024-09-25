@@ -160,6 +160,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator SpinReel ()
     {
+        CommandCentre.Instance.BetManager_.rounds++;
         Debug.Log("Spinning");
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {

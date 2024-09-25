@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Networking; // Include this for UnityWebRequest
-using System.Collections; // Required for using IEnumerator
+using UnityEngine.Networking;
+using System.Collections;
 
 public class InternetCheck : MonoBehaviour
 {
@@ -8,38 +8,55 @@ public class InternetCheck : MonoBehaviour
     public bool IsInternetEnabled = false;
     private bool IsOffLine = false;
     private float checkInterval = 5f; // Time in seconds between checks
-    private float timer = 0f; // Timer to track elapsed time
+    private float timer = 0f;
+    private int maxRetries = 3; // Number of retry attempts on failure
+    private int retryCount = 0;
 
     void Update ()
     {
-        // Increment the timer using unscaled delta time
         timer += Time.unscaledDeltaTime;
 
-        // Check if the timer has reached the interval
         if (timer >= checkInterval)
         {
-            timer = 0f; // Reset the timer
-            StartCoroutine(CheckInternetConnectionCoroutine()); // Start the internet check coroutine
+            timer = 0f;
+            if (Application.internetReachability != NetworkReachability.NotReachable)
+            {
+                // Internet reachability detected, proceed with network request check
+                StartCoroutine(CheckInternetConnectionCoroutine());
+            }
+            else
+            {
+                // No internet reachability at all
+                IsInternetEnabled = false;
+                HandleNoInternetConnection();
+            }
         }
     }
 
     private IEnumerator CheckInternetConnectionCoroutine ()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("https://www.google.com"))
+        using (UnityWebRequest www = UnityWebRequest.Get("https://www.cloudflare.com/cdn-cgi/trace")) // Lightweight endpoint
         {
             yield return www.SendWebRequest();
 
-            if (www.result == UnityWebRequest.Result.ConnectionError ||
-                www.result == UnityWebRequest.Result.ProtocolError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
-                IsInternetEnabled = false ;
-                Debug.Log("No internet connection");
-                HandleNoInternetConnection();
+                retryCount++;
+                if (retryCount >= maxRetries)
+                {
+                    IsInternetEnabled = false;
+                    HandleNoInternetConnection();
+                    retryCount = 0; // Reset retry counter
+                }
+                else
+                {
+                    Debug.Log("Retrying connection...");
+                }
             }
             else
             {
                 IsInternetEnabled = true;
-                Debug.Log("Connected to the internet");
+                retryCount = 0; // Reset retry counter on success
                 HandleInternetConnection();
             }
         }
@@ -47,15 +64,13 @@ public class InternetCheck : MonoBehaviour
 
     void HandleNoInternetConnection ()
     {
-        // Optionally, show a message or disable gameplay elements
         if (internetErrorPanel != null)
         {
-            internetErrorPanel.SetActive(true); // Display an error message (UI panel)
+            internetErrorPanel.SetActive(true);
         }
         CommandCentre.Instance.SoundManager_.PauseAllSounds();
-        // Disable gameplay by pausing or stopping player input, etc.
-        Time.timeScale = 0; // Pause the game
-        IsOffLine = true; // Update offline status
+        Time.timeScale = 0;
+        IsOffLine = true;
         Debug.Log("No internet connection. Game is paused.");
     }
 
@@ -63,12 +78,12 @@ public class InternetCheck : MonoBehaviour
     {
         if (internetErrorPanel != null)
         {
-            internetErrorPanel.SetActive(false); // Hide the error message (UI panel)
+            internetErrorPanel.SetActive(false);
         }
-        if (IsOffLine) // Check if we were offline before
+        if (IsOffLine)
         {
-            Time.timeScale = 1; // Resume the game
-            IsOffLine = false; // Update online status
+            Time.timeScale = 1;
+            IsOffLine = false;
             CommandCentre.Instance.SoundManager_.UnPauseAllSounds();
             Debug.Log("Internet connection restored. Game is resumed.");
         }
