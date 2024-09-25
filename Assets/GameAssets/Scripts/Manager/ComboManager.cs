@@ -30,12 +30,14 @@ public class ComboManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ComboText.text = $"Combo {ComboCounter}";
+        ComboText.text = $"{ComboCounter}";
     }
 
     public void ActivateComboUI ()
     {
         ComboVisual.SetActive(true);
+        ComboVisual.GetComponentInChildren<Animator>().Rebind();
+        ComboVisual.GetComponentInChildren<Animator>().Play("ComboAnim");
     }
 
     public void DeactivateComboUI ()
