@@ -42,12 +42,14 @@ public class GridManager : MonoBehaviour
     public List<GridColumns_CardPos> Columns_Cardpos = new List<GridColumns_CardPos>();
 
     public List<bool> WhichColHasScatterCard = new List<bool>();
-    
+
+    float originalMoveduration;
 
     private void Start ()
     {
         poolManager = CommandCentre.Instance.PoolManager_;
         multiDeckManager = CommandCentre.Instance.MultiDeckManager_;
+        originalMoveduration = moveDuration;
     }
 
     public void ManualStart ()
@@ -175,14 +177,44 @@ public class GridManager : MonoBehaviour
                 if (ColumnsWithScatterCards() >= 2)
                 {
                     //Do something
+                    card.transform.SetParent(targetPos);
+                    card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                    float delay = ( col * rowCount + row );
+                    // Create a sequence for each card's movement
+                    Sequence cardSequence = DOTween.Sequence();
+                    moveDuration = 0.25f;
+                    delayIncrement = moveDuration;
+                    cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .OnComplete(() =>
+                        {
+                            // Set local position to zero explicitly after the animation
+                            card.transform.localPosition = Vector3.zero;
+
+                            targetPos.GetComponent<CardPos>().TheOwner = card;
+                            CalculateObjectsPlaced();
+                            if (card.GetComponent<Card>().cardType == CardType.Scatter)
+                            {
+                                card.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
+                            }
+
+                            if (card.GetComponent<Card>().IsGoldenCard)
+                            {
+                                card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                            }
+                        }));
+                    cardSequence.PrependInterval((delay*delayIncrement)); // Delay based on column and row position
                 }
                 else
                 {
+                    moveDuration = originalMoveduration;
                     card.transform.SetParent(targetPos);
                     card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                     float delay = ( col * rowCount + row ) * delayIncrement;
                     // Create a sequence for each card's movement
                     Sequence cardSequence = DOTween.Sequence();
+
                     cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
                         .SetEase(Ease.OutQuad)
                         .OnComplete(() =>
