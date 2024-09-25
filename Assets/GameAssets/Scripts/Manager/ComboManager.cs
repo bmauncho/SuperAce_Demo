@@ -19,8 +19,8 @@ public class ComboManager : MonoBehaviour
     public GameObject ComboVisual;
     public ComboUI ComboUI_;
 
-    public ComboAmount ComboAmount; 
-
+    public ComboAmount ComboAmount;
+    public int comboIndex;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,12 +56,14 @@ public class ComboManager : MonoBehaviour
             freeGameComboCounter++;
             if (ComboCounter > 6) { ComboCounter = 10; }
             if(freeGameComboCounter>3) { freeGameComboCounter = 5; }
+            comboIndex++;
         }
         else
         {
             ComboUI_.NormalCombo.ShowCombo();
             ComboCounter++;
             if (ComboCounter > 3) { ComboCounter = 5; }
+            comboIndex++;
         }
         
     }
@@ -71,6 +73,7 @@ public class ComboManager : MonoBehaviour
         DeactivateComboUI ();
         ComboCounter = 0;
         freeGameComboCounter = 0;
+        comboIndex = 0;
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             ComboUI_.FreeGameCombo.ResetCombos ();

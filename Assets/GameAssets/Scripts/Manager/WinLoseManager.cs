@@ -390,6 +390,7 @@ public class WinLoseManager : MonoBehaviour
             AutoSpinManager AutoSpinManager_ = CommandCentre.Instance.AutoSpinManager_;
             FreeGameManager freeGameManager_ = CommandCentre.Instance.FreeGameManager_;
             MainMenuController mainMenuController_ = CommandCentre.Instance.MainMenuController_;
+            ComboManager comboManager_ = CommandCentre.Instance.ComboManager_;
 
             if (AutoSpinManager_.IsAutoSpin)
             {
@@ -418,7 +419,12 @@ public class WinLoseManager : MonoBehaviour
                             AutoSpinManager_.IsAutoSpin = false;
                             AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
                         }
-
+                        else if(comboManager_.comboIndex >= AutoSpinManager_.AutoSpinSettings_.WinRatioController_.CurrentWinRatio)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
                         else
                         {
                             mainMenuController_.Spin();
@@ -439,6 +445,12 @@ public class WinLoseManager : MonoBehaviour
                             AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
                         }
                         else if (CashManager_.CashAmount < AutoSpinManager_.AutoSpinSettings_.BalanceController_GreaterThan.CurrentBalance)
+                        {
+                            AutoSpinManager_.DisableAutoSpin();
+                            AutoSpinManager_.IsAutoSpin = false;
+                            AutoSpinManager_.Autospin.AutoSpinToggle.isOn = false;
+                        }
+                        else if (comboManager_.comboIndex >= AutoSpinManager_.AutoSpinSettings_.WinRatioController_.CurrentWinRatio)
                         {
                             AutoSpinManager_.DisableAutoSpin();
                             AutoSpinManager_.IsAutoSpin = false;
