@@ -116,21 +116,19 @@ public class PayOutManager : MonoBehaviour
     public float TotalWinnings ( List<float> Payout , int PayLines , float Bet , int Combo )
     {
         float Total = 0;
-        if (Bet > 50)
+
+
+        for (int i = 0 ; i < Payout.Count ; i++)
         {
-            for (int i = 0 ; i < Payout.Count ; i++)
+            if (Bet > 50)
             {
                 Total += Payout [i] * PayLines * Bet * Combo * CommandCentre.Instance.BetManager_.rtp;
             }
-        }
-        else
-        {
-            for (int i = 0 ; i < Payout.Count ; i++)
+            else
             {
                 Total += Payout [i] * PayLines * Bet * Combo;
             }
         }
-        
         return Total;
     }
 
