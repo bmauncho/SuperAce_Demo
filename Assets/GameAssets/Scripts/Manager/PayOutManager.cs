@@ -52,6 +52,11 @@ public class PayOutManager : MonoBehaviour
         {
             CurrentWinAmount.text = $"{CurrentWin.ToString("F2")}";
         }
+
+        if (CurrentWin >= 10000000)
+        {
+            CurrentWin = 10000000;
+        }
     }
 
     public void ShowCurrentWin ()

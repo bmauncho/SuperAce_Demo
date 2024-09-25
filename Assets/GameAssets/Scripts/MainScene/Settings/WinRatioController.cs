@@ -9,7 +9,10 @@ public class WinRatioController : MonoBehaviour
     public void IncreaseWinRatio ()
     {
         CurrentWinRatio++;
-
+        if(CurrentWinRatio >= 10000)
+        {
+            CurrentWinRatio = 10000;
+        }
         WinRatio.text = $"{CurrentWinRatio}X";
     }
 
