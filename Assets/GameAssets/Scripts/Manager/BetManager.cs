@@ -31,6 +31,7 @@ public class BetManager : MonoBehaviour
         {
             rounds = 1;
         }
+        Debug.Log(AdjustedBetAmount);
     }
 
     // Deactivates all bets without clearing the list
