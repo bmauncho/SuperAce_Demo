@@ -875,6 +875,15 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.CardMaskManager_.DeactivateAllCardMasks();
         CommandCentre.Instance.CardMaskManager_.Deactivate();
         CommandCentre.Instance.GridColumnManager_.CheckAndFillColumns(columns.Count);
+        GamePlayMenuController GPMC = CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>();
+        if (GPMC.NormalGamePlay.activeSelf)
+        {
+            GPMC.NormalGamePlay.GetComponent<NormalGamePlay>().Bounce();
+        }
+        else
+        {
+            GPMC.DemoGamePlay.GetComponent<DemoGamepLay>().Bounce();
+        }
     }
 
 
