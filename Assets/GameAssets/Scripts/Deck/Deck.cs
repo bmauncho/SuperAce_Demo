@@ -40,6 +40,7 @@ public class Deck : MonoBehaviour
         }
         MaintainCorrectAmountOfCardsInDeck();
         RepositionCards();
+        maintainOnlyOneScatterCard();
     }
 
     public void ClearDeck ()
@@ -127,10 +128,54 @@ public class Deck : MonoBehaviour
         }
         else
         {
+            
             //Debug.Log("Deck is already refilled.");
         }
     }
 
+    void maintainOnlyOneScatterCard ()
+    {
+        int scattercards = 0;
+        if (DeckCards.Count > 0)
+        {
+            for (int i = 0 ; i < DeckCards.Count ; i++)
+            {
+                if (DeckCards [i] != null)
+                {
+                    Card cardScript = DeckCards [i].GetComponent<Card>();
+                    if (cardScript.cardType == CardType.Scatter)
+                    {
+                        scattercards++;
+                        float timeout = 3f; // Maximum time to wait in seconds
+                        float timer = 0f;
+                        // If it's the second instance, change its card type
+                        while (scattercards >= 2&&timer < timeout)
+                        {
+                            cardScript.cardType = CardType.Clubs;
+                            cardScript.TheCard.SetActive(true);
+                            cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
+                            cardScript.ScatterWords.SetActive(false);
+                            //Debug.Log("Change the second");
+                            timer += Time.deltaTime;
+                            scattercards--;
+                        }
+
+                        if (timer >= timeout)
+                        {
+                            Debug.LogWarning("Safety exit");
+                            // Handle timeout case here, like forcing a spin or showing a message to the player
+                        }
+                    }
+                    else if (cardScript.cardType == CardType.Big_Jocker)
+                    {
+                        cardScript.IsBigJocker = false;
+                        CommandCentre.Instance.CardManager_.DealNormalCards(DeckCards [i].GetComponent<Card>().transform);
+                    }
+                }
+            }
+        }
+        
+    }
 
     public void ResetDeck ()
     {
@@ -165,7 +210,7 @@ public class Deck : MonoBehaviour
             drawnCard.transform.SetParent(null);
             drawnCard.SetActive(true);
             drawnCard.transform.localRotation = Quaternion.Euler(0 , 0 , 0);
-            //CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
+            CommandCentre.Instance.CardManager_.GetAndAssignSprites(drawnCard.transform);
             return drawnCard;
         }
 

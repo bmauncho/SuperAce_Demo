@@ -1,8 +1,9 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 [System.Serializable]
 public class GridColumns
@@ -56,6 +57,41 @@ public class GridManager : MonoBehaviour
     public void ManualStart ()
     {
         CreateGrid();
+    }
+
+    private void Update ()
+    {
+        // Iterate through the cards in the specified column
+        for (int h = 0 ; h < Columns.Count ; h++) 
+        {
+            int cardCount = 0;
+            for (int i = 0; i < Columns [h].Cards.Count ; i++)
+            {
+                Card cardScript = Columns [h].Cards [i].GetComponent<Card>();
+
+                if (cardScript != null)
+                {
+                    // Check if the card type matches the target card type
+                    if (cardScript.cardType == CardType.Scatter)
+                    {
+                        cardCount++;
+                        //Debug.Log(cardCount);
+                        //Debug.Log($"Column:{col} has {cardCount} scattercards");
+                        // If it's the second instance, change its card type
+                        if (cardCount >= 2)
+                        {
+
+                            cardScript.cardType = CardType.Clubs;
+                            cardScript.TheCard.SetActive(true);
+                            cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
+                            cardScript.ScatterWords.SetActive(false);
+                            cardScript.ScatterRotate.gameObject.SetActive(false);
+                            //Debug.Log("Change the second");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     [ContextMenu("Reset Grid")]
@@ -153,6 +189,7 @@ public class GridManager : MonoBehaviour
                         else
                         {
                             card = currentDeck.DrawCard();
+                            CheckAndModifyCardTypeInColumn(col , CardType.Scatter, card);
                         }
                         
                     }
@@ -169,7 +206,7 @@ public class GridManager : MonoBehaviour
                     //Debug.Log($"Number of scatter cards : {ScatterCards_} in column :{col}");
                 }
 
-                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
+                
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -234,6 +271,7 @@ public class GridManager : MonoBehaviour
                 else
                 {
                     card = currentDeck.DrawCard();
+                    CheckAndModifyCardTypeInColumn(col , CardType.Scatter, card);
                 }
                 card.GetComponent<Card>().ScatterCardAnim.enabled = false;
                 if (card.GetComponent<Card>().cardType == CardType.Scatter)
@@ -242,7 +280,7 @@ public class GridManager : MonoBehaviour
                     WhichColHasScatterCard [col] = true;
                     //Debug.Log($"Number of scatter cards : {ScatterCards_} in column :{col}");
                 }
-                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
+
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -299,8 +337,8 @@ public class GridManager : MonoBehaviour
                 else
                 {
                     card = currentDeck.DrawCard();
+                    CheckAndModifyCardTypeInColumn(col , CardType.Scatter,card);
                 }
-                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -343,10 +381,9 @@ public class GridManager : MonoBehaviour
         return count;
     }
 
-    void CheckAndModifyCardTypeInColumn ( int col , CardType targetCardType)
+    void CheckAndModifyCardTypeInColumn ( int col , CardType targetCardType,GameObject Card)
     {
         int cardCount = 0;
-
         // Iterate through the cards in the specified column
         for (int i = 0 ; i < Columns [col].Cards.Count ; i++)
         {
@@ -358,12 +395,18 @@ public class GridManager : MonoBehaviour
                 if (cardScript.cardType == targetCardType)
                 {
                     cardCount++;
+                    Debug.Log(cardCount);
                     //Debug.Log($"Column:{col} has {cardCount} scattercards");
                     // If it's the second instance, change its card type
-                    if (cardCount >= 2)
+                    while(cardCount >= 2)
                     {
+
+                        Card.GetComponent<Card>().cardType = CardType.Clubs;
+                        Card.GetComponent<Card>().TheCard.SetActive(true);
+                        Card.GetComponent<Card>().card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
+                        Card.GetComponent<Card>().ScatterWords.SetActive(false);
+                        cardCount--;
                         //Debug.Log("Change the second");
-                        CommandCentre.Instance.CardManager_.DealNormalCards(Columns [col].Cards [i].transform);
                     }
                 }
             }

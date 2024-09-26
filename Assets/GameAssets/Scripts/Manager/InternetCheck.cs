@@ -42,6 +42,13 @@ public class InternetCheck : MonoBehaviour
 
     private IEnumerator CheckInternetConnectionCoroutine ()
     {
+        yield return StartCoroutine(checkforInternet_OptionA());
+
+        yield return StartCoroutine(checkforInternet_OptionB());
+    }
+
+    IEnumerator checkforInternet_OptionA ()
+    {
         string url = "https://www.cloudflare.com/cdn-cgi/trace?" + Random.Range(0 , 100000); // Append random query string
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
@@ -69,6 +76,32 @@ public class InternetCheck : MonoBehaviour
                 retryCount = 0; // Reset retry counter on success
                 HandleInternetConnection();
             }
+        }
+    }
+
+    IEnumerator checkforInternet_OptionB ()
+    {
+        WWW www_ = new WWW("https://google.com");
+        yield return www_;
+        if (www_.error != null)
+        {
+            retryCount++;
+            if (retryCount >= maxRetries)
+            {
+                IsInternetEnabled = false;
+                HandleNoInternetConnection();
+                retryCount = 0; // Reset retry counter
+            }
+            else
+            {
+                Debug.Log("Retrying connection...");
+            }
+        }
+        else
+        {
+            IsInternetEnabled = true;
+            retryCount = 0; // Reset retry counter on success
+            HandleInternetConnection();
         }
     }
 
