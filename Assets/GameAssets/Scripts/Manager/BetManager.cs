@@ -219,6 +219,7 @@ public class BetManager : MonoBehaviour
                 {
                     BetAmount *= 1.5f;
                 }
+
                 AdjustedBetAmount = BetAmount * betMultiplier * rtp;
             }
             
