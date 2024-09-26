@@ -69,7 +69,11 @@ public class FreeGameManager : MonoBehaviour
         resetFreeSpins();
         CommandCentre.Instance.WinLoseManager_.enableSpin = true;
         CommandCentre.Instance.SoundManager_.PlayAmbientSound("FunkCasino");
-        CommandCentre.Instance.PayOutManager_.WinUI_.ShowFreeGameWinUi_win();
+        float amount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
+        if (amount > 0)
+        {
+            CommandCentre.Instance.PayOutManager_.WinUI_.ShowFreeGameWinUi_win();
+        }
         FreeGameUi.SetActive(false);
     }
 

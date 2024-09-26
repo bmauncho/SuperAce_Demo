@@ -32,13 +32,15 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance.MainMenuController_.StartGame();
         ActivateDemoUI();
 
+        CommandCentre.Instance.BetManager_.refreshBetSlip();
+
         Invoke(nameof(DemoSpin) , 3f);
     }
 
     public void DemoSpin ()
     {
         CommandCentre.Instance.MainMenuController_.Spin();
-        Debug.Log("DemoSpin");
+        //Debug.Log("DemoSpin");
         if(IsDemoFeatureActive)
         {
             DeactivateDemoFeature();

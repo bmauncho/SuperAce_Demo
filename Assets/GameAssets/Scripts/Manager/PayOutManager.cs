@@ -62,7 +62,7 @@ public class PayOutManager : MonoBehaviour
 
     public void ShowCurrentWin ()
     {
-        Debug.Log($"the combo is X{comboManager.GetCombo()} the real combo is{comboManager.ComboCounter}");
+        //Debug.Log($"the combo is X{comboManager.GetCombo()} the real combo is{comboManager.ComboCounter}");
         CurrentWin = TotalWinnings(GetCardPayOut(winLoseManager.GetWinningCardType(),winLoseManager.GetNumberOfWinningCards()) 
             , winLoseManager.GetPayLines(),betManager.GetBetAmount() ,comboManager.GetCombo());
         WinUI_.ActivateCurrentWinings();
@@ -102,7 +102,7 @@ public class PayOutManager : MonoBehaviour
                 {
                     result.Add(PayList [index].Payouts [PayList [index].Payouts.Count-1]);
                    // Debug.Log(string.Join(", " , result));
-                    Debug.LogWarning($"Invalid payout index for card {card [i]} with {No_ofCards [i]} cards.");
+                    //Debug.LogWarning($"Invalid payout index for card {card [i]} with {No_ofCards [i]} cards.");
                 }
             }
         }
@@ -117,7 +117,7 @@ public class PayOutManager : MonoBehaviour
     {
         float Total = 0;
 
-        Debug.Log(Bet);
+        //Debug.Log(Bet);
         for (int i = 0 ; i < Payout.Count ; i++)
         {
             Total += Payout [i] * PayLines * Bet * Combo;

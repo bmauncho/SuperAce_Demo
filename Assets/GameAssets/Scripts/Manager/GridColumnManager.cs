@@ -210,7 +210,7 @@ public class GridColumnManager : MonoBehaviour
                 {
                     if (IsDemoSecondRefill)
                     {
-                        Debug.Log(colIndex + " : " + row);
+                       // Debug.Log(colIndex + " : " + row);
                         switch (colIndex)
                         {
                             case 0:
@@ -478,7 +478,7 @@ public class GridColumnManager : MonoBehaviour
                                     {
                                         case 0:
                                             CommandCentre.Instance.CardManager_.DealBigJocker(owner.transform);
-                                            Debug.Log("BigJocker");
+                                            //Debug.Log("BigJocker");
                                             break;
                                     }
                                     break;
@@ -487,7 +487,7 @@ public class GridColumnManager : MonoBehaviour
                                     {
                                         case 0:
                                             CommandCentre.Instance.CardManager_.DealSmallJocker(owner.transform);
-                                            Debug.Log("SmallJocker");
+                                            //Debug.Log("SmallJocker");
                                             break;
                                     }
                                     break;
@@ -551,7 +551,7 @@ public class GridColumnManager : MonoBehaviour
         totalObjectsToRotate = 0;
         objectsRotated = 0;
 
-        Debug.Log("win Check");
+        //Debug.Log("win Check");
         CommandCentre.Instance.WinLoseManager_.PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
         isWinChecked = true;
         IsDoneCheckingWin = true;
@@ -676,8 +676,8 @@ public class GridColumnManager : MonoBehaviour
                 yield return tween.WaitForCompletion(); // Wait for each individual tween to complete
             }
 
-            Debug.Log("Shaking complete");
-            Debug.Log($"IsObjectShakedComplete : {IsObjectShakedComplete()}");
+            //Debug.Log("Shaking complete");
+            //Debug.Log($"IsObjectShakedComplete : {IsObjectShakedComplete()}");
 
             if (IsObjectShakedComplete())
             {
@@ -705,13 +705,13 @@ public class GridColumnManager : MonoBehaviour
 
         if (safetyCounter == 0)
         {
-            Debug.LogWarning($"Loop exited due to safety for card {target.name}, rotation may not be completed.");
+            //Debug.LogWarning($"Loop exited due to safety for card {target.name}, rotation may not be completed.");
         }
         else
         {
             // Set the final rotation if the tween completed successfully
             target.rotation = Quaternion.Euler(0 , 180 , 0);
-            Debug.Log($"Card {target.name} rotation tween completed, rotation set to (0, 180, 0).");
+            //Debug.Log($"Card {target.name} rotation tween completed, rotation set to (0, 180, 0).");
         }
         yield return new WaitForSeconds(0.15f);
         yield return StartCoroutine(ShakingAction(target , activeTweens));
@@ -719,13 +719,13 @@ public class GridColumnManager : MonoBehaviour
 
     public IEnumerator ShakingAction (Transform Target , List<Tween> activeTweens)
     {
-        Debug.Log("ShakingAction");
+        //Debug.Log("ShakingAction");
         Tween shakeTween = Target.transform.DOShakeRotation(0.25f , new Vector3(0 , 0 , 15) , 8 , 90 , true , ShakeRandomnessMode.Harmonic)
                    .OnComplete(() =>
                    {
                        objectsShaked++;
                        Target.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                       Debug.Log($"Card {Target.name} finished shaking.");
+                       //Debug.Log($"Card {Target.name} finished shaking.");
                        if (Target.GetComponent<Card>().IsGoldenCard)
                        {
                            GameObject goldeneffect_ = Target.GetComponent<Card>().GoldenCardeffect;
@@ -816,14 +816,14 @@ public class GridColumnManager : MonoBehaviour
 
         yield return StartCoroutine(MarkAllCardsToBeProcessed());
 
-        Debug.Log("Check For BigJokerAndAnimate");
+        //Debug.Log("Check For BigJokerAndAnimate");
 
         totalObjectstojump = cardsToJump();
         objectsjumped = 0;
 
         if (totalObjectstojump >= 1)
         {
-            Debug.Log("start Animation");
+            //Debug.Log("start Animation");
             var jumpSequence = DOTween.Sequence();
             bool jokerFound = false;  // Track if a Big_Joker has been processed
 
@@ -896,7 +896,7 @@ public class GridColumnManager : MonoBehaviour
                                             2.0f , 1 , 1.0f).OnComplete(() =>
                                             {
                                                 objectsjumped++;
-                                                Debug.Log($"Card 1 jumped: {objectsjumped}/{totalObjectstojump}");
+                                                //Debug.Log($"Card 1 jumped: {objectsjumped}/{totalObjectstojump}");
                                                 newCard1.transform.localPosition = Vector3.zero;
                                                 newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                                 CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard1.transform);
@@ -914,7 +914,7 @@ public class GridColumnManager : MonoBehaviour
                                             2.0f , 1 , 1.0f).OnComplete(() =>
                                             {
                                                 objectsjumped++;
-                                                Debug.Log($"Card 2 jumped: {objectsjumped}/{totalObjectstojump}");
+                                                //Debug.Log($"Card 2 jumped: {objectsjumped}/{totalObjectstojump}");
                                                 newCard2.transform.localPosition = Vector3.zero;
                                                 newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                                                 CommandCentre.Instance.CardManager_.GetAndAssignSprites(newCard2.transform);
@@ -1083,13 +1083,13 @@ public class GridColumnManager : MonoBehaviour
             // Play the jump sequence and wait for it to complete
             if (jumpSequence.IsActive())
             {
-                Debug.Log("Waiting for jump sequence to complete...");
+               // Debug.Log("Waiting for jump sequence to complete...");
                 yield return jumpSequence.Play().WaitForCompletion();
             }
 
-            Debug.Log("Jump complete");
+            //Debug.Log("Jump complete");
             yield return new WaitForSeconds(0.5f);
-            Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
+            //Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
             
             if (!IsObjectsJumpComplete())
             {
@@ -1101,7 +1101,7 @@ public class GridColumnManager : MonoBehaviour
            
             if (IsObjectsJumpComplete() && !hasCheckedWin)
             {
-                Debug.Log("wincheck");
+                //Debug.Log("wincheck");
                 CheckWin();
                 hasCheckedWin = true;
             }

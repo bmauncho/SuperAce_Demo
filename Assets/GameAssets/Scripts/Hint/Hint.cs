@@ -31,7 +31,7 @@ public class Hint : MonoBehaviour
     [ContextMenu("ShowHint")]
     public void ShowHint ()
     {
-        Debug.Log("Show Hint");
+        //Debug.Log("Show Hint");
         m_RectTransform.DOAnchorPosY(0 , .75f)
             .OnComplete(() =>
         {

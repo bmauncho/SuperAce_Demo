@@ -204,8 +204,7 @@ public class BetManager : MonoBehaviour
             if (CommandCentre.Instance.DemoManager_.IsDemo)
             {
                 float betMultiplier = ( 1 + ( highVariance * rounds / 10 ) );
-                BetAmount *= 2;
-                AdjustedBetAmount = BetAmount * betMultiplier * rtp;
+                AdjustedBetAmount = (BetAmount*2) * betMultiplier * rtp;
             }
             else
             {
@@ -213,14 +212,14 @@ public class BetManager : MonoBehaviour
                 //progressive betting
                 if (CommandCentre.Instance.WinLoseManager_.IsLastRoundWon)
                 {
-                    BetAmount /= 2f;
+                    AdjustedBetAmount = (BetAmount/2) * betMultiplier * rtp;
                 }
                 else
                 {
-                    BetAmount *= 1.5f;
+                    AdjustedBetAmount = (BetAmount*1.5f) * betMultiplier * rtp;
                 }
 
-                AdjustedBetAmount = BetAmount * betMultiplier * rtp;
+                
             }
             
         }

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class GridColumns
@@ -158,15 +159,17 @@ public class GridManager : MonoBehaviour
                     
                 }
                 card.GetComponent<Card>().ScatterCardAnim.enabled = false;
-                Debug.Log(card.GetComponent<Card>().cardType.ToString());
+                //Debug.Log(card.GetComponent<Card>().cardType.ToString());
+                //Dictionary<Columns [] , List<GameObject>> scatterCards = new Dictionary<Columns [] , List<GameObject>>();
                 if (card.GetComponent<Card>().cardType == CardType.Scatter)
                 {
                     ScatterCards_++;
                     WhichColHasScatterCard [col] = true;
-                    Debug.Log($"Number of scatter cards : {ScatterCards_} in column :{col}");
+                   // Debug.Log("Has Scatter card");
+                    //Debug.Log($"Number of scatter cards : {ScatterCards_} in column :{col}");
                 }
 
-
+                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -174,69 +177,36 @@ public class GridManager : MonoBehaviour
 
                 Transform targetPos = tempPos [positionIndex];
                 positionIndex++;
-                if (ColumnsWithScatterCards() >= 2)
-                {
-                    //Do something
-                    card.transform.SetParent(targetPos);
-                    card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                    float delay = ( col * rowCount + row );
-                    // Create a sequence for each card's movement
-                    Sequence cardSequence = DOTween.Sequence();
-                    moveDuration = 0.25f;
-                    delayIncrement = moveDuration;
-                    cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
-                        .SetEase(Ease.OutQuad)
-                        .OnComplete(() =>
+                
+
+                moveDuration = originalMoveduration;
+                card.transform.SetParent(targetPos);
+                card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                float delay = ( col * rowCount + row ) * delayIncrement;
+                // Create a sequence for each card's movement
+                Sequence cardSequence = DOTween.Sequence();
+
+                cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+                        // Set local position to zero explicitly after the animation
+                        card.transform.localPosition = Vector3.zero;
+
+                        targetPos.GetComponent<CardPos>().TheOwner = card;
+                        CalculateObjectsPlaced();
+                        if (card.GetComponent<Card>().cardType == CardType.Scatter)
                         {
-                            // Set local position to zero explicitly after the animation
-                            card.transform.localPosition = Vector3.zero;
+                            card.GetComponent<Card>().ScatterCardAnim.enabled = true;
+                            CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
+                        }
 
-                            targetPos.GetComponent<CardPos>().TheOwner = card;
-                            CalculateObjectsPlaced();
-                            if (card.GetComponent<Card>().cardType == CardType.Scatter)
-                            {
-                                card.GetComponent<Card>().ScatterCardAnim.enabled = true;
-                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
-                            }
-
-                            if (card.GetComponent<Card>().IsGoldenCard)
-                            {
-                                card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
-                            }
-                        }));
-                    cardSequence.PrependInterval((delay*delayIncrement)); // Delay based on column and row position
-                }
-                else
-                {
-                    moveDuration = originalMoveduration;
-                    card.transform.SetParent(targetPos);
-                    card.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                    float delay = ( col * rowCount + row ) * delayIncrement;
-                    // Create a sequence for each card's movement
-                    Sequence cardSequence = DOTween.Sequence();
-
-                    cardSequence.Append(card.transform.DOLocalMove(Vector3.zero , moveDuration)
-                        .SetEase(Ease.OutQuad)
-                        .OnComplete(() =>
+                        if (card.GetComponent<Card>().IsGoldenCard)
                         {
-                            // Set local position to zero explicitly after the animation
-                            card.transform.localPosition = Vector3.zero;
-
-                            targetPos.GetComponent<CardPos>().TheOwner = card;
-                            CalculateObjectsPlaced();
-                            if (card.GetComponent<Card>().cardType == CardType.Scatter)
-                            {
-                                card.GetComponent<Card>().ScatterCardAnim.enabled = true;
-                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterCard" , false , .3f);
-                            }
-
-                            if (card.GetComponent<Card>().IsGoldenCard)
-                            {
-                                card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
-                            }
-                        }));
-                    cardSequence.PrependInterval(delay); // Delay based on column and row position
-                }
+                            card.GetComponent<Card>().GoldenCardeffect.SetActive(true);
+                        }
+                    }));
+                cardSequence.PrependInterval(delay); // Delay based on column and row position
             }
         }
     }
@@ -246,7 +216,7 @@ public class GridManager : MonoBehaviour
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int columnCount = Decks.Length; // Number of columns
-
+        int ScatterCards_ = 0;
         int positionIndex = 0; // Keeps track of the current position in tempPos
         for (int col = 0 ; col < columnCount ; col++)
         {
@@ -266,6 +236,13 @@ public class GridManager : MonoBehaviour
                     card = currentDeck.DrawCard();
                 }
                 card.GetComponent<Card>().ScatterCardAnim.enabled = false;
+                if (card.GetComponent<Card>().cardType == CardType.Scatter)
+                {
+                    ScatterCards_++;
+                    WhichColHasScatterCard [col] = true;
+                    //Debug.Log($"Number of scatter cards : {ScatterCards_} in column :{col}");
+                }
+                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -323,7 +300,7 @@ public class GridManager : MonoBehaviour
                 {
                     card = currentDeck.DrawCard();
                 }
-
+                CheckAndModifyCardTypeInColumn(col , CardType.Scatter);
                 currentDeck.ResetDeck();
                 if (card == null) continue;
 
@@ -364,6 +341,33 @@ public class GridManager : MonoBehaviour
             }
         }
         return count;
+    }
+
+    void CheckAndModifyCardTypeInColumn ( int col , CardType targetCardType)
+    {
+        int cardCount = 0;
+
+        // Iterate through the cards in the specified column
+        for (int i = 0 ; i < Columns [col].Cards.Count ; i++)
+        {
+            Card cardScript = Columns [col].Cards [i].GetComponent<Card>();
+
+            if (cardScript != null)
+            {
+                // Check if the card type matches the target card type
+                if (cardScript.cardType == targetCardType)
+                {
+                    cardCount++;
+                    //Debug.Log($"Column:{col} has {cardCount} scattercards");
+                    // If it's the second instance, change its card type
+                    if (cardCount >= 2)
+                    {
+                        //Debug.Log("Change the second");
+                        CommandCentre.Instance.CardManager_.DealNormalCards(Columns [col].Cards [i].transform);
+                    }
+                }
+            }
+        }
     }
 
     private void ResetColumnsWithScatterCardsList ()

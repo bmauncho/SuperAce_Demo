@@ -26,7 +26,7 @@ public class CommentaryManager : MonoBehaviour
             {
                 case CardType.Ace:
                     // Play commentary for Ace
-                    Debug.Log("You won with Aces!");
+                    //Debug.Log("You won with Aces!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -34,7 +34,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.King:
                     // Play commentary for King
-                    Debug.Log("You won with Spades!");
+                    //Debug.Log("You won with Spades!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -42,7 +42,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Queen:
                     // Play commentary for Queen
-                    Debug.Log("You won with Queens!");
+                    //Debug.Log("You won with Queens!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -50,7 +50,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Jack:
                     // Play commentary for jack
-                    Debug.Log("You won with Jacks!");
+                    //Debug.Log("You won with Jacks!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -58,7 +58,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Spades:
                     // Play commentary for Spades
-                    Debug.Log("You won with Spades!");
+                    //Debug.Log("You won with Spades!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -66,7 +66,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Hearts:
                     // Play commentary for Hearts
-                    Debug.Log("You won with Hearts!");
+                    //Debug.Log("You won with Hearts!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -74,7 +74,7 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Diamonds:
                     // Play commentary for Diamonds
-                    Debug.Log("You won with Diamonds!");
+                    //Debug.Log("You won with Diamonds!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
@@ -82,14 +82,14 @@ public class CommentaryManager : MonoBehaviour
 
                 case CardType.Clubs:
                     // Play commentary for Clubs
-                    Debug.Log("You won with Clubs!");
+                    //Debug.Log("You won with Clubs!");
                     StartCoroutine(PlayComboCommentary());
                     yield return new WaitForSeconds(.5f);
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
                 default:
                     // Handle any other card types or unexpected cases
-                    Debug.Log("You won with an Scatter card type!");
+                    //Debug.Log("You won with an Scatter card type!");
                     yield return new WaitForSeconds(1.0f);
                     break;
             }
@@ -106,24 +106,24 @@ public class CommentaryManager : MonoBehaviour
             switch (Combo)
             {
                 case 1:
-                    Debug.Log("Free Game Combo 1!");
+                    //Debug.Log("Free Game Combo 1!");
                     break;
 
                 case 2:
-                    Debug.Log("Free Game Combo 2!");
+                    //Debug.Log("Free Game Combo 2!");
                     soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
                     yield return new WaitForSeconds(0.25f);
                     soundManager.PlaySound("Double" , false , soundManager.maxSound);
                     break;
 
                 case 3:
-                    Debug.Log("Free Game Combo 3!");
+                   // Debug.Log("Free Game Combo 3!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("Triple" , false , soundManager.maxSound);
                     break;
 
                 case 5:
-                    Debug.Log("Free Game Combo 5!");
+                    //Debug.Log("Free Game Combo 5!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("FiveTimes" , false , soundManager.maxSound);
                     break;
@@ -134,26 +134,26 @@ public class CommentaryManager : MonoBehaviour
             switch (Combo)
             {
                 case 2:
-                    Debug.Log("Regular Combo 2!");
+                   // Debug.Log("Regular Combo 2!");
                     soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("Double" , false , soundManager.maxSound);
                     break;
 
                 case 4:
-                    Debug.Log("Regular Combo 4!");
+                    //Debug.Log("Regular Combo 4!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("FourTimes" , false , soundManager.maxSound);
                     break;
 
                 case 6:
-                    Debug.Log("Regular Combo 6!");
+                   // Debug.Log("Regular Combo 6!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("SixTimes" , false , soundManager.maxSound);
                     break;
 
                 case 10:
-                    Debug.Log("Regular Combo 10!");
+                    //Debug.Log("Regular Combo 10!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("TenTimes" , false , soundManager.maxSound);
                     break;

@@ -40,13 +40,13 @@ public class FetchValues : MonoBehaviour
             {
                 case UnityWebRequest.Result.ConnectionError:
                 case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    //Debug.LogError(pages[page] + ": Error: " + webRequest.error);
                     break;
                 case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
+                    //Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
                     break;
                 case UnityWebRequest.Result.Success:
-                    Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
                     ParseValue(webRequest.downloadHandler.text);
                     break;
             }
@@ -56,7 +56,7 @@ public class FetchValues : MonoBehaviour
     {
         thedata gameData = new thedata();
         gameData = JsonUtility.FromJson<thedata>(TheValue);
-        Debug.Log(gameData.winrate);
+        //Debug.Log(gameData.winrate);
 
         string[] data = gameData.winrate.Split("-");
         if(data.Length > 1)

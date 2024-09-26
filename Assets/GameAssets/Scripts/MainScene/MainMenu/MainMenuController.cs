@@ -143,8 +143,8 @@ public class MainMenuController : MonoBehaviour
 
     public void Spin ()
     {
-        Debug.Log("Spin");
-        Debug.Log(isBtnPressed);
+        //Debug.Log("Spin");
+        //Debug.Log(isBtnPressed);
 
         if (!isBtnPressed)
         {
@@ -168,7 +168,7 @@ public class MainMenuController : MonoBehaviour
     IEnumerator SpinReel ()
     {
         CommandCentre.Instance.BetManager_.rounds++;
-        Debug.Log("Spinning");
+        //Debug.Log("Spinning");
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
@@ -189,7 +189,7 @@ public class MainMenuController : MonoBehaviour
         CommandCentre.Instance.FetchValues_winRate.FetchData();
         CommandCentre.Instance.LargeBets_FetchValues.FetchData();
         CommandCentre.Instance.CardManager_.winRate = CommandCentre.Instance.FetchValues_winRate.GetWinRate();
-        Debug.Log(CommandCentre.Instance.FetchValues_winRate.GetWinRate());
+        //Debug.Log(CommandCentre.Instance.FetchValues_winRate.GetWinRate());
         CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
     }

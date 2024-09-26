@@ -29,9 +29,9 @@ public class WinLoseManager : MonoBehaviour
         enableSpin = false;
         // Loop through each child in the parent Transform
         columns = new List<GridColumns>(CommandCentre.Instance.GridManager_.Columns);
-        Debug.Log("Start Spin End");
+        //Debug.Log("Start Spin End");
         StartCoroutine(SpinEnd());
-        Debug.Log("Polulate Grid Checker");
+        //Debug.Log("Polulate Grid Checker");
     }
 
     #region
@@ -85,7 +85,7 @@ public class WinLoseManager : MonoBehaviour
         {
             IsScatterWin = true;
             GetWinningCards(winningScatterCards);
-            Debug.Log("Scatter Win! Cards that made the win: " + string.Join(", " , winningScatterCards.Select(card => GetCardType(card))));
+            //Debug.Log("Scatter Win! Cards that made the win: " + string.Join(", " , winningScatterCards.Select(card => GetCardType(card))));
             return true;
         }
         return false;
@@ -291,9 +291,9 @@ public class WinLoseManager : MonoBehaviour
     #region
     public void HandleWinCondition ( List<GameObject> winningCards )
     {
-        Debug.Log(string.Join(", " , GetWinningCardType()));
+        //Debug.Log(string.Join(", " , GetWinningCardType()));
 
-        Debug.Log(GetPayLines());
+        //Debug.Log(GetPayLines());
         // Start the coroutine to handle the winning sequence and golden card rotation
         StartCoroutine(WaitForRepositioningAndShowWinningSequence(winningCards));
     }
@@ -307,7 +307,7 @@ public class WinLoseManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("IncreaseComboCounter");
+            //Debug.Log("IncreaseComboCounter");
             CommandCentre.Instance.ComboManager_.IncreaseComboCounter();
             // Start the winning sequence once repositioning is complete
             yield return StartCoroutine(ShowWinningSequence(winningCards));
@@ -328,11 +328,11 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator SpinEnd ()
     {
-        Debug.Log("SpinEnd");
+        //Debug.Log("SpinEnd");
         if (CheckWinCondition())
         {
             
-            Debug.Log("Spin Won");
+            //Debug.Log("Spin Won");
             HandleWinCondition(winCards);
             IsScatterWin = false;
             IsLastRoundWon = true;
@@ -345,6 +345,11 @@ public class WinLoseManager : MonoBehaviour
             {
                 if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
                 {
+                    float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
+                    CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                }
+                else
+                {
                     float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
                     CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
                 }
@@ -354,6 +359,11 @@ public class WinLoseManager : MonoBehaviour
                 if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
                 {
                     float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
+                    CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
+                }
+                else
+                {
+                    float winAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
                     CommandCentre.Instance.CashManager_.IncreaseCash(winAmount);
                 }
             }
@@ -372,7 +382,7 @@ public class WinLoseManager : MonoBehaviour
             }
             
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
-            Debug.Log("SpinAgain");
+            //Debug.Log("SpinAgain");
             enableSpin = true;
 
             float timeout = 12f; // Maximum time to wait in seconds
@@ -505,7 +515,7 @@ public class WinLoseManager : MonoBehaviour
     {
         if (CommandCentre.Instance.ComboManager_.ComboCounter >= 3)
         {
-            Debug.Log("ShowTotalWinings");
+            //Debug.Log("ShowTotalWinings");
             CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
             CanAutoSpinOnce = true;
         }
@@ -700,10 +710,10 @@ public class WinLoseManager : MonoBehaviour
         }
         foreach (Tween tween in activeTweens)
         {
-            Debug.Log("Waiting for all objects to finish PunchScale tweening...");
+            //Debug.Log("Waiting for all objects to finish PunchScale tweening...");
             yield return tween.WaitForCompletion();
         }
-        Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
+        //Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
         // Check if all animations are done
         if (completedAnimations == totalAnimations)
         {
@@ -760,10 +770,10 @@ public class WinLoseManager : MonoBehaviour
         }
         foreach (Tween tween in activeTweens)
         {
-            Debug.Log("Waiting for all objects to finish PunchScale tweening...");
+            //Debug.Log("Waiting for all objects to finish PunchScale tweening...");
             yield return tween.WaitForCompletion();
         }
-        Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
+        //Debug.Log($"completed anims - {completedAnimations} : Total anims - {totalAnimations}");
         // Check if all animations are done
         if (completedAnimations == totalAnimations)
         {
@@ -925,7 +935,7 @@ public class WinLoseManager : MonoBehaviour
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
-            Debug.Log("Free Game Enabled");
+            //Debug.Log("Free Game Enabled");
             foreach (GameObject winningCard in winningCards)
             {
                 winningCard.GetComponent<Card>().DisableScatterRotate();
@@ -962,7 +972,7 @@ public class WinLoseManager : MonoBehaviour
         }
        CommandCentre.Instance.SoundManager_.PlayAmbientSound("Funk_2");
         PopulateGridChecker(CommandCentre.Instance.GridManager_.CardsParent.transform);
-        Debug.Log("Free Game Disabled");
+        //Debug.Log("Free Game Disabled");
         enableSpin = true;
         yield return new WaitForSeconds(1);
         CommandCentre.Instance.FreeGameManager_.Combos.FreeGameCombo.ShowUi();
@@ -979,6 +989,7 @@ public class WinLoseManager : MonoBehaviour
 
         if (timer >= timeout)
         {
+            enableSpin = true;
             Debug.LogWarning("Button was not pressed within the timeout period.");
             // Handle timeout case here, like forcing a spin or showing a message to the player
         }
@@ -1004,6 +1015,7 @@ public class WinLoseManager : MonoBehaviour
         {
             yield return null;
         }
+        enableSpin = true;
         // Reset the flag once the coroutine has finished
         isScatterWinSequenceRunning = false;
     }

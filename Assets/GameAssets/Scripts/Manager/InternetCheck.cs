@@ -19,24 +19,34 @@ public class InternetCheck : MonoBehaviour
         if (timer >= checkInterval)
         {
             timer = 0f;
-            if (Application.internetReachability != NetworkReachability.NotReachable)
-            {
-                // Internet reachability detected, proceed with network request check
-                StartCoroutine(CheckInternetConnectionCoroutine());
-            }
-            else
-            {
-                // No internet reachability at all
-                IsInternetEnabled = false;
-                HandleNoInternetConnection();
-            }
+            // Check the internet reachability before making requests
+            CheckInternetReachability();
+        }
+    }
+
+    void CheckInternetReachability ()
+    {
+        // Check if the device has any form of internet connection (WiFi, Mobile data)
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            // No internet available on the device
+            IsInternetEnabled = false;
+            HandleNoInternetConnection();
+        }
+        else
+        {
+            // Internet is reachable (WiFi or Mobile data), proceed to network request check
+            StartCoroutine(CheckInternetConnectionCoroutine());
         }
     }
 
     private IEnumerator CheckInternetConnectionCoroutine ()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get("https://www.cloudflare.com/cdn-cgi/trace")) // Lightweight endpoint
+        string url = "https://www.cloudflare.com/cdn-cgi/trace?" + Random.Range(0 , 100000); // Append random query string
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
+            www.timeout = 5;
             yield return www.SendWebRequest();
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
@@ -61,6 +71,7 @@ public class InternetCheck : MonoBehaviour
             }
         }
     }
+
 
     void HandleNoInternetConnection ()
     {
