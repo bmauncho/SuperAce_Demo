@@ -89,6 +89,14 @@ public class GridManager : MonoBehaviour
                             //Debug.Log("Change the second");
                         }
                     }
+                    else if (cardScript.cardType == CardType.Big_Jocker)
+                    {
+                        cardScript.cardType = CardType.Diamonds;
+                        cardScript.TheCard.SetActive(true);
+                        cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [7];
+                        cardScript.ScatterWords.SetActive(false);
+                        CommandCentre.Instance.CardManager_.DealNormalCards(cardScript.transform);
+                    }
                 }
             }
         }

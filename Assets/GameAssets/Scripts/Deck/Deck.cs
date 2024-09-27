@@ -168,7 +168,10 @@ public class Deck : MonoBehaviour
                     }
                     else if (cardScript.cardType == CardType.Big_Jocker)
                     {
-                        cardScript.IsBigJocker = false;
+                        cardScript.cardType = CardType.Diamonds;
+                        cardScript.TheCard.SetActive(true);
+                        cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [7];
+                        cardScript.ScatterWords.SetActive(false);
                         CommandCentre.Instance.CardManager_.DealNormalCards(DeckCards [i].GetComponent<Card>().transform);
                     }
                 }
