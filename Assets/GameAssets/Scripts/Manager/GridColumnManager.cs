@@ -474,11 +474,14 @@ public class GridColumnManager : MonoBehaviour
                             switch (columnIndex)
                             {
                                 case 1:
+                                    Debug.Log(cardIndex);
                                     switch (cardIndex)
                                     {
                                         case 0:
                                             CommandCentre.Instance.CardManager_.DealBigJocker(owner.transform);
-                                            //Debug.Log("BigJocker");
+                                            Debug.Log(owner.GetComponent<Card>().cardType.ToString());
+
+                                            Debug.Log("BigJocker");
                                             break;
                                     }
                                     break;
@@ -487,7 +490,7 @@ public class GridColumnManager : MonoBehaviour
                                     {
                                         case 0:
                                             CommandCentre.Instance.CardManager_.DealSmallJocker(owner.transform);
-                                            //Debug.Log("SmallJocker");
+                                            Debug.Log("SmallJocker");
                                             break;
                                     }
                                     break;

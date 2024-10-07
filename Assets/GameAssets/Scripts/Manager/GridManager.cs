@@ -71,32 +71,69 @@ public class GridManager : MonoBehaviour
 
                 if (cardScript != null)
                 {
-                    // Check if the card type matches the target card type
-                    if (cardScript.cardType == CardType.Scatter)
+                    if (CommandCentre.Instance.DemoManager_.IsDemo)
                     {
-                        cardCount++;
-                        //Debug.Log(cardCount);
-                        //Debug.Log($"Column:{col} has {cardCount} scattercards");
-                        // If it's the second instance, change its card type
-                        if (cardCount >= 2)
+                        if (!CommandCentre.Instance.GridColumnManager_.IsDemoFirstRefill
+                            && CommandCentre.Instance.GridColumnManager_.IsDemoManupilationComplete)
                         {
+                            // Check if the card type matches the target card type
+                            if (cardScript.cardType == CardType.Scatter)
+                            {
+                                cardCount++;
+                                //Debug.Log(cardCount);
+                                //Debug.Log($"Column:{col} has {cardCount} scattercards");
+                                // If it's the second instance, change its card type
+                                if (cardCount >= 2)
+                                {
 
-                            cardScript.cardType = CardType.Clubs;
-                            cardScript.TheCard.SetActive(true);
-                            cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
-                            cardScript.ScatterWords.SetActive(false);
-                            cardScript.ScatterRotate.gameObject.SetActive(false);
-                            //Debug.Log("Change the second");
+                                    cardScript.cardType = CardType.Clubs;
+                                    cardScript.TheCard.SetActive(true);
+                                    cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
+                                    cardScript.ScatterWords.SetActive(false);
+                                    cardScript.ScatterRotate.gameObject.SetActive(false);
+                                    //Debug.Log("Change the second");
+                                }
+                            }
+                            else if (cardScript.cardType == CardType.Big_Jocker)
+                            {
+                                cardScript.cardType = CardType.Diamonds;
+                                cardScript.TheCard.SetActive(true);
+                                cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [7];
+                                cardScript.ScatterWords.SetActive(false);
+                                CommandCentre.Instance.CardManager_.DealNormalCards(cardScript.transform);
+                            }
                         }
                     }
-                    else if (cardScript.cardType == CardType.Big_Jocker)
+                    else
                     {
-                        cardScript.cardType = CardType.Diamonds;
-                        cardScript.TheCard.SetActive(true);
-                        cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [7];
-                        cardScript.ScatterWords.SetActive(false);
-                        CommandCentre.Instance.CardManager_.DealNormalCards(cardScript.transform);
+                        // Check if the card type matches the target card type
+                        if (cardScript.cardType == CardType.Scatter)
+                        {
+                            cardCount++;
+                            //Debug.Log(cardCount);
+                            //Debug.Log($"Column:{col} has {cardCount} scattercards");
+                            // If it's the second instance, change its card type
+                            if (cardCount >= 2)
+                            {
+
+                                cardScript.cardType = CardType.Clubs;
+                                cardScript.TheCard.SetActive(true);
+                                cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [5];
+                                cardScript.ScatterWords.SetActive(false);
+                                cardScript.ScatterRotate.gameObject.SetActive(false);
+                                //Debug.Log("Change the second");
+                            }
+                        }
+                        else if (cardScript.cardType == CardType.Big_Jocker)
+                        {
+                            cardScript.cardType = CardType.Diamonds;
+                            cardScript.TheCard.SetActive(true);
+                            cardScript.card.sprite = CommandCentre.Instance.CardManager_.cardSprites [7];
+                            cardScript.ScatterWords.SetActive(false);
+                            CommandCentre.Instance.CardManager_.DealNormalCards(cardScript.transform);
+                        }
                     }
+                    
                 }
             }
         }
