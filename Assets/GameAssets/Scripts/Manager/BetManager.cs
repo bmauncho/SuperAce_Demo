@@ -11,10 +11,6 @@ public class BetManager : MonoBehaviour
     public TMP_Text [] CurrentBetAmount;
     public BetMenu BetMenu_;
     public float BetAmount;
-    public float AdjustedBetAmount;
-
-    public float rtp = 0.95f;    // Return to Player, 95%
-    public float highVariance = 0.25f;  // High risk, higher reward variance
     public int rounds = 0;
 
     private void Start ()
@@ -24,23 +20,7 @@ public class BetManager : MonoBehaviour
     }
     private void Update ()
     {
-        if (CommandCentre.Instance)
-        {
-            if (BetAmount >=50)
-            {
-                rtp = CommandCentre.Instance.LargeBets_FetchValues.PercentageValue / 100;
-            }
-            else
-            {
-                rtp = .95f;
-            }
-            
-
-            if (rounds <= 1)
-            {
-                rounds = 1;
-            }
-        }
+      
     }
 
     // Deactivates all bets without clearing the list
@@ -86,7 +66,6 @@ public class BetManager : MonoBehaviour
             index = 0;
             BetAmount = 2;
         }
-        AdjustedBetAmount = BetAmount;
         UpdateBetAmount(index);
     }
 }

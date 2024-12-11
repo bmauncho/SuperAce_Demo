@@ -8,12 +8,7 @@ public class MultiDeckManager : MonoBehaviour
     public Vector3 deckOffset = new Vector3(2 , 0 , 0);
     public Deck [] decks;
 
-    private void Start ()
-    {
-
-        Invoke(nameof(InitializeDecks) , .25f);
-    }
-
+    [ContextMenu("SetUp Decks")]
     public void InitializeDecks ()
     {
         ArrangeDecksInRow();
