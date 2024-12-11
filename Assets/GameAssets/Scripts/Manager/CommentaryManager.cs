@@ -14,8 +14,7 @@ public class CommentaryManager : MonoBehaviour
 
     public void PlayCommentary ( List<GameObject> winningCards )
     {
-        List<CardType> cardTypes = GetCardTypes(winningCards);
-        StartCoroutine(PlayCommentarySequentially(cardTypes));
+
     }
 
     private IEnumerator PlayCommentarySequentially ( List<CardType> cardTypes )
@@ -159,24 +158,6 @@ public class CommentaryManager : MonoBehaviour
                     break;
             }
         }
-    }
-
-
-
-    public List<CardType> GetCardTypes ( List<GameObject> winningCards )
-    {
-        HashSet<CardType> cardTypes = new HashSet<CardType>();
-
-        foreach (GameObject card in winningCards)
-        {
-            Card cardComponent = card.GetComponent<Card>();
-            if (cardComponent != null)
-            {
-                cardTypes.Add(cardComponent.cardType);
-            }
-        }
-
-        return cardTypes.ToList();
     }
 
 }

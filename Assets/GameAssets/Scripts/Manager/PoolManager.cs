@@ -71,10 +71,6 @@ public class PoolManager : MonoBehaviour
         {
             // Return a card to the pool
             card.transform.rotation = Quaternion.Euler(0 , 0 , 0);
-            if (card.GetComponent<Card>().Outline.sprite != null)
-            {
-                card.GetComponent<Card>().SetCardOutLine();
-            }
             card.transform.SetParent(transform);
             card.transform.localPosition = Vector3.zero;
             card.SetActive(false);

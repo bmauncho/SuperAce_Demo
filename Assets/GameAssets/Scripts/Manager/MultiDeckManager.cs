@@ -44,20 +44,4 @@ public class MultiDeckManager : MonoBehaviour
         }
         return null;
     }
-
-    public void ClearAllDecks ()
-    {
-        foreach (Deck deck in decks)
-        {
-            deck.ClearDeck();
-        }
-    }
-
-    public void refillAllDecks ()
-    {
-        foreach(Deck deck in decks)
-        {
-            deck.ResetDeck();
-        }
-    }
 }

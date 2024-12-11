@@ -67,39 +67,11 @@ public class MainMenuController : MonoBehaviour
     public void DisableWinMoreMenu ()
     {
         WinMoreMenu.SetActive(false);
-        Invoke(nameof(SetGrid) , .5f);
-    }
-
-    void SetGrid ()
-    {
-        CommandCentre.Instance.GridManager_.IsFirstTime = false;
-        CommandCentre.Instance.GridManager_.CheckGrid();
     }
 
     void Update ()
     {
-        if (CommandCentre.Instance)
-        {
-            CanSpin = CommandCentre.Instance.GridManager_.IsGridCreationComplete();
-            IsDemo = CommandCentre.Instance.DemoManager_.IsDemo;
-            if (CanSpin)
-            {
-                EnableGameplayMenu();
-                if (!IsFirstTimeDone)
-                {
-                    if (!IsDemo)
-                    {
-                        Invoke(nameof(EnableWinMoreMenu) , .5f);
-                    }
-                    else
-                    {
-                        SetGrid();
-                        CommandCentre.Instance.WinLoseManager_.enableSpin = true;
-                    }
-                    IsFirstTimeDone = true;
-                }
-            }
-        }
+       
     }
 
     public void StartGame ()
@@ -110,7 +82,6 @@ public class MainMenuController : MonoBehaviour
 
     public void ManualStart ()
     {
-        CommandCentre.Instance.GridManager_.ManualStart();
         Startfx_.Activate();
         StartCoroutine(CheckIfGridReady());
     }
@@ -119,20 +90,8 @@ public class MainMenuController : MonoBehaviour
     {
         while (!CanSpin)
         {
-            CanSpin = CommandCentre.Instance.GridManager_.IsGridCreationComplete();
-            IsDemo = CommandCentre.Instance.DemoManager_.IsDemo;
             if (CanSpin)
             {
-                EnableGameplayMenu();
-                if (!IsDemo) 
-                { 
-                    Invoke(nameof(EnableWinMoreMenu) , .5f); 
-                }
-                else
-                {
-                    SetGrid() ;
-                    CommandCentre.Instance.WinLoseManager_.enableSpin = true;
-                }
                 yield break;
             }
             yield return null;
@@ -143,8 +102,6 @@ public class MainMenuController : MonoBehaviour
 
     public void Spin ()
     {
-        //Debug.Log("Spin");
-        //Debug.Log(isBtnPressed);
 
         if (!isBtnPressed)
         {
@@ -185,12 +142,6 @@ public class MainMenuController : MonoBehaviour
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
        
-        CommandCentre.Instance.WinLoseManager_.enableSpin = false;
-        CommandCentre.Instance.FetchValues_winRate.FetchData();
-        CommandCentre.Instance.LargeBets_FetchValues.FetchData();
-        CommandCentre.Instance.CardManager_.winRate = CommandCentre.Instance.FetchValues_winRate.GetWinRate();
-        //Debug.Log(CommandCentre.Instance.FetchValues_winRate.GetWinRate());
-        CommandCentre.Instance.GridManager_.ResetGrid();
         yield break;
     }
 
@@ -202,6 +153,7 @@ public class MainMenuController : MonoBehaviour
             CommandCentre.Instance.AutoSpinManager_.DecreaseAutoSpins();
         }
     }
+
     public void OpenBets ()
     {
         BetingMenu.SetActive(true);

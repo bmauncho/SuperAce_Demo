@@ -14,58 +14,7 @@ public class ButtonPressed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CommandCentre.Instance)
-        {
-            if (isSpinButton)
-            {
-                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
-                {
-                    EnableButtonInteractvity();
-                    //delay 
-                }
-                else
-                {
-                    if (CommandCentre.Instance.MainMenuController_.isBtnPressed)
-                    {
-                        DisableButtonInteractvity();
-                    }
-                    else
-                    {
-                        DisableButtonInteractvity();
-                    }
-                    
-                }
-            }
-            else
-            {
-                if (CommandCentre.Instance.WinLoseManager_.enableSpin)
-                {
-                    EnableButtonInteractvity();
-                    //delay 
-                }
-                else
-                {
-                    if (IsContinuebutton)
-                    {
-                        EnableButtonInteractvity();
-                    }
-                    else
-                    {
-                        if (CommandCentre.Instance.MainMenuController_.isBtnPressed)
-                        {
-                            DisableButtonInteractvity();
-                        }
-                        else
-                        {
-                            DisableButtonInteractvity();
-                        }
-                    }
-
-                }
-            }
-
-        }
-       
+      
     }
 
     void EnableButtonInteractvity ()
