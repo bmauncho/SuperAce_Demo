@@ -135,7 +135,7 @@ public class GridManager : MonoBehaviour
 
             if (CommandCentre.Instance.TurboManager_.TurboSpin_)
             {
-                TurboFillGrid(columnCount , rowCount , decks);
+                //TurboFillGrid(columnCount , rowCount , decks);
             }
             else
             {
@@ -193,14 +193,15 @@ public class GridManager : MonoBehaviour
             for (int row = 0 ; row < rowCount ; row++)
             {
                 Deck currentDeck = decks [col];
-                GameObject newCard = null;
+                GameObject newCard = currentDeck.DrawCard();
                 if (isFirstPlay)
                 {
-                    newCard = currentDeck.DrawCard();
+                    cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
                 }
                 else
                 {
-                    newCard = currentDeck.DrawCard();
+
+                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
                 Transform targetPos = rowData [col].cardPositionInRow [row].transform;
