@@ -14,7 +14,6 @@ public class Deck : MonoBehaviour
     public List<GameObject> DeckCards = new List<GameObject>();
     public List<Vector3> cardPositions = new List<Vector3>();
     bool IsPositionsaved = false;
-    private bool isMaintainingDeck = false;
 
     private void Start ()
     {
@@ -113,15 +112,6 @@ public class Deck : MonoBehaviour
 
             isDeckFilled = true;
             IsPositionsaved = true;
-        }
-    }
-
-    private IEnumerator ReturnExcessCards ( List<GameObject> excessCards )
-    {
-        foreach (GameObject card in excessCards)
-        {
-            poolManager.ReturnCard(card);
-            yield return null; // Return control to the main thread
         }
     }
 

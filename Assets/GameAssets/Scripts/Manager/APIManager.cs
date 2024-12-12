@@ -56,6 +56,7 @@ public class APIManager : MonoBehaviour
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardInfo> infos = new List<CardInfo>();
+    public bool isDataFetched = false;
 
     private void Update ()
     {
@@ -74,6 +75,7 @@ public class APIManager : MonoBehaviour
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () =>
         {
             populateRows();
+            isDataFetched = true;
         }));
     }
 
@@ -103,8 +105,9 @@ public class APIManager : MonoBehaviour
                     string [] _newdata = newdata [i].Split(']');
                     Debug.Log(_newdata [0]);
                     string [] Newdata1 = _newdata [0].Split('}');
-                    rowData rowData = new rowData();
-                    rows.Add(rowData);
+
+
+                    
                     for (int y = 0 ; y < Newdata1.Length ; y++)
                     {
                         Debug.Log(Newdata1 [y]);
@@ -133,18 +136,40 @@ public class APIManager : MonoBehaviour
 
     void populateRows ()
     {
-        for(int i = 0 ; i < rows.Count ; i++)
+        // Create 4 rows and add them to the rows list
+        for (int i = 0 ; i < 4 ; i++)
         {
-            for(int j = 0 ;j<5 ;j++)
+            rowData rowData = new rowData();
+            rows.Add(rowData);
+        }
+
+        int index = 0;
+        // Iterate over each row
+        for (int i = 0 ; i < rows.Count ; i++)
+        {
+            // Add 5 infos to each row
+            for (int j = 0 ; j < 5 ; j++)
             {
-                rows [i].infos.Add(infos [j]);
+                if (index < infos.Count) // Ensure index does not exceed infos size
+                {
+                    rows [i].infos.Add(infos [index]);
+                    index++; // Increment index to move to the next item
+                }
             }
         }
     }
 
+
     public bool IsFreeGame ()
     {
         return finalData.freeSpins >= 10;
+    }
+
+    public CardInfo GetCardInfo (int col,int row)
+    {
+        CardInfo info = null;
+        info = rows [row].infos [col];
+        return info;
     }
 }
 

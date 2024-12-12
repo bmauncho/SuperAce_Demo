@@ -23,7 +23,7 @@ public class CommentaryManager : MonoBehaviour
         {
             switch (cardType)
             {
-                case CardType.Ace:
+                case CardType.ACE:
                     // Play commentary for Ace
                     //Debug.Log("You won with Aces!");
                     StartCoroutine(PlayComboCommentary());
@@ -31,7 +31,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.King:
+                case CardType.KING:
                     // Play commentary for King
                     //Debug.Log("You won with Spades!");
                     StartCoroutine(PlayComboCommentary());
@@ -39,7 +39,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Queen:
+                case CardType.QUEEN:
                     // Play commentary for Queen
                     //Debug.Log("You won with Queens!");
                     StartCoroutine(PlayComboCommentary());
@@ -47,7 +47,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Jack:
+                case CardType.JACK:
                     // Play commentary for jack
                     //Debug.Log("You won with Jacks!");
                     StartCoroutine(PlayComboCommentary());
@@ -55,7 +55,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Spades:
+                case CardType.SPADE:
                     // Play commentary for Spades
                     //Debug.Log("You won with Spades!");
                     StartCoroutine(PlayComboCommentary());
@@ -63,7 +63,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Hearts:
+                case CardType.HEART:
                     // Play commentary for Hearts
                     //Debug.Log("You won with Hearts!");
                     StartCoroutine(PlayComboCommentary());
@@ -71,7 +71,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Diamonds:
+                case CardType.DIAMOND:
                     // Play commentary for Diamonds
                     //Debug.Log("You won with Diamonds!");
                     StartCoroutine(PlayComboCommentary());
@@ -79,7 +79,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.Clubs:
+                case CardType.CLUB:
                     // Play commentary for Clubs
                     //Debug.Log("You won with Clubs!");
                     StartCoroutine(PlayComboCommentary());

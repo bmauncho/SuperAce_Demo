@@ -73,6 +73,7 @@ public class PoolManager : MonoBehaviour
             card.transform.rotation = Quaternion.Euler(0 , 0 , 0);
             card.transform.SetParent(transform);
             card.transform.localPosition = Vector3.zero;
+            card.GetComponent<Card>().resetCard();
             card.SetActive(false);
             cardPool.Enqueue(card);
         }

@@ -7,14 +7,14 @@ using UnityEngine;
 [System.Serializable]
 public class cardPositions
 {
-    public List<GameObject> cardPositionInColumn = new List<GameObject>(4);
+    public List<GameObject> cardPositionInRow = new List<GameObject>(4);
 }
 
 public class GridManager : MonoBehaviour
 {
     MultiDeckManager multiDeckManager;
     PoolManager poolManager;
-    APIManager apiManager;
+    CardManager cardManager;
 
     [Header("Data")]
     public bool isFirstPlay =true;
@@ -27,17 +27,17 @@ public class GridManager : MonoBehaviour
     public float moveDuration = 0.5f;
     public float delayBetweenMoves = 0.1f;
     public int totalObjectsToPlace = 0;
-    private int objectsPlaced;
+    public int objectsPlaced;
     Vector3 originalPosition;
 
     [Header("Lists")]
-    public List<cardPositions> columnData = new List<cardPositions>(5);
+    public List<cardPositions> rowData = new List<cardPositions>(5);
 
     private void Start ()
     {
         poolManager = CommandCentre.Instance.PoolManager_;
         multiDeckManager = CommandCentre.Instance.MultiDeckManager_;
-        apiManager = CommandCentre.Instance.APIManager_;
+        cardManager = CommandCentre.Instance.CardManager_;
         originalPosition = cardPositionsHolder.transform.localPosition;
     }
 
@@ -66,29 +66,30 @@ public class GridManager : MonoBehaviour
 
     void returnCardsToPool ()
     {
-        foreach (var obj in columnData)
+        if (!isFirstPlay)
         {
-            foreach (var _obj in obj.cardPositionInColumn)
+            foreach (var obj in rowData)
             {
-                var cardPos = _obj.GetComponent<CardPos>();
-                if (cardPos)
+                foreach (var _obj in obj.cardPositionInRow)
                 {
-                    if(!cardPos.TheOwner)
-                        break;
-                    var card = cardPos.TheOwner;
-                    if (card)
+                    var cardPos = _obj.GetComponent<CardPos>();
+                    if (cardPos)
                     {
-                        poolManager.ReturnCard(card);
-                        cardPos.TheOwner = null;
+                        var card = cardPos.TheOwner;
+                        if (card)
+                        {
+                            poolManager.ReturnCard(card);
+                            cardPos.TheOwner = null;
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"CardPos found :{cardPos.name} but TheOwner is null: {card.name}");
+                        }
                     }
                     else
                     {
-                        Debug.LogWarning($"CardPos found :{cardPos.name} but TheOwner is null: {card.name}");
+                        Debug.LogWarning($"Transform does not have CardPos");
                     }
-                }
-                else
-                {
-                    Debug.LogWarning($"Transform does not have CardPos");
                 }
             }
         }
@@ -100,9 +101,9 @@ public class GridManager : MonoBehaviour
 
         List<Transform> tempPos = new List<Transform>();
 
-        foreach(var obj in columnData)
+        foreach(var obj in rowData)
         {
-            foreach(var _obj in obj.cardPositionInColumn)
+            foreach(var _obj in obj.cardPositionInRow)
             {
                 if (_obj.GetComponent<CardPos>().TheOwner == null)
                 {
@@ -129,7 +130,6 @@ public class GridManager : MonoBehaviour
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int columnCount = decks.Length; // Number of columns
-        int positionIndex = 0; // Keeps track of the current position
         if (isGridSpaceAvailable())
         {
 
@@ -153,17 +153,19 @@ public class GridManager : MonoBehaviour
             for (int row = 0 ; row < rowCount ; row++)
             {
                 Deck currentDeck = decks [col];
-                GameObject newCard = null;
+                GameObject newCard = currentDeck.DrawCard();
                 if (isFirstPlay)
                 {
-                    newCard = currentDeck.DrawCard();
+                    cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
                 }
                 else
                 {
-                    newCard = currentDeck.DrawCard();
+                    
+                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                 }
+
                 currentDeck.ResetDeck();
-                Transform targetPos = columnData [col].cardPositionInColumn [row].transform;
+                Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                 float delay = ( col * rowCount + row ) * delayIncrement;
@@ -180,6 +182,8 @@ public class GridManager : MonoBehaviour
                 cardSequence.PrependInterval(delay);
             }
         }
+
+        isFirstPlay = false;
     }
 
     void TurboFillGrid (int columnCount,int rowCount,Deck []decks)
@@ -199,7 +203,7 @@ public class GridManager : MonoBehaviour
                     newCard = currentDeck.DrawCard();
                 }
                 currentDeck.ResetDeck();
-                Transform targetPos = columnData [col].cardPositionInColumn [row].transform;
+                Transform targetPos = rowData [col].cardPositionInRow [row].transform;
 
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0f , 0f , 0f);
@@ -216,6 +220,7 @@ public class GridManager : MonoBehaviour
                     }));
             }
         }
+        isFirstPlay = false;
     }
 
    

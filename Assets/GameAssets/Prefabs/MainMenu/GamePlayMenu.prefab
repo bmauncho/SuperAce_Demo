@@ -410,6 +410,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWinnings: {fileID: 6930338429536390822}
+  BounceAmt: 1.5
+  gamePlayButtons:
+  - {fileID: 4534329037334202150}
+  - {fileID: 3769056382035140673}
+  - {fileID: 1910424596748478592}
+  - {fileID: 2265032425111496314}
 --- !u!1 &1212237240950870764
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWinnings: {fileID: 8953186464301979076}
+  BounceAmt: 1.5
 --- !u!1 &1385024588949806725
 GameObject:
   m_ObjectHideFlags: 0

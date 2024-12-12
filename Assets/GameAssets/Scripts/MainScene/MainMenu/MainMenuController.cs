@@ -71,11 +71,7 @@ public class MainMenuController : MonoBehaviour
 
     void Update ()
     {
-        if (CommandCentre.Instance.GridManager_.isGridFilled())
-        {
-            CanSpin =true;
-        }
-       
+        
     }
 
     public void StartGame ()
@@ -105,14 +101,13 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-   
+
 
     public void Spin ()
     {
-
         if (!isBtnPressed)
         {
-            if (CommandCentre.Instance.CashManager_.CashAmount <= 0 
+            if (CommandCentre.Instance.CashManager_.CashAmount <= 0
                 || CommandCentre.Instance.CashManager_.CashAmount < CommandCentre.Instance.BetManager_.BetAmount)
             {
                 InsufficientAmount.SetActive(true);
@@ -121,13 +116,27 @@ public class MainMenuController : MonoBehaviour
 
             if (CanSpin)
             {
-                
-                StartCoroutine(SpinReel());
-                
+                StartCoroutine(FetchDataAndSpin());
             }
             isBtnPressed = true;
         }
-        CommandCentre.Instance.HintManager_.CanShowHints = true;    
+        CommandCentre.Instance.HintManager_.CanShowHints = true;
+    }
+
+    private IEnumerator FetchDataAndSpin ()
+    {
+        bool datafetched = CommandCentre.Instance.APIManager_.isDataFetched;
+        CommandCentre.Instance.APIManager_.FetchInfo();
+
+        // Wait until data is fetched, without freezing the game
+        while (!datafetched)
+        {
+            datafetched = CommandCentre.Instance.APIManager_.isDataFetched;
+            yield return null; // Wait for the next frame
+        }
+
+        // Once data is fetched, start the spinning process
+        StartCoroutine(SpinReel());
     }
 
     IEnumerator SpinReel ()
@@ -149,8 +158,8 @@ public class MainMenuController : MonoBehaviour
         {
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
-       
-        yield break;
+        CommandCentre.Instance.APIManager_.isDataFetched =false;
+         yield break;
     }
 
 
