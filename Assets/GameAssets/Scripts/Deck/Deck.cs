@@ -30,23 +30,26 @@ public class Deck : MonoBehaviour
                 refillTempDeckFromPool();
             }
         }
-        MaintainCorrectAmountOfCardsInDeck();
         RepositionCards();
+    }
+
+    public void ResetDeck ()
+    {
+        isDeckFilled = false; // Reset the flag when you need to refill the deck again
     }
 
     public void refillTempDeckFromPool ()
     {
-        // Return invalid or excess cards to the pool
-        for (int i = tempDeckCards.Count - 1 ; i >= 0 ; i--)
+        // Return excess cards to the pool
+        if (tempDeckCards.Count > tempDeckSize)
         {
-            if (tempDeckCards [i] == null)
+            for (int i = tempDeckCards.Count - 1 ; i >= tempDeckSize ; i--)
             {
-                tempDeckCards.RemoveAt(i);
-            }
-            else
-            {
-                poolManager.ReturnCard(tempDeckCards [i]);
-                tempDeckCards.RemoveAt(i);
+                if (tempDeckCards [i] != null)
+                {
+                    poolManager.ReturnCard(tempDeckCards [i]);
+                }
+                tempDeckCards.RemoveAt(i); // Remove the card from the temp deck
             }
         }
 
@@ -70,6 +73,7 @@ public class Deck : MonoBehaviour
         // Proceed to fill the main deck
         fillDeck();
     }
+
 
     public void fillDeck ()
     {
@@ -112,32 +116,6 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public void MaintainCorrectAmountOfCardsInDeck ()
-    {
-        if (isMaintainingDeck) return;
-
-        isMaintainingDeck = true;
-
-        // Remove excess cards if DeckCards exceed the maximum allowed
-        List<GameObject> excessCards = new List<GameObject>();
-        while (DeckCards.Count > cardsPerDeck)
-        {
-            GameObject excessCard = DeckCards [DeckCards.Count - 1];
-            DeckCards.RemoveAt(DeckCards.Count - 1);
-            excessCards.Add(excessCard);
-        }
-
-        StartCoroutine(ReturnExcessCards(excessCards));
-
-        // Refill the deck if below the required count
-        if (DeckCards.Count < cardsPerDeck)
-        {
-            refillTempDeckFromPool();
-        }
-
-        isMaintainingDeck = false;
-    }
-
     private IEnumerator ReturnExcessCards ( List<GameObject> excessCards )
     {
         foreach (GameObject card in excessCards)
@@ -161,4 +139,26 @@ public class Deck : MonoBehaviour
         }
     }
 
+    public GameObject DrawCard ()
+    {
+        if (DeckCards.Count <= 0)
+        {
+            ResetDeck();
+        }
+
+        if(DeckCards.Count > 0)
+        {
+            GameObject newCard = DeckCards [0];
+            if (!newCard)
+            {
+                DrawCard();
+            }
+            DeckCards.RemoveAt (0);
+            newCard.transform.SetParent(null);
+            newCard.SetActive(true);
+            newCard.transform.localRotation = Quaternion.Euler(0 , 180f , 0);
+            return newCard;
+        }
+        return null;
+    }
 }

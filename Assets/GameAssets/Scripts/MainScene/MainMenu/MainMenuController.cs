@@ -71,6 +71,10 @@ public class MainMenuController : MonoBehaviour
 
     void Update ()
     {
+        if (CommandCentre.Instance.GridManager_.isGridFilled())
+        {
+            CanSpin =true;
+        }
        
     }
 
@@ -84,14 +88,17 @@ public class MainMenuController : MonoBehaviour
     {
         Startfx_.Activate();
         StartCoroutine(CheckIfGridReady());
+        CommandCentre.Instance.GridManager_.populateGrid();
     }
 
     IEnumerator CheckIfGridReady ()
     {
         while (!CanSpin)
         {
+            CanSpin = CommandCentre.Instance.GridManager_.isGridFilled();
             if (CanSpin)
             {
+                EnableGameplayMenu();
                 yield break;
             }
             yield return null;
@@ -106,12 +113,13 @@ public class MainMenuController : MonoBehaviour
         if (!isBtnPressed)
         {
             if (CommandCentre.Instance.CashManager_.CashAmount <= 0 
-                || CommandCentre.Instance.CashManager_.CashAmount< CommandCentre.Instance.BetManager_.BetAmount)
+                || CommandCentre.Instance.CashManager_.CashAmount < CommandCentre.Instance.BetManager_.BetAmount)
             {
                 InsufficientAmount.SetActive(true);
                 return;
             }
-            if (CanSpin /*&& CommandCentre.Instance.WinLoseManager_.enableSpin*/)
+
+            if (CanSpin)
             {
                 
                 StartCoroutine(SpinReel());
@@ -125,6 +133,7 @@ public class MainMenuController : MonoBehaviour
     IEnumerator SpinReel ()
     {
         //Debug.Log("Spinning");
+        CommandCentre.Instance.GridManager_.refreshGrid();
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();

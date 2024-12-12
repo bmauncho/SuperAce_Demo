@@ -25,8 +25,7 @@ public class CommandCentre : MonoBehaviour
     public TurboManager TurboManager_;
     public CardFxManager CardFxManager_;
     public DemoManager DemoManager_;
-    public FetchValues FetchValues_winRate;
-    public LargeBets_FetchValues LargeBets_FetchValues;
+    public APIManager APIManager_;
 
     private void Awake ()
     {
