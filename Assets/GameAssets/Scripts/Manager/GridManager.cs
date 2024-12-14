@@ -1,5 +1,4 @@
 using DG.Tweening;
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +16,7 @@ public class GridManager : MonoBehaviour
     CardManager cardManager;
 
     [Header("Data")]
-    public bool isFirstPlay =true;
+    public bool isFirstPlay = true;
     public bool isRefreshDone = true;
 
     [Header("Data")]
@@ -55,9 +54,9 @@ public class GridManager : MonoBehaviour
         Tween myTween = cardPositionsHolder.transform.DOLocalMove(cardPositionsHolder.transform.localPosition + direction , .25f);
         yield return myTween.WaitForCompletion(true);
         returnCardsToPool();
-        Debug.Log(originalPosition);
+        //Debug.Log(originalPosition);
         cardPositionsHolder.transform.localPosition = originalPosition;
-        isRefreshDone =true;
+        isRefreshDone = true;
         if (isRefreshDone)
         {
             populateGrid();
@@ -101,9 +100,9 @@ public class GridManager : MonoBehaviour
 
         List<Transform> tempPos = new List<Transform>();
 
-        foreach(var obj in rowData)
+        foreach (var obj in rowData)
         {
-            foreach(var _obj in obj.cardPositionInRow)
+            foreach (var _obj in obj.cardPositionInRow)
             {
                 if (_obj.GetComponent<CardPos>().TheOwner == null)
                 {
@@ -139,14 +138,14 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                NormalFillGrid(columnCount, rowCount , decks,delayIncrement);
+                NormalFillGrid(columnCount , rowCount , decks , delayIncrement);
             }
-          
+
         }
 
     }
 
-    void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks,float delayIncrement)
+    void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
     {
         for (int col = 0 ; col < columnCount ; col++)
         {
@@ -160,7 +159,7 @@ public class GridManager : MonoBehaviour
                 }
                 else
                 {
-                    
+
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                 }
 
@@ -186,7 +185,7 @@ public class GridManager : MonoBehaviour
         isFirstPlay = false;
     }
 
-    void TurboFillGrid (int columnCount,int rowCount,Deck []decks)
+    void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
         for (int col = 0 ; col < columnCount ; col++)
         {
@@ -224,7 +223,7 @@ public class GridManager : MonoBehaviour
         isFirstPlay = false;
     }
 
-   
+
     public void refillGrid ()
     {
 
@@ -234,18 +233,29 @@ public class GridManager : MonoBehaviour
     {
         objectsPlaced++;
 
-        //if (isGridFilled())
-        //{
-        //    Debug.Log($"grid is filled")
-        //    if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
-        //    {
-        //        CommandCentre.Instance.MainMenuController_.Spin();
-        //    }
-        //}
+        if (isGridFilled())
+        {
+            Debug.Log("Grid is filled");
+            StartCoroutine(Autospin());
+        }
     }
 
-        public bool isGridFilled ()
+    IEnumerator Autospin ()
     {
-        return objectsPlaced>=totalObjectsToPlace;
+        // Wait until spinning is allowed
+        yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
+
+        // Check if auto-spin is enabled and perform the spin
+        if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+        {
+            Debug.Log("Can auto spin");
+            CommandCentre.Instance.MainMenuController_.Spin();
+        }
+    }
+
+
+    public bool isGridFilled ()
+    {
+        return objectsPlaced >= totalObjectsToPlace;
     }
 }

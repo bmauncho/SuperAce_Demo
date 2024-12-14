@@ -105,6 +105,7 @@ public class MainMenuController : MonoBehaviour
 
     public void Spin ()
     {
+        Debug.Log(1);
         if (!isBtnPressed)
         {
             if (CommandCentre.Instance.CashManager_.CashAmount <= 0
@@ -113,18 +114,24 @@ public class MainMenuController : MonoBehaviour
                 InsufficientAmount.SetActive(true);
                 return;
             }
-
+            Debug.Log(2);
+            Debug.Log($"Cans spin is : {CanSpin}");
             if (CanSpin)
             {
+                Debug.Log(3);
                 StartCoroutine(FetchDataAndSpin());
             }
+            Debug.Log(2.1);
             isBtnPressed = true;
         }
+        Debug.Log(2.2);
         CommandCentre.Instance.HintManager_.CanShowHints = true;
+        Debug.Log(2.3);
     }
 
     private IEnumerator FetchDataAndSpin ()
     {
+
         bool datafetched = CommandCentre.Instance.APIManager_.isDataFetched;
         CommandCentre.Instance.APIManager_.FetchInfo();
 
