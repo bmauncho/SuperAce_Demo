@@ -60,6 +60,7 @@ public class AutoSpinManager : MonoBehaviour
         if (AutoSpinIndex_ <= 0)
         {
             AutoSpinIndex_ = 0;
+            IsAutoSpin = false;
         }
     }
 

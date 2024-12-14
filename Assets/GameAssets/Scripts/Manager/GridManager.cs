@@ -135,7 +135,7 @@ public class GridManager : MonoBehaviour
 
             if (CommandCentre.Instance.TurboManager_.TurboSpin_)
             {
-                //TurboFillGrid(columnCount , rowCount , decks);
+                TurboFillGrid(columnCount , rowCount , decks);
             }
             else
             {
@@ -177,7 +177,7 @@ public class GridManager : MonoBehaviour
 
                         newCard.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = newCard;
-                        objectsPlaced++;
+                        CalculateObjectsPlaced();
                     }));
                 cardSequence.PrependInterval(delay);
             }
@@ -204,10 +204,10 @@ public class GridManager : MonoBehaviour
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
-                Transform targetPos = rowData [col].cardPositionInRow [row].transform;
+                Transform targetPos = rowData [row].cardPositionInRow [col].transform;
 
                 newCard.transform.SetParent(targetPos);
-                newCard.transform.rotation = Quaternion.Euler(0f , 0f , 0f);
+                newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
 
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
@@ -217,7 +217,7 @@ public class GridManager : MonoBehaviour
 
                         newCard.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = newCard;
-                        objectsPlaced++;
+                        CalculateObjectsPlaced();
                     }));
             }
         }
@@ -230,7 +230,21 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public bool isGridFilled ()
+    void CalculateObjectsPlaced ()
+    {
+        objectsPlaced++;
+
+        //if (isGridFilled())
+        //{
+        //    Debug.Log($"grid is filled")
+        //    if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+        //    {
+        //        CommandCentre.Instance.MainMenuController_.Spin();
+        //    }
+        //}
+    }
+
+        public bool isGridFilled ()
     {
         return objectsPlaced>=totalObjectsToPlace;
     }

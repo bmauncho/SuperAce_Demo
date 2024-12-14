@@ -109,11 +109,11 @@ public class CardManager : MonoBehaviour
             golden = apiManager.GetCardInfo(col , row).golden ,
         };
 
-        Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
+       // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
-            Debug.Log($"Successfully parsed card type: {cardType}");
+            //Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
 
             if (card.ActiveCardType == CardType.WILD || card.ActiveCardType == CardType.SCATTER)
