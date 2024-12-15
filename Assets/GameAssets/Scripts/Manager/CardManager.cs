@@ -105,8 +105,8 @@ public class CardManager : MonoBehaviour
 
         CardInfo cardInfo = new CardInfo()
         {
-            name = apiManager.GetCardInfo(col , row).name ,
-            golden = apiManager.GetCardInfo(col , row).golden ,
+            name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
+            golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
         };
 
        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
