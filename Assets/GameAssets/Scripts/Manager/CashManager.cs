@@ -14,8 +14,16 @@ public class CashManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float MoneyIntheBank = PlayerPrefs.GetFloat("TotalCash");
-        MoneyIntheBank = 2000;
+        float MoneyIntheBank = 0;
+        if (PlayerPrefs.HasKey("TotalCash"))
+        {
+            MoneyIntheBank = PlayerPrefs.GetFloat("TotalCash");
+        }
+        else
+        {
+            MoneyIntheBank = 2000;
+        }
+        
         CashAmount = MoneyIntheBank;
         updateThecashUi();
     }
@@ -28,32 +36,13 @@ public class CashManager : MonoBehaviour
             {
                 CashAmount = 2000;
             }
+            else
+            {
+               
+                CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
+                updateThecashUi();
+            }
         }
-    }
-    public void IncreaseCash(float amount)
-    {
-        CashAmount += amount;
-
-        updateThecashUi();
-    }
-
-    public void DecreaseCash(float amount)
-    {
-        CashAmount -= amount;
-        if(CashAmount < 0)
-        {
-            CashAmount = 0;
-        }
-
-        updateThecashUi();
-    }
-
-    [ContextMenu("BreakTheBank")]
-    public void BreakTheBank()
-    {
-        CashAmount = 1000;
-        PlayerPrefs.SetFloat("TotalCash", CashAmount);
-        updateThecashUi();
     }
 
     public void SaveCashAmount()
@@ -71,7 +60,7 @@ public class CashManager : MonoBehaviour
         {
             CashAmountText [0].SetText(Mathf.FloorToInt(CashAmount).ToString("F2"));
         }
-        
+        SaveCashAmount();
     }
 
     public void UpdateWinnings ()
@@ -84,20 +73,6 @@ public class CashManager : MonoBehaviour
         {
             WinCashAmountText [0].text = CurrentWinings.ToString("F2");
         }
-    }
-
-    [ContextMenu("IncreaseCash")]
-    public void TestIncreasecash ()
-    {
-        IncreaseCash(50);
-        SaveCashAmount();
-    }
-
-    [ContextMenu("DecreaseCash")]
-    public void TestDecreasecash ()
-    {
-        DecreaseCash(50);
-        SaveCashAmount();
     }
 
     public void IncreaseWinings (float Amount)

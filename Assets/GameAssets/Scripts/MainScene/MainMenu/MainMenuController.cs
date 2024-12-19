@@ -101,8 +101,6 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-
-
     public void Spin ()
     {
         if (!isBtnPressed)
@@ -149,10 +147,7 @@ public class MainMenuController : MonoBehaviour
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
             
         }
-        else
-        {
-            CommandCentre.Instance.CashManager_.DecreaseCash(CommandCentre.Instance.BetManager_.BetAmount);
-        }
+
         DecreaseAutoSpins();
         CommandCentre.Instance.ComboManager_.ResetComboCounter();
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
@@ -160,6 +155,7 @@ public class MainMenuController : MonoBehaviour
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
         CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched =false;
+        CommandCentre.Instance.APIManager_.PlaceBet();
          yield break;
     }
 

@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -31,7 +30,7 @@ public class BetUpdaterAPI : MonoBehaviour
         BetUpDateData Data = new BetUpDateData
         {
             bet_id = 1,
-            amount_won = 1,
+            amount_won = 0,
         };
         string jsonPayload =  JsonUtility.ToJson(Data , true);
         Debug.Log(jsonPayload);
@@ -62,6 +61,19 @@ public class BetUpdaterAPI : MonoBehaviour
               $"newWalletBalance : {responseData.new_wallet_balance}," +
               $"status : {responseData.status}," +
               $"error : {responseData.error}");
+
+
+            UpdateBetResponse data = new UpdateBetResponse
+            {
+                message = responseData.message,
+                bet_id = responseData.bet_id,
+                amount_won = responseData.amount_won,
+                new_wallet_balance = responseData.new_wallet_balance,
+                status = responseData.status,
+                error = responseData.error,
+            };
+
+            updateBetResponse = data;
         }
     }
 }
