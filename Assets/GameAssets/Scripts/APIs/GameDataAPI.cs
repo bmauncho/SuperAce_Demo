@@ -25,7 +25,7 @@ public class FinalData
 {
     public float freeSpins;
     public float AmountWon;
-    [HideInInspector] public Rows [] rows;
+    public Rows [] rows;
 }
 
 [System.Serializable]
@@ -100,14 +100,10 @@ public class GameDataAPI : MonoBehaviour
                 if (Firsskip)
                 {
                     string [] _newdata = newdata [i].Split(']');
-                    //Debug.Log(_newdata [0]);
                     string [] Newdata1 = _newdata [0].Split('}');
-
-
 
                     for (int y = 0 ; y < Newdata1.Length ; y++)
                     {
-                        //Debug.Log(Newdata1 [y]);
                         string [] _newdata2 = Newdata1 [y].Split('{');
 
                         for (int r = 0 ; r < _newdata2.Length ; r++)
@@ -116,7 +112,6 @@ public class GameDataAPI : MonoBehaviour
                             if (!string.IsNullOrEmpty(_newdata2 [r]) &&
                                lenght.Length > 3)
                             {
-                                //Debug.Log(_newdata2 [r]);
                                 CardInfo _card = new CardInfo();
                                 _card = JsonUtility.FromJson<CardInfo>("{" + _newdata2 [r] + "}");
                                 infos.Add(_card);

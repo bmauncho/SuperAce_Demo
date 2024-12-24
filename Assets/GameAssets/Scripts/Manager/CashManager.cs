@@ -40,8 +40,9 @@ public class CashManager : MonoBehaviour
             {
                
                 CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-                updateThecashUi();
+                
             }
+            updateThecashUi();
         }
     }
 

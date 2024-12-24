@@ -4,7 +4,6 @@ using UnityEngine;
 public class DemoManager : MonoBehaviour
 {
     public bool IsDemo = false;
-    public bool CanShowDemoFeature;
     public bool IsDemoFeatureActive; 
     public GameObject DemoFeature;
     public GameObject DemoUi;
@@ -13,6 +12,7 @@ public class DemoManager : MonoBehaviour
     [Space(10)]
     public MainScene_LoadingMenu MainScene_LoadingMenu_;
     public DemoSequence DemoSequence_;
+    public DemoGridManager DemoGridManager_;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -99,4 +99,15 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
 
     }
+
+    public void Demofill ()
+    {
+
+    }
+
+    public void DemoRefill ()
+    {
+
+    }
+
 }

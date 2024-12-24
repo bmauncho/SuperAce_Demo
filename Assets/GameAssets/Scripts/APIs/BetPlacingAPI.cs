@@ -48,7 +48,6 @@ public class BetPlacingAPI : MonoBehaviour
 
     private IEnumerator PlaceBet(string jsonPayload)
     {
-        
         // Create UnityWebRequest
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
         byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
@@ -58,6 +57,7 @@ public class BetPlacingAPI : MonoBehaviour
 
         // Send request
         yield return request.SendWebRequest();
+        Debug.Log("Called");
 
         if (request.result == UnityWebRequest.Result.Success)
         {
@@ -82,6 +82,10 @@ public class BetPlacingAPI : MonoBehaviour
 
             response = betResponse;
 
+        }
+        else
+        {
+            Debug.LogWarning("request is unsuccessfull");
         }
     }
 }

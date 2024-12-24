@@ -146,6 +146,54 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void setUpDemoCards ( Card card , int col , int row )
+    {
+        if (!card)
+            return;
+
+        CardInfo cardInfo = new CardInfo()
+        {
+            name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
+            golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
+        };
+
+        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
+
+        if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
+        {
+            //Debug.Log($"Successfully parsed card type: {cardType}");
+            card.ActiveCardType = (CardType)cardType;
+
+            if (card.ActiveCardType == CardType.WILD || card.ActiveCardType == CardType.SCATTER)
+            {
+                card.showWildCard();
+            }
+            else if (card.ActiveCardType == CardType.LITTLE_JOKER)
+            {
+                card.showSmall_Jocker(goldenCardBg , thecard(card.ActiveCardType) , smallJockerOutline);
+            }
+            else if (card.ActiveCardType == CardType.BIG_JOKER)
+            {
+                card.showBig_Jocker(goldenCardBg , thecard(card.ActiveCardType) , bigJockerOutline);
+            }
+            else
+            {
+                if (cardInfo.golden)
+                {
+                    card.showGoldenCard(goldenCardBg , thecard(card.ActiveCardType) , normalOutline);
+                }
+                else
+                {
+                    card.showNormalCard(normalCardBg , thecard(card.ActiveCardType));
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to parse card type: {cardInfo.name}");
+        }
+    }
+
 
     public Sprite thecard ( CardType cardType )
     {

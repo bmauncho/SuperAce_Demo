@@ -123,29 +123,54 @@ public class MainMenuController : MonoBehaviour
 
     private IEnumerator FetchDataAndSpin ()
     {
-
-        bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
-        CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
-
-        // Wait until data is fetched, without freezing the game
-        while (!datafetched)
+        if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
-            yield return null; // Wait for the next frame
+            bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
+            CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
+
+            // Wait until data is fetched, without freezing the game
+            while (!datafetched)
+            {
+                datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
+                yield return null; // Wait for the next frame
+            }
+            // Once data is fetched, start the spinning process
+            StartCoroutine(SpinReel(false));
+        }
+        else
+        {
+            // Once data is fetched, start the spinning process
+            StartCoroutine(SpinReel(true));
         }
 
-        // Once data is fetched, start the spinning process
-        StartCoroutine(SpinReel());
+    
     }
 
-    IEnumerator SpinReel ()
+    IEnumerator SpinReel (bool isDemo)
     {
         //Debug.Log("Spinning");
-        CommandCentre.Instance.GridManager_.refreshGrid();
+        
+        if (!isDemo)
+        {
+            CommandCentre.Instance.GridManager_.refreshGrid();
+            normlSpin();
+        }
+        else
+        {
+           CommandCentre.Instance.DemoManager_.DemoGridManager_.refreshDemoGrid();
+            // show demo
+            DemoSpin();
+        }
+         yield break;
+    }
+
+    void normlSpin ()
+    {
+
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
-            
+
         }
 
         DecreaseAutoSpins();
@@ -154,9 +179,23 @@ public class MainMenuController : MonoBehaviour
         {
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
-        CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched =false;
+        CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched = false;
         CommandCentre.Instance.APIManager_.PlaceBet();
-         yield break;
+    }
+
+    void DemoSpin ()
+    {
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
+
+        }
+        DecreaseAutoSpins();
+        CommandCentre.Instance.ComboManager_.ResetComboCounter();
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.CashManager_.ResetWinings();
+        }
     }
 
 
