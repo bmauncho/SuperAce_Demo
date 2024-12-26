@@ -55,11 +55,7 @@ public class GameDataAPI : MonoBehaviour
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonString);
-        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () =>
-        {
-            populateRows();
-            isDataFetched = true;
-        }));
+        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => { isDataFetched = true; }));
     }
 
     IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
@@ -102,76 +98,14 @@ public class GameDataAPI : MonoBehaviour
                                 golden = card.golden ,
                                 transformed = card.transformed ,
                             };
-                            //Debug.Log(cardData_.name);
                             logReceivedData(i,j,cardData_);
                         }
                     }
                 }
             }
-
-            //string _Data = JsonHelper.GetJsonObject(request.downloadHandler.text , "data");
-            //Debug.Log(_Data);
-            //finalData = JsonUtility.FromJson<FinalData>(_Data);
-            //string [] newdata = _Data.Split('[');
-            //bool Firsskip = false;
-            //for (int i = 0 ; i < newdata.Length ; i++)
-            //{
-            //    if (Firsskip)
-            //    {
-            //        string [] _newdata = newdata [i].Split(']');
-            //        string [] Newdata1 = _newdata [0].Split('}');
-
-            //        for (int y = 0 ; y < Newdata1.Length ; y++)
-            //        {
-            //            string [] _newdata2 = Newdata1 [y].Split('{');
-
-            //            for (int r = 0 ; r < _newdata2.Length ; r++)
-            //            {
-            //                char [] lenght = _newdata2 [r].ToCharArray();
-            //                if (!string.IsNullOrEmpty(_newdata2 [r]) &&
-            //                   lenght.Length > 3)
-            //                {
-            //                    CardData _card = new CardData();
-            //                    _card = JsonUtility.FromJson<CardData>("{" + _newdata2 [r] + "}");
-            //                    infos.Add(_card);
-            //                }
-
-            //            }
-            //        }
-            //    }
-            //    Firsskip = true;
-            //}
             OnComplete?.Invoke();
         }
     }
-
-    void populateRows ()
-    {
-        // Create 4 rows and add them to the rows list
-        for (int i = 0 ; i < 4 ; i++)
-        {
-            rowData rowData = new rowData();
-            rows.Add(rowData);
-        }
-
-        int index = 0;
-        // Iterate over each row
-        for (int i = 0 ; i < rows.Count ; i++)
-        {
-            // Add 5 infos to each row
-            for (int j = 0 ; j < 5 ; j++)
-            {
-                if (index < infos.Count) // Ensure index does not exceed infos size
-                {
-                    rows [i].infos.Add(infos [index]);
-                    index++; // Increment index to move to the next item
-                }
-            }
-        }
-
-       //refillCardsAPI.SetUp();
-    }
-
 
     public bool IsFreeGame ()
     {

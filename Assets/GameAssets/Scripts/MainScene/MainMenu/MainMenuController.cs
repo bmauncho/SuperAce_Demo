@@ -148,7 +148,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator SpinReel (bool isDemo)
     {
-        //Debug.Log("Spinning");
+        Debug.Log("Spinning");
         
         if (!isDemo)
         {
