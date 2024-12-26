@@ -48,8 +48,7 @@ public class CardManager : MonoBehaviour
                 // Find all wild cards (Scatter, Little_Joker, Big_Joker)
                 Sprite [] newMatchingCards = cards
                   .Where(card => card != null &&
-                        ( card.name == "SCATTER" ||
-                        card.name == "LITTLE_JOKER" ||
+                        ( card.name == "LITTLE_JOKER" ||
                         card.name == "BIG_JOKER" ))
                   .ToArray();
 

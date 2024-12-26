@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -50,8 +51,15 @@ public class PayOutManager : MonoBehaviour
 
     public void ShowCurrentWin ()
     {
+        StartCoroutine(showinnings());
+    }
+
+    IEnumerator showinnings ()
+    {
         WinUI_.ActivateCurrentWinings();
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
+        yield return new WaitForSeconds(1f);
+        HideCurrentWin();
     }
 
     public void HideCurrentWin ()

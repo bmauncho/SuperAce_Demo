@@ -88,32 +88,4 @@ public class BetPlacingAPI : MonoBehaviour
             Debug.LogWarning("request is unsuccessfull");
         }
     }
-    #region
-    
-    //private IEnumerator PlaceBet ( string jsonPayload )
-    //{
-    //    Debug.Log($"Sending request to: {ApiUrl}");
-    //    Debug.Log($"Payload: {jsonPayload}");
-
-    //    UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
-    //    byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
-    //    request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-    //    request.downloadHandler = new DownloadHandlerBuffer();
-    //    request.SetRequestHeader("Content-Type" , "application/json");
-
-    //    // Send request
-    //    yield return request.SendWebRequest();
-    //    Debug.Log("Request sent.");
-
-    //    if (request.result == UnityWebRequest.Result.Success)
-    //    {
-    //        Debug.Log("Response: " + request.downloadHandler.text);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError($"Request failed: {request.error}");
-    //        Debug.LogError($"Response: {request.downloadHandler.text}");
-    //    }
-    //}
-    #endregion
 }

@@ -51,11 +51,17 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
+
         _GameInfo Data = new _GameInfo();
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonString);
-        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => { isDataFetched = true; }));
+        CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
+        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => 
+        { 
+            isDataFetched = true; 
+            refillCardsAPI.FetchData();
+        }));
     }
 
     IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
@@ -99,6 +105,10 @@ public class GameDataAPI : MonoBehaviour
                                 transformed = card.transformed ,
                             };
                             logReceivedData(i,j,cardData_);
+                            if (cardData_.transformed)
+                            {
+                                CommandCentre.Instance.WinLoseManager_.GetWinningCard(cardData_ , i , j);
+                            }
                         }
                     }
                 }

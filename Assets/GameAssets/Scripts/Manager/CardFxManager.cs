@@ -8,8 +8,12 @@ public class CardfxColumn
 
 public class CardFxManager : MonoBehaviour
 {
+    public GameObject cardFxMask;
     public GameObject CardFxHolder;
     public List<CardfxColumn> CardFx = new List<CardfxColumn>();
+    public List<CardfxColumn> CardFxMask = new List<CardfxColumn>();
+
+    [ContextMenu("Activate")]
     public void Activate ()
     {
         //Debug.Log("activateMasks");
@@ -19,6 +23,16 @@ public class CardFxManager : MonoBehaviour
     public void Deactivate ()
     {
         CardFxHolder.SetActive(false);
+    }
+    [ContextMenu("Activate Mask")]
+    public void ActivateCardMask ()
+    {
+        cardFxMask.SetActive(true);
+    }
+    [ContextMenu("Deactivate Mask")]
+    public void DeactivateCardMask ()
+    {
+        cardFxMask.SetActive(false);
     }
    
 
@@ -54,6 +68,45 @@ public class CardFxManager : MonoBehaviour
                         CommandCentre.Instance.PoolManager_.ReturnFx(thefx.gameObject);
                     }
                 }
+            }
+        }
+    }
+
+    [ContextMenu("activate card Masks")]
+    void test ()
+    {
+        int col = Random.Range(0 , 4);
+        int row = Random.Range(0 , 3);
+
+        Debug.Log($"The row {row} the Col {col}");
+        ActivateCardMask();
+        ActivateCardFxMask(row, col);
+    }
+
+
+    public void ActivateCardFxMask(int whichrow, int whichcol )
+    {
+        for (int i = 0;i<5 ;i++)
+        {
+            for(int j = 0;j<4 ;j++)
+            {
+                if(CardFxMask [whichrow].cardFxPos [whichcol] == CardFxMask [j].cardFxPos [i])
+                {
+                    CardFxMask [whichrow].cardFxPos [whichcol].SetActive(true);
+                }
+            }
+        }
+    }
+
+    [ContextMenu("Deactivate card Masks")]
+    public void DeactivateCardFxMask ()
+    {
+        DeactivateCardMask ();
+        for (int i = 0 ; i < 5 ; i++)
+        {
+            for (int j = 0 ; j < 4 ; j++)
+            {
+                CardFxMask [j].cardFxPos [i].SetActive(false);
             }
         }
     }

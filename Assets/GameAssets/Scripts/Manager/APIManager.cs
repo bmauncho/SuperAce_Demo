@@ -1,4 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public class CardData
+{
+    public string name;
+    public bool golden;
+    public bool transformed;
+}
+
+[System.Serializable]
+public class ApiResponse
+{
+    public bool status { get; set; }
+    public string message { get; set; }
+    public Data data { get; set; }
+}
+
+[System.Serializable]
+public class Data
+{
+    public int freeSpins { get; set; }
+    public int AmountWon { get; set; }
+    public CardData [] [] cards { get; set; }
+}
+
 public class APIManager : MonoBehaviour
 {
     public GameDataAPI GameDataAPI_;
