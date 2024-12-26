@@ -46,7 +46,7 @@ public class BetPlacingAPI : MonoBehaviour
         StartCoroutine(PlaceBet(jsonString));
     }
 
-    private IEnumerator PlaceBet(string jsonPayload)
+    private IEnumerator PlaceBet ( string jsonPayload )
     {
         // Create UnityWebRequest
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
@@ -65,11 +65,11 @@ public class BetPlacingAPI : MonoBehaviour
 
             // Parse successful response
             BetResponse responseData = JsonUtility.FromJson<BetResponse>(request.downloadHandler.text);
-            Debug.Log($"message : {responseData.message}," +
-                $"betId : {responseData.bet_id}," +
-                $"newWalletBalance : {responseData.new_wallet_balance}," +
-                $"status : {responseData.status}," +
-                $"error : {responseData.error}");
+            //Debug.Log($"message : {responseData.message}," +
+            //    $"betId : {responseData.bet_id}," +
+            //    $"newWalletBalance : {responseData.new_wallet_balance}," +
+            //    $"status : {responseData.status}," +
+            //    $"error : {responseData.error}");
 
             BetResponse betResponse = new BetResponse
             {
@@ -88,4 +88,32 @@ public class BetPlacingAPI : MonoBehaviour
             Debug.LogWarning("request is unsuccessfull");
         }
     }
+    #region
+    
+    //private IEnumerator PlaceBet ( string jsonPayload )
+    //{
+    //    Debug.Log($"Sending request to: {ApiUrl}");
+    //    Debug.Log($"Payload: {jsonPayload}");
+
+    //    UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
+    //    byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
+    //    request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    //    request.downloadHandler = new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type" , "application/json");
+
+    //    // Send request
+    //    yield return request.SendWebRequest();
+    //    Debug.Log("Request sent.");
+
+    //    if (request.result == UnityWebRequest.Result.Success)
+    //    {
+    //        Debug.Log("Response: " + request.downloadHandler.text);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError($"Request failed: {request.error}");
+    //        Debug.LogError($"Response: {request.downloadHandler.text}");
+    //    }
+    //}
+    #endregion
 }

@@ -4,6 +4,7 @@ public class APIManager : MonoBehaviour
     public GameDataAPI GameDataAPI_;
     public BetPlacingAPI betPlacingAPI_;
     public BetUpdaterAPI betUpdaterAPI_;
+    public RefillCardsAPI refillCardsAPI_;
 
     public void FetchGameData ()
     {

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class cardsData
 {
     [HideInInspector]public string CardName;
     public CardType cardType;
-    public Sprite card;
+    public Sprite[] card;
 }
 
 public class CardManager : MonoBehaviour
@@ -21,7 +22,7 @@ public class CardManager : MonoBehaviour
     public Sprite normalOutline;
     public Sprite smallJockerOutline;
     public Sprite bigJockerOutline;
-    [HideInInspector]public Sprite [] cards;
+    public Sprite [] cards;
 
 
     public List<cardsData> cardsDatas = new List<cardsData>();
@@ -39,21 +40,45 @@ public class CardManager : MonoBehaviour
         // Get all values from the CardType enum
         Array cardTypeArray = System.Enum.GetValues(typeof(CardType));
 
+       
         foreach (CardType cardType in cardTypeArray)
         {
-            // Find the matching card in the list by name
-            Sprite matchingCard = cards.FirstOrDefault(card => card != null && card.name == cardType.ToString());
-
-            if (matchingCard != null)
+            if (cardType == CardType.WILD)
             {
-                AddCardType(cardType , matchingCard);
+                // Find all wild cards (Scatter, Little_Joker, Big_Joker)
+                Sprite [] newMatchingCards = cards
+                  .Where(card => card != null &&
+                        ( card.name == "SCATTER" ||
+                        card.name == "LITTLE_JOKER" ||
+                        card.name == "BIG_JOKER" ))
+                  .ToArray();
+
+                if (newMatchingCards.Length > 0)
+                {
+                    AddCardType(cardType , newMatchingCards);
+                }
+                else
+                {
+                    Debug.LogWarning($"No matching cards found for CardType {cardType}.");
+                }
             }
             else
             {
-                Debug.LogWarning($"No matching card found for CardType {cardType}.");
+                // Find the matching card by name
+                Sprite matchingCard = cards.FirstOrDefault(card => card != null && card.name == cardType.ToString());
+
+                if (matchingCard != null)
+                {
+                    AddCardType(cardType , new Sprite [] { matchingCard });
+                }
+                else
+                {
+                    Debug.LogWarning($"No matching card found for CardType {cardType}.");
+                }
             }
         }
     }
+
 
     public void SetUpStartCards ( Card card , int col , int row )
     {
@@ -87,7 +112,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    void AddCardType ( CardType cardType , Sprite theCard )
+    void AddCardType ( CardType cardType , Sprite[] theCard )
     {
         cardsDatas.Add(new cardsData()
         {
@@ -103,10 +128,11 @@ public class CardManager : MonoBehaviour
         if (!card)
             return;
 
-        CardInfo cardInfo = new CardInfo()
+        CardData cardInfo = new CardData()
         {
             name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
             golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
+            transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
         };
 
        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
@@ -151,10 +177,11 @@ public class CardManager : MonoBehaviour
         if (!card)
             return;
 
-        CardInfo cardInfo = new CardInfo()
+        CardData cardInfo = new CardData()
         {
             name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
             golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
+            transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
         };
 
         // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
@@ -197,11 +224,13 @@ public class CardManager : MonoBehaviour
 
     public Sprite thecard ( CardType cardType )
     {
+        
         for (int i = 0 ; i < cardsDatas.Count ; i++)
         {
+            int rand = Random.Range(0 , cardsDatas [i].card.Length);
             if (cardsDatas [i].cardType == cardType)
             {
-                return cardsDatas [i].card;
+                return cardsDatas [i].card [rand];
             }
         }
         Debug.LogWarning($"CardType {cardType} not found in cardsDatas.");

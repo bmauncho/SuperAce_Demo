@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,40 +22,24 @@ public class _game
 }
 
 [System.Serializable]
-public class FinalData
-{
-    public float freeSpins;
-    public float AmountWon;
-    public Rows [] rows;
-}
-
-[System.Serializable]
-public class Rows
-{
-    public CardInfo [] cards;
-}
-
-[System.Serializable]
-public class CardInfo
-{
-    public string name;
-    public bool golden;
-}
-[System.Serializable]
 public class rowData
 {
-    public List<CardInfo> infos = new List<CardInfo>();
+    public List<CardData> infos = new List<CardData>();
 }
 public class GameDataAPI : MonoBehaviour
 {
     private const string ApiUrl = "https://slots.ibibe.africa/spin/superace";
-    public FinalData finalData;
+    public ApiResponse finalData;
     public float BetAmount;
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
-    List<CardInfo> infos = new List<CardInfo>();
+    List<CardData> infos = new List<CardData>();
     public bool isDataFetched = false;
-
+    public RefillCardsAPI refillCardsAPI;
+    private void Start ()
+    {
+        isDataFetched = false;
+    }
     private void Update ()
     {
         if (CommandCentre.Instance)
@@ -68,7 +53,8 @@ public class GameDataAPI : MonoBehaviour
     {
         _GameInfo Data = new _GameInfo();
         Data.betAmount = BetAmount;
-        string jsonString = JsonUtility.ToJson(Data);
+        string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
+        Debug.Log(jsonString);
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () =>
         {
             populateRows();
@@ -83,6 +69,7 @@ public class GameDataAPI : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
+        Debug.Log("Sending data...");
         yield return request.SendWebRequest();
         infos.Clear();
         rows.Clear();
@@ -90,38 +77,70 @@ public class GameDataAPI : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);
-            string _Data = JsonHelper.GetJsonObject(request.downloadHandler.text , "data");
-            Debug.Log(_Data);
-            finalData = JsonUtility.FromJson<FinalData>(_Data);
-            string [] newdata = _Data.Split('[');
-            bool Firsskip = false;
-            for (int i = 0 ; i < newdata.Length ; i++)
+            string output = request.downloadHandler.text;
+
+            var response = JsonConvert.DeserializeObject<ApiResponse>(output);
+            if (response?.data?.cards != null)
             {
-                if (Firsskip)
+                // Debug the deserialized data
+                Debug.Log("Status: " + response.status);
+                Debug.Log("Free Spins: " + response.data.freeSpins);
+                Debug.Log("Amount Won: " + response.data.AmountWon);
+
+                for (int i = 0 ; i < response.data.cards.Length ; i++)
                 {
-                    string [] _newdata = newdata [i].Split(']');
-                    string [] Newdata1 = _newdata [0].Split('}');
-
-                    for (int y = 0 ; y < Newdata1.Length ; y++)
+                    var cardRow = response.data.cards [i];
+                    if (cardRow != null)
                     {
-                        string [] _newdata2 = Newdata1 [y].Split('{');
-
-                        for (int r = 0 ; r < _newdata2.Length ; r++)
+                        for (int j = 0 ; j < cardRow.Length ; j++)
                         {
-                            char [] lenght = _newdata2 [r].ToCharArray();
-                            if (!string.IsNullOrEmpty(_newdata2 [r]) &&
-                               lenght.Length > 3)
-                            {
-                                CardInfo _card = new CardInfo();
-                                _card = JsonUtility.FromJson<CardInfo>("{" + _newdata2 [r] + "}");
-                                infos.Add(_card);
-                            }
+                            var card = cardRow [j];
 
+                            CardData cardData_ = new CardData
+                            {
+                                name = card.name ,
+                                golden = card.golden ,
+                                transformed = card.transformed ,
+                            };
+                            //Debug.Log(cardData_.name);
+                            logReceivedData(i,j,cardData_);
                         }
                     }
                 }
-                Firsskip = true;
             }
+
+            //string _Data = JsonHelper.GetJsonObject(request.downloadHandler.text , "data");
+            //Debug.Log(_Data);
+            //finalData = JsonUtility.FromJson<FinalData>(_Data);
+            //string [] newdata = _Data.Split('[');
+            //bool Firsskip = false;
+            //for (int i = 0 ; i < newdata.Length ; i++)
+            //{
+            //    if (Firsskip)
+            //    {
+            //        string [] _newdata = newdata [i].Split(']');
+            //        string [] Newdata1 = _newdata [0].Split('}');
+
+            //        for (int y = 0 ; y < Newdata1.Length ; y++)
+            //        {
+            //            string [] _newdata2 = Newdata1 [y].Split('{');
+
+            //            for (int r = 0 ; r < _newdata2.Length ; r++)
+            //            {
+            //                char [] lenght = _newdata2 [r].ToCharArray();
+            //                if (!string.IsNullOrEmpty(_newdata2 [r]) &&
+            //                   lenght.Length > 3)
+            //                {
+            //                    CardData _card = new CardData();
+            //                    _card = JsonUtility.FromJson<CardData>("{" + _newdata2 [r] + "}");
+            //                    infos.Add(_card);
+            //                }
+
+            //            }
+            //        }
+            //    }
+            //    Firsskip = true;
+            //}
             OnComplete?.Invoke();
         }
     }
@@ -149,18 +168,38 @@ public class GameDataAPI : MonoBehaviour
                 }
             }
         }
+
+       //refillCardsAPI.SetUp();
     }
 
 
     public bool IsFreeGame ()
     {
-        return finalData.freeSpins >= 10;
+        return finalData.data.freeSpins >= 10;
     }
 
-    public CardInfo GetCardInfo ( int col , int row )
+    public CardData GetCardInfo ( int col , int row )
     {
-        CardInfo info = null;
+        CardData info = null;
         info = rows [row].infos [col];
         return info;
+    }
+
+    void logReceivedData ( int rows_ , int cols_ , CardData cardData )
+    {
+        // Make sure the list has enough rows
+        while (rows.Count <= rows_)
+        {
+            rows.Add(new rowData());
+        }
+
+        // Ensure the row has enough columns
+        while (rows [rows_].infos.Count <= cols_)
+        {
+            rows [rows_].infos.Add(new CardData());
+        }
+
+        // Now safely assign the cardData
+        rows [rows_].infos [cols_] = cardData;
     }
 }
