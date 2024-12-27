@@ -60,7 +60,7 @@ public class Card : MonoBehaviour
         ScatterSpin.GetComponentInChildren<ScatterMotions>().StopMovementAndRotation();
     }
 
-    public void showWildCard ()
+    public void showScatterCard ()
     {
         disableModel();
         CardBg.gameObject.SetActive(false);

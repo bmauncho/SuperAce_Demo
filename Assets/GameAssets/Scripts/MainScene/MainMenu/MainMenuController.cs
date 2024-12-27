@@ -148,7 +148,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator SpinReel (bool isDemo)
     {
-        Debug.Log("Spinning");
+        //Debug.Log("Spinning");
         
         if (!isDemo)
         {
@@ -180,7 +180,7 @@ public class MainMenuController : MonoBehaviour
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
         CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched = false;
-        CommandCentre.Instance.APIManager_.PlaceBet();
+        //CommandCentre.Instance.APIManager_.PlaceBet();
     }
 
     void DemoSpin ()

@@ -55,7 +55,7 @@ public class GameDataAPI : MonoBehaviour
         _GameInfo Data = new _GameInfo();
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
         CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => 
         { 
@@ -71,23 +71,23 @@ public class GameDataAPI : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
-        Debug.Log("Sending data...");
+        //Debug.Log("Sending data...");
         yield return request.SendWebRequest();
         infos.Clear();
         rows.Clear();
         //Debug.Log("Status Code: " + request.responseCode);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             if (response?.data?.cards != null)
             {
                 // Debug the deserialized data
-                Debug.Log("Status: " + response.status);
-                Debug.Log("Free Spins: " + response.data.freeSpins);
-                Debug.Log("Amount Won: " + response.data.AmountWon);
+                //Debug.Log("Status: " + response.status);
+                //Debug.Log("Free Spins: " + response.data.freeSpins);
+                //Debug.Log("Amount Won: " + response.data.AmountWon);
 
                 for (int i = 0 ; i < response.data.cards.Length ; i++)
                 {

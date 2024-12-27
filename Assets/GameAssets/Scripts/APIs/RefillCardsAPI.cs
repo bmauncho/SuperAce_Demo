@@ -65,7 +65,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -78,13 +78,13 @@ public class RefillCardsAPI : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
 
-        Debug.Log("Sending data...");
+        //Debug.Log("Sending data...");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Data successfully sent!");
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log("Data successfully sent!");
+            //Debug.Log("Response: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
@@ -92,9 +92,9 @@ public class RefillCardsAPI : MonoBehaviour
             if (response?.data?.cards != null)
             {
                 // Debug the deserialized data
-                Debug.Log("Status: " + response.status);
-                Debug.Log("Free Spins: " + response.data.freeSpins);
-                Debug.Log("Amount Won: " + response.data.AmountWon);
+                //Debug.Log("Status: " + response.status);
+                //Debug.Log("Free Spins: " + response.data.freeSpins);
+                //Debug.Log("Amount Won: " + response.data.AmountWon);
 
 
                 // Iterate through cards and log their names

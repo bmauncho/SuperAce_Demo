@@ -110,7 +110,7 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(tempPos.Count);
+       // Debug.Log(tempPos.Count);
         if (tempPos.Count < totalObjectsToPlace)
         {
             Debug.LogError("Not enough available positions to place all the cards.");
@@ -147,35 +147,75 @@ public class GridManager : MonoBehaviour
 
     void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
     {
+        if (decks == null || decks.Length == 0)
+        {
+            Debug.LogError("Decks array is null or empty.");
+            return;
+        }
+
         for (int col = 0 ; col < columnCount ; col++)
         {
+            if (col >= decks.Length || decks [col] == null)
+            {
+                Debug.LogError($"Deck at column {col} is null or out of bounds.");
+                continue;
+            }
+
+            Deck currentDeck = decks [col];
             for (int row = 0 ; row < rowCount ; row++)
             {
-                Deck currentDeck = decks [col];
+                if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
+                {
+                    Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
+                    continue;
+                }
+
                 GameObject newCard = currentDeck.DrawCard();
+                if (newCard == null)
+                {
+                    currentDeck.ResetDeck();
+                    newCard = currentDeck.DrawCard();
+                    Debug.LogError($"Failed to draw card from deck {col}.");
+                    continue;
+                }
+
                 if (isFirstPlay)
                 {
                     cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
                 }
                 else
                 {
-
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                 }
 
                 currentDeck.ResetDeck();
                 Transform targetPos = rowData [row].cardPositionInRow [col].transform;
+                if (targetPos == null)
+                {
+                    Debug.LogError($"Target position for row {row}, col {col} is null.");
+                    continue;
+                }
+
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
                 float delay = ( col * rowCount + row ) * delayIncrement;
+
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
                     .SetEase(Ease.OutQuad)
                     .OnComplete(() =>
                     {
-
                         newCard.transform.localPosition = Vector3.zero;
-                        targetPos.GetComponent<CardPos>().TheOwner = newCard;
+                        CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
+                        if (cardPosComponent != null)
+                        {
+                            cardPosComponent.TheOwner = newCard;
+                        }
+                        else
+                        {
+                            Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
+                        }
+
                         CalculateObjectsPlaced();
                     }));
                 cardSequence.PrependInterval(delay);
@@ -185,41 +225,107 @@ public class GridManager : MonoBehaviour
         isFirstPlay = false;
     }
 
-    void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
+
+    public void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
+        // Ensure all inputs are valid
+        if (decks == null || decks.Length < columnCount)
+        {
+            Debug.LogError("Decks array is null or does not match the column count.");
+            return;
+        }
+
+        if (rowData == null || rowData.Count < rowCount)
+        {
+            Debug.LogError("RowData is null or does not match the row count.");
+            return;
+        }
+
+        if (cardManager == null)
+        {
+            Debug.LogError("CardManager is not assigned.");
+            return;
+        }
+
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = 0 ; row < rowCount ; row++)
             {
+                // Validate rowData and its cardPositionInRow
+                if (rowData [row] == null || rowData [row].cardPositionInRow == null || rowData [row].cardPositionInRow.Count <= col)
+                {
+                    Debug.LogError($"Invalid rowData or cardPositionInRow at row {row}, column {col}.");
+                    continue;
+                }
+
                 Deck currentDeck = decks [col];
+                if (currentDeck == null)
+                {
+                    Debug.LogError($"Deck at column {col} is null.");
+                    continue;
+                }
+
                 GameObject newCard = currentDeck.DrawCard();
+                if (newCard == null)
+                {
+                    Debug.LogError($"DrawCard returned null for deck at column {col}.");
+                    continue;
+                }
+
+                // Setup the card using the cardManager
+                Card cardComponent = newCard.GetComponent<Card>();
+                if (cardComponent == null)
+                {
+                    Debug.LogError($"New card at column {col}, row {row} does not have a Card component.");
+                    continue;
+                }
+
                 if (isFirstPlay)
                 {
-                    cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
+                    cardManager.SetUpStartCards(cardComponent , col , row);
                 }
                 else
                 {
-
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.setUpCard(cardComponent , col , row);
                 }
-                currentDeck.ResetDeck();
-                Transform targetPos = rowData [row].cardPositionInRow [col].transform;
 
+                // Reset the deck for subsequent draws
+                currentDeck.ResetDeck();
+
+                // Get the target position
+                Transform targetPos = rowData [row].cardPositionInRow [col]?.transform;
+                if (targetPos == null)
+                {
+                    Debug.LogError($"Target position at row {row}, column {col} is null.");
+                    continue;
+                }
+
+                // Set the card's parent and initial rotation
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
 
+                // Animate the card to the target position
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
                     .SetEase(Ease.OutQuad)
                     .OnComplete(() =>
                     {
-
                         newCard.transform.localPosition = Vector3.zero;
-                        targetPos.GetComponent<CardPos>().TheOwner = newCard;
+                        CardPos cardPos = targetPos.GetComponent<CardPos>();
+                        if (cardPos != null)
+                        {
+                            cardPos.TheOwner = newCard;
+                        }
+                        else
+                        {
+                            Debug.LogError($"Target position at row {row}, column {col} does not have a CardPos component.");
+                        }
                         CalculateObjectsPlaced();
                     }));
             }
         }
+
+        // Mark the first play as complete
         isFirstPlay = false;
     }
 
@@ -315,7 +421,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
-            Debug.Log("Grid is filled");
+            //Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
     }

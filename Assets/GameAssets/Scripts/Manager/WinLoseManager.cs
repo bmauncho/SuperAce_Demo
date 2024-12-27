@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
@@ -74,16 +75,48 @@ public class WinLoseManager : MonoBehaviour
         int hiddenCards = 0;
         for (int i = 0 ; i < data.Count ; i++)
         {
-            if (data [i].name != "SCATTER" ||
-                data [i].name != "LITTLE_JOKER" ||
-                data [i].name != "BIG_JOKER")
+            int row = data [i].row;
+            int col = data [i].col;
+            if (data [i].name == "SCATTER" ||
+                data [i].name == "LITTLE_JOKER" ||
+                data [i].name == "BIG_JOKER" ||
+                data [i].name == "WILD")
             {
-                int row = data [i].row;
-                int col = data [i].col;
 
-                // Check if col and row are within valid ranges
                 if (col >= 0 && col < gridManager.rowData.Count &&
                     row >= 0 && row < gridManager.rowData [col].cardPositionInRow.Count)
+                {
+                    GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
+                    CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
+                    GameObject card = cardPos.TheOwner;
+
+                    if (card)
+                    {
+                        CardType cardType = card.GetComponent<Card>().ActiveCardType;
+                        switch (cardType)
+                        {
+                            case CardType.SCATTER:
+                                card.GetComponent<Card>().ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
+                                break;
+                            case CardType.LITTLE_JOKER:
+                            case CardType.BIG_JOKER:
+                                StartCoroutine(RotateGoldenCards(card));
+                                break;
+                            case CardType.WILD:
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Invalid row or column index: row={row}, col={col}");
+                }
+            }
+            else
+            {
+                // Check if col and row are within valid ranges
+                if (col >= 0 && col < gridManager.rowData [col].cardPositionInRow.Count  &&
+                    row >= 0 && row < gridManager.rowData.Count)
                 {
                     GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
                     CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
@@ -101,10 +134,7 @@ public class WinLoseManager : MonoBehaviour
                 {
                     Debug.LogWarning($"Invalid row or column index: row={row}, col={col}");
                 }
-            }
-            else
-            {
-                yield return StartCoroutine(RotateWildCards());
+               
             }
         }
         yield return new WaitForSeconds(1.5f);
@@ -122,8 +152,38 @@ public class WinLoseManager : MonoBehaviour
         yield return null;
     }
 
+
+    private IEnumerator RotateGoldenCards (GameObject goldenCard)
+    {
+        goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
+        {
+            StartCoroutine(PunchScaleRotatedCards(goldenCard.transform));
+        });
+
+        yield return null;
+    }
+
+    public IEnumerator PunchScaleRotatedCards ( Transform target )
+    {
+        yield return new WaitForSeconds(.25f);
+        Tween PunchScale = target.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1).SetEase(Ease.OutQuad);
+        yield return PunchScale.WaitForCompletion();
+
+        target.transform.DORotate(new Vector3(0,180f,0) , .5f , RotateMode.FastBeyond360);
+    }
+
     IEnumerator RotateWildCards ()
     {
+        for(int i = 0;i<data.Count;i++)
+        {
+            if(data [i] != null)
+            {
+                if(data [i].name == "LITTLE_JOKER" ||data [i].name == "BIG_JOKER")
+                {
+
+                }
+            }
+        }
         yield return null ;
     }
 
