@@ -39,8 +39,6 @@ public class DemoManager : MonoBehaviour
 
     public void DemoSpin ()
     {
-        CommandCentre.Instance.MainMenuController_.Spin();
-        //Debug.Log("DemoSpin");
         if(IsDemoFeatureActive)
         {
             DeactivateDemoFeature();

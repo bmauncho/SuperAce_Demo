@@ -16,6 +16,7 @@ public class cardsData
 public class CardManager : MonoBehaviour
 {
     APIManager apiManager;
+    DemoManager demoManager;
     public Sprite normalCardBg;
     public Sprite goldenCardBg;
 
@@ -30,6 +31,7 @@ public class CardManager : MonoBehaviour
     private void Start ()
     {
         apiManager = CommandCentre.Instance.APIManager_;
+        demoManager = CommandCentre.Instance.DemoManager_;
     }
 
     [ContextMenu("Initialize")]
@@ -188,11 +190,12 @@ public class CardManager : MonoBehaviour
         if (!card)
             return;
 
-        CardData cardInfo = new CardData()
+        DemoCardsInfo cardInfo = new DemoCardsInfo
         {
-            name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
-            golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
-            transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
+            name = demoManager.DemoSequence_.GetDemoCardInfo(col,row).name,
+            Subsitute = demoManager.DemoSequence_.GetDemoCardInfo(col , row).Subsitute,
+            isGolden = demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden,
+
         };
 
         // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
@@ -228,7 +231,7 @@ public class CardManager : MonoBehaviour
             }
             else
             {
-                if (cardInfo.golden)
+                if (cardInfo.isGolden)
                 {
                     card.showGoldenCard(goldenCardBg , thecard(card.ActiveCardType) , normalOutline);
                 }
@@ -259,6 +262,4 @@ public class CardManager : MonoBehaviour
         Debug.LogWarning($"CardType {cardType} not found in cardsDatas.");
         return null;
     }
-
-
 }

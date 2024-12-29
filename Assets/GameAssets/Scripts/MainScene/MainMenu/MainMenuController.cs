@@ -84,7 +84,15 @@ public class MainMenuController : MonoBehaviour
     {
         Startfx_.Activate();
         StartCoroutine(CheckIfGridReady());
-        CommandCentre.Instance.GridManager_.populateGrid();
+        if (!CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            CommandCentre.Instance.GridManager_.populateGrid();
+        }
+        else
+        {
+            CommandCentre.Instance.DemoManager_.DemoGridManager_.populateGrid();
+        }
+        
     }
 
     IEnumerator CheckIfGridReady ()
@@ -123,6 +131,7 @@ public class MainMenuController : MonoBehaviour
 
     private IEnumerator FetchDataAndSpin ()
     {
+        Debug.Log(CommandCentre.Instance.DemoManager_.IsDemo);
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
             bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;

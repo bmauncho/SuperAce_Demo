@@ -125,7 +125,6 @@ public class DemoGridManager : MonoBehaviour
         int columnCount = decks.Length; // Number of columns
         if (isGridSpaceAvailable())
         {
-
             if (CommandCentre.Instance.TurboManager_.TurboSpin_)
             {
                 TurboFillGrid(columnCount , rowCount , decks);
@@ -154,7 +153,7 @@ public class DemoGridManager : MonoBehaviour
                 else
                 {
 
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
                 Transform targetPos = colData [col].cardPositionInRow [row].transform;
@@ -193,7 +192,7 @@ public class DemoGridManager : MonoBehaviour
                 else
                 {
 
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
                 Transform targetPos = colData [row].cardPositionInRow [col].transform;

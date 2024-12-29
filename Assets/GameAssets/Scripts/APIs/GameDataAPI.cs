@@ -28,7 +28,7 @@ public class rowData
 }
 public class GameDataAPI : MonoBehaviour
 {
-    private const string ApiUrl = "https://slots.ibibe.africa/spin/superace";
+    private const string ApiUrl = "https://api.ibibe.africa:8500/spin/superace";
     public ApiResponse finalData;
     public float BetAmount;
     [Space(10)]
@@ -55,8 +55,8 @@ public class GameDataAPI : MonoBehaviour
         _GameInfo Data = new _GameInfo();
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        //Debug.Log(jsonString);
-        CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
+        Debug.Log(jsonString);
+        //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => 
         { 
             isDataFetched = true; 

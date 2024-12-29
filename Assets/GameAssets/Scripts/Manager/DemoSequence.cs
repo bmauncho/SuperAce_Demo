@@ -8,11 +8,19 @@ using UnityEngine;
 public class DemoCardsInfo
 {
     public string name;
+    public string Subsitute;
     public bool isGolden;
 }
-public class DemoSequence : MonoBehaviour
+
+[System.Serializable]
+public class DemoCards
 {
     public List<DemoCardsInfo> cards = new List<DemoCardsInfo>();
+}
+
+public class DemoSequence : MonoBehaviour
+{
+    public List<DemoCards> demoCards = new List<DemoCards>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,14 +34,26 @@ public class DemoSequence : MonoBehaviour
 
     }
 
-    void RandomizeCards ()
+    [ContextMenu("SetUp Cards")]
+    void SetUpCards ()
     {
-        cards.Clear();
+        demoCards.Clear();
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
+        for(int i = 0;i<4;i++)
+        {
+            demoCards.Add(new DemoCards());
 
+            for(int j = 0 ; j < 5 ; j++)
+            {
+                demoCards [i].cards.Add(new DemoCardsInfo());
+                demoCards [i].cards [j] = new DemoCardsInfo();
+                demoCards [i].cards [j] = Spin_1(j , i);
+            }
+        }
     }
 
-    void AddCardType ( CardType cardType ,bool isGolden)
+
+    void AddCardType ( CardType cardType ,bool isGolden = false)
     {
         DemoCardsInfo cardsInfo = new DemoCardsInfo
         {
@@ -43,13 +63,97 @@ public class DemoSequence : MonoBehaviour
         };
     }
 
-    public void Spin_2 ( Transform whichCard , int col , int row )
+    public DemoCardsInfo Spin_2 (int col , int row ) 
     {
-       
+        var cardData = new DemoCardsInfo [,]
+         {
+            {
+                new DemoCardsInfo { name = "HEART", Subsitute = "KING", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "BIG_JOKER", isGolden = true },
+                new DemoCardsInfo { name = "JACK", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "CLUB", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "KING", Subsitute = "", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "KING", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "CL", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "DIAMOND", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "LITTLE_JOKER", isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false }
+            }
+         };
+
+        // Validate input to prevent index out of bounds
+        if (row < 0 || row >= cardData.GetLength(0) || col < 0 || col >= cardData.GetLength(1))
+        {
+            throw new ArgumentOutOfRangeException("Invalid row or column index.");
+        }
+
+        return cardData [row , col];
     }
 
-    public void Spin_1 ( Transform whichCard , int col , int row )
+    public DemoCardsInfo Spin_1 ( int col , int row )
     {
-       
+        var cardData = new DemoCardsInfo [,]
+        {
+            {
+                new DemoCardsInfo { name = "HEART", Subsitute = "KING", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "BIG_JOKER", isGolden = true },
+                new DemoCardsInfo { name = "JACK", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "CLUB", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "KING", Subsitute = "", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "KING", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "CL", isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "DIAMOND", isGolden = false },
+                new DemoCardsInfo { name = "HEART", Subsitute = "LITTLE_JOKER", isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false }
+            }
+        };
+
+        // Validate input to prevent index out of bounds
+        if (row < 0 || row >= cardData.GetLength(0) || col < 0 || col >= cardData.GetLength(1))
+        {
+            throw new ArgumentOutOfRangeException("Invalid row or column index.");
+        }
+
+        return cardData [row , col];
     }
+
+    public DemoCardsInfo GetDemoCardInfo ( int col , int row )
+    {
+        DemoCardsInfo info = new DemoCardsInfo();
+        info = demoCards [row].cards[col];
+        return info;
+    }
+
 }

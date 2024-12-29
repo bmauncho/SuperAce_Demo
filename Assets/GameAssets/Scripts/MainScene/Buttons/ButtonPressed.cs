@@ -20,7 +20,9 @@ public class ButtonPressed : MonoBehaviour
             if (isSpinButton)
             {
                 // if the win or card sequence is complete enable
-                if (commandCentre.GridManager_.isGridFilled() && !CommandCentre.Instance.WinLoseManager_.IsWin())
+                if ((commandCentre.GridManager_.isGridFilled()|| 
+                    commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled()) &&
+                    !CommandCentre.Instance.WinLoseManager_.IsWin())
                 {
                     EnableButtonInteractvity();
                     commandCentre.MainMenuController_.CanSpin = true;

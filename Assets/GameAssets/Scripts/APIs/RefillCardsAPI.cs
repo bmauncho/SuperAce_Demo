@@ -27,12 +27,13 @@ public class receivedData
 
 public class RefillCardsAPI : MonoBehaviour
 {
-    public const string ApiUrl = "https://slots.ibibe.africa/spin/superace?transform=true";
+    public const string ApiUrl = "https://api.ibibe.africa:8500/spin/superace?transform=true";
     public refillApi api;
     public GameDataAPI gameDataAPI_;
     public List<sentData> sentData_ = new List<sentData>();
     public List<receivedData> receivedData_ = new List<receivedData>();
 
+    [ContextMenu("Fetch Data")]
     public void FetchData ()
     {
         sentData_.Clear();
@@ -78,13 +79,13 @@ public class RefillCardsAPI : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
 
-        //Debug.Log("Sending data...");
+        Debug.Log("Sending data...");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Data successfully sent!");
-            //Debug.Log("Response: " + request.downloadHandler.text);
+            Debug.Log("Data successfully sent!");
+            Debug.Log("Response: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
