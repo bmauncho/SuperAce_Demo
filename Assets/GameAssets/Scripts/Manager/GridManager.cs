@@ -436,7 +436,7 @@ public class GridManager : MonoBehaviour
         {
             isRefilling = false;
             yield return new WaitForSeconds(.25f);
-            CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
+            //CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
         }
 
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
