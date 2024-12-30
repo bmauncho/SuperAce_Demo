@@ -15,6 +15,7 @@ public class cardsData
 
 public class CardManager : MonoBehaviour
 {
+    GridManager gridManager;
     APIManager apiManager;
     DemoManager demoManager;
     public Sprite normalCardBg;
@@ -32,6 +33,7 @@ public class CardManager : MonoBehaviour
     {
         apiManager = CommandCentre.Instance.APIManager_;
         demoManager = CommandCentre.Instance.DemoManager_;
+        gridManager = CommandCentre.Instance.GridManager_;
     }
 
     [ContextMenu("Initialize")]
@@ -45,37 +47,15 @@ public class CardManager : MonoBehaviour
        
         foreach (CardType cardType in cardTypeArray)
         {
-            if (cardType == CardType.WILD)
-            {
-                // Find all wild cards (Scatter, Little_Joker, Big_Joker)
-                Sprite [] newMatchingCards = cards
-                  .Where(card => card != null &&
-                        ( card.name == "LITTLE_JOKER" ||
-                        card.name == "BIG_JOKER" ))
-                  .ToArray();
+            Sprite matchingCard = cards.FirstOrDefault(card => card != null && card.name == cardType.ToString());
 
-                if (newMatchingCards.Length > 0)
-                {
-                    AddCardType(cardType , newMatchingCards);
-                }
-                else
-                {
-                    Debug.LogWarning($"No matching cards found for CardType {cardType}.");
-                }
+            if (matchingCard != null)
+            {
+                AddCardType(cardType , new Sprite [] { matchingCard });
             }
             else
             {
-                // Find the matching card by name
-                Sprite matchingCard = cards.FirstOrDefault(card => card != null && card.name == cardType.ToString());
-
-                if (matchingCard != null)
-                {
-                    AddCardType(cardType , new Sprite [] { matchingCard });
-                }
-                else
-                {
-                    Debug.LogWarning($"No matching card found for CardType {cardType}.");
-                }
+                Debug.LogWarning($"No matching card found for CardType {cardType}.");
             }
         }
     }
@@ -99,7 +79,7 @@ public class CardManager : MonoBehaviour
                     case 0: cardLayout [i , j] = CardType.ACE; break;
                     case 1: cardLayout [i , j] = CardType.KING; break;
                     case 2: cardLayout [i , j] = CardType.QUEEN; break;
-                    case 3: cardLayout [i , j] = CardType.JACK; break;
+                    case 3: cardLayout [i , j] = CardType.WILD; break;
                     case 4: cardLayout [i , j] = CardType.SPADE; break;
                 }
             }
@@ -129,12 +109,30 @@ public class CardManager : MonoBehaviour
         if (!card)
             return;
 
-        CardData cardInfo = new CardData()
+        CardData cardInfo = new CardData();
+        if (gridManager.isRefilling)
         {
-            name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
-            golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
-            transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
-        };
+            cardInfo = new CardData()
+            {
+                name = apiManager.refillCardsAPI_.GetCardInfo(col , row).name ,
+                substitute = apiManager.refillCardsAPI_.GetCardInfo(col , row).substitute ,
+                golden = apiManager.refillCardsAPI_.GetCardInfo(col , row).golden ,
+                transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
+            };
+
+            apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
+        }
+        else
+        {
+            cardInfo = new CardData()
+            {
+                name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
+                substitute = apiManager.GameDataAPI_.GetCardInfo(col , row).substitute ,
+                golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
+                transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
+            };
+        }
+       
 
        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 

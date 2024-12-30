@@ -25,6 +25,7 @@ public class WinLoseManager : MonoBehaviour
         gridManager = CommandCentre.Instance.GridManager_;
         poolManager = CommandCentre.Instance.PoolManager_;
         cardFxManager = CommandCentre.Instance.CardFxManager_;
+        data.Clear();
     }
     public void GetWinningCard (CardData _data,int row, int col)
     {
@@ -79,13 +80,11 @@ public class WinLoseManager : MonoBehaviour
             int col = data [i].col;
             if (data [i].name == "SCATTER" ||
                 data [i].name == "LITTLE_JOKER" ||
-                data [i].name == "BIG_JOKER" ||
-                data [i].name == "WILD")
+                data [i].name == "BIG_JOKER")
             {
 
-                if (col >= 0 && col < gridManager.rowData.Count &&
-                    row >= 0 && row < gridManager.rowData [col].cardPositionInRow.Count)
-                {
+                if (row >= 0 && row < 4 && col >= 0 && col < 5) 
+                { 
                     GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
                     CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
                     GameObject card = cardPos.TheOwner;
@@ -102,8 +101,6 @@ public class WinLoseManager : MonoBehaviour
                             case CardType.BIG_JOKER:
                                 StartCoroutine(RotateGoldenCards(card));
                                 break;
-                            case CardType.WILD:
-                                break;
                         }
                     }
                 }
@@ -115,8 +112,7 @@ public class WinLoseManager : MonoBehaviour
             else
             {
                 // Check if col and row are within valid ranges
-                if (col >= 0 && col < gridManager.rowData [col].cardPositionInRow.Count  &&
-                    row >= 0 && row < gridManager.rowData.Count)
+                if (row >= 0 && row < 4 && col >= 0 && col < 5)
                 {
                     GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
                     CardPos cardPos = cardPosHolder.GetComponent<CardPos>();

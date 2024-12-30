@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Assertions.Must;
 
 public class CashManager : MonoBehaviour
 {
@@ -38,9 +39,14 @@ public class CashManager : MonoBehaviour
             }
             else
             {
-               
-                CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-                
+                if (CashAmount <= 0)
+                {
+                    CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
+                }
+                else
+                {
+                    CashAmount = 2000;
+                }
             }
             updateThecashUi();
         }

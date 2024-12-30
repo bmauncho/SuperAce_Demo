@@ -39,6 +39,7 @@ public class DemoSequence : MonoBehaviour
     {
         demoCards.Clear();
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
+        int spinCount = 0;
         for(int i = 0;i<4;i++)
         {
             demoCards.Add(new DemoCards());
@@ -47,8 +48,22 @@ public class DemoSequence : MonoBehaviour
             {
                 demoCards [i].cards.Add(new DemoCardsInfo());
                 demoCards [i].cards [j] = new DemoCardsInfo();
-                demoCards [i].cards [j] = Spin_1(j , i);
+                demoCards [i].cards [j] = whichSpin(spinCount,j , i);
             }
+        }
+    }
+
+    public DemoCardsInfo whichSpin(int which,int col,int row)
+    {
+        var cardsDatas= new DemoCardsInfo ();
+        switch (which)
+        {
+            case 0:
+                return cardsDatas = Spin_1(col,row);
+            case 1:
+                return cardsDatas = Spin_2(col , row);
+            default:
+                return cardsDatas = null;
         }
     }
 
@@ -86,7 +101,7 @@ public class DemoSequence : MonoBehaviour
                 new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
-                new DemoCardsInfo { name = "HEART", Subsitute = "CL", isGolden = false }
+                new DemoCardsInfo { name = "HEART", Subsitute = "CLUB", isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "SPADE", Subsitute = "", isGolden = false },

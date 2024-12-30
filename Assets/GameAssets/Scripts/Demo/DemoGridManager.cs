@@ -8,6 +8,7 @@ public class DemoGridManager : MonoBehaviour
     MultiDeckManager multiDeckManager;
     PoolManager poolManager;
     CardManager cardManager;
+    public DemoWinLoseManager winLoseManager;
 
     [Header("Data")]
     public bool isFirstPlay = true;
@@ -227,8 +228,14 @@ public class DemoGridManager : MonoBehaviour
         if (isDemoGridFilled())
         {
             Debug.Log("Grid is filled");
-            StartCoroutine(Autospin());
+            StartCoroutine(CheckAndContinue());
         }
+    }
+
+
+    IEnumerator CheckAndContinue ()
+    {
+        yield return StartCoroutine(Autospin());
     }
 
     IEnumerator Autospin ()
@@ -242,6 +249,8 @@ public class DemoGridManager : MonoBehaviour
             Debug.Log("Can auto spin");
             CommandCentre.Instance.MainMenuController_.Spin();
         }
+
+        //check win
     }
 
 

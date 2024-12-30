@@ -40,7 +40,7 @@ public class PayOutManager : MonoBehaviour
         if (CommandCentre.Instance)
         {
             //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
-            CurrentWin = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.amount_won;
+            CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
         }
         
         if (CurrentWin >= 10000000)

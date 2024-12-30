@@ -24,6 +24,11 @@ public class BetUpdaterAPI : MonoBehaviour
     private const string ApiUrl = "https://admin1.ibibe.africa/api/update_bet";
     public UpdateBetResponse updateBetResponse;
 
+
+    private void Start ()
+    {
+        UpdateBet();
+    }
     [ContextMenu("UpdateBet")]
     public void UpdateBet ()
     {

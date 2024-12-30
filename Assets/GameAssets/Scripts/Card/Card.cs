@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum CardType { ACE, KING, QUEEN, JACK, SPADE, CLUB, HEART, DIAMOND, SCATTER,WILD,LITTLE_JOKER,BIG_JOKER }
+public enum CardType { ACE, KING, QUEEN, WILD, SPADE, CLUB, HEART, DIAMOND, SCATTER,LITTLE_JOKER,BIG_JOKER }
 
 public class Card : MonoBehaviour
 {

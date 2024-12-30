@@ -18,6 +18,7 @@ public class GridManager : MonoBehaviour
     [Header("Data")]
     public bool isFirstPlay = true;
     public bool isRefreshDone = true;
+    public bool isRefilling = false;
 
     [Header("Data")]
     public GameObject cardPositionsHolder;
@@ -332,6 +333,7 @@ public class GridManager : MonoBehaviour
 
     public void refillGrid ( int objectshidden )
     {
+        isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
@@ -377,6 +379,7 @@ public class GridManager : MonoBehaviour
 
     public void refillTurbo (int objectshidden)
     {
+        isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
         int rowCount = 4; // Number of rows
@@ -421,6 +424,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
+           
             //Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
@@ -428,8 +432,16 @@ public class GridManager : MonoBehaviour
 
     IEnumerator CheckAndContinue ()
     {
+        if (isRefilling)
+        {
+            isRefilling = false;
+            yield return new WaitForSeconds(.25f);
+            CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
+        }
+
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
         else
@@ -437,6 +449,7 @@ public class GridManager : MonoBehaviour
             yield return StartCoroutine(Autospin());
         }
     }
+
 
     IEnumerator Autospin ()
     {

@@ -47,7 +47,7 @@ public class CommentaryManager : MonoBehaviour
                     soundManager.PlaySound(cardType.ToString() , false , soundManager.maxSound);
                     break;
 
-                case CardType.JACK:
+                case CardType.WILD:
                     // Play commentary for jack
                     //Debug.Log("You won with Jacks!");
                     StartCoroutine(PlayComboCommentary());

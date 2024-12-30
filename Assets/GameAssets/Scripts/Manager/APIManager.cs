@@ -5,6 +5,7 @@ using UnityEngine;
 public class CardData
 {
     public string name;
+    public string substitute;
     public bool golden;
     public bool transformed;
 }
@@ -21,7 +22,7 @@ public class ApiResponse
 public class Data
 {
     public int freeSpins { get; set; }
-    public int AmountWon { get; set; }
+    public float AmountWon { get; set; }
     public CardData [] [] cards { get; set; }
 }
 

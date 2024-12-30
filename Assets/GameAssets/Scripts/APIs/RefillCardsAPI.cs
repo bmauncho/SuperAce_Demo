@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,18 +28,21 @@ public class receivedData
 
 public class RefillCardsAPI : MonoBehaviour
 {
-    public const string ApiUrl = "https://api.ibibe.africa:8500/spin/superace?transform=true";
+    public const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace?transform=true";
     public refillApi api;
     public GameDataAPI gameDataAPI_;
     public List<sentData> sentData_ = new List<sentData>();
     public List<receivedData> receivedData_ = new List<receivedData>();
+    public int maxtries = 3;
+    public int tries;
+    public bool refillDataFetched=false;
 
     [ContextMenu("Fetch Data")]
     public void FetchData ()
     {
+        refillDataFetched = false;
         sentData_.Clear();
         receivedData_.Clear();
-        // Define the jagged array
         // Define the jagged array
         CardData [] [] data = new CardData [5] [];  // 5 rows (or columns depending on how you want to structure it)
         for (int j = 0 ; j < 5 ; j++)  // Loop through columns (5)
@@ -46,13 +50,22 @@ public class RefillCardsAPI : MonoBehaviour
             data [j] = new CardData [4];  // 4 rows (or items per column)
             for (int i = 0 ; i < 4 ; i++)  // Loop through rows (4)
             {
-                data [j] [i] = new CardData
+
+                Debug.Log(gameDataAPI_.rows.Count);
+
+
+                //Ensure indices are valid
+                if (i < gameDataAPI_.rows.Count && j < gameDataAPI_.rows [i].infos.Count)
                 {
-                    golden = gameDataAPI_.rows [i].infos [j].golden ,  // Access data by row then column
-                    transformed = false ,
-                    name = gameDataAPI_.rows [i].infos [j].name ,
-                };
-                logSentData(i , j , data [j] [i]);
+                    data [j] [i] = new CardData
+                    {
+                        name = gameDataAPI_.rows [i].infos [j].name ,
+                        golden = gameDataAPI_.rows [i].infos [j].golden ,
+                        substitute = gameDataAPI_.rows [i].infos [j].substitute ,
+                        transformed = gameDataAPI_.rows [i].infos [j].transformed ,
+                    };
+                    logSentData(i , j , data [j] [i]);
+                }
             }
         }
 
@@ -62,11 +75,9 @@ public class RefillCardsAPI : MonoBehaviour
             betAmount = 2 ,
             cards = data ,
         };
-
-
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-        //Debug.Log(jsonString);
+        Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -84,6 +95,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
+            
             Debug.Log("Data successfully sent!");
             Debug.Log("Response: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
@@ -92,45 +104,77 @@ public class RefillCardsAPI : MonoBehaviour
 
             if (response?.data?.cards != null)
             {
-                // Debug the deserialized data
-                //Debug.Log("Status: " + response.status);
-                //Debug.Log("Free Spins: " + response.data.freeSpins);
-                //Debug.Log("Amount Won: " + response.data.AmountWon);
-
-
-                // Iterate through cards and log their names
-                for (int i = 0 ; i < response.data.cards.Length ; i++)
+                tries = 0;
+                foreach (var cardRow in response.data.cards)
                 {
-                    var cardRow = response.data.cards [i];
                     if (cardRow != null)
                     {
-                        for (int j = 0 ; j < cardRow.Length ; j++)
+                        foreach (var card in cardRow)
                         {
-                            var card = cardRow [j];
-
-                            CardData cardData_ = new CardData
+                            if (card != null)
                             {
-                                name = card.name ,
-                                golden = card.golden ,
-                                transformed = card.transformed ,
-                            };
-                            //Debug.Log(cardData_.name);
-                            logReceivedData(i , j , cardData_);
+                                var cardData_ = new CardData
+                                {
+                                    name = card.name ,
+                                    golden = card.golden ,
+                                    transformed = card.transformed ,
+                                    substitute = card.substitute ,
+                                };
+                                logReceivedData(Array.IndexOf(cardRow , card) , Array.IndexOf(response.data.cards , cardRow) , cardData_);
+                            }
                         }
                     }
                 }
-
+                refillDataFetched = true;
             }
             else
             {
-                Debug.LogError("Cards array is null.");
+                Debug.LogError("Response data invalid or cards array is null.");
+                HandleRetry("Invalid cards array.");
             }
         }
         else
         {
-            Debug.LogError($"Error sending data: {request.error}");
+            HandleRetry("Error sending data: " + request.error);
+        }
+
+    }
+
+    private void HandleRetry ( string errorMessage )
+    {
+        if (tries < maxtries)
+        {
+            tries++;
+            Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
+            FetchData();
+        }
+        else
+        {
+            Debug.LogError(errorMessage);
+            for (int i = 0 ; i < sentData_.Count ; i++)
+            {
+                // Initialize a new receivedData object
+                var newReceivedData = new receivedData();
+
+                // Add it to the list
+                receivedData_.Add(newReceivedData);
+
+                for (int j = 0 ; j < sentData_ [i].data.Count ; j++)
+                {
+                    // Initialize a new CardData object
+                    var newCardData = new CardData();
+
+                    // Set the value of newCardData
+                    newCardData = sentData_ [i].data [j];
+
+                    // Add the new CardData to the receivedData's data list
+                    newReceivedData.data.Add(newCardData);
+                }
+            }
+            refillDataFetched=true;
         }
     }
+
 
     void logSentData ( int rows , int cols , CardData cardData )
     {
@@ -167,5 +211,12 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Now safely assign the cardData
         receivedData_ [rows].data [cols] = cardData;
+    }
+
+    public CardData GetCardInfo ( int col , int row )
+    {
+        CardData info = null;
+        info = receivedData_ [row].data [col];
+        return receivedData_.Count > 0 ? info : null ;
     }
 }

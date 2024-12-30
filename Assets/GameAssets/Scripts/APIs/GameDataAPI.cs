@@ -28,9 +28,11 @@ public class rowData
 }
 public class GameDataAPI : MonoBehaviour
 {
-    private const string ApiUrl = "https://api.ibibe.africa:8500/spin/superace";
+    public WinLoseManager winloseManager;
+    private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace";
     public ApiResponse finalData;
     public float BetAmount;
+    public float AmountWon;
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
@@ -40,6 +42,7 @@ public class GameDataAPI : MonoBehaviour
     {
         isDataFetched = false;
     }
+
     private void Update ()
     {
         if (CommandCentre.Instance)
@@ -78,7 +81,7 @@ public class GameDataAPI : MonoBehaviour
         //Debug.Log("Status Code: " + request.responseCode);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Received: " + request.downloadHandler.text);
+            Debug.Log("Received: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
@@ -88,7 +91,7 @@ public class GameDataAPI : MonoBehaviour
                 //Debug.Log("Status: " + response.status);
                 //Debug.Log("Free Spins: " + response.data.freeSpins);
                 //Debug.Log("Amount Won: " + response.data.AmountWon);
-
+                
                 for (int i = 0 ; i < response.data.cards.Length ; i++)
                 {
                     var cardRow = response.data.cards [i];
@@ -102,15 +105,18 @@ public class GameDataAPI : MonoBehaviour
                             {
                                 name = card.name ,
                                 golden = card.golden ,
+                                substitute = card.substitute ,
                                 transformed = card.transformed ,
                             };
                             logReceivedData(i,j,cardData_);
+
                             if (cardData_.transformed)
                             {
-                                CommandCentre.Instance.WinLoseManager_.GetWinningCard(cardData_ , i , j);
+                                winloseManager.GetWinningCard(cardData_ , i , j);
                             }
                         }
                     }
+                    AmountWon = response.data.AmountWon;
                 }
             }
             OnComplete?.Invoke();
@@ -145,5 +151,21 @@ public class GameDataAPI : MonoBehaviour
 
         // Now safely assign the cardData
         rows [rows_].infos [cols_] = cardData;
+    }
+
+    public void recheckWin ()
+    {
+        Debug.Log("recheck");
+        for(int i = 0;i<rows.Count ; i++)
+        {
+            for(int j = 0 ; j < rows [i].infos.Count ; j++)
+            {
+                CardData data = rows [i].infos [j];
+                if (data.transformed)
+                {
+                    winloseManager.GetWinningCard(data , i , j);
+                }
+            }
+        }
     }
 }
