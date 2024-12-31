@@ -33,28 +33,9 @@ public class CashManager : MonoBehaviour
     {
         if (CommandCentre.Instance)
         {
-            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            if (CashAmount <= 0)
             {
                 CashAmount = 2000;
-            }
-            else
-            {
-                if (CashAmount <= 0)
-                {
-                    CashAmount = 2000;
-                }
-                else
-                {
-                    if (CommandCentre.Instance.WinLoseManager_.IsWin())
-                    {
-                        CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
-                    }
-                    else
-                    {
-                        CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-                    }
-                    
-                }
             }
             updateThecashUi();
         }

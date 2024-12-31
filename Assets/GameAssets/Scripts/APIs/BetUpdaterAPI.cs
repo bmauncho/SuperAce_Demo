@@ -80,6 +80,7 @@ public class BetUpdaterAPI : MonoBehaviour
             };
 
             updateBetResponse = data;
+            CommandCentre.Instance.CashManager_.CashAmount = updateBetResponse.new_wallet_balance;
         }
     }
 }

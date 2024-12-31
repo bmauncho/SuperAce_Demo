@@ -28,6 +28,8 @@ public class DemoManager : MonoBehaviour
     public void StartDemo ()
     {
         IsDemo = true;
+        CommandCentre.Instance.CashManager_.CashAmount = 2000;
+        CommandCentre.Instance.CashManager_.updateThecashUi();
         MainScene_LoadingMenu_.ContinueToMainGame();
         CommandCentre.Instance.MainMenuController_.StartGame();
         ActivateDemoUI();
