@@ -165,10 +165,15 @@ public class RefillCardsAPI : MonoBehaviour
                 {
                     // Initialize a new CardData object
                     var newCardData = new CardData();
-
+                      
                     // Set the value of newCardData
                     newCardData = sentData_ [i].data [j];
-
+                    if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
+                    {
+                        newCardData = new CardData();
+                        newCardData.name = newCardData.substitute;
+                        newCardData.substitute = null;
+                    }
                     // Add the new CardData to the receivedData's data list
                     newReceivedData.data.Add(newCardData);
                 }

@@ -141,19 +141,7 @@ public class CardManager : MonoBehaviour
             //Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
 
-            if (card.ActiveCardType == CardType.WILD)
-            {
-                int rand = Random.Range(0, 2);
-                if(rand <= 1)
-                {
-                    card.showSmall_Jocker(goldenCardBg , thecard(card.ActiveCardType) , smallJockerOutline);
-                }
-                else
-                {
-                    card.showBig_Jocker(goldenCardBg , thecard(card.ActiveCardType) , bigJockerOutline);
-                }
-            }
-            else if (card.ActiveCardType == CardType.SCATTER)
+            if (card.ActiveCardType == CardType.SCATTER)
             {
                 card.showScatterCard();
             }
@@ -203,19 +191,7 @@ public class CardManager : MonoBehaviour
             //Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
 
-            if (card.ActiveCardType == CardType.WILD)
-            {
-                int rand = Random.Range(0 , 2);
-                if (rand <= 1)
-                {
-                    card.showSmall_Jocker(goldenCardBg , thecard(card.ActiveCardType) , smallJockerOutline);
-                }
-                else
-                {
-                    card.showBig_Jocker(goldenCardBg , thecard(card.ActiveCardType) , bigJockerOutline);
-                }
-            }
-            else if (card.ActiveCardType == CardType.SCATTER)
+            if (card.ActiveCardType == CardType.SCATTER)
             {
                 card.showScatterCard();
             }

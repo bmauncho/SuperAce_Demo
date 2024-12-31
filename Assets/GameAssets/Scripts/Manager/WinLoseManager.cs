@@ -74,82 +74,92 @@ public class WinLoseManager : MonoBehaviour
     IEnumerator HideNormalCards ()
     {
         int hiddenCards = 0;
+
         for (int i = 0 ; i < data.Count ; i++)
         {
             int row = data [i].row;
             int col = data [i].col;
-            if (data [i].name == "SCATTER" ||
-                data [i].name == "LITTLE_JOKER" ||
-                data [i].name == "BIG_JOKER")
+
+            // Ensure row and col indices are within valid range
+            if (row < 0 || row >= 4 || col < 0 || col >= 5)
             {
-
-                if (row >= 0 && row < 4 && col >= 0 && col < 5) 
-                { 
-                    GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
-                    CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
-                    GameObject card = cardPos.TheOwner;
-
-                    if (card)
-                    {
-                        CardType cardType = card.GetComponent<Card>().ActiveCardType;
-                        switch (cardType)
-                        {
-                            case CardType.SCATTER:
-                                card.GetComponent<Card>().ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
-                                break;
-                            case CardType.LITTLE_JOKER:
-                            case CardType.BIG_JOKER:
-                                StartCoroutine(RotateGoldenCards(card));
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"Invalid row or column index: row={row}, col={col}");
-                }
+                Debug.LogWarning($"Invalid row or column index: row={row}, col={col}");
+                continue;
             }
+
+            GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
+            CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
+            GameObject card = cardPos.TheOwner;
+
+            if (card == null) continue;
+
+            Card cardComponent = card.GetComponent<Card>();
+
+            // Handle golden cards
+            if (cardComponent.golden && !cardComponent.wild && !cardComponent.scatter)
+            {
+                Debug.Log(" Handle golden cards-1");
+                StartCoroutine(rotateNormalGoldenCards(card,col,row));
+            }
+            // Handle wild cards
+            else if (cardComponent.wild && !cardComponent.golden && !cardComponent.scatter)
+            {
+                StartCoroutine(RotateWildCards(card));
+            }
+            // Handle scatter cards
+            else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)
+            {
+                cardComponent.ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
+            }
+            // Deactivate and return normal cards to the pool
             else
             {
-                // Check if col and row are within valid ranges
-                if (row >= 0 && row < 4 && col >= 0 && col < 5)
-                {
-                    GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
-                    CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
-                    GameObject card = cardPos.TheOwner;
-
-                    if (card)
-                    {
-                        card.SetActive(false);
-                        poolManager.ReturnCard(card.GetComponent<Card>().gameObject);
-                        cardPos.TheOwner = null;
-                        hiddenCards++;
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"Invalid row or column index: row={row}, col={col}");
-                }
-               
+                card.SetActive(false);
+                poolManager.ReturnCard(card);
+                cardPos.TheOwner = null;
+                hiddenCards++;
             }
         }
+
         yield return new WaitForSeconds(1.5f);
-        cardFxManager.DeactivateCardFxMask ();
-        ResetWinDataList ();
+
+        // Reset and refill processes
+        cardFxManager.DeactivateCardFxMask();
+        ResetWinDataList();
+
         if (CommandCentre.Instance.TurboManager_.TurboSpin_)
         {
-            gridManager.refillTurbo (hiddenCards);
+            gridManager.refillTurbo(hiddenCards);
         }
         else
         {
-            gridManager.refillGrid (hiddenCards);
+            gridManager.refillGrid(hiddenCards);
         }
+
+        // Show current win
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+
         yield return null;
     }
 
 
-    private IEnumerator RotateGoldenCards (GameObject goldenCard)
+
+    private IEnumerator rotateNormalGoldenCards ( GameObject card,int col = 0,int row= 0 )
+    {
+        Debug.Log(" Handle golden cards-2");
+        card.transform.DORotate(Vector3.zero , .2f)
+            .OnComplete(() =>
+            {
+                CommandCentre.Instance.CardManager_.setUpCard(card.GetComponent<Card>(),col,row);
+            });
+        yield return new WaitForSeconds(1f);
+        card.transform.DORotate(new Vector3(0 , 180f , 0), .2f);
+
+        // set 
+    }
+
+
+    private IEnumerator RotateWildCards (GameObject goldenCard)
     {
         goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
         {
@@ -165,22 +175,12 @@ public class WinLoseManager : MonoBehaviour
         Tween PunchScale = target.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1).SetEase(Ease.OutQuad);
         yield return PunchScale.WaitForCompletion();
 
+        //setUp Replacement card
+
+        //rotate
         target.transform.DORotate(new Vector3(0,180f,0) , .5f , RotateMode.FastBeyond360);
-    }
 
-    IEnumerator RotateWildCards ()
-    {
-        for(int i = 0;i<data.Count;i++)
-        {
-            if(data [i] != null)
-            {
-                if(data [i].name == "LITTLE_JOKER" ||data [i].name == "BIG_JOKER")
-                {
-
-                }
-            }
-        }
-        yield return null ;
+        // if Big joker jump two cards to random positions which is not the current card pos
     }
 
     public bool IsWin ()

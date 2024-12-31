@@ -441,11 +441,13 @@ public class GridManager : MonoBehaviour
 
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
+            CommandCentre.Instance.APIManager_.PlaceBet();
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
         else
         {
+            CommandCentre.Instance.APIManager_.UpdateBet();
             yield return StartCoroutine(Autospin());
         }
     }

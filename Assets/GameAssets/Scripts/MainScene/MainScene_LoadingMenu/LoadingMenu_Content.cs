@@ -10,6 +10,8 @@ public class LoadingMenu_Content : MonoBehaviour
     float RightPos = 224f;
     float LeftPos = -224f;
     bool MovedLeft;
+    public GameObject Content_1;
+    public GameObject Content_2;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -77,11 +79,16 @@ public class LoadingMenu_Content : MonoBehaviour
     public void MoveLeft ()
     {
         MovedLeft = false;
+        Content_1.SetActive(true);
+        Content_2.SetActive(false);
+
         ScrollTheContent(RightPos);
     }
     public void MoveRight ()
     {
         MovedLeft = true;
+        Content_1.SetActive(false);
+        Content_2.SetActive(true);
         ScrollTheContent(LeftPos);
     }
 }

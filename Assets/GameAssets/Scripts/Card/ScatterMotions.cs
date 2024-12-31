@@ -33,13 +33,18 @@ public class ScatterMotions : MonoBehaviour
 
     private IEnumerator RotateObject ()
     {
-        while (isRotate)  // Infinite loop for rotation
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (isRotate && elapsedTime < 2f) // Rotate for up to 2 seconds
         {
-            // Rotate around the Y-axis
-            transform.Rotate(Vector3.up , rotationSpeed * Time.deltaTime);  // Rotate on the Y-axis
+            transform.Rotate(Vector3.up , rotationSpeed * Time.deltaTime); // Rotate on the Y-axis
+            elapsedTime += Time.deltaTime; // Increment elapsed time
             yield return null;
         }
+
+        Bounce();
     }
+
 
 
     public void StopMovementAndRotation ()
