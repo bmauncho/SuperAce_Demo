@@ -88,16 +88,17 @@ public class RefillCardsAPI : MonoBehaviour
         byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("accept" , "application/json");
         request.SetRequestHeader("Content-Type" , "application/json");
 
-        Debug.Log("Sending data...");
+        Debug.Log($"Sending data...: {jsonData}");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            
+
             Debug.Log("Data successfully sent!");
-            Debug.Log("Response: " + request.downloadHandler.text);
+            Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
@@ -129,12 +130,13 @@ public class RefillCardsAPI : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Response data invalid or cards array is null.");
+                Debug.LogWarning("Response data invalid or cards array is null.");
                 HandleRetry("Invalid cards array.");
             }
         }
         else
         {
+            Debug.LogError($"Error sending data: {request.error} | Response Code: {request.responseCode}");
             HandleRetry("Error sending data: " + request.error);
         }
 
@@ -150,7 +152,7 @@ public class RefillCardsAPI : MonoBehaviour
         }
         else
         {
-            Debug.LogError(errorMessage);
+            Debug.LogWarning(errorMessage);
             for (int i = 0 ; i < sentData_.Count ; i++)
             {
                 // Initialize a new receivedData object

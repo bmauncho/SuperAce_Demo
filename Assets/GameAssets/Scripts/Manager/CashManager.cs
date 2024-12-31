@@ -41,11 +41,11 @@ public class CashManager : MonoBehaviour
             {
                 if (CashAmount <= 0)
                 {
-                    CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
+                    CashAmount = 2000;
                 }
                 else
                 {
-                    CashAmount = 2000;
+                    CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
                 }
             }
             updateThecashUi();

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -37,7 +38,7 @@ public class BetUpdaterAPI : MonoBehaviour
             bet_id = 1,
             amount_won = 0,
         };
-        string jsonPayload =  JsonUtility.ToJson(Data , true);
+        string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonPayload);
         StartCoroutine(SendUpdateBetRequest(jsonPayload));
     }
@@ -58,7 +59,7 @@ public class BetUpdaterAPI : MonoBehaviour
             Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
-            UpdateBetResponse responseData = JsonUtility.FromJson<UpdateBetResponse>(request.downloadHandler.text);
+            UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);
 
             Debug.Log($"message : {responseData.message}," +
               $"betId : {responseData.bet_id}," +

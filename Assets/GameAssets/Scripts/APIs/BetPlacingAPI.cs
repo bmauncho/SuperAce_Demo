@@ -43,6 +43,7 @@ public class BetPlacingAPI : MonoBehaviour
             amount = BetAmount ,
         };
         string jsonString = JsonUtility.ToJson(Data,true);
+        Debug.Log(jsonString);
         StartCoroutine(PlaceBet(jsonString));
     }
 
@@ -61,7 +62,7 @@ public class BetPlacingAPI : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Received: " + request.downloadHandler.text);
+            Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             BetResponse responseData = JsonUtility.FromJson<BetResponse>(request.downloadHandler.text);

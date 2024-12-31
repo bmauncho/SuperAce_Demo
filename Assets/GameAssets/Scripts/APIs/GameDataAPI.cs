@@ -60,11 +60,7 @@ public class GameDataAPI : MonoBehaviour
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonString);
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
-        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString , () => 
-        { 
-            isDataFetched = true; 
-            refillCardsAPI.FetchData();
-        }));
+        StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
 
     IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
@@ -119,7 +115,8 @@ public class GameDataAPI : MonoBehaviour
                     AmountWon = response.data.AmountWon;
                 }
             }
-            OnComplete?.Invoke();
+            isDataFetched = true;
+            refillCardsAPI.FetchData();
         }
     }
 
