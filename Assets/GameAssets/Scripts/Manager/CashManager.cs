@@ -23,10 +23,14 @@ public class CashManager : MonoBehaviour
         else
         {
             MoneyIntheBank = 2000;
+            float MoneyOuttheBank = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
+            if (MoneyOuttheBank > 0)
+            {
+                MoneyIntheBank = MoneyOuttheBank;
+            }
         }
         
         CashAmount = MoneyIntheBank;
-        CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
         Debug.Log(CashAmount);
         updateThecashUi();
     }

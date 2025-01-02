@@ -6,11 +6,13 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource> PossibleAudioSource = new List<AudioSource>();
     public AudioSource AmbientSound;
     public float minSound, maxSound;
+
     private void Start ()
     {
         PlayAmbientSound("FunkCasino");
         LowerAmbientSound();
     }
+
     public void LowerAmbientSound ()
     {
         AmbientSound.volume = minSound;
@@ -23,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound ( string AudioFile , bool loopState = false , float Volume = 1f )
     {
-        AudioClip _Clip = (AudioClip)Resources.Load("Sounds/" + AudioFile);
+        AudioClip _Clip = (AudioClip)Resources.Load("mp3/" + AudioFile);
         AudioSource AS = ReturnOpenSource();
         AS.clip = _Clip;
         AS.loop = loopState;
@@ -33,7 +35,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayAmbientSound ( string AudioFile)
     {
-        AudioClip _Clip = (AudioClip)Resources.Load("Sounds/" + AudioFile);
+        AudioClip _Clip = (AudioClip)Resources.Load("mp3/" + AudioFile);
         AmbientSound.clip = _Clip;
         AmbientSound.Play();
     }
