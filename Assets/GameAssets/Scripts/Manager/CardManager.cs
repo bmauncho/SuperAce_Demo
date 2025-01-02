@@ -134,7 +134,7 @@ public class CardManager : MonoBehaviour
         }
        
 
-        Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
+       // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
@@ -167,7 +167,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Failed to parse card type: {cardInfo.name}");
+            Debug.LogWarning($"Failed to parse card type: {cardInfo.name} row: {row} col : {col}");
         }
     }
 
