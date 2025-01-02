@@ -439,11 +439,13 @@ public class GridManager : MonoBehaviour
             //CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
         }
 
+        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
+        CommandCentre.Instance.CashManager_.updateThecashUi();
+
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
-            CommandCentre.Instance.APIManager_.PlaceBet();
+            
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }

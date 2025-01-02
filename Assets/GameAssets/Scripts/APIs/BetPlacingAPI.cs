@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class BetRequest
 {
     public int customer_id;
+    public string bet_id;
     public float amount;
 }
 
@@ -25,6 +26,8 @@ public class BetPlacingAPI : MonoBehaviour
     public BetResponse response;
     public float BetAmount;
     public int customerId;
+    public int tries;
+    public int maxtries;
 
     private void Update ()
     {
@@ -37,9 +40,14 @@ public class BetPlacingAPI : MonoBehaviour
     [ContextMenu("Bet")]
     public void Bet()
     {
+        //int customer_id = Random.Range(1 , 28);
+        //customerId = customer_id;
+        int bet_id = Random.Range(100 , 10000000);
+
         BetRequest Data = new BetRequest
         {
             customer_id = customerId ,
+            bet_id = bet_id.ToString(),
             amount = BetAmount ,
         };
         string jsonString = JsonUtility.ToJson(Data,true);
@@ -83,6 +91,24 @@ public class BetPlacingAPI : MonoBehaviour
 
             response = betResponse;
 
+        }
+        else
+        {
+            
+            
+            HandleRetry();
+        }
+    }
+
+    private void HandleRetry ()
+    {
+
+        if (tries < maxtries)
+        {
+            customerId++;
+            tries++;
+            Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
+            Bet();
         }
         else
         {

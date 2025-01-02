@@ -134,6 +134,7 @@ public class MainMenuController : MonoBehaviour
         Debug.Log(CommandCentre.Instance.DemoManager_.IsDemo);
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
+            
             bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
             CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
 
@@ -161,6 +162,7 @@ public class MainMenuController : MonoBehaviour
         
         if (!isDemo)
         {
+            CommandCentre.Instance.APIManager_.PlaceBet();
             CommandCentre.Instance.GridManager_.refreshGrid();
             normlSpin();
         }

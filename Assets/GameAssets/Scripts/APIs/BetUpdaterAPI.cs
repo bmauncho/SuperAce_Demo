@@ -28,14 +28,16 @@ public class BetUpdaterAPI : MonoBehaviour
 
     private void Start ()
     {
-        UpdateBet();
+        
     }
+
     [ContextMenu("UpdateBet")]
     public void UpdateBet ()
     {
+        Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id);
         BetUpDateData Data = new BetUpDateData
         {
-            bet_id = 1,
+            bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id,
             amount_won = 0,
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
