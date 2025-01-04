@@ -24,9 +24,9 @@ public class TotalSpinsController : MonoBehaviour
         Spins.text = CurrentSpns.ToString();
     }
 
-    public void SetStaticSpins ()
+    public void SetStaticSpins (int amount)
     {
-        CurrentSpns = TotalSpins;
+        CurrentSpns = amount;
         Spins.text = CurrentSpns.ToString();
     }
 }
