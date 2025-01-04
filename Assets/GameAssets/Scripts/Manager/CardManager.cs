@@ -103,6 +103,19 @@ public class CardManager : MonoBehaviour
         });
     }
 
+    public void setcard(Card card)
+    {
+        if (!card)
+            return;
+        CardData cardInfo = new CardData();
+        cardInfo = new CardData()
+        {
+            name = card.ActiveCardType.ToString() ,
+            substitute = null ,
+            golden = false ,
+            transformed = false,
+        };
+    }
 
     public void setUpCard (Card card,int col , int row )
     {

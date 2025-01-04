@@ -116,6 +116,7 @@ public class GameDataAPI : MonoBehaviour
                 }
             }
             isDataFetched = true;
+            yield return new WaitForSeconds(.25f);
             refillCardsAPI.FetchData();
         }
     }

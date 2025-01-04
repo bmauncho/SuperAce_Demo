@@ -12,9 +12,10 @@ public class CommentaryManager : MonoBehaviour
         soundManager = CommandCentre.Instance.SoundManager_;
     }
 
-    public void PlayCommentary ( List<GameObject> winningCards )
+    public void PlayCommentary ( List<CardType> winningCards )
     {
-
+        HashSet<CardType> cardTypes = new HashSet<CardType>(winningCards);
+        StartCoroutine(PlayCommentarySequentially(cardTypes.ToList()));
     }
 
     private IEnumerator PlayCommentarySequentially ( List<CardType> cardTypes )
@@ -159,5 +160,22 @@ public class CommentaryManager : MonoBehaviour
             }
         }
     }
+
+    public List<CardType> GetCardTypes ( List<GameObject> winningCards )
+    {
+        HashSet<CardType> cardTypes = new HashSet<CardType>();
+
+        foreach (GameObject card in winningCards)
+        {
+            Card cardComponent = card.GetComponent<Card>();
+            if (cardComponent != null)
+            {
+                cardTypes.Add(cardComponent.ActiveCardType);
+            }
+        }
+
+        return cardTypes.ToList();
+    }
+
 
 }

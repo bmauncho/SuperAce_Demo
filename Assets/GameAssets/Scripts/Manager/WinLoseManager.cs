@@ -1,9 +1,12 @@
 using DG.Tweening;
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class winData
@@ -63,7 +66,22 @@ public class WinLoseManager : MonoBehaviour
         {
             CommandCentre.Instance.CardFxManager_.ActivateCardFxMask(data [i].row , data [i].col);
         }
+        List<CardType> winningCards = new List<CardType>();
+        for (int j = 0 ; j < data.Count ; j++)
+        {
+            // Assuming `data[j].name` is a string and `CardType` is an enum
+            if (Enum.TryParse(data [j].name , out CardType matchingCard))
+            {
+                // Log the match
+                Debug.Log($"Match found: {data [j].name}");
 
+                // Add the matching CardType to the list
+                winningCards.Add(matchingCard);
+            }
+        }
+
+
+        CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
         yield return new WaitForSeconds(1); 
 
         yield return StartCoroutine(HideNormalCards());
@@ -152,10 +170,23 @@ public class WinLoseManager : MonoBehaviour
             {
                 CommandCentre.Instance.CardManager_.setUpCard(card.GetComponent<Card>(),col,row);
             });
-        yield return new WaitForSeconds(1f);
-        card.transform.DORotate(new Vector3(0 , 180f , 0), .2f);
+        yield return new WaitForSeconds(.5f);
+     
 
-        // set 
+        // set golden cards to either bigJoker or little jocker
+        int rand = Random.Range(0 , 2);
+        if(rand <= 1)
+        {
+            card.GetComponent<Card>().ActiveCardType = CardType.LITTLE_JOKER;
+        }
+        else
+        {
+            card.GetComponent<Card>().ActiveCardType = CardType.BIG_JOKER;
+        }
+         
+        CommandCentre.Instance.CardManager_.setcard(card.GetComponent<Card>());
+        yield return new WaitForSeconds(.5f);
+        card.transform.DORotate(new Vector3(0 , 180f , 0) , .2f);
     }
 
 

@@ -36,10 +36,12 @@ public class RefillCardsAPI : MonoBehaviour
     public int maxtries = 3;
     public int tries;
     public bool refillDataFetched=false;
+    public bool isError;
 
     [ContextMenu("Fetch Data")]
     public void FetchData ()
     {
+        isError = false;
         refillDataFetched = false;
         sentData_.Clear();
         receivedData_.Clear();
@@ -105,6 +107,7 @@ public class RefillCardsAPI : MonoBehaviour
 
             if (response?.data?.cards != null)
             {
+                
                 tries = 0;
                 foreach (var cardRow in response.data.cards)
                 {
@@ -132,6 +135,7 @@ public class RefillCardsAPI : MonoBehaviour
             {
                 Debug.LogWarning("Response data invalid or cards array is null.");
                 HandleRetry("Invalid cards array.");
+                isError = true;
             }
         }
         else
