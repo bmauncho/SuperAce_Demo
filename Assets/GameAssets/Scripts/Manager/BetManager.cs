@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using DG.Tweening.Core.Easing;
+using UnityEngine.UI;
 
 public class BetManager : MonoBehaviour
 {
@@ -67,5 +68,18 @@ public class BetManager : MonoBehaviour
             BetAmount = 2;
         }
         UpdateBetAmount(index);
+    }
+
+    [ContextMenu("showBetSelected")]
+    public void showBetSelected ()
+    {
+        BetButtonsController bbc = BetMenu_.betButtonsController_;
+        for (int i = 0;i<bbc.BetButtons.Count;i++)
+        {
+            if(bbc.BetAmounts[i] == BetAmount)
+            {
+                bbc.BetButtons [i].GetComponentInChildren<Button>().Select ();
+            }
+        }
     }
 }

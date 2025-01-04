@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -220,6 +221,16 @@ public class MainMenuController : MonoBehaviour
     public void OpenBets ()
     {
         BetingMenu.SetActive(true);
+        StartCoroutine(MonitorBettingMenu());
+    }
+
+    private IEnumerator MonitorBettingMenu ()
+    {
+        while (BetingMenu.activeInHierarchy)
+        {
+            CommandCentre.Instance.BetManager_.showBetSelected();
+            yield return null; // Wait until the next frame
+        }
     }
 
     public void CloseBets ()
