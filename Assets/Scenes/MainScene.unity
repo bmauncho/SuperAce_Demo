@@ -47240,7 +47240,91 @@ MonoBehaviour:
   winloseManager: {fileID: 1537336882}
   BetAmount: 0
   AmountWon: 0
-  rows: []
+  rows:
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: DIAMOND
+      golden: 0
+      transformed: 0
   isDataFetched: 1
   refillCardsAPI: {fileID: 853445695}
 --- !u!1 &665285069
@@ -52639,6 +52723,7 @@ MonoBehaviour:
   maxtries: 3
   tries: 0
   refillDataFetched: 0
+  isError: 0
 --- !u!1 &857952519
 GameObject:
   m_ObjectHideFlags: 0
@@ -90963,7 +91048,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8297be9ae41dfb4b9eceb27c3c7386c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: []
+  data:
+  - name: CLUB
+    row: 0
+    col: 1
+  - name: WILD
+    row: 1
+    col: 1
+  - name: CLUB
+    row: 2
+    col: 0
+  - name: WILD
+    row: 2
+    col: 1
+  - name: CLUB
+    row: 2
+    col: 2
 --- !u!1 &1543606329 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1691537666199884037, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
