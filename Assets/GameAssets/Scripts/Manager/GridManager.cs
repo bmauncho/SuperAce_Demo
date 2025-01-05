@@ -222,8 +222,6 @@ public class GridManager : MonoBehaviour
                 cardSequence.PrependInterval(delay);
             }
         }
-
-        isFirstPlay = false;
     }
 
 
@@ -326,8 +324,6 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        // Mark the first play as complete
-        isFirstPlay = false;
     }
 
 
@@ -424,7 +420,11 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
-           
+            if (isFirstPlay)
+            {
+                isFirstPlay = false;
+                CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
+            }
            Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }

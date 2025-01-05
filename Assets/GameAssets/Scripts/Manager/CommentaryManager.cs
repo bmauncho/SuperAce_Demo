@@ -110,14 +110,14 @@ public class CommentaryManager : MonoBehaviour
                     break;
 
                 case 2:
-                    //Debug.Log("Free Game Combo 2!");
+                    Debug.Log("Free Game Combo 2!");
                     soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
                     yield return new WaitForSeconds(0.25f);
                     soundManager.PlaySound("Double" , false , soundManager.maxSound);
                     break;
 
                 case 3:
-                   // Debug.Log("Free Game Combo 3!");
+                    Debug.Log("Free Game Combo 3!");
                     yield return new WaitForSeconds(0.1f);
                     soundManager.PlaySound("Triple" , false , soundManager.maxSound);
                     break;
