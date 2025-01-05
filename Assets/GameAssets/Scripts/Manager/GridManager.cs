@@ -404,7 +404,10 @@ public class GridManager : MonoBehaviour
                         .SetEase(Ease.OutQuad)
                         .OnComplete(() =>
                         {
-
+                            if(newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , CommandCentre.Instance.SoundManager_.maxSound);
+                            }
                             newCard.transform.localPosition = Vector3.zero;
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
                             CalculateObjectsPlaced();
@@ -446,18 +449,30 @@ public class GridManager : MonoBehaviour
         CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
         CommandCentre.Instance.CashManager_.updateThecashUi();
 
-        if (CommandCentre.Instance.WinLoseManager_.IsWin())
+        if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
-        else
-        {
-            CommandCentre.Instance.APIManager_.UpdateBet();
-            yield return StartCoroutine(Autospin());
+        else {
+            if (CommandCentre.Instance.WinLoseManager_.IsWin())
+            {
+                CommandCentre.Instance.CashManager_.updateThecashUi();
+                CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+                yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+                CommandCentre.Instance.WinLoseManager_.winSequence();
+            }
+            else
+            {
+                CommandCentre.Instance.APIManager_.UpdateBet();
+                yield return StartCoroutine(Autospin());
+            }
+
         }
+
+       
     }
 
 
