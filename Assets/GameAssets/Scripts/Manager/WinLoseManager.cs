@@ -60,6 +60,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator showWinningCards ()
     {
+        CommandCentre.Instance.ComboManager_.IncreaseComboCounter();
         CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
         CommandCentre.Instance.CardFxManager_.ActivateCardMask();
         for (int i = 0;i<data.Count ; i++)
