@@ -71,9 +71,10 @@ public class RefillCardsAPI : MonoBehaviour
             }
         }
 
-
+        _game gameinfo = new _game();
         api = new refillApi
         {
+            game = gameinfo,
             betAmount = 2 ,
             cards = data ,
         };
@@ -98,16 +99,15 @@ public class RefillCardsAPI : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-
+            isError = false;
             Debug.Log("Data successfully sent!");
             Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
-
+            
             if (response?.data?.cards != null)
             {
-                
                 tries = 0;
                 foreach (var cardRow in response.data.cards)
                 {
@@ -140,6 +140,7 @@ public class RefillCardsAPI : MonoBehaviour
         }
         else
         {
+            isError = true;
             Debug.LogError($"Error sending data: {request.error} | Response Code: {request.responseCode}");
             HandleRetry("Error sending data: " + request.error);
         }

@@ -56,6 +56,7 @@ public class GameDataAPI : MonoBehaviour
     {
 
         _GameInfo Data = new _GameInfo();
+        Data.game = new _game();
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonString);
@@ -116,8 +117,6 @@ public class GameDataAPI : MonoBehaviour
                 }
             }
             isDataFetched = true;
-            yield return new WaitForSeconds(.25f);
-            refillCardsAPI.FetchData();
         }
     }
 

@@ -103,7 +103,7 @@ public class CardManager : MonoBehaviour
         });
     }
 
-    public void setcard(Card card)
+    public void setcard ( Card card , int col , int row )
     {
         if (!card)
             return;
@@ -115,6 +115,41 @@ public class CardManager : MonoBehaviour
             golden = false ,
             transformed = false,
         };
+
+
+        if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
+        {
+            //Debug.Log($"Successfully parsed card type: {cardType}");
+            card.ActiveCardType = (CardType)cardType;
+
+            if (card.ActiveCardType == CardType.SCATTER)
+            {
+                card.showScatterCard();
+            }
+            else if (card.ActiveCardType == CardType.LITTLE_JOKER)
+            {
+                card.showSmall_Jocker(goldenCardBg , thecard(card.ActiveCardType) , smallJockerOutline);
+            }
+            else if (card.ActiveCardType == CardType.BIG_JOKER)
+            {
+                card.showBig_Jocker(goldenCardBg , thecard(card.ActiveCardType) , bigJockerOutline);
+            }
+            else
+            {
+                if (cardInfo.golden)
+                {
+                    card.showGoldenCard(goldenCardBg , thecard(card.ActiveCardType) , normalOutline);
+                }
+                else
+                {
+                    card.showNormalCard(normalCardBg , thecard(card.ActiveCardType));
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to parse card type: {cardInfo.name} row: {row} col : {col}");
+        }
     }
 
     public void setUpCard (Card card,int col , int row )
@@ -125,15 +160,19 @@ public class CardManager : MonoBehaviour
         CardData cardInfo = new CardData();
         if (gridManager.isRefilling)
         {
-            cardInfo = new CardData()
+            if (!apiManager.GameDataAPI_.GetCardInfo(col , row).golden)
             {
-                name = apiManager.refillCardsAPI_.GetCardInfo(col , row).name ,
-                substitute = apiManager.refillCardsAPI_.GetCardInfo(col , row).substitute ,
-                golden = apiManager.refillCardsAPI_.GetCardInfo(col , row).golden ,
-                transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
-            };
 
-            apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
+                cardInfo = new CardData()
+                {
+                    name = apiManager.refillCardsAPI_.GetCardInfo(col , row).name ,
+                    substitute = apiManager.refillCardsAPI_.GetCardInfo(col , row).substitute ,
+                    golden = apiManager.refillCardsAPI_.GetCardInfo(col , row).golden ,
+                    transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
+                };
+
+                apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
+            }
         }
         else
         {

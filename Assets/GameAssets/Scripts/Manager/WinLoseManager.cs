@@ -184,7 +184,7 @@ public class WinLoseManager : MonoBehaviour
             card.GetComponent<Card>().ActiveCardType = CardType.BIG_JOKER;
         }
          
-        CommandCentre.Instance.CardManager_.setcard(card.GetComponent<Card>());
+        CommandCentre.Instance.CardManager_.setcard(card.GetComponent<Card>(),col,row);
         yield return new WaitForSeconds(.5f);
         card.transform.DORotate(new Vector3(0 , 180f , 0) , .2f);
     }

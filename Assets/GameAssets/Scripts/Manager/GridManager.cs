@@ -425,7 +425,7 @@ public class GridManager : MonoBehaviour
         if (isGridFilled())
         {
            
-            //Debug.Log("Grid is filled");
+           Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
     }
@@ -436,7 +436,11 @@ public class GridManager : MonoBehaviour
         {
             isRefilling = false;
             yield return new WaitForSeconds(.25f);
-            //CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
+            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
+            {
+                CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
+            }
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.isError =false;
         }
 
         CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
@@ -445,7 +449,7 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
-            
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
