@@ -5377,7 +5377,7 @@ MonoBehaviour:
   response:
     message: Bet placed successfully
     bet_id: 3354222
-    new_wallet_balance: 9106.4
+    new_wallet_balance: 72.5
     status: lost
     error: Insufficient balance
   BetAmount: 2
@@ -102208,9 +102208,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1918836572}
   - {fileID: 5656942185587680129}
   - {fileID: 371885468}
-  - {fileID: 1918836572}
   - {fileID: 404313982}
   - {fileID: 1037889108}
   - {fileID: 3141896748196281970}
@@ -135006,9 +135006,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 70604004469910748, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047268271733088745, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047268271733088745, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2047268271733088745, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2054700971409455583, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2167958524631211420, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865661872129451114, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2945066764678927211, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
       propertyPath: m_Name
       value: ComboUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323503861105287245, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890277656765812453, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4296891148670754285, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
       propertyPath: m_Pivot.x
@@ -135109,6 +135145,30 @@ PrefabInstance:
     - target: {fileID: 4386608979912997152, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5015414670112357513, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6130540579066715241, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7987430071453083593, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8046836392591735872, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418603160743844152, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525940059616395815, guid: 57c4e10ff3305ed4381abdfa2560f809, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -141794,6 +141854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 2319659102410024603, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6124640721608833683, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
       propertyPath: m_IsActive
       value: 0

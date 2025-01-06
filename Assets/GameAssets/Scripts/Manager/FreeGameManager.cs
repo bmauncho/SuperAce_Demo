@@ -21,7 +21,7 @@ public class FreeGameManager : MonoBehaviour
         ToggleFreeGame(true);
         ToggleComboBanner(true);
     }
-
+    [ContextMenu("Deactivate FreeGameIntro")]
     public void DeactivateFreeGameIntro ()
     {
         FreeGameIntro_.Deactivate();
@@ -55,15 +55,15 @@ public class FreeGameManager : MonoBehaviour
         }
     }
 
-
+    [ContextMenu("Activate FreeGameIntro")]
     public void ActivateFreeGame ()
     {
         ActivateFreeGameIntro();
     }
 
+    [ContextMenu("Deactivate FreeGame")]
     public void DeactivateFreeGame ()
     {
-        
         ToggleFreeGame(false);
         ToggleComboBanner(false);
         resetFreeSpins();

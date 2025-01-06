@@ -137,7 +137,10 @@ public class WinLoseManager : MonoBehaviour
                 cardComponent.ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
                 yield return new  WaitForSeconds(1);
                 CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
-                CommandCentre.Instance.FreeGameManager_.ActivateFreeGame();
+                CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
+                yield return new WaitForSeconds(3);
+                CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+
             }
             // Deactivate and return normal cards to the pool
             else
