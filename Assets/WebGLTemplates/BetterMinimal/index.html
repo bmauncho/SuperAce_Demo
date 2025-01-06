@@ -36,12 +36,13 @@
       }
 
       .logo {
-        font-size: 72px;
-        font-family: "Stardos Stencil", serif;
-        background: linear-gradient(45deg, #ffd700, #ffa500, #ffec8b);
-        -webkit-background-clip: text;
-        color: transparent;
-        font-weight: bold;
+        background: url("LogoAnim.png") no-repeat center center;
+        background-size: contain;
+        width: 1200px; /* Adjust width and height as needed */
+        height: 60px;
+        display: inline-block;
+        margin-bottom: 5px;
+        margin-left: -5px;
       }
 
       .progress-bar {
@@ -89,7 +90,7 @@
 
   <body>
     <div class="container" id="loading-screen">
-      <div class="logo">JILI</div>
+      <div class="logo"></div>
       <div class="progress-bar">
         <div class="progress" id="progress"></div>
       </div>

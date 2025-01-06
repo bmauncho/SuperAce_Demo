@@ -113620,7 +113620,7 @@ MonoBehaviour:
     - name: HEART
       Subsitute: BIG_JOKER
       isGolden: 1
-    - name: JACK
+    - name: WILD
       Subsitute: 
       isGolden: 0
     - name: QUEEN
@@ -139604,7 +139604,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1743851831}
         m_TargetAssemblyTypeName: DemoManager, Assembly-CSharp
-        m_MethodName: StartDemo
+        m_MethodName: StartDemoFromWinMoreMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
