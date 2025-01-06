@@ -46,27 +46,23 @@ public class RefillCardsAPI : MonoBehaviour
         sentData_.Clear();
         receivedData_.Clear();
         // Define the jagged array
-        CardData [] [] data = new CardData [5] [];  // 5 rows (or columns depending on how you want to structure it)
-        for (int j = 0 ; j < 5 ; j++)  // Loop through columns (5)
+        CardData [] [] data = new CardData [4] []; // 4 rows
+        for (int i = 0 ; i < 4 ; i++) // Loop through rows
         {
-            data [j] = new CardData [4];  // 4 rows (or items per column)
-            for (int i = 0 ; i < 4 ; i++)  // Loop through rows (4)
+            data [i] = new CardData [5]; // 5 columns per row
+            for (int j = 0 ; j < 5 ; j++) // Loop through columns
             {
-
-                //Debug.Log(gameDataAPI_.rows.Count);
-
-
-                //Ensure indices are valid
+                // Ensure indices are valid
                 if (i < gameDataAPI_.rows.Count && j < gameDataAPI_.rows [i].infos.Count)
                 {
-                    data [j] [i] = new CardData
+                    data [i] [j] = new CardData
                     {
                         name = gameDataAPI_.rows [i].infos [j].name ,
                         golden = gameDataAPI_.rows [i].infos [j].golden ,
                         substitute = gameDataAPI_.rows [i].infos [j].substitute ,
                         transformed = gameDataAPI_.rows [i].infos [j].transformed ,
                     };
-                    logSentData(i , j , data [j] [i]);
+                    logSentData(i , j , data [i] [j]);
                 }
             }
         }
@@ -74,10 +70,11 @@ public class RefillCardsAPI : MonoBehaviour
         _game gameinfo = new _game();
         api = new refillApi
         {
-            game = gameinfo,
+            game = gameinfo ,
             betAmount = 2 ,
             cards = data ,
         };
+
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
         Debug.Log(jsonString);
@@ -109,23 +106,23 @@ public class RefillCardsAPI : MonoBehaviour
             if (response?.data?.cards != null)
             {
                 tries = 0;
-                foreach (var cardRow in response.data.cards)
+                Debug.Log(response.data.cards.Length);
+
+                for (int i = 0 ; i < response.data.cards.Length ; i++)
                 {
-                    if (cardRow != null)
+                    if(response.data.cards[i] != null)
                     {
-                        foreach (var card in cardRow)
+                        for(int j = 0 ; j < response.data.cards [i].Length ; j++)
                         {
-                            if (card != null)
+                            var card = response.data.cards [i] [j];
+                            var cardData_ = new CardData
                             {
-                                var cardData_ = new CardData
-                                {
-                                    name = card.name ,
-                                    golden = card.golden ,
-                                    transformed = card.transformed ,
-                                    substitute = card.substitute ,
-                                };
-                                logReceivedData(Array.IndexOf(cardRow , card) , Array.IndexOf(response.data.cards , cardRow) , cardData_);
-                            }
+                                name = card.name ,
+                                golden = card.golden ,
+                                transformed = card.transformed ,
+                                substitute = card.substitute ,
+                            };
+                            logReceivedData(i , j , cardData_);
                         }
                     }
                 }

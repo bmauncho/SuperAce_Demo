@@ -23,12 +23,17 @@ public class UpdateBetResponse
 public class BetUpdaterAPI : MonoBehaviour
 {
     private const string ApiUrl = "https://admin1.ibibe.africa/api/update_bet";
-    public UpdateBetResponse updateBetResponse;
+    public UpdateBetResponse updateBetResponse_;
 
 
     private void Start ()
     {
-        //updateBetResponse.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
+        updateBetResponse_.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
+    }
+    [ContextMenu("setUpBalance")]
+    void setUpBalance ()
+    {
+        updateBetResponse_.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
     }
 
     [ContextMenu("UpdateBet")]
@@ -81,8 +86,8 @@ public class BetUpdaterAPI : MonoBehaviour
                 error = responseData.error,
             };
 
-            updateBetResponse = data;
-            CommandCentre.Instance.CashManager_.CashAmount = updateBetResponse.new_wallet_balance;
+            updateBetResponse_ = data;
+            CommandCentre.Instance.CashManager_.CashAmount = updateBetResponse_.new_wallet_balance;
         }
     }
 }

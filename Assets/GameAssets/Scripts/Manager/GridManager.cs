@@ -435,13 +435,16 @@ public class GridManager : MonoBehaviour
 
     IEnumerator CheckAndContinue ()
     {
-        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-        CommandCentre.Instance.CashManager_.updateThecashUi();
+        if (CommandCentre.Instance.APIManager_.betPlacingAPI_.IsUpdated)
+        {
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
+            CommandCentre.Instance.CashManager_.updateThecashUi();
+        }
 
         if (isRefilling)
         {
             isRefilling = false;
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
             yield return new WaitForSeconds(.25f);
             if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)

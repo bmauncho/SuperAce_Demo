@@ -28,6 +28,7 @@ public class BetPlacingAPI : MonoBehaviour
     public int customerId;
     public int tries;
     public int maxtries;
+    public bool IsUpdated;
 
     private void Update ()
     {
@@ -40,6 +41,7 @@ public class BetPlacingAPI : MonoBehaviour
     [ContextMenu("Bet")]
     public void Bet()
     {
+        IsUpdated = false;
         //int customer_id = Random.Range(1 , 28);
         //customerId = customer_id;
         int bet_id = Random.Range(100 , 10000000);
@@ -90,7 +92,7 @@ public class BetPlacingAPI : MonoBehaviour
             };
 
             response = betResponse;
-
+            IsUpdated = true;
         }
         else
         {
