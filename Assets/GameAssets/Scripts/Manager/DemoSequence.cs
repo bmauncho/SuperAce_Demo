@@ -85,7 +85,7 @@ public class DemoSequence : MonoBehaviour
             {
                 new DemoCardsInfo { name = "HEART", Subsitute = "KING", isGolden = false },
                 new DemoCardsInfo { name = "HEART", Subsitute = "BIG_JOKER", isGolden = true },
-                new DemoCardsInfo { name = "JACK", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "WILD", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false }
             },
@@ -128,7 +128,7 @@ public class DemoSequence : MonoBehaviour
             {
                 new DemoCardsInfo { name = "HEART", Subsitute = "KING", isGolden = false },
                 new DemoCardsInfo { name = "HEART", Subsitute = "BIG_JOKER", isGolden = true },
-                new DemoCardsInfo { name = "JACK", Subsitute = "", isGolden = false },
+                new DemoCardsInfo { name = "WILD", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", Subsitute = "", isGolden = false },
                 new DemoCardsInfo { name = "ACE", Subsitute = "", isGolden = false }
             },

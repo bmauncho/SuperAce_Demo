@@ -50,8 +50,12 @@ public class DemoManager : MonoBehaviour
     public void StartDemoFromWinMoreMenu ()
     {
         IsDemo = true;
+        DemoGridManager_.demoObjectsPlaced = 20;
+        DemoGridManager_.isFirstPlay = false;
         CommandCentre.Instance .MainMenuController_.DisableWinMoreMenu();
         CommandCentre.Instance .MainMenuController_.EnableGameplayMenu();
+        CommandCentre.Instance.CashManager_.CashAmount = 2000;
+        CommandCentre.Instance.CashManager_.updateThecashUi();
         CommandCentre.Instance.BetManager_.refreshBetSlip();
         ActivateDemoUI ();
         Invoke(nameof(DemoSpin) , 1f);
