@@ -53,7 +53,7 @@ public class RefillCardsAPI : MonoBehaviour
             for (int i = 0 ; i < 4 ; i++)  // Loop through rows (4)
             {
 
-                Debug.Log(gameDataAPI_.rows.Count);
+                //Debug.Log(gameDataAPI_.rows.Count);
 
 
                 //Ensure indices are valid

@@ -132,7 +132,7 @@ public class MainMenuController : MonoBehaviour
 
     private IEnumerator FetchDataAndSpin ()
     {
-        Debug.Log(CommandCentre.Instance.DemoManager_.IsDemo);
+        //Debug.Log(CommandCentre.Instance.DemoManager_.IsDemo);
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
             
