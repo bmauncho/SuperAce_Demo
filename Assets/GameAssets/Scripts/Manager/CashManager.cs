@@ -49,7 +49,7 @@ public class CashManager : MonoBehaviour
 
     public void SaveCashAmount()
     {
-        PlayerPrefs.SetFloat("TotalCash", Mathf.FloorToInt(CashAmount));
+        PlayerPrefs.SetFloat("TotalCash", CashAmount);
     }
 
     public void updateThecashUi ()
@@ -60,7 +60,7 @@ public class CashManager : MonoBehaviour
         }
         else
         {
-            CashAmountText [0].SetText(Mathf.FloorToInt(CashAmount).ToString("F2"));
+            CashAmountText [0].SetText(CashAmount.ToString("F2"));
         }
         SaveCashAmount();
     }

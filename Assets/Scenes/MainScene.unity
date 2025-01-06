@@ -5377,7 +5377,7 @@ MonoBehaviour:
   response:
     message: Bet placed successfully
     bet_id: 3354222
-    new_wallet_balance: 72.5
+    new_wallet_balance: 9106.4
     status: lost
     error: Insufficient balance
   BetAmount: 2
@@ -91335,6 +91335,9 @@ MonoBehaviour:
   - name: CLUB
     row: 2
     col: 2
+  scatterdata: []
+  totalobjectstojump: 2
+  objectsJumped: 0
 --- !u!1 &1543606329 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1691537666199884037, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}

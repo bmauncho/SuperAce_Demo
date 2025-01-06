@@ -435,9 +435,14 @@ public class GridManager : MonoBehaviour
 
     IEnumerator CheckAndContinue ()
     {
+        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
+        CommandCentre.Instance.CashManager_.updateThecashUi();
+
         if (isRefilling)
         {
             isRefilling = false;
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse.new_wallet_balance;
+            CommandCentre.Instance.CashManager_.updateThecashUi();
             yield return new WaitForSeconds(.25f);
             if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
             {
@@ -446,33 +451,18 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.APIManager_.refillCardsAPI_.isError =false;
         }
 
-        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-        CommandCentre.Instance.CashManager_.updateThecashUi();
-
-        if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
+        if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+            CommandCentre.Instance.APIManager_.UpdateBet();
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
-        else {
-            if (CommandCentre.Instance.WinLoseManager_.IsWin())
-            {
-                CommandCentre.Instance.CashManager_.updateThecashUi();
-                CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
-                yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
-                CommandCentre.Instance.WinLoseManager_.winSequence();
-            }
-            else
-            {
-                CommandCentre.Instance.APIManager_.UpdateBet();
-                yield return StartCoroutine(Autospin());
-            }
-
+        else
+        {
+            yield return StartCoroutine(Autospin());
         }
-
-       
     }
 
 

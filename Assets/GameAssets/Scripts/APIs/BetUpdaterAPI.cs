@@ -28,7 +28,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
     private void Start ()
     {
-        
+        //updateBetResponse.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
     }
 
     [ContextMenu("UpdateBet")]
@@ -38,7 +38,7 @@ public class BetUpdaterAPI : MonoBehaviour
         BetUpDateData Data = new BetUpDateData
         {
             bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id,
-            amount_won = 0,
+            amount_won = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon,
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log(jsonPayload);
