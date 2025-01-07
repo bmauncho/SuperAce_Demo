@@ -464,6 +464,15 @@ public class GridManager : MonoBehaviour
         }
         else
         {
+            int combo = CommandCentre.Instance.ComboManager_.GetCombo();
+            if (combo >= 3)
+            {
+                //show total win
+                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+                yield return new WaitForSeconds(5f);
+                CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
+            }
+
             yield return StartCoroutine(Autospin());
         }
     }

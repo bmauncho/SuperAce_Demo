@@ -52788,9 +52788,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a9380e448f8dd4c961657130a6def5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demoSequence: {fileID: 0}
+  demoSequence: {fileID: 1934215984}
   demoGridManager: {fileID: 1390728396}
   winCards: []
+  totalobjectstojump: 2
+  objectsJumped: 0
+  jumpIndex: 0
 --- !u!1 &853445693
 GameObject:
   m_ObjectHideFlags: 0
@@ -90959,9 +90962,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22616bebb2fb5744a97dca404702b050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winLoseManager: {fileID: 0}
+  winLoseManager: {fileID: 853323454}
+  demoSequence: {fileID: 1934215984}
   isFirstPlay: 1
   isRefreshDone: 1
+  isRefilling: 0
   cardPositionsHolder: {fileID: 857952519}
   moveDuration: 0.5
   delayBetweenMoves: 0.1
@@ -96526,6 +96531,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 791405824115090198, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1231705369812394533, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869750372183202819, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869750372183208837, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869750372184993729, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1916859540405186472, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -96533,6 +96558,30 @@ PrefabInstance:
     - target: {fileID: 2036855476558843708, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650437308041335493, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650437308041335493, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650437308041335493, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650437308041335493, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650437308041335493, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3082918896087301203, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 41.7
       objectReference: {fileID: 0}
     - target: {fileID: 3213835915480220546, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: m_Pivot.x
@@ -96734,6 +96783,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 50.640205
       objectReference: {fileID: 0}
+    - target: {fileID: 7417189387907662974, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417189387908634682, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417189387908642748, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8465902877968440715, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -96742,6 +96803,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 564760787}
+    - target: {fileID: 8848068102126880606, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25
+      objectReference: {fileID: 0}
     - target: {fileID: 8932002295616963806, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: currentConnection
       value: 
@@ -102801,6 +102866,7 @@ MonoBehaviour:
   MainScene_LoadingMenu_: {fileID: 3063309362293100836}
   DemoSequence_: {fileID: 1934215984}
   DemoGridManager_: {fileID: 1390728396}
+  DemoWinLoseManager_: {fileID: 853323454}
 --- !u!4 &1743851832
 Transform:
   m_ObjectHideFlags: 0
@@ -113704,70 +113770,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e845803938eaf4a9a63df2e5ff3d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spinCount: 1
   demoCards:
   - cards:
     - name: HEART
-      Subsitute: KING
+      _Subsitute:
+        subsitute_: KING
+        isGolden: 0
       isGolden: 0
     - name: HEART
-      Subsitute: BIG_JOKER
+      _Subsitute:
+        subsitute_: BIG_JOKER
+        isGolden: 0
       isGolden: 1
     - name: WILD
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: QUEEN
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: ACE
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
   - cards:
     - name: QUEEN
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: ACE
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: CLUB
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: ACE
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: KING
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
   - cards:
     - name: KING
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: DIAMOND
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: DIAMOND
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: QUEEN
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: HEART
-      Subsitute: CL
+      _Subsitute:
+        subsitute_: CLUB
+        isGolden: 0
       isGolden: 0
   - cards:
     - name: SPADE
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: ACE
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
     - name: HEART
-      Subsitute: DIAMOND
+      _Subsitute:
+        subsitute_: DIAMOND
+        isGolden: 0
       isGolden: 0
     - name: HEART
-      Subsitute: LITTLE_JOKER
+      _Subsitute:
+        subsitute_: LITTLE_JOKER
+        isGolden: 0
       isGolden: 1
     - name: QUEEN
-      Subsitute: 
+      _Subsitute:
+        subsitute_: 
+        isGolden: 0
       isGolden: 0
 --- !u!1 &1937610581 stripped
 GameObject:

@@ -227,15 +227,27 @@ public class CardManager : MonoBehaviour
     {
         if (!card)
             return;
-
-        DemoCardsInfo cardInfo = new DemoCardsInfo
+        DemoCardsInfo cardInfo = new DemoCardsInfo();
+        if (CommandCentre.Instance.DemoManager_.DemoGridManager_.isRefilling)
         {
-            name = demoManager.DemoSequence_.GetDemoCardInfo(col,row).name,
-            Subsitute = demoManager.DemoSequence_.GetDemoCardInfo(col , row).Subsitute,
-            isGolden = demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden,
+            if(!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
+            {
+                cardInfo = new DemoCardsInfo
+                {
+                    name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                };
+            }
+        }
+        else
+        {
+            cardInfo = new DemoCardsInfo
+            {
+                name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
+                _Subsitute = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute ,
+                isGolden = demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden ,
 
-        };
-
+            };
+        }
         // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))

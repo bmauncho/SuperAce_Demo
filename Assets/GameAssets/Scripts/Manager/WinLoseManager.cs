@@ -169,17 +169,6 @@ public class WinLoseManager : MonoBehaviour
 
         // Show current win
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
-
-        int combo = CommandCentre.Instance.ComboManager_.GetCombo();
-        if(combo >= 3)
-        {
-            //show total win
-            CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
-            yield return new WaitForSeconds(5f);
-            CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
-        }
-        
-
         yield return null;
     }
 

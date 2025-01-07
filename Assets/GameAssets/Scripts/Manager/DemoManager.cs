@@ -13,6 +13,7 @@ public class DemoManager : MonoBehaviour
     public MainScene_LoadingMenu MainScene_LoadingMenu_;
     public DemoSequence DemoSequence_;
     public DemoGridManager DemoGridManager_;
+    public DemoWinLoseManager DemoWinLoseManager_;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
