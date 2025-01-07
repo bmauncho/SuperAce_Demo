@@ -201,6 +201,7 @@ public class MainMenuController : MonoBehaviour
 
     void DemoSpin ()
     {
+       
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();

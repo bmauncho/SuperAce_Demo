@@ -47,6 +47,25 @@ public class CashManager : MonoBehaviour
         }
     }
 
+    public void IncreaseCash ( float amount )
+    {
+        CashAmount += amount;
+
+        updateThecashUi();
+    }
+
+    public void DecreaseCash ( float amount )
+    {
+        CashAmount -= amount;
+        if (CashAmount < 0)
+        {
+            CashAmount = 0;
+        }
+
+        updateThecashUi();
+    }
+
+
     public void SaveCashAmount()
     {
         PlayerPrefs.SetFloat("TotalCash", CashAmount);

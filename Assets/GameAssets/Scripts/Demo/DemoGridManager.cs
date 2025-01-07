@@ -235,6 +235,7 @@ public class DemoGridManager : MonoBehaviour
 
     IEnumerator CheckAndContinue ()
     {
+
         yield return StartCoroutine(Autospin());
     }
 

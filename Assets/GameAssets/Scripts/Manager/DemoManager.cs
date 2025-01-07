@@ -52,6 +52,7 @@ public class DemoManager : MonoBehaviour
     public void StartDemoFromWinMoreMenu ()
     {
         IsDemo = true;
+        CommandCentre.Instance.MainMenuController_.IsDemo =true;
         DemoGridManager_.demoObjectsPlaced = 20;
         DemoGridManager_.isFirstPlay = false;
         CommandCentre.Instance .MainMenuController_.DisableWinMoreMenu();
