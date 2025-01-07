@@ -44,7 +44,9 @@ public class DemoManager : MonoBehaviour
         if(IsDemoFeatureActive)
         {
             DeactivateDemoFeature();
+            
         }
+        CommandCentre.Instance.MainMenuController_.Spin();
     }
 
     public void StartDemoFromWinMoreMenu ()
