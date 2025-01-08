@@ -428,7 +428,7 @@ public class GridManager : MonoBehaviour
                 isFirstPlay = false;
                 CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
             }
-           Debug.Log("Grid is filled");
+           //Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
     }

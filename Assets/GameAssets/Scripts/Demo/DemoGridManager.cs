@@ -314,7 +314,11 @@ public class DemoGridManager : MonoBehaviour
         demoObjectsPlaced++;
         if (isDemoGridFilled())
         {
-            demoSequence.SetUpCards();
+            isRefilling = false;
+            if (!CommandCentre.Instance.DemoManager_.isScatterSpin)
+            {
+                demoSequence.SetUpCards();
+            }
             Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
@@ -342,6 +346,8 @@ public class DemoGridManager : MonoBehaviour
                 if (!firstDemocheckpoint)
                 {
                     firstDemocheckpoint = true;
+                    CommandCentre.Instance.DemoManager_.isScatterSpin = true;
+                    CommandCentre.Instance.DemoManager_.DemoSequence_.setUpscatterCards();
                     CommandCentre.Instance.DemoManager_.ActivateDemoFeature();
                 }
             }

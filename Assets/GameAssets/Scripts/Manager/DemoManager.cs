@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class DemoManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class DemoManager : MonoBehaviour
     public DemoSequence DemoSequence_;
     public DemoGridManager DemoGridManager_;
     public DemoWinLoseManager DemoWinLoseManager_;
+
+    public bool isScatterSpin;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,9 +50,18 @@ public class DemoManager : MonoBehaviour
             DeactivateDemoFeature();
             
         }
-        CommandCentre.Instance.MainMenuController_.Spin();
+
+        StartCoroutine(spin());
     }
 
+    public IEnumerator spin ()
+    {
+        if (isScatterSpin)
+        {
+            yield return new WaitUntil(() => DemoSequence_.isScattersetUpDone);
+        }
+        CommandCentre.Instance.MainMenuController_.Spin();
+    }
     public void StartDemoFromWinMoreMenu ()
     {
         IsDemo = true;

@@ -31,7 +31,7 @@ public class CashManager : MonoBehaviour
         }
         
         CashAmount = MoneyIntheBank;
-        Debug.Log(CashAmount);
+        //Debug.Log(CashAmount);
         updateThecashUi();
     }
 

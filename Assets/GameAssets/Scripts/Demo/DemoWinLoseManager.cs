@@ -62,7 +62,8 @@ public class DemoWinLoseManager : MonoBehaviour
             var cards = demoCards [i];
             if (cards == null || cards.cards == null)
             {
-                continue; // Skip null entries
+                hasSubstitute = false;
+                break; // Skip null entries
             }
 
             for (int j = 0 ; j < cards.cards.Count ; j++)
@@ -70,6 +71,7 @@ public class DemoWinLoseManager : MonoBehaviour
                 var card = cards.cards [j];
                 if (card == null || string.IsNullOrEmpty(card.name))
                 {
+                    hasSubstitute =false;
                     continue; // Skip null or empty cards
                 }
 

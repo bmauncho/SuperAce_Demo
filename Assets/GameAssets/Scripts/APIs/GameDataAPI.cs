@@ -59,7 +59,7 @@ public class GameDataAPI : MonoBehaviour
         Data.game = new _game();
         Data.betAmount = BetAmount;
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
@@ -78,7 +78,7 @@ public class GameDataAPI : MonoBehaviour
         //Debug.Log("Status Code: " + request.responseCode);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);

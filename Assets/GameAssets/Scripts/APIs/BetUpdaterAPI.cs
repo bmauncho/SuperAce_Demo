@@ -46,7 +46,7 @@ public class BetUpdaterAPI : MonoBehaviour
             amount_won = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon,
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonPayload);
+        //Debug.Log(jsonPayload);
         StartCoroutine(SendUpdateBetRequest(jsonPayload));
     }
 
@@ -63,17 +63,17 @@ public class BetUpdaterAPI : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);
 
-            Debug.Log($"message : {responseData.message}," +
-              $"betId : {responseData.bet_id}," +
-              $"amountWon : {responseData.amount_won}" +
-              $"newWalletBalance : {responseData.new_wallet_balance}," +
-              $"status : {responseData.status}," +
-              $"error : {responseData.error}");
+           // Debug.Log($"message : {responseData.message}," +
+             // $"betId : {responseData.bet_id}," +
+             // $"amountWon : {responseData.amount_won}" +
+             // $"newWalletBalance : {responseData.new_wallet_balance}," +
+             // $"status : {responseData.status}," +
+             // $"error : {responseData.error}");
 
 
             UpdateBetResponse data = new UpdateBetResponse

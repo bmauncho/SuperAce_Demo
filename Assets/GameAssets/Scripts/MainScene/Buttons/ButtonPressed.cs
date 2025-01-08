@@ -8,6 +8,7 @@ public class ButtonPressed : MonoBehaviour
     public bool isSpinButton = false;
     public bool IsToggle = false;
     public bool IsContinuebutton = false;
+    private bool isButtonClicked = false; // Add this at the class level
     private void Start()
     {
         commandCentre=CommandCentre.Instance;
@@ -19,18 +20,18 @@ public class ButtonPressed : MonoBehaviour
         {
             if (isSpinButton)
             {
-                // if the win or card sequence is complete enable
-                if ((commandCentre.GridManager_.isGridFilled()|| 
-                    commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled()) &&
+                if (( commandCentre.GridManager_.isGridFilled() || commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled() ) &&
                     !CommandCentre.Instance.WinLoseManager_.IsWin())
                 {
                     EnableButtonInteractvity();
                     commandCentre.MainMenuController_.CanSpin = true;
+                    CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
                 }
                 else
                 {
-                    DisableButtonInteractvity ();
+                    DisableButtonInteractvity() ;
                     commandCentre.MainMenuController_.CanSpin = false;
+                    CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
                 }
             }
             else if(IsToggle)
@@ -45,7 +46,6 @@ public class ButtonPressed : MonoBehaviour
                 {
                     GPMC.NormalGamePlay.GetComponent<NormalGamePlay>().setButtonsInteractivity(false);
                 }
-                
 
             }
             else
@@ -59,17 +59,18 @@ public class ButtonPressed : MonoBehaviour
     {
         if (IsToggle)
         {
-            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
             GetComponent<Toggle>().interactable = true;
         }
         else
         {
-            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+            if (isSpinButton)
+            {
+                isButtonClicked = false;
+            }
             GetComponent<Button>().interactable = true;
         }
-        
-
     }
+
     public void DisableButtonInteractvity ()
     {
         if (IsToggle)
@@ -81,13 +82,20 @@ public class ButtonPressed : MonoBehaviour
             GetComponent<Button>().interactable = false;
         }
     }
-
     public void BounceBtn ()
     {
         if (this.gameObject.activeSelf)
         {
-            Bounce();
-            DisableButtonInteractvity() ;
+            DisableButtonInteractvity();
+            if (isSpinButton)
+            {
+                if(isButtonClicked) return;
+                if (!isButtonClicked)
+                {
+                    isButtonClicked = true;
+                }
+            }
+            //Bounce();
             if (CommandCentre.Instance)
             {
                 CommandCentre.Instance.SoundManager_.PlaySound("BtnClick" , false , .3f);
@@ -95,14 +103,15 @@ public class ButtonPressed : MonoBehaviour
         }
     }
 
+
     void Bounce ()
     {
-        transform.DOScale(1.1f , 3 *Time.deltaTime).SetUpdate(true).OnComplete(Debounce); ;
+        transform.DOScale(1.1f , .15f).SetUpdate(true).OnComplete(Debounce); ;
     }
 
     void Debounce ()
     {
-        transform.DOScale(1f , .25f).SetUpdate(true);
+        transform.DOScale(1f , .15f).SetUpdate(true);
         if (!isSpinButton)
         {
             EnableButtonInteractvity();

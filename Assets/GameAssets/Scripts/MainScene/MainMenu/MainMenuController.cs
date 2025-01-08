@@ -63,6 +63,7 @@ public class MainMenuController : MonoBehaviour
     public void EnableWinMoreMenu ()
     {
         WinMoreMenu.SetActive(true);
+        CanSpin = false;
     }
 
     public void DisableWinMoreMenu ()
@@ -83,6 +84,7 @@ public class MainMenuController : MonoBehaviour
 
     public void ManualStart ()
     {
+        CanSpin = false;
         Startfx_.Activate();
         StartCoroutine(CheckIfGridReady());
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
@@ -98,10 +100,11 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator CheckIfGridReady ()
     {
-        while (!CanSpin)
+        bool isGridReady = false;
+        while (!isGridReady)
         {
-            CanSpin = CommandCentre.Instance.GridManager_.isGridFilled();
-            if (CanSpin)
+            isGridReady = CommandCentre.Instance.GridManager_.isGridFilled();
+            if (isGridReady)
             {
                 EnableGameplayMenu();
                 yield break;
@@ -114,6 +117,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (!isBtnPressed)
         {
+            isBtnPressed = true;
             if (CommandCentre.Instance.CashManager_.CashAmount <= 0
                 || CommandCentre.Instance.CashManager_.CashAmount < CommandCentre.Instance.BetManager_.BetAmount)
             {
@@ -124,7 +128,7 @@ public class MainMenuController : MonoBehaviour
             {
                 StartCoroutine(FetchDataAndSpin());
             }
-            isBtnPressed = true;
+            
         }
 
         CommandCentre.Instance.HintManager_.CanShowHints = true;
@@ -153,8 +157,6 @@ public class MainMenuController : MonoBehaviour
             // Once data is fetched, start the spinning process
             StartCoroutine(SpinReel(true));
         }
-
-    
     }
 
     IEnumerator SpinReel (bool isDemo)
@@ -201,7 +203,6 @@ public class MainMenuController : MonoBehaviour
 
     void DemoSpin ()
     {
-       
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();

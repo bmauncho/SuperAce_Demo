@@ -30,6 +30,7 @@ public class DemoSequence : MonoBehaviour
     public int spinCount = 0;
     public List<DemoCards> demoCards = new List<DemoCards>();
     public bool isSetUpCard = true;
+    public bool isScattersetUpDone = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,6 +48,36 @@ public class DemoSequence : MonoBehaviour
     {
         demoCards.Clear();
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
+        bool hasSetUp = false;
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards());
+            for (int j = 0 ; j < 5 ; j++)
+            {
+                // Ensure nested objects are initialized
+                if (demoCards [i].cards == null)
+                {
+                    demoCards [i].cards = new List<DemoCardsInfo>();
+                }
+                if (whichSpin(spinCount , j , i) != null)
+                {
+                    demoCards [i].cards.Add(whichSpin(spinCount , j , i));
+                    hasSetUp = true;
+                }
+
+            }
+        }
+        if (hasSetUp)
+        {
+            spinCount++;
+        }
+    }
+
+    [ContextMenu("SetUp scatterCards")]
+    public void setUpscatterCards ()
+    {
+        demoCards.Clear();
+        List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
         for (int i = 0 ; i < 4 ; i++)
         {
@@ -59,14 +90,44 @@ public class DemoSequence : MonoBehaviour
                     demoCards [i].cards = new List<DemoCardsInfo>();
                 }
 
-                demoCards [i].cards.Add(whichSpin(spinCount , j , i));
+                demoCards [i].cards.Add(scatterspinSpin( j , i));
             }
         }
 
-        spinCount++;
+        if (!isScattersetUpDone)
+        {
+            isScattersetUpDone = true;
+        }
     }
 
-
+    public void SetUpFreeCards ()
+    {
+        demoCards.Clear();
+        List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
+        bool hasSetUp = false;
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards());
+            for (int j = 0 ; j < 5 ; j++)
+            {
+                // Ensure nested objects are initialized
+                if (demoCards [i].cards == null)
+                {
+                    demoCards [i].cards = new List<DemoCardsInfo>();
+                }
+                if(whichSpin(spinCount , j , i) != null)
+                {
+                    demoCards [i].cards.Add(whichSpin(spinCount , j , i));
+                    hasSetUp = true;
+                }
+                
+            }
+        }
+        if (hasSetUp)
+        {
+            spinCount++;
+        }
+    }
 
     public DemoCardsInfo whichSpin(int which,int col,int row)
     {
@@ -84,6 +145,12 @@ public class DemoSequence : MonoBehaviour
         }
     }
 
+    public DemoCardsInfo scatterspinSpin ( int col , int row )
+    {
+        var cardsDatas = new DemoCardsInfo();
+       return cardsDatas = Spin_4(col , row);
+    }
+
 
     void AddCardType ( CardType cardType ,bool isGolden = false)
     {
@@ -92,6 +159,48 @@ public class DemoSequence : MonoBehaviour
             name = cardType.ToString(),
             isGolden = isGolden,
         };
+    }
+    public DemoCardsInfo Spin_4 ( int col , int row )
+    {
+        var cardData = new DemoCardsInfo [,]
+         {
+            {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            }
+         };
+
+        // Validate input to prevent index out of bounds
+        if (row < 0 || row >= cardData.GetLength(0) || col < 0 || col >= cardData.GetLength(1))
+        {
+            throw new ArgumentOutOfRangeException("Invalid row or column index.");
+        }
+
+        return cardData [row , col];
     }
 
     public DemoCardsInfo Spin_3 ( int col , int row )

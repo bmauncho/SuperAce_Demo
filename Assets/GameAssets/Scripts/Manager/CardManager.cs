@@ -230,7 +230,8 @@ public class CardManager : MonoBehaviour
         DemoCardsInfo cardInfo = new DemoCardsInfo();
         if (CommandCentre.Instance.DemoManager_.DemoGridManager_.isRefilling)
         {
-            if(!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
+            Debug.Log("refill");
+            if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
             {
                 cardInfo = new DemoCardsInfo
                 {
@@ -240,6 +241,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("refresh");
             cardInfo = new DemoCardsInfo
             {
                 name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -248,7 +250,7 @@ public class CardManager : MonoBehaviour
 
             };
         }
-        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
+        Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
