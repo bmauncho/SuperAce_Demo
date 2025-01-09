@@ -23,7 +23,6 @@ public class MainMenuController : MonoBehaviour
     [Header("References")]
     public StartFx Startfx_;
 
-
     void Start ()
     {
         // Initialization logic if needed
@@ -206,7 +205,6 @@ public class MainMenuController : MonoBehaviour
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.FreeGameManager_.DecreaseFreespins();
-
         }
         DecreaseAutoSpins();
         CommandCentre.Instance.ComboManager_.ResetComboCounter();

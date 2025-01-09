@@ -230,18 +230,50 @@ public class CardManager : MonoBehaviour
         DemoCardsInfo cardInfo = new DemoCardsInfo();
         if (CommandCentre.Instance.DemoManager_.DemoGridManager_.isRefilling)
         {
-            Debug.Log("refill");
-            if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
+            //Debug.Log("refill");
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
-                cardInfo = new DemoCardsInfo
+                if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
                 {
-                    name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
-                };
+                    cardInfo = new DemoCardsInfo
+                    {
+                        name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                    };
+                }
+            }
+            else
+            {
+                if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
+                {
+                    cardInfo = new DemoCardsInfo
+                    {
+                        name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                    };
+                }
+                else
+                {
+                    if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ == "")
+                    {
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
+                            isGolden = true
+                        };
+                    }
+                    else
+                    {
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                        };
+                    }
+                    
+                }
             }
         }
         else
         {
-            Debug.Log("refresh");
+            //Debug.Log("refresh");
             cardInfo = new DemoCardsInfo
             {
                 name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -250,7 +282,7 @@ public class CardManager : MonoBehaviour
 
             };
         }
-        Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
+        //Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {

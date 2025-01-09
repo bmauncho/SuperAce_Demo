@@ -29,6 +29,8 @@ public class DemoGridManager : MonoBehaviour
     [Header("Lists")]
     public List<cardPositions> colData = new List<cardPositions>(5);
     bool firstDemocheckpoint =false;
+    [SerializeField]bool firstDemoFreeSpin = true;
+    [SerializeField]bool secondDemoSpin = false;
     private void Start ()
     {
         poolManager = CommandCentre.Instance.PoolManager_;
@@ -241,7 +243,7 @@ public class DemoGridManager : MonoBehaviour
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
 
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
 
                     currentDeck.ResetDeck();
                     Transform targetPos = colData [col].cardPositionInRow [row].transform;
@@ -281,9 +283,10 @@ public class DemoGridManager : MonoBehaviour
                 GameObject card = cardPos.TheOwner;
                 if (!card)
                 {
+
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = colData [col].cardPositionInRow [row].transform;
 
@@ -309,6 +312,8 @@ public class DemoGridManager : MonoBehaviour
         
     }
 
+    int freeGamerefills = 0;
+
     void CalculateObjectsPlaced ()
     {
         demoObjectsPlaced++;
@@ -317,7 +322,34 @@ public class DemoGridManager : MonoBehaviour
             isRefilling = false;
             if (!CommandCentre.Instance.DemoManager_.isScatterSpin)
             {
-                demoSequence.SetUpCards();
+                if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+                {
+                    if (!firstDemoFreeSpin)
+                    {
+                        if (!secondDemoSpin)
+                        {
+                            Debug.Log("free game - start");
+                            demoSequence.SetUpFreeCards();
+                        }
+                    }
+                    firstDemoFreeSpin = false;
+                    freeGamerefills++;
+                    Debug.Log($"which refill : {freeGamerefills}");
+
+                    if(freeGamerefills >= 2)
+                    {
+                        secondDemoSpin = false;
+                    }
+                    else
+                    {
+                        secondDemoSpin = true;
+                    }
+                }
+                else
+                {
+                    demoSequence.SetUpCards();
+                }
+                
             }
             Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
@@ -328,30 +360,45 @@ public class DemoGridManager : MonoBehaviour
     IEnumerator CheckAndContinue ()
     {
         yield return new WaitUntil(()=>demoSequence.isSetUpCard);
-        Debug.Log($"can refill : {winLoseManager.CanRefill()}");
+        //Debug.Log($"can refill : {winLoseManager.CanRefill()}");
         if (winLoseManager.CanRefill())
+        {
+            winLoseManager.DemoWinSequence();
+        }
+        else if (!winLoseManager.CanRefill() && CommandCentre.Instance.DemoManager_.isScatterSpin)
         {
             winLoseManager.DemoWinSequence();
         }
         else
         {
-            int combo = CommandCentre.Instance.ComboManager_.GetCombo();
-
-            if (combo >= 3)
+            if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
-                //show total win
-                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
-                yield return new WaitForSeconds(5f);
-                CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
-                if (!firstDemocheckpoint)
+                if (secondDemoSpin)
                 {
-                    firstDemocheckpoint = true;
-                    CommandCentre.Instance.DemoManager_.isScatterSpin = true;
-                    CommandCentre.Instance.DemoManager_.DemoSequence_.setUpscatterCards();
-                    CommandCentre.Instance.DemoManager_.ActivateDemoFeature();
+                    //setup spin 2 
+                    demoSequence.setUpSecondFreeCards();
+                }
+
+            }
+            else
+            {
+                int combo = CommandCentre.Instance.ComboManager_.GetCombo();
+
+                if (combo >= 3)
+                {
+                    //show total win
+                    CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+                    yield return new WaitForSeconds(5f);
+                    CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
+                    if (!firstDemocheckpoint)
+                    {
+                        firstDemocheckpoint = true;
+                        CommandCentre.Instance.DemoManager_.isScatterSpin = true;
+                        CommandCentre.Instance.DemoManager_.DemoSequence_.setUpscatterCards();
+                        CommandCentre.Instance.DemoManager_.ActivateDemoFeature();
+                    }
                 }
             }
-
 
             yield return StartCoroutine(Autospin());
         }

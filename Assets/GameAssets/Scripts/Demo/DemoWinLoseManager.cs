@@ -35,6 +35,7 @@ public class DemoWinLoseManager : MonoBehaviour
     public int objectsJumped = 0;
 
     public int jumpIndex = 0;
+    private bool isCanRefillCalled = false; // Flag to ensure method is called only once
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,23 +48,33 @@ public class DemoWinLoseManager : MonoBehaviour
     {
         
     }
+
     public bool CanRefill ()
     {
+        if (isCanRefillCalled)
+        {
+            Debug.LogWarning("CanRefill has already been called. Skipping execution.");
+            return false; // Prevent re-execution
+        }
+
+        isCanRefillCalled = true; // Mark the method as called
+
         List<DemoCards> demoCards = new List<DemoCards>(demoSequence.demoCards);
         if (demoCards == null || demoCards.Count <= 0)
         {
+            isCanRefillCalled = false; // Reset the flag before returning
             return false;
         }
 
         bool hasSubstitute = false; // Flag to track if at least one substitute is found
+        HashSet<string> addedCardKeys = new HashSet<string>(); // To track added cards and avoid duplicates
 
         for (int i = 0 ; i < demoCards.Count ; i++)
         {
             var cards = demoCards [i];
             if (cards == null || cards.cards == null)
             {
-                hasSubstitute = false;
-                break; // Skip null entries
+                continue; // Skip null entries
             }
 
             for (int j = 0 ; j < cards.cards.Count ; j++)
@@ -71,8 +82,32 @@ public class DemoWinLoseManager : MonoBehaviour
                 var card = cards.cards [j];
                 if (card == null || string.IsNullOrEmpty(card.name))
                 {
-                    hasSubstitute =false;
                     continue; // Skip null or empty cards
+                }
+
+                // Create a unique key for the card (row, col, and name)
+                string cardKey = $"{i}-{j}-{card.name}";
+                if (addedCardKeys.Contains(cardKey))
+                {
+                    continue; // Skip if card is already added
+                }
+
+                if (CommandCentre.Instance.DemoManager_.isScatterSpin && card.name == "SCATTER")
+                {
+                    winCards.Add(new WinCardData
+                    {
+                        name = card.name ,
+                        Substitute = card._Subsitute?.subsitute_ ,
+                        position = new position
+                        {
+                            row = i ,
+                            col = j
+                        }
+                    });
+
+                    addedCardKeys.Add(cardKey); // Mark SCATTER as added
+                    hasSubstitute = true; // SCATTER counts as a substitute
+                    continue; // Skip further checks for this card
                 }
 
                 // Check for substitute or optional jokers
@@ -91,8 +126,25 @@ public class DemoWinLoseManager : MonoBehaviour
                             col = j
                         }
                     });
+                    addedCardKeys.Add(cardKey); // Mark this card as added
                     hasSubstitute = true;
                 }
+                
+                
+            }
+        }
+
+        if (CommandCentre.Instance.DemoManager_.isScatterSpin)
+        {
+            // Filter winCards to keep only SCATTER cards
+            winCards = winCards.Where(card => card.name == "SCATTER").ToList();
+        }
+        else if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            if(winCards.Count <3)
+            {
+                winCards.Clear();
+                hasSubstitute = false;
             }
         }
 
@@ -102,9 +154,9 @@ public class DemoWinLoseManager : MonoBehaviour
             Debug.LogWarning("No substitutes or jokers found for refill.");
         }
 
+        isCanRefillCalled = false; // Reset the flag after the method is complete
         return hasSubstitute; // Return true if at least one substitute was found
     }
-
 
 
 
@@ -139,6 +191,8 @@ public class DemoWinLoseManager : MonoBehaviour
     IEnumerator HideNormalCards ()
     {
         int hiddenCards = 0;
+        // Collect all scatter cards
+        List<GameObject> scatterCards = new List<GameObject>();
 
         for (int i = 0 ; i < winCards.Count ; i++)
         {
@@ -163,7 +217,7 @@ public class DemoWinLoseManager : MonoBehaviour
             // Handle golden cards
             if (cardComponent.golden && !cardComponent.wild && !cardComponent.scatter)
             {
-                Debug.Log(" Handle golden cards-1");
+                //Debug.Log(" Handle golden cards-1");
                 StartCoroutine(rotateNormalGoldenCards(card , col , row));
             }
             // Handle wild cards
@@ -174,13 +228,7 @@ public class DemoWinLoseManager : MonoBehaviour
             // Handle scatter cards
             else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)
             {
-                cardComponent.ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
-                yield return new WaitForSeconds(1);
-                CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
-                CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
-                yield return new WaitForSeconds(3);
-                CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
-
+                scatterCards.Add(card);
             }
             // Deactivate and return normal cards to the pool
             else
@@ -191,24 +239,32 @@ public class DemoWinLoseManager : MonoBehaviour
                 hiddenCards++;
             }
         }
-
-        yield return new WaitForSeconds(1.5f);
-        // Reset and refill processes
-        if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+        if (scatterCards.Count > 0)
         {
-            demoGridManager.refillTurbo(hiddenCards);
+            yield return StartCoroutine(RotateScatterCards(scatterCards));
         }
         else
         {
-            demoGridManager.refillGrid(hiddenCards);
+            yield return new WaitForSeconds(1.5f);
+            // Reset and refill processes
+            if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+            {
+                demoGridManager.refillTurbo(hiddenCards);
+            }
+            else
+            {
+                demoGridManager.refillGrid(hiddenCards);
+            }
+            winCards.Clear();
+            cardFxManager.DeactivateCardFxMask();
+            //
+            // Show current win
+            CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+            yield return null;
         }
-        winCards.Clear();
-        cardFxManager.DeactivateCardFxMask();
-        //
-        // Show current win
-        CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
-        yield return null;
     }
+
+
 
     private IEnumerator rotateNormalGoldenCards ( GameObject card , int col = 0 , int row = 0 )
     {
@@ -242,6 +298,44 @@ public class DemoWinLoseManager : MonoBehaviour
         }
 
     }
+
+    private IEnumerator RotateScatterCards ( List<GameObject> scatterCards )
+    {
+        // Ensure there are scatter cards to process
+        if (scatterCards == null || scatterCards.Count == 0)
+        {
+            yield break;
+        }
+
+        // Trigger the rotation for all scatter cards
+        foreach (var scatterCard in scatterCards)
+        {
+            if (scatterCard == null) continue;
+
+            ScatterMotions scatterMotions = scatterCard.GetComponentInChildren<ScatterMotions>();
+            if (scatterMotions != null)
+            {
+                scatterMotions.Rotate();
+            }
+        }
+
+        // Wait for a duration that matches the scatter card rotation animation
+        yield return new WaitForSeconds(1);
+
+        // Activate the free game mechanics
+        CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
+        CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
+
+        // Wait for the intro to complete
+        yield return new WaitForSeconds(3);
+
+        CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+        winCards.Clear();
+        cardFxManager.DeactivateCardFxMask();
+        CommandCentre.Instance.DemoManager_.isScatterSpin = false;
+        CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();
+    }
+
 
 
     private IEnumerator RotateWildCards ( GameObject goldenCard , int col = 0 , int row = 0 )

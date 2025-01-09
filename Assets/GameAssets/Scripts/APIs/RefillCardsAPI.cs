@@ -77,7 +77,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-       // Debug.Log(jsonString);
+        //Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
