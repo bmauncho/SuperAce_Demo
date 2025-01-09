@@ -31,6 +31,8 @@ public class DemoGridManager : MonoBehaviour
     bool firstDemocheckpoint =false;
     [SerializeField]bool firstDemoFreeSpin = true;
     [SerializeField]bool secondDemoSpin = false;
+    [SerializeField]bool secondCheckPoint = false;
+    int refilcount = 0;
     private void Start ()
     {
         poolManager = CommandCentre.Instance.PoolManager_;
@@ -329,7 +331,57 @@ public class DemoGridManager : MonoBehaviour
                         if (!secondDemoSpin)
                         {
                             Debug.Log("free game - start");
-                            demoSequence.SetUpFreeCards();
+                            if (demoSequence.spinCount <= 7)
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
+                            else if (demoSequence.spinCount == 8)
+                            {
+                                refilcount++;
+                                if (refilcount >= 2)
+                                {
+                                    demoSequence.SetUpFreeCards();
+                                    refilcount = 0;
+                                }
+                            }
+                            else if (demoSequence.spinCount == 9)
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
+                            else if (demoSequence.spinCount == 10)
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
+                            else if (demoSequence.spinCount == 11)
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
+                            else if(demoSequence.spinCount == 12)
+                            {
+                                if (refilcount >0)
+                                {
+                                    demoSequence.SetUpFreeCards();
+                                    refilcount = 0;
+                                }
+                                refilcount++;
+                            }
+                            else if(demoSequence.spinCount == 13)
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
+                            else if(demoSequence.spinCount == 16)
+                            {
+                                if (refilcount > 1)
+                                {
+                                    demoSequence.SetUpFreeCards();
+                                    refilcount = 0;
+                                }
+                                refilcount++;
+                            }
+                            else
+                            {
+                                demoSequence.SetUpFreeCards();
+                            }
                         }
                     }
                     firstDemoFreeSpin = false;
@@ -377,6 +429,36 @@ public class DemoGridManager : MonoBehaviour
                 {
                     //setup spin 2 
                     demoSequence.setUpSecondFreeCards();
+                }
+
+                if (demoSequence.spinCount == 8)
+                {
+                    demoSequence.setUpThirdFreeCards();
+                    secondCheckPoint = true;
+                }
+                else if (demoSequence.spinCount == 9)
+                {
+                    demoSequence.setUpForthFreeCards();
+                }
+                else if (demoSequence.spinCount == 10)
+                {
+                    demoSequence.setUpFifthFreeCards();
+                }
+                else if (demoSequence.spinCount == 11)
+                {
+                    demoSequence.setUpSixthFreeCards();
+                }
+                else if(demoSequence.spinCount == 12)
+                {
+                    demoSequence.setUpSeventhFreeCards();
+                }
+                else if(demoSequence.spinCount == 15)
+                {
+                    demoSequence.setUpEighthFreeCards();
+                }
+                else if(demoSequence.spinCount == 16)
+                {
+                    demoSequence.setUpNinethFreeCards();
                 }
 
             }

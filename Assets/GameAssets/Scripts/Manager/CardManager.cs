@@ -315,7 +315,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Failed to parse card type: {cardInfo.name}");
+            Debug.LogWarning($"Failed to parse card type: {cardInfo.name} col: {col} row : {row}");
         }
     }
 

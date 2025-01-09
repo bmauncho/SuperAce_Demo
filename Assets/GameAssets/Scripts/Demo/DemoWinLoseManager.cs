@@ -110,25 +110,50 @@ public class DemoWinLoseManager : MonoBehaviour
                     continue; // Skip further checks for this card
                 }
 
-                // Check for substitute or optional jokers
-                if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
-                    card.name == "BIG_JOKER" ||
-                    card.name == "LITTLE_JOKER" ||
-                    card.isGolden)
+                if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
                 {
-                    winCards.Add(new WinCardData
+                    // Check for substitute or optional jokers
+                    if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
+                        card.name == "BIG_JOKER" ||
+                        card.name == "LITTLE_JOKER" )
                     {
-                        name = card.name ,
-                        Substitute = card._Subsitute?.subsitute_ ,
-                        position = new position
+                        winCards.Add(new WinCardData
                         {
-                            row = i ,
-                            col = j
-                        }
-                    });
-                    addedCardKeys.Add(cardKey); // Mark this card as added
-                    hasSubstitute = true;
+                            name = card.name ,
+                            Substitute = card._Subsitute?.subsitute_ ,
+                            position = new position
+                            {
+                                row = i ,
+                                col = j
+                            }
+                        });
+                        addedCardKeys.Add(cardKey); // Mark this card as added
+                        hasSubstitute = true;
+                    }
                 }
+                else
+                {
+                    // Check for substitute or optional jokers
+                    if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
+                        card.name == "BIG_JOKER" ||
+                        card.name == "LITTLE_JOKER" ||
+                        card.isGolden)
+                    {
+                        winCards.Add(new WinCardData
+                        {
+                            name = card.name ,
+                            Substitute = card._Subsitute?.subsitute_ ,
+                            position = new position
+                            {
+                                row = i ,
+                                col = j
+                            }
+                        });
+                        addedCardKeys.Add(cardKey); // Mark this card as added
+                        hasSubstitute = true;
+                    }
+                }
+                
                 
                 
             }
