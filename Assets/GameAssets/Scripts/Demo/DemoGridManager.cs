@@ -334,7 +334,7 @@ public class DemoGridManager : MonoBehaviour
                     }
                     firstDemoFreeSpin = false;
                     freeGamerefills++;
-                    Debug.Log($"which refill : {freeGamerefills}");
+                    //Debug.Log($"which refill : {freeGamerefills}");
 
                     if(freeGamerefills >= 2)
                     {
