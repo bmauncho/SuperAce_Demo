@@ -322,6 +322,7 @@ public class DemoGridManager : MonoBehaviour
         if (isDemoGridFilled())
         {
             isRefilling = false;
+           
             if (!CommandCentre.Instance.DemoManager_.isScatterSpin)
             {
                 if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
@@ -467,6 +468,15 @@ public class DemoGridManager : MonoBehaviour
                 else if(demoSequence.spinCount == 16)
                 {
                     demoSequence.setUpNinethFreeCards();
+                }
+
+                if(CommandCentre.Instance.FreeGameManager_.FreeSpinCounter == 0)
+                {
+                    CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
+                    if (CommandCentre.Instance.DemoManager_.IsDemo)
+                    {
+                        CommandCentre.Instance.DemoManager_.IsDemo =false;
+                    }
                 }
 
             }

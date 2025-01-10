@@ -357,6 +357,8 @@ public class DemoSequence : MonoBehaviour
                 return cardsDatas = freeSpin_16(col , row);
             case 17:
                 return cardsDatas = freeSpin_17(col , row);
+            case 18:
+                return cardsDatas = freeSpin_18(col , row);
             default:
                 return cardsDatas = null;
         }
@@ -429,6 +431,49 @@ public class DemoSequence : MonoBehaviour
             name = cardType.ToString(),
             isGolden = isGolden,
         };
+    }
+
+    public DemoCardsInfo freeSpin_18 ( int col , int row )
+    {
+        var cardData = new DemoCardsInfo [,]
+         {
+            {
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            }
+         };
+
+        // Validate input to prevent index out of bounds
+        if (row < 0 || row >= cardData.GetLength(0) || col < 0 || col >= cardData.GetLength(1))
+        {
+            throw new ArgumentOutOfRangeException("Invalid row or column index.");
+        }
+
+        return cardData [row , col];
     }
 
     public DemoCardsInfo freeSpin_17 ( int col , int row )
