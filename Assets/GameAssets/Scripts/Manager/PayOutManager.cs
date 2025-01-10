@@ -34,13 +34,23 @@ public class PayOutManager : MonoBehaviour
         }
         else
         {
-            CurrentWinAmount.text = $"{CurrentWin.ToString("F2")}";
+            CurrentWinAmount.text = $"{CurrentWin.ToString("N2")}";
         }
 
         if (CommandCentre.Instance)
         {
-            //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
-            CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+            if (CommandCentre.Instance.DemoManager_.IsDemo)
+            {
+                if (CommandCentre.Instance.DemoManager_.winIndex < CommandCentre.Instance.DemoManager_.winAmount.Length)
+                {
+                    CurrentWin = float.Parse(CommandCentre.Instance.DemoManager_.winAmount [CommandCentre.Instance.DemoManager_.winIndex]);
+                }
+            }
+            else
+            {
+                //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
+                CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+            }
         }
         
         if (CurrentWin >= 10000000)

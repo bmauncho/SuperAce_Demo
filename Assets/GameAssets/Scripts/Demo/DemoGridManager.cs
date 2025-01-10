@@ -425,6 +425,7 @@ public class DemoGridManager : MonoBehaviour
         if (winLoseManager.CanRefill())
         {
             winLoseManager.DemoWinSequence();
+            CommandCentre.Instance.DemoManager_.winIndex++;
         }
         else if (!winLoseManager.CanRefill() && CommandCentre.Instance.DemoManager_.isScatterSpin)
         {

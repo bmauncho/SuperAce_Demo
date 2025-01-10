@@ -47404,19 +47404,19 @@ MonoBehaviour:
   AmountWon: 0
   rows:
   - infos:
-    - name: QUEEN
+    - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
     - name: CLUB
       substitute: 
       golden: 0
-      transformed: 1
-    - name: HEART
+      transformed: 0
+    - name: SPADE
       substitute: 
       golden: 0
       transformed: 0
-    - name: QUEEN
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
@@ -47425,19 +47425,19 @@ MonoBehaviour:
       golden: 0
       transformed: 0
   - infos:
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: WILD
       substitute: CLUB
       golden: 0
-      transformed: 1
-    - name: HEART
+      transformed: 0
+    - name: ACE
       substitute: 
       golden: 0
       transformed: 0
     - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
       substitute: 
       golden: 0
       transformed: 0
@@ -47446,36 +47446,11 @@ MonoBehaviour:
       golden: 0
       transformed: 0
   - infos:
-    - name: CLUB
+    - name: QUEEN
       substitute: 
       golden: 0
-      transformed: 1
-    - name: WILD
-      substitute: CLUB
-      golden: 0
-      transformed: 1
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 1
+      transformed: 0
     - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
@@ -47483,8 +47458,118 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: WILD
-      substitute: DIAMOND
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  rowsInterchanged:
+  - infos:
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
       golden: 0
       transformed: 0
   isDataFetched: 1
@@ -91370,6 +91455,54 @@ MonoBehaviour:
   - name: CLUB
     row: 2
     col: 2
+  - name: KING
+    row: 0
+    col: 1
+  - name: KING
+    row: 0
+    col: 3
+  - name: KING
+    row: 1
+    col: 2
+  - name: KING
+    row: 3
+    col: 0
+  - name: SPADE
+    row: 0
+    col: 0
+  - name: WILD
+    row: 0
+    col: 2
+  - name: SPADE
+    row: 1
+    col: 1
+  - name: SPADE
+    row: 2
+    col: 0
+  - name: SPADE
+    row: 2
+    col: 3
+  - name: CLUB
+    row: 0
+    col: 1
+  - name: WILD
+    row: 1
+    col: 1
+  - name: SPADE
+    row: 2
+    col: 0
+  - name: SPADE
+    row: 2
+    col: 1
+  - name: SPADE
+    row: 2
+    col: 2
+  - name: CLUB
+    row: 3
+    col: 0
+  - name: CLUB
+    row: 3
+    col: 2
   scatterdata: []
   totalobjectstojump: 2
   objectsJumped: 0
@@ -102576,6 +102709,25 @@ MonoBehaviour:
   DemoGridManager_: {fileID: 1390728396}
   DemoWinLoseManager_: {fileID: 853323454}
   isScatterSpin: 0
+  originalWinAmounts: []
+  winAmount:
+  - 10
+  - 10
+  - 700
+  - 60
+  - 96
+  - 156
+  - 36
+  - 300
+  - 20
+  - 8
+  - 4
+  - 16
+  - 36
+  - 16
+  - 84
+  - 108
+  winIndex: 0
 --- !u!4 &1743851832
 Transform:
   m_ObjectHideFlags: 0

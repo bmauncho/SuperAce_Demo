@@ -17,17 +17,50 @@ public class DemoManager : MonoBehaviour
     public DemoWinLoseManager DemoWinLoseManager_;
 
     public bool isScatterSpin;
+    [SerializeField]private string [] originalWinAmounts; // To store the original amounts
+    public string [] winAmount;
+    public int winIndex = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        InitializeWinAmounts(winAmount);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (CommandCentre.Instance)
+        {
+
+            UpdateWinAmounts(CommandCentre.Instance.BetManager_.BetAmount);
+        }
     }
+
+    
+
+    public void InitializeWinAmounts ( string [] initialAmounts )
+    {
+        originalWinAmounts = (string [])initialAmounts.Clone();
+        winAmount = (string [])initialAmounts.Clone();
+    }
+
+    public void UpdateWinAmounts ( float betAmount )
+    {
+        for (int i = 0 ; i < originalWinAmounts.Length ; i++)
+        {
+            if (float.TryParse(originalWinAmounts [i] , out float originalAmount))
+            {
+                winAmount [i] = ( originalAmount * betAmount / 10f ).ToString("F2");
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid original win amount at index {i}: {originalWinAmounts [i]}");
+            }
+        }
+    }
+
+
+
 
     public void StartDemo ()
     {
