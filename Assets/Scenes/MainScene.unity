@@ -47404,171 +47404,171 @@ MonoBehaviour:
   AmountWon: 0
   rows:
   - infos:
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: WILD
-      substitute: CLUB
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
     - name: WILD
-      substitute: CLUB
+      substitute: HEART
       golden: 0
       transformed: 0
-    - name: ACE
+    - name: WILD
+      substitute: QUEEN
+      golden: 0
+      transformed: 1
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: ACE
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
     - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
   rowsInterchanged:
   - infos:
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
     - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: SPADE
       substitute: 
       golden: 0
       transformed: 0
     - name: WILD
-      substitute: CLUB
+      substitute: HEART
       golden: 0
       transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
     - name: WILD
-      substitute: CLUB
+      substitute: QUEEN
       golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
+      transformed: 1
     - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
@@ -91503,6 +91503,27 @@ MonoBehaviour:
   - name: CLUB
     row: 3
     col: 2
+  - name: WILD
+    row: 0
+    col: 2
+  - name: QUEEN
+    row: 1
+    col: 1
+  - name: CLUB
+    row: 1
+    col: 2
+  - name: QUEEN
+    row: 2
+    col: 0
+  - name: QUEEN
+    row: 2
+    col: 1
+  - name: CLUB
+    row: 3
+    col: 0
+  - name: CLUB
+    row: 3
+    col: 1
   scatterdata: []
   totalobjectstojump: 2
   objectsJumped: 0
@@ -144639,6 +144660,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 164479946644579164, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 916844593156559302, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -144727,6 +144752,14 @@ PrefabInstance:
       propertyPath: SettingBtn
       value: 
       objectReference: {fileID: 4534329036797666545}
+    - target: {fileID: 3946443357891510338, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_Size
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946443357891510338, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_NumberOfSteps
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7705933430431402908, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Name
       value: SettingsMenu
