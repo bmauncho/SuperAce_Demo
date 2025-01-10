@@ -36,6 +36,7 @@ public class GameDataAPI : MonoBehaviour
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
+    public List<rowData> rowsInterchanged = new List<rowData>(5);
     public bool isDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     private void Start ()
@@ -66,6 +67,7 @@ public class GameDataAPI : MonoBehaviour
 
     IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
     {
+        bool isDone = false;
         var request = new UnityWebRequest(url , "POST");
         byte [] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -114,10 +116,15 @@ public class GameDataAPI : MonoBehaviour
                         }
                     }
                     AmountWon = response.data.AmountWon;
+                    isDone = true;
+                    isDataFetched = true;
                 }
             }
-            isDataFetched = true;
+            
         }
+        
+        yield return new WaitUntil(()=>isDone);
+        rowsInterchanged = new List<rowData>(InterchangeRows(rows,0,3));
     }
 
     public bool IsFreeGame ()
@@ -128,7 +135,8 @@ public class GameDataAPI : MonoBehaviour
     public CardData GetCardInfo ( int col , int row )
     {
         CardData info = null;
-        info = rows [row].infos [col];
+        //info = rows [row].infos [col];
+        info = rowsInterchanged [row].infos [col];
         return info;
     }
 
@@ -165,4 +173,26 @@ public class GameDataAPI : MonoBehaviour
             }
         }
     }
+
+    public List<rowData> InterchangeRows ( List<rowData> originalRows , int index1 , int index2 )
+    {
+        // Check if indices are within bounds
+        if (originalRows == null || index1 < 0 || index2 < 0 ||
+            index1 >= originalRows.Count || index2 >= originalRows.Count)
+        {
+            Debug.LogError("Invalid indices or rows list is null.");
+            return null;
+        }
+
+        // Create a deep copy of the original list
+        List<rowData> modifiedRows = new List<rowData>(originalRows);
+
+        // Swap the rows
+        rowData temp = modifiedRows [index1];
+        modifiedRows [index1] = modifiedRows [index2];
+        modifiedRows [index2] = temp;
+
+        return modifiedRows;
+    }
+
 }

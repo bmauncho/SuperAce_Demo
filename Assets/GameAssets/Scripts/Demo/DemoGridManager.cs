@@ -371,7 +371,15 @@ public class DemoGridManager : MonoBehaviour
                             }
                             else if(demoSequence.spinCount == 16)
                             {
-                                if (refilcount > 1)
+                                if (refilcount >= 2)
+                                {
+                                    demoSequence.SetUpFreeCards();
+                                    refilcount = 0;
+                                }
+                                refilcount++;
+                            }else if (demoSequence.spinCount == 17)
+                            {
+                                if (refilcount > 0)
                                 {
                                     demoSequence.SetUpFreeCards();
                                     refilcount = 0;
