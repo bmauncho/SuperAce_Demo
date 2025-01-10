@@ -5360,15 +5360,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   response:
     message: Bet placed successfully
-    bet_id: 3354222
-    new_wallet_balance: 72.5
+    bet_id: 7260
+    new_wallet_balance: 2104353.5
     status: lost
     error: Insufficient balance
   BetAmount: 2
   customerId: 28
   tries: 3
   maxtries: 3
-  IsUpdated: 0
+  IsUpdated: 1
 --- !u!1 &131352186
 GameObject:
   m_ObjectHideFlags: 0
@@ -144489,19 +144489,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 810063202144013364, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 810063202144013364, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 810063202144013364, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 810063202144013364, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -129.8
       objectReference: {fileID: 0}
     - target: {fileID: 916844593156559302, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Pivot.x
@@ -144589,47 +144589,51 @@ PrefabInstance:
       objectReference: {fileID: 989973740}
     - target: {fileID: 2926717226532721303, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 2926717226532721303, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -28.199997
       objectReference: {fileID: 0}
     - target: {fileID: 3172026954436281474, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: SettingBtn
       value: 
       objectReference: {fileID: 4534329036797666545}
+    - target: {fileID: 4257679849530866758, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4522004245781043777, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4522004245781043777, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4522004245781043777, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 4522004245781043777, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -17.5
       objectReference: {fileID: 0}
     - target: {fileID: 5145689642263475096, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5145689642263475096, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5145689642263475096, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 5145689642263475096, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -74.9
       objectReference: {fileID: 0}
     - target: {fileID: 7705933430431402908, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Name

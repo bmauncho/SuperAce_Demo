@@ -153,7 +153,7 @@ public class GridManager : MonoBehaviour
             Debug.LogError("Decks array is null or empty.");
             return;
         }
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , CommandCentre.Instance.SoundManager_.maxSound);
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -245,7 +245,7 @@ public class GridManager : MonoBehaviour
             Debug.LogError("CardManager is not assigned.");
             return;
         }
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , CommandCentre.Instance.SoundManager_.maxSound);
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = 0 ; row < rowCount ; row++)
@@ -335,7 +335,7 @@ public class GridManager : MonoBehaviour
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int columnCount = decks.Length; // Number of columns
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , CommandCentre.Instance.SoundManager_.maxSound);
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = 0 ; row < rowCount ; row++)
@@ -380,7 +380,7 @@ public class GridManager : MonoBehaviour
         objectsPlaced = totalObjectsToPlace - objectshidden;
         int rowCount = 4; // Number of rows
         int columnCount = decks.Length; // Number of columns
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , CommandCentre.Instance.SoundManager_.maxSound);
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = 0 ; row < rowCount ; row++)
@@ -407,7 +407,7 @@ public class GridManager : MonoBehaviour
                         {
                             if(newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
                             {
-                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , CommandCentre.Instance.SoundManager_.maxSound);
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , 1);
                             }
                             newCard.transform.localPosition = Vector3.zero;
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
