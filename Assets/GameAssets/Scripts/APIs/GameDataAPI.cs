@@ -124,7 +124,7 @@ public class GameDataAPI : MonoBehaviour
         }
         
         yield return new WaitUntil(()=>isDone);
-        rowsInterchanged = new List<rowData>(InterchangeRows(rows,0,3));
+        rowsInterchanged = new List<rowData>(ReverseRows(rows));
     }
 
     public bool IsFreeGame ()
@@ -174,25 +174,23 @@ public class GameDataAPI : MonoBehaviour
         }
     }
 
-    public List<rowData> InterchangeRows ( List<rowData> originalRows , int index1 , int index2 )
+    public List<rowData> ReverseRows ( List<rowData> originalRows )
     {
-        // Check if indices are within bounds
-        if (originalRows == null || index1 < 0 || index2 < 0 ||
-            index1 >= originalRows.Count || index2 >= originalRows.Count)
+        // Check if the list is null or empty
+        if (originalRows == null || originalRows.Count == 0)
         {
-            Debug.LogError("Invalid indices or rows list is null.");
+            Debug.LogError("The rows list is null or empty.");
             return null;
         }
 
         // Create a deep copy of the original list
         List<rowData> modifiedRows = new List<rowData>(originalRows);
 
-        // Swap the rows
-        rowData temp = modifiedRows [index1];
-        modifiedRows [index1] = modifiedRows [index2];
-        modifiedRows [index2] = temp;
+        // Reverse the list
+        modifiedRows.Reverse();
 
         return modifiedRows;
     }
+
 
 }
