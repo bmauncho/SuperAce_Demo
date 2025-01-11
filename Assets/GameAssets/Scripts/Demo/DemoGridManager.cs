@@ -149,9 +149,10 @@ public class DemoGridManager : MonoBehaviour
     {
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            Deck currentDeck = decks [col];
+            for (int row = rowCount -1; row >=0 ; row--)
             {
-                Deck currentDeck = decks [col];
+               
                 GameObject newCard = currentDeck.DrawCard();
                 if (isFirstPlay)
                 {
@@ -163,10 +164,10 @@ public class DemoGridManager : MonoBehaviour
                     cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
-                Transform targetPos = colData [col].cardPositionInRow [row].transform;
+                Transform targetPos = colData [row].cardPositionInRow [col].transform;
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                float delay = ( col * rowCount + row ) * delayIncrement;
+                float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement;
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
                     .SetEase(Ease.OutQuad)
@@ -188,7 +189,7 @@ public class DemoGridManager : MonoBehaviour
     {
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
                 Deck currentDeck = decks [col];
                 GameObject newCard = currentDeck.DrawCard();
@@ -202,7 +203,7 @@ public class DemoGridManager : MonoBehaviour
                     cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                 }
                 currentDeck.ResetDeck();
-                Transform targetPos = colData [col].cardPositionInRow [row].transform;
+                Transform targetPos = colData [row].cardPositionInRow [col].transform;
 
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
@@ -234,10 +235,10 @@ public class DemoGridManager : MonoBehaviour
 
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
 
-                GameObject cardPosHolder = colData [col].cardPositionInRow [row];
+                GameObject cardPosHolder = colData [row].cardPositionInRow [col];
                 CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
                 GameObject card = cardPos.TheOwner;
                 if (!card)
@@ -248,10 +249,10 @@ public class DemoGridManager : MonoBehaviour
                     cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
 
                     currentDeck.ResetDeck();
-                    Transform targetPos = colData [col].cardPositionInRow [row].transform;
+                    Transform targetPos = colData [row].cardPositionInRow [col].transform; ;
                     newCard.transform.SetParent(targetPos);
                     newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                    float delay = ( col * rowCount + row ) * delayIncrement;
+                    float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement;
                     Sequence cardSequence = DOTween.Sequence();
                     cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
                         .SetEase(Ease.OutQuad)
@@ -277,7 +278,7 @@ public class DemoGridManager : MonoBehaviour
         int columnCount = decks.Length; // Number of columns
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
 
                 GameObject cardPosHolder = colData [row].cardPositionInRow [col];
@@ -290,7 +291,7 @@ public class DemoGridManager : MonoBehaviour
                     GameObject newCard = currentDeck.DrawCard();
                     cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
-                    Transform targetPos = colData [col].cardPositionInRow [row].transform;
+                    Transform targetPos = colData [row].cardPositionInRow [col].transform;
 
                     newCard.transform.SetParent(targetPos);
                     newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);

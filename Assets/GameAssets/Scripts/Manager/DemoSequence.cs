@@ -47,39 +47,48 @@ public class DemoSequence : MonoBehaviour
     public void SetUpCards ()
     {
         demoCards.Clear();
-        List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
-        bool hasSetUp = false;
+
+        // Ensure `demoCards` has 4 pre-initialized elements
         for (int i = 0 ; i < 4 ; i++)
         {
-            demoCards.Add(new DemoCards());
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
+
+        List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
+        bool hasSetUp = false;
+
+        for (int i = 4 - 1 ; i >= 0 ; i--)
+        {
             for (int j = 0 ; j < 5 ; j++)
             {
-                // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
-                {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
-                }
                 if (whichSpin(spinCount , j , i) != null)
                 {
                     demoCards [i].cards.Add(whichSpin(spinCount , j , i));
                     hasSetUp = true;
                 }
-
             }
         }
+
         if (hasSetUp)
         {
             spinCount++;
         }
     }
 
+
     [ContextMenu("SetUp scatterCards")]
     public void setUpscatterCards ()
     {
         demoCards.Clear();
+
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
@@ -89,8 +98,12 @@ public class DemoSequence : MonoBehaviour
                 {
                     demoCards [i].cards = new List<DemoCardsInfo>();
                 }
+                if(scatterspinSpin(j , i) != null)
+                {
+                    demoCards [i].cards.Add(scatterspinSpin(j , i));
+                }
 
-                demoCards [i].cards.Add(scatterspinSpin( j , i));
+               
             }
         }
 
@@ -103,20 +116,25 @@ public class DemoSequence : MonoBehaviour
     public void setUpFirstFreeCards ()
     {
         demoCards.Clear();
+
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
+
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (firstfreeSpin(j , i) !=null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(firstfreeSpin(j , i));
                 }
-
-                demoCards [i].cards.Add(firstfreeSpin(j , i));
             }
         }
     }
@@ -124,20 +142,24 @@ public class DemoSequence : MonoBehaviour
     public void setUpSecondFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (secondfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(secondfreeSpin(j , i));
                 }
 
-                demoCards [i].cards.Add(secondfreeSpin(j , i));
             }
         }
     }
@@ -146,20 +168,25 @@ public class DemoSequence : MonoBehaviour
     {
         Debug.Log("called");
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
         bool hasSetUp = false;
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (whichFreeSpin(spinCount , j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    Debug.Log(whichFreeSpin(spinCount , j , i));
+                    demoCards [i].cards.Add(whichFreeSpin(spinCount , j , i));
                 }
-                Debug.Log(whichFreeSpin(spinCount , j , i));
-                demoCards [i].cards.Add(whichFreeSpin(spinCount , j , i));
+               
                 hasSetUp = true;
 
             }
@@ -173,20 +200,23 @@ public class DemoSequence : MonoBehaviour
     public void setUpThirdFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (thirdfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(thirdfreeSpin(j , i));
                 }
-
-                demoCards [i].cards.Add(thirdfreeSpin(j , i));
             }
         }
     }
@@ -194,20 +224,23 @@ public class DemoSequence : MonoBehaviour
     public void setUpForthFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (forthfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(forthfreeSpin(j , i));
                 }
-
-                demoCards [i].cards.Add(forthfreeSpin(j , i));
             }
         }
     }
@@ -215,20 +248,25 @@ public class DemoSequence : MonoBehaviour
     public void setUpFifthFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (fifthfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(fifthfreeSpin(j , i));
                 }
 
-                demoCards [i].cards.Add(fifthfreeSpin(j , i));
+               
             }
         }
     }
@@ -237,20 +275,23 @@ public class DemoSequence : MonoBehaviour
     public void setUpSixthFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (sixthfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(sixthfreeSpin(j , i));
                 }
-
-                demoCards [i].cards.Add(sixthfreeSpin(j , i));
             }
         }
     }
@@ -259,20 +300,25 @@ public class DemoSequence : MonoBehaviour
     public void setUpSeventhFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (seventhfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(seventhfreeSpin(j , i));
                 }
 
-                demoCards [i].cards.Add(seventhfreeSpin(j , i));
+                
             }
         }
     }
@@ -280,20 +326,25 @@ public class DemoSequence : MonoBehaviour
     public void setUpEighthFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >= 0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (eigthfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(eigthfreeSpin(j , i));
                 }
 
-                demoCards [i].cards.Add(eigthfreeSpin(j , i));
+                
             }
         }
     }
@@ -301,20 +352,25 @@ public class DemoSequence : MonoBehaviour
     public void setUpNinethFreeCards ()
     {
         demoCards.Clear();
+        // Ensure `demoCards` has 4 pre-initialized elements
+        for (int i = 0 ; i < 4 ; i++)
+        {
+            demoCards.Add(new DemoCards { cards = new List<DemoCardsInfo>() });
+        }
         List<CardType> cardTypes = new List<CardType>((CardType [])Enum.GetValues(typeof(CardType)));
 
-        for (int i = 0 ; i < 4 ; i++)
+        for (int i = 4 - 1 ; i >=0 ; i--)
         {
             demoCards.Add(new DemoCards());
             for (int j = 0 ; j < 5 ; j++)
             {
                 // Ensure nested objects are initialized
-                if (demoCards [i].cards == null)
+                if (ninethfreeSpin(j , i) != null)
                 {
-                    demoCards [i].cards = new List<DemoCardsInfo>();
+                    demoCards [i].cards.Add(ninethfreeSpin(j , i));
                 }
 
-                demoCards [i].cards.Add(ninethfreeSpin(j , i));
+              
             }
         }
     }
@@ -438,32 +494,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true},
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -481,31 +537,31 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = true } , isGolden = false },
-                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="ACE" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = true } , isGolden = false },
                 new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden =false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="HEART" , isGolden = true } , isGolden = false},
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
@@ -524,32 +580,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "SCATTER" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute =  new Substitute{ subsitute_ ="DIAMOND" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DAMOND" , isGolden = false } , isGolden =false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute =  new Substitute{ subsitute_ ="DIAMOND" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "SCATTER" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -567,32 +623,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="CLUB" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
+                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="LITTLE_JOKER" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -610,32 +666,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -653,32 +709,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="HEART" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -696,32 +752,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "lITTLE_JOKER", _Subsitute =  new Substitute{ subsitute_ ="DIAMOND" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -739,32 +795,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = true } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute =  new Substitute{ subsitute_ ="lITTLE_JOKER" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -782,32 +838,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true},
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -825,32 +881,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden =false },
+                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -868,32 +924,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -911,32 +967,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = true } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -954,32 +1010,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = true } , isGolden = false },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute =  new Substitute{ subsitute_ ="DIAMOND" , isGolden = true } , isGolden = false},
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -997,32 +1053,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute =  new Substitute{ subsitute_ ="LITTLE_JOKER" , isGolden = false } , isGolden = true },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -1038,36 +1094,36 @@ public class DemoSequence : MonoBehaviour
     public DemoCardsInfo freeSpin_4 ( int col , int row )
     {
         var cardData = new DemoCardsInfo [,]
-         {
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = true } , isGolden = false},
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute =  new Substitute{ subsitute_ ="QUEEN" , isGolden = true } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = true } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
+        {
             {
                 new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
-         };
+        };
 
         // Validate input to prevent index out of bounds
         if (row < 0 || row >= cardData.GetLength(0) || col < 0 || col >= cardData.GetLength(1))
@@ -1083,32 +1139,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true},
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "WILD" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -1126,32 +1182,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = true } , isGolden = false},
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "LITTLLE_JOKER" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "LITTLE_JOKER" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute =  new Substitute{ subsitute_ ="HEART" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = true } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -1169,32 +1225,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -1212,32 +1268,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
-            },
-            {
                 new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false},
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SCATTER", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+            },
+            {
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = true },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             }
          };
 
@@ -1255,32 +1311,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ ="", isGolden = false, } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = true },
-                new DemoCardsInfo { name = "WILD", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "SPADE",_Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = true},
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ = "HEART" , isGolden = false},isGolden  = false }
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ ="", isGolden = false, } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false},
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="SCATTER" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "CLUB",_Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false},
+                new DemoCardsInfo { name = "CLUB", _Subsitute =  new Substitute{ subsitute_ = "" , isGolden = false},isGolden  = false }
             },
             {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute= new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = ""  ,isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute =  new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ = ""  , isGolden =false}, isGolden = false },
-                new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ = ""  ,isGolden =false }, isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute= new Substitute{ subsitute_ = "QUEEN" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "KING"  ,isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ = "KING" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ = "SPADE"  , isGolden =false}, isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute =  new Substitute{ subsitute_ = ""  ,isGolden =false }, isGolden = false },
             },
             {
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="KING" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ =  "" , isGolden = false} , isGolden = false }
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ =  "" , isGolden = false} , isGolden = false }
             },
             {
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
                 new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "SCATTER" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false }
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = true },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false}, isGolden = false }
             }
          };
 
@@ -1298,32 +1354,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
          {
             {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ ="QUEEN", isGolden = false, } , isGolden = false },
-                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute =  new Substitute{ subsitute_ ="ACE" , isGolden = false} , isGolden = true },
-                new DemoCardsInfo { name = "WILD", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN",_Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = true} , isGolden = false },
-                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute =  new Substitute{ subsitute_ = "DIAMOND" , isGolden = false},isGolden  = false }
-            },
-            {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute= new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = ""  ,isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute =  new Substitute{ subsitute_ = "HEART" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ = ""  , isGolden =false}, isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute =  new Substitute{ subsitute_ = "SPADE"  ,isGolden =false }, isGolden = false },
-            },
-            {
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ ="ACE", isGolden = false, } , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false} , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ =  "CLUB" , isGolden = false} , isGolden = false }
+                new DemoCardsInfo { name = "LITTLE_JOKER",_Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = true} , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute =  new Substitute{ subsitute_ = "CLUB" , isGolden = false},isGolden  = false }
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "LITTLE_JOKER", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false}, isGolden = true },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "CLUB" , isGolden = false}, isGolden = false }
+                new DemoCardsInfo { name = "KING", _Subsitute= new Substitute{ subsitute_ = "DIAMOND" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = ""  ,isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND", _Subsitute =  new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute =  new Substitute{ subsitute_ = "DIAMOND"  , isGolden =false}, isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute =  new Substitute{ subsitute_ = ""  ,isGolden =false }, isGolden = false },
+            },
+            {
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute = new Substitute{ subsitute_ = "HEART" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false} , isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ =  "SPADE" , isGolden = false} , isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "QUEEN" , isGolden = false}, isGolden = false },
+                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute = new Substitute{ subsitute_ = "ACE" , isGolden = false}, isGolden = false },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "SPADE" , isGolden = true}, isGolden = false },
+                new DemoCardsInfo { name = "BIG_JOKER", _Subsitute = new Substitute{ subsitute_ = "DIAMOND" , isGolden = false}, isGolden = false }
             }
          };
 
@@ -1341,32 +1397,32 @@ public class DemoSequence : MonoBehaviour
         var cardData = new DemoCardsInfo [,]
         {
             {
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "KING" , isGolden = false}, isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "BIG_JOKER" , isGolden = false}, isGolden = true },
-                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
-            },
-            {
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "ACE",_Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
+                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false}, isGolden = true },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "DIAMOND", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "LITTLE_JOKER", isGolden = false }, isGolden = true },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
             },
             {
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "DIAMOND",_Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
                 new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "CLUB", isGolden = false }, isGolden = false }
             },
             {
-                new DemoCardsInfo { name = "SPADE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "ACE",_Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "DIAMOND", isGolden = false }, isGolden = false },
-                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "LITTLE_JOKER", isGolden = false }, isGolden = true },
-                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "KING", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
+            },
+            {
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute { subsitute_ = "KING", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "HEART",_Subsitute = new Substitute { subsitute_ = "BIG_JOKER", isGolden = false }, isGolden = true },
+                new DemoCardsInfo { name = "WILD", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false },
+                new DemoCardsInfo { name = "ACE", _Subsitute = new Substitute { subsitute_ = "", isGolden = false }, isGolden = false }
             }
         };
 

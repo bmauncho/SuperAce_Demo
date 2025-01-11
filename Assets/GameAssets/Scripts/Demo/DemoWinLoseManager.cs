@@ -110,52 +110,24 @@ public class DemoWinLoseManager : MonoBehaviour
                     continue; // Skip further checks for this card
                 }
 
-                if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+                // Check for substitute or optional jokers
+                if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
+                    card.name == "BIG_JOKER" ||
+                    card.name == "LITTLE_JOKER")
                 {
-                    // Check for substitute or optional jokers
-                    if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
-                        card.name == "BIG_JOKER" ||
-                        card.name == "LITTLE_JOKER" )
+                    winCards.Add(new WinCardData
                     {
-                        winCards.Add(new WinCardData
+                        name = card.name ,
+                        Substitute = card._Subsitute?.subsitute_ ,
+                        position = new position
                         {
-                            name = card.name ,
-                            Substitute = card._Subsitute?.subsitute_ ,
-                            position = new position
-                            {
-                                row = i ,
-                                col = j
-                            }
-                        });
-                        addedCardKeys.Add(cardKey); // Mark this card as added
-                        hasSubstitute = true;
-                    }
+                            row = i ,
+                            col = j
+                        }
+                    });
+                    addedCardKeys.Add(cardKey); // Mark this card as added
+                    hasSubstitute = true;
                 }
-                else
-                {
-                    // Check for substitute or optional jokers
-                    if (!string.IsNullOrEmpty(card._Subsitute?.subsitute_) ||
-                        card.name == "BIG_JOKER" ||
-                        card.name == "LITTLE_JOKER" ||
-                        card.isGolden)
-                    {
-                        winCards.Add(new WinCardData
-                        {
-                            name = card.name ,
-                            Substitute = card._Subsitute?.subsitute_ ,
-                            position = new position
-                            {
-                                row = i ,
-                                col = j
-                            }
-                        });
-                        addedCardKeys.Add(cardKey); // Mark this card as added
-                        hasSubstitute = true;
-                    }
-                }
-                
-                
-                
             }
         }
 
@@ -231,7 +203,7 @@ public class DemoWinLoseManager : MonoBehaviour
                 continue;
             }
 
-            GameObject cardPosHolder = demoGridManager.colData [col].cardPositionInRow [row];
+            GameObject cardPosHolder = demoGridManager.colData [row].cardPositionInRow [col];
             CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
             GameObject card = cardPos.TheOwner;
 
@@ -408,9 +380,9 @@ public class DemoWinLoseManager : MonoBehaviour
         if (jumpIndex == 0)
         {
             randomColumnIndex1 = 2;
-            randomrowIndex1 = 1;
+            randomrowIndex1 = 2;
             randomColumnIndex2 = 4;
-            randomrowIndex2 = 0;
+            randomrowIndex2 = 3;
            
         }
         else
@@ -433,13 +405,13 @@ public class DemoWinLoseManager : MonoBehaviour
         newCard1.SetActive(true);
         newCard2.SetActive(true);
 
-        newCard1.transform.SetParent(demoGridManager.colData [randomColumnIndex1].cardPositionInRow [randomrowIndex1].transform);
-        newCard2.transform.SetParent(demoGridManager.colData [randomColumnIndex2].cardPositionInRow [randomrowIndex2].transform);
+        newCard1.transform.SetParent(demoGridManager.colData [randomrowIndex1].cardPositionInRow [randomColumnIndex1].transform);
+        newCard2.transform.SetParent(demoGridManager.colData [randomrowIndex2].cardPositionInRow [randomColumnIndex2].transform);
 
-        demoGridManager.colData [randomColumnIndex1].cardPositionInRow [randomrowIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
-        demoGridManager.colData [randomColumnIndex2].cardPositionInRow [randomrowIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
-        demoGridManager.colData [randomColumnIndex1].cardPositionInRow [randomrowIndex1].GetComponent<CardPos>().TheOwner = newCard1;
-        demoGridManager.colData [randomColumnIndex2].cardPositionInRow [randomrowIndex2].GetComponent<CardPos>().TheOwner = newCard2;
+        demoGridManager.colData [randomrowIndex1].cardPositionInRow [randomColumnIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
+        demoGridManager.colData [randomrowIndex2].cardPositionInRow [randomColumnIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
+        demoGridManager.colData [randomrowIndex1].cardPositionInRow [randomColumnIndex1].GetComponent<CardPos>().TheOwner = newCard1;
+        demoGridManager.colData [randomrowIndex2].cardPositionInRow [randomColumnIndex2].GetComponent<CardPos>().TheOwner = newCard2;
         newCard1.GetComponent<Card>().ActiveCardType = CardType.BIG_JOKER;
         newCard2.GetComponent<Card>().ActiveCardType = CardType.BIG_JOKER;
         CommandCentre.Instance.CardManager_.setcard(newCard1.GetComponent<Card>() , randomColumnIndex1 , randomrowIndex1);
@@ -448,7 +420,7 @@ public class DemoWinLoseManager : MonoBehaviour
         var jumpSequence = DOTween.Sequence();
         // DOTween jump animations
         jumpSequence.Join(newCard1.transform.DOJump(
-            demoGridManager.colData [randomColumnIndex1].cardPositionInRow [randomrowIndex1].transform.position ,
+            demoGridManager.colData [randomrowIndex1].cardPositionInRow [randomColumnIndex1].transform.position ,
             2.0f , 1 , 1.0f).OnComplete(() =>
             {
                 objectsJumped++;
@@ -459,7 +431,7 @@ public class DemoWinLoseManager : MonoBehaviour
             }));
 
         jumpSequence.Join(newCard2.transform.DOJump(
-            demoGridManager.colData [randomColumnIndex2].cardPositionInRow [randomrowIndex2].transform.position ,
+            demoGridManager.colData [randomrowIndex2].cardPositionInRow [randomColumnIndex2].transform.position ,
             2.0f , 1 , 1.0f).OnComplete(() =>
             {
                 objectsJumped++;

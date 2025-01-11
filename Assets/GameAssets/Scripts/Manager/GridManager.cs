@@ -358,7 +358,7 @@ public class GridManager : MonoBehaviour
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                     newCard.transform.SetParent(targetPos);
                     newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                    float delay = ( col * rowCount + row ) * delayIncrement;
+                    float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement;
                     Sequence cardSequence = DOTween.Sequence();
                     cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
                         .SetEase(Ease.OutQuad)
