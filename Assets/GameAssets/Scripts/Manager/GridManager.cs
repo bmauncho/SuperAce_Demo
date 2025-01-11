@@ -153,7 +153,9 @@ public class GridManager : MonoBehaviour
             Debug.LogError("Decks array is null or empty.");
             return;
         }
+
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -163,7 +165,7 @@ public class GridManager : MonoBehaviour
             }
 
             Deck currentDeck = decks [col];
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
             {
                 if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
                 {
@@ -199,7 +201,7 @@ public class GridManager : MonoBehaviour
 
                 newCard.transform.SetParent(targetPos);
                 newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                float delay = ( col * rowCount + row ) * delayIncrement;
+                float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement; // Adjust delay for reversed order
 
                 Sequence cardSequence = DOTween.Sequence();
                 cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
@@ -225,6 +227,7 @@ public class GridManager : MonoBehaviour
     }
 
 
+
     public void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
         // Ensure all inputs are valid
@@ -248,7 +251,7 @@ public class GridManager : MonoBehaviour
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
                 // Validate rowData and its cardPositionInRow
                 if (rowData [row] == null || rowData [row].cardPositionInRow == null || rowData [row].cardPositionInRow.Count <= col)
@@ -338,7 +341,7 @@ public class GridManager : MonoBehaviour
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
 
                 GameObject cardPosHolder = rowData [row].cardPositionInRow [col];
@@ -383,7 +386,7 @@ public class GridManager : MonoBehaviour
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
-            for (int row = 0 ; row < rowCount ; row++)
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
             {
 
                 GameObject cardPosHolder = rowData [row].cardPositionInRow [col];

@@ -26,23 +26,43 @@ public class WinLoseManager : MonoBehaviour
 
     public int totalobjectstojump = 2;
     public int objectsJumped = 0;
+    private  HashSet<string> addedKeys = new HashSet<string>();
+
     private void Start ()
     {
         gridManager = CommandCentre.Instance.GridManager_;
         poolManager = CommandCentre.Instance.PoolManager_;
         cardFxManager = CommandCentre.Instance.CardFxManager_;
         data.Clear();
+        addedKeys.Clear();
     }
 
-    public void GetWinningCard (CardData _data,int row, int col)
-    {
+   
 
-        data.Add(new winData
+    public void GetWinningCard ( CardData _data , int row , int col )
+    {
+        // Create a unique key for the card
+        string key = $"{row}-{col}";
+
+        // Check if the key already exists in the HashSet
+        if (!addedKeys.Contains(key))
         {
-            name = _data.name ,
-            row = row ,
-            col = col ,
-        });
+            // Add the card data if it's not a duplicate
+            data.Add(new winData
+            {
+                name = _data.name ,
+                row = row ,
+                col = col ,
+            });
+
+            // Add the key to the HashSet to prevent future duplicates
+            addedKeys.Add(key);
+        }
+    }
+
+    public void ClearAddedKeys ()
+    {
+        addedKeys.Clear();
     }
 
     public void ResetWinDataList ()
@@ -157,6 +177,7 @@ public class WinLoseManager : MonoBehaviour
         // Reset and refill processes
         cardFxManager.DeactivateCardFxMask();
         ResetWinDataList();
+        ClearAddedKeys();
 
         if (CommandCentre.Instance.TurboManager_.TurboSpin_)
         {

@@ -75,12 +75,19 @@ public class CardFxManager : MonoBehaviour
     [ContextMenu("activate card Masks")]
     void test ()
     {
-        int col = Random.Range(0 , 4);
-        int row = Random.Range(0 , 3);
-
-        Debug.Log($"The row {row} the Col {col}");
         ActivateCardMask();
-        ActivateCardFxMask(row, col);
+        ActivateAllCardFxMask();
+    }
+
+    public void ActivateAllCardFxMask ()
+    {
+        for (int i = 0 ; i < 5 ; i++)
+        {
+            for (int j = 4 - 1 ; j >= 0 ; j--)
+            {
+                CardFxMask [j].cardFxPos [i].SetActive(true);
+            }
+        }
     }
 
 
@@ -88,7 +95,7 @@ public class CardFxManager : MonoBehaviour
     {
         for (int i = 0;i<5 ;i++)
         {
-            for(int j = 0;j<4 ;j++)
+            for(int j = 4-1;j>=0 ;j--)
             {
                 if(CardFxMask [whichrow].cardFxPos [whichcol] == CardFxMask [j].cardFxPos [i])
                 {
@@ -104,7 +111,7 @@ public class CardFxManager : MonoBehaviour
         DeactivateCardMask ();
         for (int i = 0 ; i < 5 ; i++)
         {
-            for (int j = 0 ; j < 4 ; j++)
+            for (int j = 4 - 1 ; j >= 0 ; j--)
             {
                 CardFxMask [j].cardFxPos [i].SetActive(false);
             }

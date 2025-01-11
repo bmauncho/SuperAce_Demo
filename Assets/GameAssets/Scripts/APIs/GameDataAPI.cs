@@ -36,7 +36,7 @@ public class GameDataAPI : MonoBehaviour
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
-    public List<rowData> rowsInterchanged = new List<rowData>(5);
+    //public List<rowData> rowsInterchanged = new List<rowData>(5);
     public bool isDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     private void Start ()
@@ -82,7 +82,10 @@ public class GameDataAPI : MonoBehaviour
         {
             //Debug.Log("Received: " + request.downloadHandler.text);
             string output = request.downloadHandler.text;
+            object parsedResponse = JsonConvert.DeserializeObject(output);
+            string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
+            Debug.Log("Received: " + formattedOutput);
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             if (response?.data?.cards != null)
             {
@@ -123,8 +126,6 @@ public class GameDataAPI : MonoBehaviour
             
         }
         
-        yield return new WaitUntil(()=>isDone);
-        rowsInterchanged = new List<rowData>(ReverseRows(rows));
     }
 
     public bool IsFreeGame ()
@@ -135,8 +136,7 @@ public class GameDataAPI : MonoBehaviour
     public CardData GetCardInfo ( int col , int row )
     {
         CardData info = null;
-        //info = rows [row].infos [col];
-        info = rowsInterchanged [row].infos [col];
+        info = rows [row].infos [col];
         return info;
     }
 

@@ -15,13 +15,13 @@ public class CardPosGenerator : MonoBehaviour
     void CreateGrid ()
     {
         int thepos = 1;
-        for (int col = 0 ; col < gridSizeX ; col++)
+        for (int row = 0 ; row < gridSizeY ; row++)
         {
-            for (int row = 0 ; row < gridSizeY ; row++)
+            for (int col = 0 ; col < gridSizeX ; col++)
             {
                 GameObject card = Instantiate(CardPositioner , transform);
-                card.name = ItemName+"_"+ thepos.ToString();
-                Vector3 targetPos = new Vector3(col * Spacing.x , row * Spacing.y , 0f);
+                card.name = ItemName + "_" + thepos.ToString();
+                Vector3 targetPos = new Vector3(col * Spacing.x , -row * Spacing.y , 0f); // Adjust Y direction if necessary
                 card.transform.localPosition = targetPos;
                 thepos++;
             }
@@ -29,48 +29,36 @@ public class CardPosGenerator : MonoBehaviour
     }
 
     [ContextMenu("Clear Grid")]
-    void clear ()
+    void Clear ()
     {
-        List<Transform>objectsToDestroy = new List<Transform>();
-        foreach(Transform t in transform)
+        List<Transform> objectsToDestroy = new List<Transform>();
+        foreach (Transform t in transform)
         {
             objectsToDestroy.Add(t);
         }
 
-        foreach(Transform t in objectsToDestroy)
+        foreach (Transform t in objectsToDestroy)
         {
             DestroyImmediate(t.gameObject);
         }
     }
 
     [ContextMenu("Disable Markers")]
-    void disableMarkers ()
+    void DisableMarkers ()
     {
-        List<Transform> markersToHide = new List<Transform>();
         foreach (Transform t in transform)
         {
-            markersToHide.Add(t);
-        }
-
-        foreach(Transform t in markersToHide)
-        {
-            foreach(Transform _t in t)
+            foreach (Transform _t in t)
             {
                 _t.gameObject.SetActive(false);
             }
         }
     }
 
-    [ContextMenu("enable Markers")]
-    void enableMarkers ()
+    [ContextMenu("Enable Markers")]
+    void EnableMarkers ()
     {
-        List<Transform> markersToShow = new List<Transform>();
         foreach (Transform t in transform)
-        {
-            markersToShow.Add(t);
-        }
-
-        foreach (Transform t in markersToShow)
         {
             foreach (Transform _t in t)
             {
