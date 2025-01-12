@@ -43,13 +43,14 @@ public class WinUI : MonoBehaviour
         });
     }
 
+    [ContextMenu("SHOW FREE GAME WIN")]
     public void ShowFreeGameWinUi_win ()
     {
         FreeGameWinUi.SetActive(true);
         FreeGameWinUi.GetComponent<CanvasGroup>().DOFade(1 , .5f)
             .OnComplete(() =>
             {
-                Invoke(nameof(ActivteTheText) , 2f);
+                Invoke(nameof(ActivteTheText) , .5f);
                 Invoke(nameof(HideFreeGameUi_win) , 8f);
             });
     }

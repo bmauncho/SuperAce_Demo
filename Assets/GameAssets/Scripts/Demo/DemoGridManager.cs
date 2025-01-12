@@ -147,8 +147,13 @@ public class DemoGridManager : MonoBehaviour
 
     void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
     {
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
+            if (col == 2)
+            {
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+            }
             Deck currentDeck = decks [col];
             for (int row = rowCount -1; row >=0 ; row--)
             {
@@ -187,6 +192,7 @@ public class DemoGridManager : MonoBehaviour
 
     void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
+         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)

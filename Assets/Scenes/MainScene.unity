@@ -42180,6 +42180,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519377234}
   m_CullTransparentMesh: 1
+--- !u!1 &521382989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8812891267620389339, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+  m_PrefabInstance: {fileID: 8041319494701967859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &521382994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521382989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcfad0ed4c833743ad4dd25804257e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 0.2
+  smoothTime: 0.2
+  isHandHeldDevice: 0
+  isScrolling: 0
+  isDragging: 0
 --- !u!1 &522161206 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7261340369627594163, guid: 69b667dac3a0dc64a87332481d835a67, type: 3}
@@ -53322,92 +53344,7 @@ MonoBehaviour:
   gameDataAPI_: {fileID: 653306915}
   sentData_:
   - data:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 1
     - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: CLUB
-      golden: 0
-      transformed: 1
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: WILD
-      substitute: CLUB
-      golden: 0
-      transformed: 1
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: DIAMOND
-      golden: 0
-      transformed: 0
-  receivedData_:
-  - data:
-    - name: QUEEN
       substitute: 
       golden: 0
       transformed: 1
@@ -53415,79 +53352,164 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: HEART
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
     - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
   - data:
-    - name: HEART
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
     - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
     - name: WILD
       substitute: DIAMOND
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: ACE
+      golden: 0
+      transformed: 0
+  - data:
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: ACE
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+  receivedData_:
+  - data:
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: DIAMOND
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: ACE
+      golden: 0
+      transformed: 0
+  - data:
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: ACE
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
       golden: 0
       transformed: 0
   maxtries: 3
@@ -144551,6 +144573,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
     - target: {fileID: 164479946644579164, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164479946644579164, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_ScrollSensitivity
       value: 120
       objectReference: {fileID: 0}
@@ -144657,7 +144683,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8812891267620389339, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521382994}
   m_SourcePrefab: {fileID: 100100000, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
 --- !u!222 &8057702413383351483
 CanvasRenderer:

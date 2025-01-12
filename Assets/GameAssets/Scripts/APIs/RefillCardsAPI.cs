@@ -77,7 +77,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-        //Debug.Log(jsonString);
+        Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -100,6 +100,11 @@ public class RefillCardsAPI : MonoBehaviour
            // Debug.Log("Data successfully sent!");
             //Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
+
+            object parsedResponse = JsonConvert.DeserializeObject(output);
+            string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
+
+            Debug.Log("Received: " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             

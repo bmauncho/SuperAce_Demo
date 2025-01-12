@@ -163,7 +163,10 @@ public class GridManager : MonoBehaviour
                 Debug.LogError($"Deck at column {col} is null or out of bounds.");
                 continue;
             }
-
+            if(col == 2)
+            {
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+            }
             Deck currentDeck = decks [col];
             for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
             {
@@ -213,6 +216,10 @@ public class GridManager : MonoBehaviour
                         if (cardPosComponent != null)
                         {
                             cardPosComponent.TheOwner = newCard;
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , 1);
+                            }
                         }
                         else
                         {
@@ -316,6 +323,10 @@ public class GridManager : MonoBehaviour
                         CardPos cardPos = targetPos.GetComponent<CardPos>();
                         if (cardPos != null)
                         {
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , 1);
+                            }
                             cardPos.TheOwner = newCard;
                         }
                         else
@@ -364,7 +375,10 @@ public class GridManager : MonoBehaviour
                         .SetEase(Ease.OutQuad)
                         .OnComplete(() =>
                         {
-
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , 1);
+                            }
                             newCard.transform.localPosition = Vector3.zero;
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
                             CalculateObjectsPlaced();

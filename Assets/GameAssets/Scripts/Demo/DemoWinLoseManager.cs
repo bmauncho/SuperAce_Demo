@@ -178,6 +178,23 @@ public class DemoWinLoseManager : MonoBehaviour
             CommandCentre.Instance.CardFxManager_.ActivateCardFxMask(winCards [i].position.row , winCards [i].position.col);
         }
 
+        List<CardType> winningCards = new List<CardType>();
+        for (int j = 0 ; j < winCards.Count ; j++)
+        {
+            // Assuming `data[j].name` is a string and `CardType` is an enum
+            if (Enum.TryParse(winCards [j].name , out CardType matchingCard))
+            {
+                // Log the match
+                //Debug.Log($"Match found: {data [j].name}");
+
+                // Add the matching CardType to the list
+                winningCards.Add(matchingCard);
+            }
+        }
+
+
+        CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
+
         yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(HideNormalCards());

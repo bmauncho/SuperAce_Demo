@@ -14,6 +14,7 @@ public class CommentaryManager : MonoBehaviour
 
     public void PlayCommentary ( List<CardType> winningCards )
     {
+        Debug.Log("commentary called");
         HashSet<CardType> cardTypes = new HashSet<CardType>(winningCards);
         StartCoroutine(PlayCommentarySequentially(cardTypes.ToList()));
     }

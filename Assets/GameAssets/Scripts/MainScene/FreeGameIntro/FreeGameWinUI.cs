@@ -47,13 +47,13 @@ public class FreeGameWinUI : MonoBehaviour
         // Calculate the current value using Mathf.Lerp
         float currentValue = Mathf.Lerp(0f , targetAmount , elapsedTime / Duration);
         // Update the text with the formatted value
-        CurrentWinAmount.text = currentValue.ToString("F2");
+        CurrentWinAmount.text = currentValue.ToString("N2");
 
         // Reset or cap elapsed time once the duration is reached
         if (elapsedTime >= Duration)
         {
             elapsedTime = Duration;  // Ensure it doesn't go beyond the duration
-            CurrentWinAmount.text = targetAmount.ToString("F2");  // Set to the final target value
+            CurrentWinAmount.text = targetAmount.ToString("N2");  // Set to the final target value
         }
     }
 
@@ -63,12 +63,12 @@ public class FreeGameWinUI : MonoBehaviour
         float theAmount = 0f;
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            theAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [1].text.ToString());
+            theAmount = CommandCentre.Instance.CashManager_.CurrentWinings;
 
         }
         else
         {
-            theAmount = float.Parse(CommandCentre.Instance.CashManager_.WinCashAmountText [0].text.ToString());
+            theAmount = CommandCentre.Instance.CashManager_.CurrentWinings;
         }
         return theAmount;
     }
