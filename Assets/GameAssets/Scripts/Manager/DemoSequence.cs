@@ -984,7 +984,7 @@ public class DemoSequence : MonoBehaviour
                 new DemoCardsInfo { name = "QUEEN", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "SPADE", _Subsitute =  new Substitute{ subsitute_ ="" , isGolden = false } , isGolden = false},
                 new DemoCardsInfo { name = "DIAMOND", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
-                new DemoCardsInfo { name = "CLUB", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
+                new DemoCardsInfo { name = "HEART", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false },
                 new DemoCardsInfo { name = "KING", _Subsitute = new Substitute{ subsitute_ = "" , isGolden = false } , isGolden = false }
             },
             {

@@ -35,25 +35,23 @@ public class Deck : MonoBehaviour
     public void ResetDeck ()
     {
         isDeckFilled = false; // Reset the flag when you need to refill the deck again
+        ReturnUnusedCardsToPool();
     }
 
     public void refillTempDeckFromPool ()
     {
         // Return excess cards to the pool
-        if (tempDeckCards.Count > tempDeckSize)
+        for (int i = tempDeckCards.Count - 1 ; i >= tempDeckSize ; i--)
         {
-            for (int i = tempDeckCards.Count - 1 ; i >= tempDeckSize ; i--)
+            if (tempDeckCards [i] != null)
             {
-                if (tempDeckCards [i] != null)
-                {
-                    poolManager.ReturnCard(tempDeckCards [i]);
-                }
-                tempDeckCards.RemoveAt(i); // Remove the card from the temp deck
+                poolManager.ReturnCard(tempDeckCards [i]);
             }
+            tempDeckCards.RemoveAt(i);
         }
 
         // Add new cards to fill the temp deck
-        while (tempDeckCards.Count < tempDeckSize)
+        while (tempDeckCards.Count < tempDeckSize && DeckCards.Count < cardsPerDeck)
         {
             GameObject newCard = poolManager.GetCard();
             if (newCard != null)
@@ -69,10 +67,16 @@ public class Deck : MonoBehaviour
             }
         }
 
-        // Proceed to fill the main deck
-        fillDeck();
+        // Ensure tempDeckCards has cards before filling the deck
+        if (tempDeckCards.Count > 0)
+        {
+            fillDeck();
+        }
+        else
+        {
+            Debug.LogWarning("TempDeckCards is empty; cannot fill main deck.");
+        }
     }
-
 
     public void fillDeck ()
     {
@@ -85,13 +89,13 @@ public class Deck : MonoBehaviour
             }
 
             Sequence deckSequence = DOTween.Sequence();
-            for (int i = 0 ; i < tempDeckCards.Count ; i++)
+            for (int i = 0 ; i < tempDeckCards.Count && DeckCards.Count < cardsPerDeck ; i++)
             {
                 GameObject newCard = tempDeckCards [i];
                 if (newCard != null)
                 {
                     DeckCards.Add(newCard);
-                    Vector3 targetOffset = Vector3.zero + new Vector3(0 , cardOffset.y * i , cardOffset.z * i);
+                    Vector3 targetOffset = Vector3.zero + new Vector3(0 , cardOffset.y * DeckCards.Count , cardOffset.z * DeckCards.Count);
                     deckSequence.Append(newCard.transform.DOLocalMove(targetOffset , 0.25f).SetEase(Ease.OutQuad));
 
                     if (!IsPositionsaved)
@@ -101,7 +105,7 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Card at index " + i + " is null in TempDeckCards.");
+                    Debug.LogWarning($"Card at index {i} is null in TempDeckCards.");
                 }
             }
 
@@ -112,6 +116,17 @@ public class Deck : MonoBehaviour
 
             isDeckFilled = true;
             IsPositionsaved = true;
+
+            // Remove extra cards if over max deck size
+            if (DeckCards.Count > cardsPerDeck)
+            {
+                int excessCount = DeckCards.Count - cardsPerDeck;
+                for (int i = 0 ; i < excessCount ; i++)
+                {
+                    poolManager.ReturnCard(DeckCards [DeckCards.Count - 1]);
+                    DeckCards.RemoveAt(DeckCards.Count - 1);
+                }
+            }
         }
     }
 
@@ -136,14 +151,14 @@ public class Deck : MonoBehaviour
             ResetDeck();
         }
 
-        if(DeckCards.Count > 0)
+        if (DeckCards.Count > 0)
         {
             GameObject newCard = DeckCards [0];
             if (!newCard)
             {
                 DrawCard();
             }
-            DeckCards.RemoveAt (0);
+            DeckCards.RemoveAt(0);
             newCard.transform.SetParent(null);
             newCard.SetActive(true);
             newCard.transform.localRotation = Quaternion.Euler(0 , 180f , 0);
@@ -151,4 +166,28 @@ public class Deck : MonoBehaviour
         }
         return null;
     }
+
+    private void ReturnUnusedCardsToPool ()
+    {
+        List<Transform> cards = new List<Transform>();
+
+        // Collect all child transforms that have a Card component
+        foreach (Transform deckCard in transform)
+        {
+            if (deckCard.GetComponent<Card>())
+            {
+                cards.Add(deckCard);
+            }
+        }
+
+        // Return cards to the pool that are not in the DeckCards list
+        foreach (Transform card in cards)
+        {
+            if (!DeckCards.Contains(card.gameObject))
+            {
+                poolManager.ReturnCard(card.gameObject);
+            }
+        }
+    }
+
 }

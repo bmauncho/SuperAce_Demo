@@ -20,18 +20,35 @@ public class ButtonPressed : MonoBehaviour
         {
             if (isSpinButton)
             {
-                if (( commandCentre.GridManager_.isGridFilled() || commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled() ) &&
-                    !CommandCentre.Instance.WinLoseManager_.IsWin())
+                if (commandCentre.DemoManager_.IsDemo)
                 {
-                    EnableButtonInteractvity();
-                    commandCentre.MainMenuController_.CanSpin = true;
-                    CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                    if (commandCentre.MainMenuController_.CanSpin)
+                    {
+                        EnableButtonInteractvity();
+                        CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                    }
+                    else
+                    {
+                        DisableButtonInteractvity ();
+                        CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+                    }
                 }
                 else
                 {
-                    DisableButtonInteractvity() ;
-                    commandCentre.MainMenuController_.CanSpin = false;
-                    CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+
+                    if (( commandCentre.GridManager_.isGridFilled() || commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled() ) &&
+                        !CommandCentre.Instance.WinLoseManager_.IsWin())
+                    {
+                        EnableButtonInteractvity();
+                        commandCentre.MainMenuController_.CanSpin = true;
+                        CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                    }
+                    else
+                    {
+                        DisableButtonInteractvity();
+                        commandCentre.MainMenuController_.CanSpin = false;
+                        CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+                    }
                 }
             }
             else if(IsToggle)

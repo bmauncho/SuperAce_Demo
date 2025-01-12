@@ -501,7 +501,7 @@ public class DemoGridManager : MonoBehaviour
                     }
                 }
             }
-
+            CommandCentre.Instance.MainMenuController_.CanSpin = true;
             yield return StartCoroutine(Autospin());
         }
     }

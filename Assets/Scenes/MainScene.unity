@@ -20936,7 +20936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDeckFilled: 0
-  cardsPerDeck: 10
+  cardsPerDeck: 5
   tempDeckSize: 5
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   tempDeckCards: []
@@ -85522,7 +85522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDeckFilled: 0
-  cardsPerDeck: 10
+  cardsPerDeck: 5
   tempDeckSize: 5
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   tempDeckCards: []
@@ -90898,7 +90898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDeckFilled: 0
-  cardsPerDeck: 10
+  cardsPerDeck: 5
   tempDeckSize: 5
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   tempDeckCards: []
@@ -91458,7 +91458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDeckFilled: 0
-  cardsPerDeck: 10
+  cardsPerDeck: 5
   tempDeckSize: 5
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   tempDeckCards: []
@@ -96615,7 +96615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDeckFilled: 0
-  cardsPerDeck: 10
+  cardsPerDeck: 5
   tempDeckSize: 5
   cardOffset: {x: 0, y: 0.2, z: -0.2}
   tempDeckCards: []

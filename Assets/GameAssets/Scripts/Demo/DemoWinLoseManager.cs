@@ -331,6 +331,7 @@ public class DemoWinLoseManager : MonoBehaviour
         cardFxManager.DeactivateCardFxMask();
         CommandCentre.Instance.DemoManager_.isScatterSpin = false;
         CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
     }
 
 
