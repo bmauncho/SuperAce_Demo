@@ -135,7 +135,7 @@ public class WinLoseManager : MonoBehaviour
             GameObject cardPosHolder = gridManager.rowData [row].cardPositionInRow [col];
             CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
             GameObject card = cardPos.TheOwner;
-
+            List<GameObject> scatterCards = new List<GameObject>();
             if (card == null) continue;
 
             Card cardComponent = card.GetComponent<Card>();
@@ -154,12 +154,7 @@ public class WinLoseManager : MonoBehaviour
             // Handle scatter cards
             else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)
             {
-                cardComponent.ScatterSpin.GetComponentInChildren<ScatterMotions>().Rotate();
-                yield return new  WaitForSeconds(1);
-                CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
-                CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
-                yield return new WaitForSeconds(3);
-                CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+                scatterCards.Add(card);
 
             }
             // Deactivate and return normal cards to the pool
@@ -191,6 +186,44 @@ public class WinLoseManager : MonoBehaviour
         // Show current win
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         yield return null;
+    }
+
+    private IEnumerator RotateScatterCards ( List<GameObject> scatterCards )
+    {
+        // Ensure there are scatter cards to process
+        if (scatterCards == null || scatterCards.Count == 0)
+        {
+            yield break;
+        }
+
+        // Trigger the rotation for all scatter cards
+        foreach (var scatterCard in scatterCards)
+        {
+            if (scatterCard == null) continue;
+
+            ScatterMotions scatterMotions = scatterCard.GetComponentInChildren<ScatterMotions>();
+            if (scatterMotions != null)
+            {
+                scatterMotions.Rotate();
+            }
+        }
+
+        // Wait for a duration that matches the scatter card rotation animation
+        yield return new WaitForSeconds(1);
+
+        // Activate the free game mechanics
+        CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
+        CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
+
+        // Wait for the intro to complete
+        yield return new WaitForSeconds(3);
+
+        CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
+        data.Clear();
+        cardFxManager.DeactivateCardFxMask();
+        CommandCentre.Instance.DemoManager_.isScatterSpin = false;
+        CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
     }
 
 

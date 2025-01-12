@@ -35,20 +35,29 @@ public class ButtonPressed : MonoBehaviour
                 }
                 else
                 {
-
-                    if (( commandCentre.GridManager_.isGridFilled() || commandCentre.DemoManager_.DemoGridManager_.isDemoGridFilled() ) &&
-                        !CommandCentre.Instance.WinLoseManager_.IsWin())
+                    if (commandCentre.MainMenuController_.CanSpin)
                     {
                         EnableButtonInteractvity();
-                        commandCentre.MainMenuController_.CanSpin = true;
                         CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
                     }
                     else
                     {
                         DisableButtonInteractvity();
-                        commandCentre.MainMenuController_.CanSpin = false;
                         CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
                     }
+
+                    //if (commandCentre.GridManager_.isGridFilled() && !CommandCentre.Instance.WinLoseManager_.IsWin())
+                    //{
+                    //    EnableButtonInteractvity();
+                    //    commandCentre.MainMenuController_.CanSpin = true;
+                    //    CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                    //}
+                    //else
+                    //{
+                    //    DisableButtonInteractvity();
+                    //    commandCentre.MainMenuController_.CanSpin = false;
+                    //    CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+                    //}
                 }
             }
             else if(IsToggle)

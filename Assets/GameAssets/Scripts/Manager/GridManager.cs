@@ -477,6 +477,8 @@ public class GridManager : MonoBehaviour
                 CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
             }
 
+            CommandCentre.Instance.MainMenuController_.CanSpin = true;
+
             yield return StartCoroutine(Autospin());
         }
     }

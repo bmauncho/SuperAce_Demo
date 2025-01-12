@@ -126,6 +126,7 @@ public class MainMenuController : MonoBehaviour
             if (CanSpin)
             {
                 StartCoroutine(FetchDataAndSpin());
+                CanSpin = false;
             }
             
         }
@@ -153,7 +154,7 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            CanSpin = false;
+            
             // Once data is fetched, start the spinning process
             StartCoroutine(SpinReel(true));
         }

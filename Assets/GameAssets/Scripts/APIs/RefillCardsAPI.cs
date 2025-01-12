@@ -47,7 +47,7 @@ public class RefillCardsAPI : MonoBehaviour
         receivedData_.Clear();
         // Define the jagged array
         CardData [] [] data = new CardData [4] []; // 4 rows
-        for (int i = 0 ; i < 4 ; i++) // Loop through rows
+        for (int i = 4-1 ; i >= 0 ; i--) // Loop through rows
         {
             data [i] = new CardData [5]; // 5 columns per row
             for (int j = 0 ; j < 5 ; j++) // Loop through columns
@@ -71,7 +71,7 @@ public class RefillCardsAPI : MonoBehaviour
         api = new refillApi
         {
             game = gameinfo ,
-            betAmount = 2 ,
+            betAmount = gameDataAPI_.BetAmount ,
             cards = data ,
         };
 
