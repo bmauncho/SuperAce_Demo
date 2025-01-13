@@ -163,10 +163,7 @@ public class GridManager : MonoBehaviour
                 Debug.LogError($"Deck at column {col} is null or out of bounds.");
                 continue;
             }
-            if(col == 2)
-            {
-                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
-            }
+            
             Deck currentDeck = decks [col];
             for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
             {
@@ -438,6 +435,13 @@ public class GridManager : MonoBehaviour
     void CalculateObjectsPlaced ()
     {
         objectsPlaced++;
+        if(objectsPlaced==9)
+        {
+            if (!CommandCentre.Instance.TurboManager_.TurboSpin_)
+            {
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+            }
+        }
 
         if (isGridFilled())
         {

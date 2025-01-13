@@ -21,6 +21,7 @@ public class Card : MonoBehaviour
     public GameObject ScatterWords;
     public GameObject Gloweffect;
     public GameObject Back;
+    public GameObject wineffect;
 
     public void enableModel ()
     {
@@ -145,5 +146,16 @@ public class Card : MonoBehaviour
         ScatterWords.SetActive(false);
         ScatterSpin.gameObject.SetActive(false);
         ScatterSpin.GetComponentInChildren<ScatterMotions>().StopMovementAndRotation();
+        disableWinEffect();
+    }
+
+    public void enableWinEffect ()
+    {
+        wineffect.SetActive(true);
+    }
+
+    public void disableWinEffect ()
+    {
+        wineffect.SetActive(false );    
     }
 }
