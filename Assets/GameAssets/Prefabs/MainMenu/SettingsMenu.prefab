@@ -2361,8 +2361,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &782831507649018951
 GameObject:
@@ -8776,8 +8776,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &3021197704554984625
 GameObject:
@@ -11150,8 +11150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &3856649225507949156
 GameObject:
@@ -13299,7 +13299,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 906308840807284669}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.10497142
+  m_Size: 0.005
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -15780,7 +15780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &406679364144877298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15849,8 +15849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &5518286051048313109
 GameObject:
@@ -19529,8 +19529,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &6579193576430112676
 GameObject:
@@ -21392,8 +21392,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &7352294047411459685
 GameObject:
@@ -22077,7 +22077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 6700}
   m_SizeDelta: {x: 0, y: 7621.122}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7551663921298084810
@@ -24150,8 +24150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.81, y: 10.1}
-  m_SizeDelta: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 41.7, y: 10.1}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &8258916059308767006
 GameObject:
@@ -26346,6 +26346,7 @@ GameObject:
   - component: {fileID: 4647834321642439778}
   - component: {fileID: 4317687463640193234}
   - component: {fileID: 164479946644579164}
+  - component: {fileID: 4686243456892549111}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -26419,7 +26420,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8812891267620389339}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
@@ -26431,7 +26432,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 40
+  m_ScrollSensitivity: 120
   m_Viewport: {fileID: 5490106185736108709}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 3946443357891510338}
@@ -26442,6 +26443,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4686243456892549111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812891267620389339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcfad0ed4c833743ad4dd25804257e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 0.2
+  smoothTime: 0.2
+  isHandHeldDevice: 0
+  isScrolling: 0
+  isDragging: 0
 --- !u!1 &8819549600287027955
 GameObject:
   m_ObjectHideFlags: 0
@@ -27170,7 +27188,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1142102080227176759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.8950286}
+  m_AnchorMin: {x: 0, y: 0.995}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}

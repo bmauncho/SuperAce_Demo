@@ -138,7 +138,7 @@ public class WinLoseManager : MonoBehaviour
 
             if (card)
             {
-                card.GetComponent<Card>().enableWinEffect();
+                //card.GetComponent<Card>().enableWinEffect();
                 card.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1)
                     .OnComplete(() =>
                     {
