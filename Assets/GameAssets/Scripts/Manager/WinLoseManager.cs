@@ -122,7 +122,7 @@ public class WinLoseManager : MonoBehaviour
     {
         int tweensToComplete = data.Count;
         int tweensCompleted = 0;
-        Debug.Log($"Tweens to complete: {tweensToComplete}");
+        //Debug.Log($"Tweens to complete: {tweensToComplete}");
         var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
 
         for (int i = 0 ; i < data.Count ; i++)
@@ -143,7 +143,7 @@ public class WinLoseManager : MonoBehaviour
                     .OnComplete(() =>
                     {
                         tweensCompleted++;
-                        Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
+                        //Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
                     });
                 cardfxMask.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1);
             }
@@ -151,7 +151,7 @@ public class WinLoseManager : MonoBehaviour
 
         // Wait until all tweens are completed
         yield return new WaitUntil(() => tweensCompleted >= tweensToComplete);
-        Debug.Log("All tweens completed. Coroutine finished.");
+       // Debug.Log("All tweens completed. Coroutine finished.");
     }
 
 

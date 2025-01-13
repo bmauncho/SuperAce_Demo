@@ -7,6 +7,8 @@ using UnityEngine;
 public class CommentaryManager : MonoBehaviour
 {
     SoundManager soundManager;
+    public List<CardType> cards = new List<CardType>();
+    bool comboPlayed = false;
     private void Start ()
     {
         soundManager = CommandCentre.Instance.SoundManager_;
@@ -14,9 +16,12 @@ public class CommentaryManager : MonoBehaviour
 
     public void PlayCommentary ( List<CardType> winningCards )
     {
+        cards.Clear();
+        comboPlayed = false ;
         Debug.Log("commentary called");
         HashSet<CardType> cardTypes = new HashSet<CardType>(winningCards);
         StartCoroutine(PlayCommentarySequentially(cardTypes.ToList()));
+        cards = new List<CardType>(cardTypes.ToList());
     }
 
     private IEnumerator PlayCommentarySequentially ( List<CardType> cardTypes )
@@ -101,66 +106,72 @@ public class CommentaryManager : MonoBehaviour
     public IEnumerator PlayComboCommentary ()
     {
         int Combo = CommandCentre.Instance.ComboManager_.GetCombo();
+         // Flag to track if the combo commentary has been played.
 
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            switch (Combo)
+            if (!comboPlayed && Combo >= 2) // Check if combo is 2 or greater and not yet played.
             {
-                case 1:
-                    //Debug.Log("Free Game Combo 1!");
-                    break;
+                switch (Combo)
+                {
+                    case 2:
+                        Debug.Log("Free Game Combo 2!");
+                        soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
+                        yield return new WaitForSeconds(0.25f);
+                        soundManager.PlaySound("Double" , false , soundManager.maxSound);
+                        break;
 
-                case 2:
-                    Debug.Log("Free Game Combo 2!");
-                    soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
-                    yield return new WaitForSeconds(0.25f);
-                    soundManager.PlaySound("Double" , false , soundManager.maxSound);
-                    break;
+                    case 3:
+                        Debug.Log("Free Game Combo 3!");
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("Triple" , false , soundManager.maxSound);
+                        break;
 
-                case 3:
-                    Debug.Log("Free Game Combo 3!");
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("Triple" , false , soundManager.maxSound);
-                    break;
-
-                case 5:
-                    //Debug.Log("Free Game Combo 5!");
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("FiveTimes" , false , soundManager.maxSound);
-                    break;
+                    case 5:
+                        Debug.Log("Free Game Combo 5!");
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("FiveTimes" , false , soundManager.maxSound);
+                        break;
+                }
+                comboPlayed = true; // Set flag to true after playing commentary.
             }
         }
         else
         {
-            switch (Combo)
+            if (!comboPlayed && Combo >= 2) // Check for regular game combo.
             {
-                case 2:
-                   // Debug.Log("Regular Combo 2!");
-                    soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("Double" , false , soundManager.maxSound);
-                    break;
+                switch (Combo)
+                {
+                    case 2:
+                        Debug.Log("Regular Combo 2!");
+                        soundManager.PlaySound("Lucky" , false , soundManager.maxSound);
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("Double" , false , soundManager.maxSound);
+                        break;
 
-                case 4:
-                    //Debug.Log("Regular Combo 4!");
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("FourTimes" , false , soundManager.maxSound);
-                    break;
+                    case 4:
+                        Debug.Log("Regular Combo 4!");
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("FourTimes" , false , soundManager.maxSound);
+                        break;
 
-                case 6:
-                   // Debug.Log("Regular Combo 6!");
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("SixTimes" , false , soundManager.maxSound);
-                    break;
+                    case 6:
+                        Debug.Log("Regular Combo 6!");
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("SixTimes" , false , soundManager.maxSound);
+                        break;
 
-                case 10:
-                    //Debug.Log("Regular Combo 10!");
-                    yield return new WaitForSeconds(0.1f);
-                    soundManager.PlaySound("TenTimes" , false , soundManager.maxSound);
-                    break;
+                    case 10:
+                        Debug.Log("Regular Combo 10!");
+                        yield return new WaitForSeconds(0.1f);
+                        soundManager.PlaySound("TenTimes" , false , soundManager.maxSound);
+                        break;
+                }
+                comboPlayed = true; // Set flag to true after playing commentary.
             }
         }
     }
+
 
     public List<CardType> GetCardTypes ( List<GameObject> winningCards )
     {

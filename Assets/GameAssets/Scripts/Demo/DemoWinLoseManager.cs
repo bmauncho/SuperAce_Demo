@@ -194,11 +194,48 @@ public class DemoWinLoseManager : MonoBehaviour
 
 
         CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
-
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.5f);
+        yield return StartCoroutine(WinEffect());
+        yield return new WaitForSeconds(.5f);
 
         yield return StartCoroutine(HideNormalCards());
         yield return null;
+    }
+
+    IEnumerator WinEffect ()
+    {
+        int tweensToComplete = winCards.Count;
+        int tweensCompleted = 0;
+       // Debug.Log($"Tweens to complete: {tweensToComplete}");
+        var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+
+        for (int i = 0 ; i < winCards.Count ; i++)
+        {
+            int row = winCards [i].position.row;
+            int col = winCards [i].position.col;
+
+            var cardfxMask = cardFxManager_.CardFxMask [row].cardFxPos [col];
+
+            GameObject cardPosHolder = demoGridManager.colData [row].cardPositionInRow [col];
+            CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
+            GameObject card = cardPos.TheOwner;
+
+            if (card)
+            {
+                card.GetComponent<Card>().enableWinEffect();
+                card.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1)
+                    .OnComplete(() =>
+                    {
+                        tweensCompleted++;
+                        //Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
+                    });
+                cardfxMask.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1);
+            }
+        }
+
+        // Wait until all tweens are completed
+        yield return new WaitUntil(() => tweensCompleted >= tweensToComplete);
+        //Debug.Log("All tweens completed. Coroutine finished.");
     }
 
 

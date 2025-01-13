@@ -326,6 +326,14 @@ public class DemoGridManager : MonoBehaviour
     void CalculateObjectsPlaced ()
     {
         demoObjectsPlaced++;
+
+        if (demoObjectsPlaced == 9)
+        {
+            if (!CommandCentre.Instance.TurboManager_.TurboSpin_ && !isRefilling)
+            {
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+            }
+        }
         if (isDemoGridFilled())
         {
             isRefilling = false;

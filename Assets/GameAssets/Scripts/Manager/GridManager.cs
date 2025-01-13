@@ -437,7 +437,7 @@ public class GridManager : MonoBehaviour
         objectsPlaced++;
         if(objectsPlaced==9)
         {
-            if (!CommandCentre.Instance.TurboManager_.TurboSpin_)
+            if (!CommandCentre.Instance.TurboManager_.TurboSpin_ && !isRefilling)
             {
                 CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
             }
