@@ -74,6 +74,13 @@ public class SmoothScrolling : MonoBehaviour
             ref currentVelocity ,
             smoothTime
         );
+
+        scrollRect.verticalScrollbar.value = Mathf.SmoothDamp(
+            scrollRect.verticalScrollbar.value ,
+            targetScrollPosition ,
+            ref currentVelocity ,
+            smoothTime
+            );
     }
 
 }
