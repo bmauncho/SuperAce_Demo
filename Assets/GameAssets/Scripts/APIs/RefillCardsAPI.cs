@@ -145,6 +145,8 @@ public class RefillCardsAPI : MonoBehaviour
             else
             {
                 refillDataFetched = true;
+                HandleRetry("Error sending data: " + request.error);
+                isError = true;
             }
         }
         else
