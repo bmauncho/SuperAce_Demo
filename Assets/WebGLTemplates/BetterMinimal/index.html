@@ -11,7 +11,6 @@
     <style>
       html,
       body {
-        background: {{{ BACKGROUND || '#000' }}};
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -20,9 +19,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+        background: url("Bg.png") no-repeat center center fixed;
+        background-size: cover;
+        filter: blur(10px);
+        z-index: -1; /* Ensures the background is behind all other content */
       }
 
       .container {
+        background: rgba(0, 0, 0, 0.8); /* Optional semi-transparent overlay */
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -31,7 +45,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: black;
         z-index: 10;
       }
 
@@ -66,7 +79,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        display: none;
+        z-index: 20;
       }
 
       #gameContainer canvas {

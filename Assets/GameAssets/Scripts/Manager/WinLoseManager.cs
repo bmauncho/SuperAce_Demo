@@ -107,12 +107,12 @@ public class WinLoseManager : MonoBehaviour
             }
         }
 
-
+        
         CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(WinEffect());
-        yield return new WaitForSeconds(.5f); 
-
+        yield return new WaitForSeconds(.5f);
+        Activatecardfx();
         yield return StartCoroutine(HideNormalCards());
 
         yield return null;
@@ -154,7 +154,35 @@ public class WinLoseManager : MonoBehaviour
        // Debug.Log("All tweens completed. Coroutine finished.");
     }
 
+    public void Activatecardfx ()
+    {
+        var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+        if (cardFxManager_ == null || cardFxManager_.CardFx.Count == 0)
+        {
+            Debug.LogError("CardfxManager or Cardfx not set up correctly.");
+            return;
+        }
 
+        for (int i = 0 ; i < data.Count ; i++)
+        {
+            int row = data [i].row;
+            int col = data [i].col;
+            var cardFx = cardFxManager_.CardFx [row].cardFxPos [col];
+
+            if (cardFx)
+            {
+                cardFx.SetActive(true);
+                GameObject TheCardfx = CommandCentre.Instance.PoolManager_.GetCardFx();
+                TheCardfx.transform.SetParent(cardFx.transform);
+                TheCardfx.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                // Deactivate the card mask if it's not a winning card
+                cardFx.SetActive(false);
+            }
+        }
+    }
 
 
     IEnumerator HideNormalCards ()
@@ -216,6 +244,8 @@ public class WinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         // Reset and refill processes
+        CommandCentre.Instance.CardFxManager_.ReturnToPool();
+        CommandCentre.Instance.CardFxManager_.Deactivate();
         cardFxManager.DeactivateCardFxMask();
         ResetWinDataList();
         ClearAddedKeys();
