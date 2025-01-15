@@ -5371,6 +5371,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 659537736994460231, guid: 69b667dac3a0dc64a87332481d835a67, type: 3}
   m_PrefabInstance: {fileID: 1135382891640235569}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &88685014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9206975881855317731, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 6493491079494380510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &97788041
 GameObject:
   m_ObjectHideFlags: 0
@@ -36541,6 +36552,17 @@ MonoBehaviour:
   betPlacingAPI_: {fileID: 121908060}
   betUpdaterAPI_: {fileID: 136216696}
   refillCardsAPI_: {fileID: 853445695}
+--- !u!114 &425819208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3281934544716059599, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+  m_PrefabInstance: {fileID: 6493491079494380510}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &434470063
 GameObject:
   m_ObjectHideFlags: 0
@@ -54615,6 +54637,8 @@ MonoBehaviour:
   AutoSpinSettings_: {fileID: 2182848255246410888}
   AutoSpinIndex_: 0
   Autospin: {fileID: 6377052654491904015}
+  AutospinToggle: {fileID: 425819208}
+  DemoAutospinToggle: {fileID: 88685014}
 --- !u!4 &989973741
 Transform:
   m_ObjectHideFlags: 0

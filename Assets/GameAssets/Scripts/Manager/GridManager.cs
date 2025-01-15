@@ -490,7 +490,12 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            int combo = CommandCentre.Instance.ComboManager_.GetCombo();
+            int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
+            Debug.Log($"which combo : {combo}");
+            if (combo == 5)
+            {
+                Debug.Log("Combo 5 - win");
+            }
             if (combo >= 3)
             {
                 //show total win

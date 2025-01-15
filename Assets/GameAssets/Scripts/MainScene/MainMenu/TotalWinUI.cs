@@ -21,7 +21,7 @@ public class TotalWinUI : MonoBehaviour
                     .SetEase(Ease.OutCubic)
                     .OnComplete(() =>
                     {
-                        TotalWinings.text = endValue.ToString("F0");
+                        TotalWinings.text = endValue.ToString("N2");
                     });
 
         yield return new WaitForSeconds(3);
@@ -36,6 +36,6 @@ public class TotalWinUI : MonoBehaviour
 
     void SetValue ( float x ) 
     { 
-        TotalWinings.text = x.ToString("F0"); 
+        TotalWinings.text = x.ToString("N2"); 
     }
 }

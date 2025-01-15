@@ -187,23 +187,48 @@ public class GameDataAPI : MonoBehaviour
             canRefill.Add(winCardCount > 0);
         }
 
-        // Check for 3 or more consecutive rows with winning cards
-        for (int i = 0 ; i < canRefill.Count - 2 ; i++)
-        {
-            if (canRefill [i] && canRefill [i + 1] && canRefill [i + 2])
-            {
-                foreach (var cardEntry in winningCards)
-                {
-                    CardData card = cardEntry.Key;
-                    (int row, int col) = cardEntry.Value;
+        // Check for valid winning columns: first three must be true and at least three consecutive columns
+        int consecutiveCount = 0;
+        bool firstThreeValid = canRefill.Count >= 3 && canRefill [0] && canRefill [1] && canRefill [2];
 
-                    // Notify the WinLoseManager
-                    winloseManager.GetWinningCard(card , row , col);
+        if (firstThreeValid)
+        {
+            for (int i = 0 ; i < canRefill.Count ; i++)
+            {
+                if (canRefill [i])
+                {
+                    consecutiveCount++;
                 }
+                else
+                {
+                    if (consecutiveCount >= 3)
+                    {
+                        NotifyWinningCards(winningCards);
+                        return; // Exit early after notifying
+                    }
+                    consecutiveCount = 0; // Reset count if a break occurs
+                }
+            }
+
+            // Final check in case the last columns form a valid group
+            if (consecutiveCount >= 3)
+            {
+                NotifyWinningCards(winningCards);
             }
         }
     }
 
+    private void NotifyWinningCards ( Dictionary<CardData , (int row, int col)> winningCards )
+    {
+        foreach (var cardEntry in winningCards)
+        {
+            CardData card = cardEntry.Key;
+            (int row, int col) = cardEntry.Value;
+
+            // Notify the WinLoseManager
+            winloseManager.GetWinningCard(card , row , col);
+        }
+    }
 
     public List<rowData> ReverseRows ( List<rowData> originalRows )
     {

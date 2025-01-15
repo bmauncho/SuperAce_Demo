@@ -137,20 +137,49 @@ public class RefillCardsAPI : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.LogWarning("Response data invalid or cards array is null.");
+                    Debug.LogWarning("cards array is null.");
                     HandleRetry("Invalid cards array.");
                     isError = true;
                 }
             }
             else
             {
-                refillDataFetched = true;
-                HandleRetry("Error sending data: " + request.error);
-                isError = true;
+                Debug.Log(response.message);
+                if (receivedData_.Count <= 0)
+                {
+                    int index = 0;
+                    for(int i = 0 ;i<4 ; i++)
+                    {
+                        // Initialize a new receivedData object
+                        var newReceivedData = new receivedData();
+
+                        // Add it to the list
+                        receivedData_.Add(newReceivedData);
+                        for(int j = 0 ;j<5 ; j++)
+                        {
+                            var newCardData = new CardData();
+
+                            // Set the value of newCardData
+                            newCardData = sentData_ [i].data [j];
+                            if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
+                            {
+                                newCardData = new CardData();
+                                newCardData.name = newCardData.substitute;
+                                newCardData.substitute = null;
+                            }
+                            // Add the new CardData to the receivedData's data list
+                            newReceivedData.data.Add(newCardData);
+                            index++;
+                        }
+                    }
+                    yield return new WaitUntil(() => index >= 20);
+                }
+                refillDataFetched =true;
             }
         }
         else
         {
+            Debug.Log("Failed to get data!");
             isError = true;
             Debug.LogError($"Error sending data: {request.error} | Response Code: {request.responseCode}");
             HandleRetry("Error sending data: " + request.error);

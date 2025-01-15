@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AutoSpinManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class AutoSpinManager : MonoBehaviour
     public AutoSpinSettings AutoSpinSettings_;
     public int AutoSpinIndex_;
     public AutoSpin Autospin;
+    public Toggle AutospinToggle;
+    public Toggle DemoAutospinToggle;
+
 
     public void EnableAutoSpin ()
     {
@@ -36,8 +40,14 @@ public class AutoSpinManager : MonoBehaviour
        AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , .5f)
           .OnComplete(() =>
           {
+              AutospinToggle.isOn = false;
+              if (CommandCentre.Instance.DemoManager_.IsDemo)
+              {
+                  DemoAutospinToggle.isOn = false;
+              }
               Invoke(nameof(DisableAutoSpinUI) , 2f);
           });
+        
     }
 
     public void ActivateAutoSpinUI ()
