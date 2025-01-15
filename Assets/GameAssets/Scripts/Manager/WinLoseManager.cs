@@ -157,6 +157,7 @@ public class WinLoseManager : MonoBehaviour
     public void Activatecardfx ()
     {
         var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+        cardFxManager_.Activate();
         if (cardFxManager_ == null || cardFxManager_.CardFx.Count == 0)
         {
             Debug.LogError("CardfxManager or Cardfx not set up correctly.");

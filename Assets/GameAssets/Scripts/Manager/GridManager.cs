@@ -382,6 +382,10 @@ public class GridManager : MonoBehaviour
                         }));
                     cardSequence.PrependInterval(delay);
                 }
+                else
+                {
+                    cardManager.UpdateGrid(col , row);
+                }
             }
         }
 
@@ -471,7 +475,7 @@ public class GridManager : MonoBehaviour
             yield return new WaitForSeconds(.25f);
             if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
             {
-                CommandCentre.Instance.APIManager_.GameDataAPI_.recheckWin();
+                CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
             }
             CommandCentre.Instance.APIManager_.refillCardsAPI_.isError =false;
         }

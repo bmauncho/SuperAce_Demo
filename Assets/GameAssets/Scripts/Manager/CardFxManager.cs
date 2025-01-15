@@ -19,7 +19,7 @@ public class CardFxManager : MonoBehaviour
         //Debug.Log("activateMasks");
         CardFxHolder.SetActive(true);
     }
-
+    [ContextMenu("Deactivate")]
     public void Deactivate ()
     {
         CardFxHolder.SetActive(false);

@@ -98,7 +98,7 @@ public class RefillCardsAPI : MonoBehaviour
         {
             isError = false;
            // Debug.Log("Data successfully sent!");
-            //Debug.Log($"Response: {request.downloadHandler.text}");
+            Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
 
             object parsedResponse = JsonConvert.DeserializeObject(output);
@@ -107,37 +107,44 @@ public class RefillCardsAPI : MonoBehaviour
             Debug.Log("Received: " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
-            
-            if (response?.data?.cards != null)
-            {
-                tries = 0;
-                //Debug.Log(response.data.cards.Length);
 
-                for (int i = 0 ; i < response.data.cards.Length ; i++)
+            if(response.message != "no transformable symbols found")
+            { 
+                if (response?.data?.cards != null)
                 {
-                    if(response.data.cards[i] != null)
+                    tries = 0;
+                    //Debug.Log(response.data.cards.Length);
+
+                    for (int i = 0 ; i < response.data.cards.Length ; i++)
                     {
-                        for(int j = 0 ; j < response.data.cards [i].Length ; j++)
+                        if (response.data.cards [i] != null)
                         {
-                            var card = response.data.cards [i] [j];
-                            var cardData_ = new CardData
+                            for (int j = 0 ; j < response.data.cards [i].Length ; j++)
                             {
-                                name = card.name ,
-                                golden = card.golden ,
-                                transformed = card.transformed ,
-                                substitute = card.substitute ,
-                            };
-                            logReceivedData(i , j , cardData_);
+                                var card = response.data.cards [i] [j];
+                                var cardData_ = new CardData
+                                {
+                                    name = card.name ,
+                                    golden = card.golden ,
+                                    transformed = card.transformed ,
+                                    substitute = card.substitute ,
+                                };
+                                logReceivedData(i , j , cardData_);
+                            }
                         }
                     }
+                    refillDataFetched = true;
                 }
-                refillDataFetched = true;
+                else
+                {
+                    //Debug.LogWarning("Response data invalid or cards array is null.");
+                    HandleRetry("Invalid cards array.");
+                    isError = true;
+                }
             }
             else
             {
-                Debug.LogWarning("Response data invalid or cards array is null.");
-                HandleRetry("Invalid cards array.");
-                isError = true;
+                refillDataFetched = true;
             }
         }
         else

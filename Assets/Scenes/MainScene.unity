@@ -48097,19 +48097,19 @@ MonoBehaviour:
   AmountWon: 0
   rows:
   - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: HEART
       substitute: 
       golden: 0
-      transformed: 1
-    - name: ACE
+      transformed: 0
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: KING
+    - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
@@ -48122,11 +48122,28 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: CLUB
+    - name: SPADE
       substitute: 
       golden: 0
       transformed: 0
-    - name: QUEEN
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
@@ -48134,54 +48151,38 @@ MonoBehaviour:
       substitute: DIAMOND
       golden: 0
       transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - infos:
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
-    - name: WILD
-      substitute: ACE
+    - name: DIAMOND
+      substitute: 
       golden: 0
       transformed: 0
   - infos:
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: KING
       substitute: 
       golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: ACE
-      golden: 0
-      transformed: 0
-    - name: HEART
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
       transformed: 1
-    - name: CLUB
+    - name: KING
       substitute: 
       golden: 0
-      transformed: 0
-    - name: SPADE
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
-      transformed: 0
+      transformed: 1
   isDataFetched: 1
   refillCardsAPI: {fileID: 853445695}
+  canRefill: 
 --- !u!1 &657657533 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 12862676123498546, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
@@ -53528,24 +53529,24 @@ MonoBehaviour:
     game:
       id: 2
       name: Super Ace
-    betAmount: 2
+    betAmount: 0
     gameMode: NORMAL
   gameDataAPI_: {fileID: 653306915}
   sentData_:
   - data:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: HEART
       substitute: 
       golden: 0
-      transformed: 1
-    - name: ACE
+      transformed: 0
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: KING
+    - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
@@ -53558,11 +53559,28 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: CLUB
+    - name: SPADE
       substitute: 
       golden: 0
       transformed: 0
-    - name: QUEEN
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+  - data:
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
@@ -53570,67 +53588,50 @@ MonoBehaviour:
       substitute: DIAMOND
       golden: 0
       transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
-    - name: WILD
-      substitute: ACE
+    - name: DIAMOND
+      substitute: 
       golden: 0
       transformed: 0
   - data:
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: KING
       substitute: 
       golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: ACE
-      golden: 0
-      transformed: 0
-    - name: HEART
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
       transformed: 1
-    - name: CLUB
+    - name: KING
       substitute: 
       golden: 0
-      transformed: 0
-    - name: SPADE
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
-      transformed: 0
+      transformed: 1
   receivedData_:
   - data:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
     - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: KING
+    - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
@@ -53643,11 +53644,28 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: CLUB
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
     - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: WILD
+      substitute: CLUB
+      golden: 0
+      transformed: 0
+  - data:
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
@@ -53655,49 +53673,32 @@ MonoBehaviour:
       substitute: DIAMOND
       golden: 0
       transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-  - data:
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 0
     - name: CLUB
       substitute: 
-      golden: 0
-      transformed: 0
-    - name: SPADE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: CLUB
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: ACE
-      golden: 0
-      transformed: 0
-  - data:
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: WILD
-      substitute: ACE
       golden: 0
       transformed: 0
     - name: DIAMOND
       substitute: 
       golden: 0
       transformed: 0
-    - name: CLUB
+  - data:
+    - name: ACE
       substitute: 
       golden: 0
       transformed: 0
-    - name: SPADE
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: DIAMOND
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
@@ -92075,6 +92076,24 @@ MonoBehaviour:
   - name: HEART
     row: 3
     col: 2
+  - name: KING
+    row: 1
+    col: 3
+  - name: KING
+    row: 2
+    col: 0
+  - name: KING
+    row: 3
+    col: 1
+  - name: KING
+    row: 3
+    col: 2
+  - name: KING
+    row: 3
+    col: 3
+  - name: KING
+    row: 3
+    col: 4
   scatterdata: []
   totalobjectstojump: 2
   objectsJumped: 0
@@ -138927,8 +138946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000692904, y: 19.77}
-  m_SizeDelta: {x: 414, y: 100}
+  m_AnchoredPosition: {x: -0, y: 19.77}
+  m_SizeDelta: {x: 333.8956, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1867890749731312012
 RectTransform:
@@ -140421,7 +140440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1947250316371600815, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 48.77
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2577496435807925125, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -140533,7 +140552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3499100542974237371, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -140589,7 +140608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4717381342297252358, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4717381342297252358, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -140661,7 +140680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6639573650136488801, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6639573650136488801, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -140681,7 +140700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7347009498525214245, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7347009498525214245, guid: 5c7237601410518429050fb88c702187, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -140836,7 +140855,7 @@ MonoBehaviour:
   m_fontSizeMin: 0.1
   m_fontSizeMax: 15
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -39,6 +40,8 @@ public class GameDataAPI : MonoBehaviour
     //public List<rowData> rowsInterchanged = new List<rowData>(5);
     public bool isDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
+    public List<bool> canRefill = new List<bool>();
+
     private void Start ()
     {
         isDataFetched = false;
@@ -158,21 +161,49 @@ public class GameDataAPI : MonoBehaviour
         rows [rows_].infos [cols_] = cardData;
     }
 
-    public void recheckWin ()
+    public void RecheckWin ()
     {
-        Debug.Log("recheck");
-        for(int i = 0;i<rows.Count ; i++)
+        canRefill.Clear();
+        Dictionary<CardData , (int row, int col)> winningCards = new Dictionary<CardData , (int row, int col)>();
+        Debug.Log("Rechecking wins...");
+        int columnCount = rows [0].infos.Count;
+
+        for (int col = 0 ; col < columnCount ; col++)
         {
-            for(int j = 0 ; j < rows [i].infos.Count ; j++)
+            int winCardCount = 0;
+
+            for (int row = 0 ; row < rows.Count ; row++)
             {
-                CardData data = rows [i].infos [j];
-                if (data.transformed)
+                CardData data = rows [row].infos [col];
+
+                if (data.transformed || !string.IsNullOrEmpty(data.substitute))
                 {
-                    winloseManager.GetWinningCard(data , i , j);
+                    winningCards [data] = (row, col);
+                    winCardCount++;
+                }
+            }
+
+            // Add to refill list if any winning cards exist in this column
+            canRefill.Add(winCardCount > 0);
+        }
+
+        // Check for 3 or more consecutive rows with winning cards
+        for (int i = 0 ; i < canRefill.Count - 2 ; i++)
+        {
+            if (canRefill [i] && canRefill [i + 1] && canRefill [i + 2])
+            {
+                foreach (var cardEntry in winningCards)
+                {
+                    CardData card = cardEntry.Key;
+                    (int row, int col) = cardEntry.Value;
+
+                    // Notify the WinLoseManager
+                    winloseManager.GetWinningCard(card , row , col);
                 }
             }
         }
     }
+
 
     public List<rowData> ReverseRows ( List<rowData> originalRows )
     {

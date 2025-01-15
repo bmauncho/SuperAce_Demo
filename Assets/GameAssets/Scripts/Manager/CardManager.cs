@@ -152,6 +152,23 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void UpdateGrid ( int col , int row )
+    {
+        CardData cardInfo = new CardData();
+        if (gridManager.isRefilling)
+        {
+            cardInfo = new CardData()
+            {
+                name = apiManager.refillCardsAPI_.GetCardInfo(col , row).name ,
+                substitute = apiManager.refillCardsAPI_.GetCardInfo(col , row).substitute ,
+                golden = apiManager.refillCardsAPI_.GetCardInfo(col , row).golden ,
+                transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
+            };
+
+            apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
+        }
+    }
+
     public void setUpCard (Card card,int col , int row )
     {
         if (!card)
