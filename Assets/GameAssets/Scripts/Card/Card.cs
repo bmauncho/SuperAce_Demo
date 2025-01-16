@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum CardType { ACE, KING, QUEEN, WILD, SPADE, CLUB, HEART, DIAMOND, SCATTER,LITTLE_JOKER,BIG_JOKER }
+public enum CardType { ACE, KING, QUEEN, JACK, SPADE, CLUB, HEART, DIAMOND, SCATTER,LITTLE_JOKER,BIG_JOKER }
 
 public class Card : MonoBehaviour
 {
     public CardType ActiveCardType;
     public bool golden;
-    public bool wild;
+    public bool JACK;
     public bool scatter;
 
     public GameObject CardModel;
@@ -36,7 +36,7 @@ public class Card : MonoBehaviour
     public void showNormalCard (Sprite _cardBg,Sprite _theCard)
     {
         golden = false;
-        wild = false;
+        JACK = false;
         scatter = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
@@ -54,7 +54,7 @@ public class Card : MonoBehaviour
     public void showGoldenCard ( Sprite _cardBg , Sprite _theCard ,Sprite _outline)
     {
         golden = true;
-        wild = false;
+        JACK = false;
         scatter = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
@@ -72,7 +72,7 @@ public class Card : MonoBehaviour
 
     public void showScatterCard ()
     {
-        wild = false;
+        JACK = false;
         scatter = true;
         golden = false;
         disableModel();
@@ -96,7 +96,7 @@ public class Card : MonoBehaviour
 
     public void showSmall_Jocker ( Sprite _cardBg , Sprite _theCard , Sprite _outline )
     {
-        wild = true;
+        JACK = true;
         golden = true;
         scatter = false;
         enableModel();
@@ -115,7 +115,7 @@ public class Card : MonoBehaviour
 
     public void showBig_Jocker ( Sprite _cardBg , Sprite _theCard , Sprite _outline )
     {
-        wild = true;
+        JACK = true;
         golden = true;
         scatter = false;
         enableModel();
@@ -135,7 +135,7 @@ public class Card : MonoBehaviour
 
     public void resetCard ()
     {
-        wild =false;
+        JACK =false;
         golden = false;
         enableModel();
         CardBg.gameObject.SetActive(true);

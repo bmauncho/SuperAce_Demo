@@ -150,7 +150,7 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance.DemoManager_.IsDemo = false;
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
-
+        CommandCentre.Instance.MainMenuController_.EnableGameplayMenu();
     }
 
     public void Demofill ()

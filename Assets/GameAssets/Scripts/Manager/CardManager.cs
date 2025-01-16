@@ -79,7 +79,7 @@ public class CardManager : MonoBehaviour
                     case 0: cardLayout [i , j] = CardType.ACE; break;
                     case 1: cardLayout [i , j] = CardType.KING; break;
                     case 2: cardLayout [i , j] = CardType.QUEEN; break;
-                    case 3: cardLayout [i , j] = CardType.WILD; break;
+                    case 3: cardLayout [i , j] = CardType.JACK; break;
                     case 4: cardLayout [i , j] = CardType.SPADE; break;
                 }
             }
@@ -299,7 +299,7 @@ public class CardManager : MonoBehaviour
 
             };
         }
-        //Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
+       // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
