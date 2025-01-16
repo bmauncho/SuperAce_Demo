@@ -76,6 +76,6 @@ public class AutoSpinManager : MonoBehaviour
 
     public void ResetAutoSpins ()
     {
-        AutoSpinIndex_ = AutoSpinSettings_.SpinsController_.TotalSpins;
+        AutoSpinIndex_ = AutoSpinSettings_.SpinsController_.CurrentSpns;
     }
 }
