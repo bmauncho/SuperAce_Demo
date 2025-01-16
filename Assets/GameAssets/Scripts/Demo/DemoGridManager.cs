@@ -517,6 +517,7 @@ public class DemoGridManager : MonoBehaviour
                 }
             }
             CommandCentre.Instance.MainMenuController_.CanSpin = true;
+            
             yield return StartCoroutine(Autospin());
         }
     }
@@ -529,8 +530,17 @@ public class DemoGridManager : MonoBehaviour
         // Check if auto-spin is enabled and perform the spin
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
-            Debug.Log("Can auto spin");
-            CommandCentre.Instance.MainMenuController_.Spin();
+
+            if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
+            {
+                CommandCentre.Instance.AutoSpinManager_.DisableAutoSpin();
+                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
+            }
+            else
+            {
+                Debug.Log("Can auto spin");
+                CommandCentre.Instance.MainMenuController_.Spin();
+            }
         }
 
         //check win

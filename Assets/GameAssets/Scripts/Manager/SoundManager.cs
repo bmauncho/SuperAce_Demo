@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -117,5 +118,22 @@ public class SoundManager : MonoBehaviour
     {
         AmbientSound.volume = volume;
     }
+    [ContextMenu("Play start sound")]
+    public void startSound ()
+    {
+        StartCoroutine(Playstartsound ());
+    }
 
+    IEnumerator Playstartsound ()
+    {
+        PlaySound("4");
+        yield return new WaitForSeconds(.4f);
+        PlaySound("3");
+        yield return new WaitForSeconds(.4f);
+        PlaySound("2");
+        yield return new WaitForSeconds(.4f);
+        PlaySound("5");
+        yield return new WaitForSeconds(.75f);
+        PlaySound("final");
+    }
 }

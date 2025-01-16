@@ -155,7 +155,10 @@ public class GridManager : MonoBehaviour
         }
 
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
-
+        if (isFirstPlay)
+        {
+            CommandCentre.Instance.SoundManager_.startSound();
+        }
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -253,6 +256,10 @@ public class GridManager : MonoBehaviour
             return;
         }
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        if(isFirstPlay)
+        {
+            CommandCentre.Instance.SoundManager_.startSound();
+        }
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)
@@ -519,8 +526,17 @@ public class GridManager : MonoBehaviour
         // Check if auto-spin is enabled and perform the spin
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
-            Debug.Log("Can auto spin");
-            CommandCentre.Instance.MainMenuController_.Spin();
+            if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
+            {
+                CommandCentre.Instance.AutoSpinManager_.DisableAutoSpin();
+                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin =false;
+            }
+            else
+            {
+                Debug.Log("Can auto spin");
+                CommandCentre.Instance.MainMenuController_.Spin();
+            }
+           
         }
     }
 
