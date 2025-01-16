@@ -81,7 +81,7 @@ public class PayOutManager : MonoBehaviour
     public void ShowTotalWinings ()
     {
         WinUI_.ActivateTotalWinnings();
-        CommandCentre.Instance.SoundManager_.PlaySound("Winmusic" , false , .3f);
+        CommandCentre.Instance.SoundManager_.PlaySound("Winmusic" , false);
     }
 
     public void HideTotalWinnings ()

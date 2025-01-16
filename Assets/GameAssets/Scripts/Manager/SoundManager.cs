@@ -6,11 +6,16 @@ public class SoundManager : MonoBehaviour
     public List<AudioSource> PossibleAudioSource = new List<AudioSource>();
     public AudioSource AmbientSound;
     public float minSound, maxSound;
-
+    public SoundSettings soundSettings;
     private void Start ()
     {
         PlayAmbientSound("FunkCasino");
-        LowerAmbientSound();
+    }
+
+    private void Update ()
+    {
+        setBGVolume(soundSettings.setBagroundMusicVolume());
+        setSFXVolume(soundSettings.setSoundEffectsVolume());
     }
 
     public void LowerAmbientSound ()
@@ -23,13 +28,13 @@ public class SoundManager : MonoBehaviour
         AmbientSound.volume = maxSound;
     }
 
-    public void PlaySound ( string AudioFile , bool loopState = false , float Volume = 1f )
+    public void PlaySound ( string AudioFile , bool loopState = false)
     {
         AudioClip _Clip = (AudioClip)Resources.Load("mp3/" + AudioFile);
         AudioSource AS = ReturnOpenSource();
         AS.clip = _Clip;
         AS.loop = loopState;
-        AS.volume = Volume;
+        AS.volume = soundSettings.setSoundEffectsVolume();
         AS.Play();
     }
 
@@ -38,6 +43,7 @@ public class SoundManager : MonoBehaviour
         AudioClip _Clip = (AudioClip)Resources.Load("mp3/" + AudioFile);
         AmbientSound.clip = _Clip;
         AmbientSound.Play();
+        AmbientSound.volume = soundSettings.setBagroundMusicVolume();
     }
 
     public void StopAudio ( string ClipName )
@@ -96,5 +102,20 @@ public class SoundManager : MonoBehaviour
         AmbientSound.UnPause();
     }
 
+    public void setSFXVolume(float volume )
+    {
+        for (int i = 0 ; i < PossibleAudioSource.Count ; i++)
+        {
+            if (PossibleAudioSource [i].clip)
+            {
+                PossibleAudioSource [i].volume = volume;
+            }
+        }
+    }
+
+    public void setBGVolume(float volume )
+    {
+        AmbientSound.volume = volume;
+    }
 
 }

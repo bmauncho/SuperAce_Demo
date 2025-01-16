@@ -147,12 +147,12 @@ public class DemoGridManager : MonoBehaviour
 
     void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
     {
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col == 2)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
             }
             Deck currentDeck = decks [col];
             for (int row = rowCount -1; row >=0 ; row--)
@@ -192,7 +192,7 @@ public class DemoGridManager : MonoBehaviour
 
     void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
-         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)
@@ -309,7 +309,7 @@ public class DemoGridManager : MonoBehaviour
                         {
                             if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
                             {
-                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false , CommandCentre.Instance.SoundManager_.maxSound);
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false );
                             }
                             newCard.transform.localPosition = Vector3.zero;
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
@@ -331,7 +331,7 @@ public class DemoGridManager : MonoBehaviour
         {
             if (!CommandCentre.Instance.TurboManager_.TurboSpin_ && !isRefilling)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false , 1);
+                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
             }
         }
         if (isDemoGridFilled())

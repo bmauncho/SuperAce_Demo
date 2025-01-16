@@ -124,7 +124,7 @@ public class ButtonPressed : MonoBehaviour
             //Bounce();
             if (CommandCentre.Instance)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("BtnClick" , false , .3f);
+                CommandCentre.Instance.SoundManager_.PlaySound("BtnClick" , false);
             }
         }
     }
