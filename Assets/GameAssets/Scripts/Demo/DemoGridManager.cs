@@ -492,6 +492,7 @@ public class DemoGridManager : MonoBehaviour
                     if (CommandCentre.Instance.DemoManager_.IsDemo)
                     {
                         CommandCentre.Instance.DemoManager_.IsDemo =false;
+
                     }
                 }
 
