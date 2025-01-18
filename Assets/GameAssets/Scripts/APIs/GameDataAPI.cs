@@ -41,7 +41,7 @@ public class GameDataAPI : MonoBehaviour
     public bool isDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     public List<bool> canRefill = new List<bool>();
-
+    
     private void Start ()
     {
         isDataFetched = false;
@@ -128,7 +128,6 @@ public class GameDataAPI : MonoBehaviour
             }
             
         }
-        
     }
 
     public bool IsFreeGame ()

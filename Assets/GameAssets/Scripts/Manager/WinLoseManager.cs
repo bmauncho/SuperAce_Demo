@@ -236,10 +236,15 @@ public class WinLoseManager : MonoBehaviour
                 hiddenCards++;
             }
         }
-
+       
         if (scatterCards.Count > 0)
         {
+            CommandCentre.Instance.SoundManager_.PlaySound("scatterWin_2");
             yield return StartCoroutine(RotateScatterCards(scatterCards));
+        }
+        else
+        {
+            CommandCentre.Instance.SoundManager_.PlaySound("hidecards");
         }
 
         yield return new WaitForSeconds(1.5f);
@@ -291,7 +296,7 @@ public class WinLoseManager : MonoBehaviour
         // Activate the free game mechanics
         CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
         CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
-
+        CommandCentre.Instance.SoundManager_.PlaySound("scatterWin");
         // Wait for the intro to complete
         yield return new WaitForSeconds(3);
 

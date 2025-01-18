@@ -197,9 +197,41 @@ public class DemoWinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(WinEffect());
         yield return new WaitForSeconds(.5f);
-
+        Activatecardfx();
         yield return StartCoroutine(HideNormalCards());
+
         yield return null;
+    }
+
+    public void Activatecardfx ()
+    {
+        var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
+        cardFxManager_.Activate();
+        if (cardFxManager_ == null || cardFxManager_.CardFx.Count == 0)
+        {
+            Debug.LogError("CardfxManager or Cardfx not set up correctly.");
+            return;
+        }
+
+        for (int i = 0 ; i < winCards.Count ; i++)
+        {
+            int row = winCards [i].position.row;
+            int col = winCards [i].position.col;
+            var cardFx = cardFxManager_.CardFx [row].cardFxPos [col];
+
+            if (cardFx)
+            {
+                cardFx.SetActive(true);
+                GameObject TheCardfx = CommandCentre.Instance.PoolManager_.GetCardFx();
+                TheCardfx.transform.SetParent(cardFx.transform);
+                TheCardfx.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                // Deactivate the card mask if it's not a winning card
+                cardFx.SetActive(false);
+            }
+        }
     }
 
     IEnumerator WinEffect ()
@@ -288,14 +320,20 @@ public class DemoWinLoseManager : MonoBehaviour
                 poolManager.ReturnCard(card);
                 cardPos.TheOwner = null;
                 hiddenCards++;
+
             }
         }
+       
+
+
         if (scatterCards.Count > 0)
         {
+            CommandCentre.Instance.SoundManager_.PlaySound("scatterWin_2");
             yield return StartCoroutine(RotateScatterCards(scatterCards));
         }
         else
         {
+            CommandCentre.Instance.SoundManager_.PlaySound("hidecards");
             yield return new WaitForSeconds(1.5f);
             // Reset and refill processes
             if (CommandCentre.Instance.TurboManager_.TurboSpin_)
@@ -307,6 +345,8 @@ public class DemoWinLoseManager : MonoBehaviour
                 demoGridManager.refillGrid(hiddenCards);
             }
             winCards.Clear();
+            CommandCentre.Instance.CardFxManager_.ReturnToPool();
+            CommandCentre.Instance.CardFxManager_.Deactivate();
             cardFxManager.DeactivateCardFxMask();
             //
             // Show current win
@@ -376,12 +416,14 @@ public class DemoWinLoseManager : MonoBehaviour
         // Activate the free game mechanics
         CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
         CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
-
+        CommandCentre.Instance.SoundManager_.PlaySound("scatterWin");
         // Wait for the intro to complete
         yield return new WaitForSeconds(3);
 
         CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
         winCards.Clear();
+        CommandCentre.Instance.CardFxManager_.ReturnToPool();
+        CommandCentre.Instance.CardFxManager_.Deactivate();
         cardFxManager.DeactivateCardFxMask();
         CommandCentre.Instance.DemoManager_.isScatterSpin = false;
         CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();

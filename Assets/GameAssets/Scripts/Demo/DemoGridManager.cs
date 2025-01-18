@@ -182,6 +182,11 @@ public class DemoGridManager : MonoBehaviour
                         newCard.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = newCard;
                         CalculateObjectsPlaced();
+                        if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                        {
+                            CommandCentre.Instance.SoundManager_.PlaySound("scatter_2");
+                        }
+
                     }));
                 cardSequence.PrependInterval(delay);
             }
@@ -223,6 +228,10 @@ public class DemoGridManager : MonoBehaviour
                         newCard.transform.localPosition = Vector3.zero;
                         targetPos.GetComponent<CardPos>().TheOwner = newCard;
                         CalculateObjectsPlaced();
+                        if(newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                        {
+                            CommandCentre.Instance.SoundManager_.PlaySound("scatter_2");
+                        }
                     }));
             }
         }
@@ -268,6 +277,11 @@ public class DemoGridManager : MonoBehaviour
                             newCard.transform.localPosition = Vector3.zero;
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
                             CalculateObjectsPlaced();
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("scatter_2");
+                            }
+
                         }));
                     cardSequence.PrependInterval(delay);
                 }

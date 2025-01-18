@@ -14,7 +14,7 @@ public class InternetBehaviour : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        string gameVersion = Application.version;
+        string gameVersion = "185_0049";
         versionText.text = $"V_{gameVersion}";
     }
 

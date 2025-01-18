@@ -353,7 +353,7 @@ public class GridManager : MonoBehaviour
         float delayIncrement = 0.1f; // Delay between cards, adjust as needed
         int rowCount = 4; // Number of rows
         int columnCount = decks.Length; // Number of columns
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        //CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)
@@ -405,7 +405,7 @@ public class GridManager : MonoBehaviour
         objectsPlaced = totalObjectsToPlace - objectshidden;
         int rowCount = 4; // Number of rows
         int columnCount = decks.Length; // Number of columns
-        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        //CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)

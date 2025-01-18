@@ -20,6 +20,11 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        background: black; /* Initially black */
+      }
+
+      body.loaded {
+        background: none; /* Revert to original background */
       }
 
       body::before {
@@ -33,6 +38,11 @@
         background-size: cover;
         filter: blur(10px);
         z-index: -1; /* Ensures the background is behind all other content */
+        display: none; /* Hide initially */
+      }
+
+      body.loaded::before {
+        display: block; /* Show the original background */
       }
 
       .container {
@@ -177,6 +187,7 @@
         }).then(function (instance) {
           document.getElementById("loading-screen").style.display = "none";
           document.getElementById("gameContainer").style.display = "block";
+          document.body.classList.add("loaded"); // Add class to revert background
           canvas = instance.Module.canvas;
           onResize();
           // Visibility change logic
