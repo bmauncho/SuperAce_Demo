@@ -197,6 +197,8 @@ public class DemoWinLoseManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         yield return StartCoroutine(WinEffect());
         yield return new WaitForSeconds(.5f);
+        CommandCentre.Instance.SoundManager_.PlaySound("win");
+        yield return new WaitForSeconds(.5f);
         Activatecardfx();
         yield return StartCoroutine(HideNormalCards());
 
@@ -240,7 +242,6 @@ public class DemoWinLoseManager : MonoBehaviour
         int tweensCompleted = 0;
        // Debug.Log($"Tweens to complete: {tweensToComplete}");
         var cardFxManager_ = CommandCentre.Instance.CardFxManager_;
-
         for (int i = 0 ; i < winCards.Count ; i++)
         {
             int row = winCards [i].position.row;
@@ -276,7 +277,6 @@ public class DemoWinLoseManager : MonoBehaviour
         int hiddenCards = 0;
         // Collect all scatter cards
         List<GameObject> scatterCards = new List<GameObject>();
-
         for (int i = 0 ; i < winCards.Count ; i++)
         {
             int row = winCards [i].position.row;
@@ -333,6 +333,7 @@ public class DemoWinLoseManager : MonoBehaviour
         }
         else
         {
+            
             CommandCentre.Instance.SoundManager_.PlaySound("hidecards");
             yield return new WaitForSeconds(1.5f);
             // Reset and refill processes
