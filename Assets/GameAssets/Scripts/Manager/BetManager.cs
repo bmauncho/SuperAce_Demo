@@ -32,7 +32,7 @@ public class BetManager : MonoBehaviour
         {
             button.IsPressed = false;
         }
-        Debug.Log("Deactivated all bets.");
+        //Debug.Log("Deactivated all bets.");
     }
 
     public void SetCurrentBetAmount ( float amount )

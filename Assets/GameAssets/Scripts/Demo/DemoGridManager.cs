@@ -111,7 +111,7 @@ public class DemoGridManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(tempPos.Count);
+       // Debug.Log(tempPos.Count);
         if (tempPos.Count < totalDemoObjectsToPlace)
         {
             Debug.LogError("Not enough available positions to place all the cards.");
@@ -441,7 +441,7 @@ public class DemoGridManager : MonoBehaviour
                 }
                 
             }
-            Debug.Log("Grid is filled");
+           // Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
         }
     }
@@ -552,7 +552,7 @@ public class DemoGridManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Can auto spin");
+                //Debug.Log("Can auto spin");
                 CommandCentre.Instance.MainMenuController_.Spin();
             }
         }

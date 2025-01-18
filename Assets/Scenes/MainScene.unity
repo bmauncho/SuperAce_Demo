@@ -90842,8 +90842,8 @@ MonoBehaviour:
   isRefreshDone: 1
   isRefilling: 0
   cardPositionsHolder: {fileID: 857952519}
-  moveDuration: 0.125
-  delayBetweenMoves: 0.025
+  moveDuration: 0.1
+  delayBetweenMoves: 0.015
   totalDemoObjectsToPlace: 20
   demoObjectsPlaced: 0
   colData:
@@ -119036,8 +119036,8 @@ MonoBehaviour:
   isRefreshDone: 0
   isRefilling: 0
   cardPositionsHolder: {fileID: 857952519}
-  moveDuration: 0.125
-  delayBetweenMoves: 0.025
+  moveDuration: 0.1
+  delayBetweenMoves: 0.015
   totalObjectsToPlace: 20
   objectsPlaced: 0
   rowData:

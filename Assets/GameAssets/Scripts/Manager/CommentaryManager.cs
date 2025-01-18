@@ -18,7 +18,7 @@ public class CommentaryManager : MonoBehaviour
     {
         cards.Clear();
         comboPlayed = false ;
-        Debug.Log("commentary called");
+        //Debug.Log("commentary called");
         HashSet<CardType> cardTypes = new HashSet<CardType>(winningCards);
         StartCoroutine(PlayCommentarySequentially(cardTypes.ToList()));
         cards = new List<CardType>(cardTypes.ToList());
@@ -115,20 +115,20 @@ public class CommentaryManager : MonoBehaviour
                 switch (Combo)
                 {
                     case 2:
-                        Debug.Log("Free Game Combo 2!");
+                       // Debug.Log("Free Game Combo 2!");
                         soundManager.PlaySound("Lucky" , false);
                         yield return new WaitForSeconds(0.25f);
                         soundManager.PlaySound("Double" , false);
                         break;
 
                     case 3:
-                        Debug.Log("Free Game Combo 3!");
+                       // Debug.Log("Free Game Combo 3!");
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("Triple" , false);
                         break;
 
                     case 5:
-                        Debug.Log("Free Game Combo 5!");
+                        //Debug.Log("Free Game Combo 5!");
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("FiveTimes" , false);
                         break;
@@ -143,26 +143,26 @@ public class CommentaryManager : MonoBehaviour
                 switch (Combo)
                 {
                     case 2:
-                        Debug.Log("Regular Combo 2!");
+                       // Debug.Log("Regular Combo 2!");
                         soundManager.PlaySound("Lucky" , false);
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("Double" , false);
                         break;
 
                     case 4:
-                        Debug.Log("Regular Combo 4!");
+                        //Debug.Log("Regular Combo 4!");
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("FourTimes" , false);
                         break;
 
                     case 6:
-                        Debug.Log("Regular Combo 6!");
+                        //Debug.Log("Regular Combo 6!");
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("SixTimes" , false);
                         break;
 
                     case 10:
-                        Debug.Log("Regular Combo 10!");
+                        //Debug.Log("Regular Combo 10!");
                         yield return new WaitForSeconds(0.1f);
                         soundManager.PlaySound("TenTimes" , false);
                         break;

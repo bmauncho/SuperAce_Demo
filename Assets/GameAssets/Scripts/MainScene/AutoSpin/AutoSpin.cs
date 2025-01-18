@@ -108,7 +108,7 @@ public class AutoSpin : MonoBehaviour
 
     private void TriggerAlternateAction ()
     {
-        Debug.Log("Alternate Action Triggered");
+       // Debug.Log("Alternate Action Triggered");
         // Add your custom logic here
         CommandCentre.Instance.SettingsManager_.SettingsController_.ActivateAutoSpinSetting();
     }

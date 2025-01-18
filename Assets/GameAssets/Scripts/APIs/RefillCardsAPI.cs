@@ -77,7 +77,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-        Debug.Log(jsonString);
+       // Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -98,13 +98,13 @@ public class RefillCardsAPI : MonoBehaviour
         {
             isError = false;
            // Debug.Log("Data successfully sent!");
-            Debug.Log($"Response: {request.downloadHandler.text}");
+           // Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
 
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            Debug.Log("Received: " + formattedOutput);
+            //Debug.Log("Received: " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
 
@@ -137,14 +137,14 @@ public class RefillCardsAPI : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("cards array is null.");
+                    //Debug.LogWarning("cards array is null.");
                     HandleRetry("Invalid cards array.");
                     isError = true;
                 }
             }
             else
             {
-                Debug.Log(response.message);
+                //Debug.Log(response.message);
                 if (receivedData_.Count <= 0)
                 {
                     int index = 0;
@@ -179,7 +179,7 @@ public class RefillCardsAPI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Failed to get data!");
+            //Debug.Log("Failed to get data!");
             isError = true;
             Debug.LogError($"Error sending data: {request.error} | Response Code: {request.responseCode}");
             HandleRetry("Error sending data: " + request.error);
@@ -192,12 +192,12 @@ public class RefillCardsAPI : MonoBehaviour
         if (tries < maxtries)
         {
             tries++;
-            Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
+            //Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
             FetchData();
         }
         else
         {
-            Debug.LogWarning(errorMessage);
+            //Debug.LogWarning(errorMessage);
             for (int i = 0 ; i < sentData_.Count ; i++)
             {
                 // Initialize a new receivedData object

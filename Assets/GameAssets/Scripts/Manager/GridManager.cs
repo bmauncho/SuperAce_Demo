@@ -498,10 +498,10 @@ public class GridManager : MonoBehaviour
         else
         {
             int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
-            Debug.Log($"which combo : {combo}");
+            //Debug.Log($"which combo : {combo}");
             if (combo == 5)
             {
-                Debug.Log("Combo 5 - win");
+                //Debug.Log("Combo 5 - win");
             }
             if (combo >= 3)
             {
@@ -533,7 +533,7 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Can auto spin");
+                //Debug.Log("Can auto spin");
                 CommandCentre.Instance.MainMenuController_.Spin();
             }
            

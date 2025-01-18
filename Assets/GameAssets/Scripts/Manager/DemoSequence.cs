@@ -166,7 +166,7 @@ public class DemoSequence : MonoBehaviour
 
     public void SetUpFreeCards ()
     {
-        Debug.Log("called");
+        //Debug.Log("called");
         demoCards.Clear();
         // Ensure `demoCards` has 4 pre-initialized elements
         for (int i = 0 ; i < 4 ; i++)
@@ -183,7 +183,7 @@ public class DemoSequence : MonoBehaviour
                 // Ensure nested objects are initialized
                 if (whichFreeSpin(spinCount , j , i) != null)
                 {
-                    Debug.Log(whichFreeSpin(spinCount , j , i));
+                    //Debug.Log(whichFreeSpin(spinCount , j , i));
                     demoCards [i].cards.Add(whichFreeSpin(spinCount , j , i));
                 }
                
@@ -394,7 +394,7 @@ public class DemoSequence : MonoBehaviour
     public DemoCardsInfo whichFreeSpin ( int which , int col , int row )
     {
         var cardsDatas = new DemoCardsInfo();
-        Debug.Log(which);
+        //Debug.Log(which);
         switch (which)
         {
             case 3:

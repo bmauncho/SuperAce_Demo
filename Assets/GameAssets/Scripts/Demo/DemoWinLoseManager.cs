@@ -360,7 +360,7 @@ public class DemoWinLoseManager : MonoBehaviour
 
     private IEnumerator rotateNormalGoldenCards ( GameObject card , int col = 0 , int row = 0 )
     {
-        Debug.Log(" Handle golden cards-2");
+        //Debug.Log(" Handle golden cards-2");
         card.transform.DORotate(Vector3.zero , .2f)
             .OnComplete(() =>
             {
@@ -522,7 +522,7 @@ public class DemoWinLoseManager : MonoBehaviour
             2.0f , 1 , 1.0f).OnComplete(() =>
             {
                 objectsJumped++;
-                Debug.Log($"Card 1 jumped: {objectsJumped}/{totalobjectstojump}");
+               // Debug.Log($"Card 1 jumped: {objectsJumped}/{totalobjectstojump}");
                 newCard1.transform.localPosition = Vector3.zero;
                 newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                 demoSequence.demoCards [randomrowIndex1].cards [randomColumnIndex1].name = newCard1.GetComponent<Card>().ActiveCardType.ToString ();
@@ -533,7 +533,7 @@ public class DemoWinLoseManager : MonoBehaviour
             2.0f , 1 , 1.0f).OnComplete(() =>
             {
                 objectsJumped++;
-                Debug.Log($"Card 2 jumped: {objectsJumped}/{totalobjectstojump}");
+               // Debug.Log($"Card 2 jumped: {objectsJumped}/{totalobjectstojump}");
                 newCard2.transform.localPosition = Vector3.zero;
                 newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                 demoSequence.demoCards [randomrowIndex2].cards [randomColumnIndex2].name = newCard2.GetComponent<Card>().ActiveCardType.ToString();

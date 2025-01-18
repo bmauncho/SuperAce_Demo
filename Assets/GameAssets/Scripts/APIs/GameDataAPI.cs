@@ -88,7 +88,7 @@ public class GameDataAPI : MonoBehaviour
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            Debug.Log("Received: " + formattedOutput);
+            //Debug.Log("Received: " + formattedOutput);
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             if (response?.data?.cards != null)
             {
@@ -164,7 +164,7 @@ public class GameDataAPI : MonoBehaviour
     {
         canRefill.Clear();
         Dictionary<CardData , (int row, int col)> winningCards = new Dictionary<CardData , (int row, int col)>();
-        Debug.Log("Rechecking wins...");
+        //Debug.Log("Rechecking wins...");
         int columnCount = rows [0].infos.Count;
 
         for (int col = 0 ; col < columnCount ; col++)

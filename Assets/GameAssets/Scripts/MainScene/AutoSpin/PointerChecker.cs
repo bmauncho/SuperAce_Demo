@@ -9,7 +9,7 @@ public class PointerChecker : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         GetComponentInParent<AutoSpin>().isPointerDown = true;
         GetComponentInParent<AutoSpin>().isHolding = true;
-        Debug.Log("Toggle pressed");
+        //Debug.Log("Toggle pressed");
     }
 
     public void OnPointerUp ( PointerEventData eventData )
@@ -17,6 +17,6 @@ public class PointerChecker : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         GetComponentInParent<AutoSpin>().isPointerDown = false;
         GetComponentInParent<AutoSpin>().isHolding = false;
         GetComponentInParent<AutoSpin>().holdTime = 0f;
-        Debug.Log("Toggle released");
+        //Debug.Log("Toggle released");
     }
 }

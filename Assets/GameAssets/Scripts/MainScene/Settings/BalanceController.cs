@@ -91,7 +91,7 @@ public class BalanceController : MonoBehaviour
 
     private void TriggerAlternateAction ()
     {
-        Debug.Log("Alternate Action Triggered");
+       // Debug.Log("Alternate Action Triggered");
         // Add your custom logic here
         if (IsIncreaseButton)
         {

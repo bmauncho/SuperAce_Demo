@@ -16,7 +16,7 @@ public class SettingsPointerChecker : MonoBehaviour, IPointerDownHandler, IPoint
             GetComponentInParent<BalanceController>().isHolding = true;
         }
 
-        Debug.Log("Toggle pressed");
+       // Debug.Log("Toggle pressed");
     }
 
     public void OnPointerUp ( PointerEventData eventData )
@@ -33,6 +33,6 @@ public class SettingsPointerChecker : MonoBehaviour, IPointerDownHandler, IPoint
             GetComponentInParent<BalanceController>().isHolding = false;
             GetComponentInParent<BalanceController>().holdTime = 0;
         }
-        Debug.Log("Toggle released");
+       // Debug.Log("Toggle released");
     }
 }

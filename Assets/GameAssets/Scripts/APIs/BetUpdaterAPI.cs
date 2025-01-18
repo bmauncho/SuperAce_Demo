@@ -39,7 +39,7 @@ public class BetUpdaterAPI : MonoBehaviour
     [ContextMenu("UpdateBet")]
     public void UpdateBet ()
     {
-        Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id);
+        //Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id);
         BetUpDateData Data = new BetUpDateData
         {
             bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id,

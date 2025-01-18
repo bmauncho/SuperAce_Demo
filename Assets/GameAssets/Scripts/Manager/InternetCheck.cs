@@ -113,11 +113,11 @@ public class InternetCheck : MonoBehaviour
                 if (retryCount >= maxRetries)
                 {
                     connection = InternetConnection.Bad;
-                    Debug.Log("Max retries reached. Connection quality determined: BAD.");
+                   // Debug.Log("Max retries reached. Connection quality determined: BAD.");
                 }
                 else
                 {
-                    Debug.Log("Retrying connection...");
+                  //  Debug.Log("Retrying connection...");
                 }
             }
         }
