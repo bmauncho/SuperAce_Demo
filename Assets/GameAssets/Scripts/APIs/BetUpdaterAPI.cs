@@ -6,8 +6,9 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class BetUpDateData
 {
-    public int bet_id;
-    public float amount_won;
+    public string bet_id;
+    public string amount_won;
+    public string client_id;
 }
 
 [System.Serializable]
@@ -42,11 +43,12 @@ public class BetUpdaterAPI : MonoBehaviour
         //Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id); 
         BetUpDateData Data = new BetUpDateData
         {
-            bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id,
-            amount_won = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon,
+            bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id.ToString(),
+            amount_won = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString(),
+            client_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString()
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        //Debug.Log(jsonPayload);
+        Debug.Log(jsonPayload);
         StartCoroutine(SendUpdateBetRequest(jsonPayload));
     }
 
@@ -63,7 +65,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Received: " + request.downloadHandler.text);
+            Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);

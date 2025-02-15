@@ -5625,13 +5625,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   response:
     message: Bet placed successfully
-    bet_id: 7260
-    new_wallet_balance: 2104353.5
-    status: lost
-    error: Insufficient balance
+    bet_id: 8274781
+    game_id: 0
+    new_wallet_balance: 8571.6
+    externalResponse_:
+      client_id: 
+      totalBets: 0
+      totalWins: 0
   BetAmount: 2
-  customerId: 28
-  tries: 3
+  customerId: 3
+  game_id: 32
+  client_id: 12345
+  tries: 0
   maxtries: 3
   IsUpdated: 1
 --- !u!1 &131502636
@@ -47635,6 +47640,7 @@ MonoBehaviour:
   winloseManager: {fileID: 1537336882}
   BetAmount: 0
   AmountWon: 0
+  clientId: 12345
   rows:
   - infos:
     - name: SPADE
@@ -53363,6 +53369,7 @@ MonoBehaviour:
     game:
       id: 2
       name: Super Ace
+      mode: NORMAL
     betAmount: 0
     gameMode: NORMAL
   gameDataAPI_: {fileID: 653306915}

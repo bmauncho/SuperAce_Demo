@@ -12,14 +12,16 @@ public class _GameInfo
 {
     public _game game;
     public float betAmount = 1000;
-    public string gameMode = "Normal";
+    public string clientId = "12345";
+
 }
 
 [System.Serializable]
 public class _game
 {
-    public int id = 2;
-    public string name = "Super Ace";
+    public string id = "2";
+    public string name = "SUPER_ACE";
+    public string mode = "NORMAL";
 }
 
 [System.Serializable]
@@ -29,11 +31,15 @@ public class rowData
 }
 public class GameDataAPI : MonoBehaviour
 {
+    [Header("API Settings")]
     public WinLoseManager winloseManager;
-    private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace";
+    private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace/";
+
+    [Header("API Response")]
     public ApiResponse finalData;
     public float BetAmount;
     public float AmountWon;
+    public int clientId = 12345;
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
@@ -59,11 +65,15 @@ public class GameDataAPI : MonoBehaviour
     public void FetchInfo ()
     {
 
-        _GameInfo Data = new _GameInfo();
-        Data.game = new _game();
-        Data.betAmount = BetAmount;
+        _GameInfo Data = new _GameInfo
+        {
+            game = new _game(),
+            betAmount = BetAmount,
+            clientId = clientId.ToString(),
+        };
+
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        //Debug.Log(jsonString);
+        Debug.Log(jsonString);
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
@@ -76,7 +86,7 @@ public class GameDataAPI : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
-        //Debug.Log("Sending data...");
+        Debug.Log("Sending data...");
         yield return request.SendWebRequest();
         infos.Clear();
         rows.Clear();
@@ -88,7 +98,7 @@ public class GameDataAPI : MonoBehaviour
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            //Debug.Log("Received: " + formattedOutput);
+            Debug.Log("Received: " + formattedOutput);
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             if (response?.data?.cards != null)
             {

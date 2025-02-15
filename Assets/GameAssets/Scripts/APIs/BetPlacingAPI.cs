@@ -5,27 +5,42 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class BetRequest
 {
-    public int customer_id;
+    public string player_id;
+    public string amount;
     public string bet_id;
-    public float amount;
+    public string game_id;
+    public string client_id;
 }
 
 [System.Serializable]
 public class BetResponse
 {
-    [HideInInspector] public string message = "Bet placed successfully";
-    public int bet_id = 1;
-    public float new_wallet_balance = 448.0f;
-    [HideInInspector]public string status = "lost";
-    [HideInInspector]public string error = "Insufficient balance"; // Optional field for errors
+    public string message = "Bet placed successfully";
+    public int bet_id;
+    public int game_id;
+    public float new_wallet_balance;
+    public ExternalResponse externalResponse_;
+}
+
+[System.Serializable]
+public class ExternalResponse
+{
+    public string client_id;
+    public float totalBets;
+    public float totalWins;
 }
 
 public class BetPlacingAPI : MonoBehaviour
 {
-    private const string ApiUrl = "https://admin1.ibibe.africa/api/place_bet";
+    [Header("API Settings")]
+    private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse response;
     public float BetAmount;
     public int customerId;
+    public int game_id = 32;
+    public int client_id = 12345;
+
+    [Header("Retry Settings")]
     public int tries;
     public int maxtries;
     public bool IsUpdated;
@@ -39,21 +54,22 @@ public class BetPlacingAPI : MonoBehaviour
     }
 
     [ContextMenu("Bet")]
-    public void Bet()
+    public void Bet ()
     {
         IsUpdated = false;
-        //int customer_id = Random.Range(1 , 28);
-        //customerId = customer_id;
         int bet_id = Random.Range(100 , 10000000);
 
         BetRequest Data = new BetRequest
         {
-            customer_id = customerId ,
-            bet_id = bet_id.ToString(),
-            amount = BetAmount ,
+            player_id = customerId.ToString() ,
+            amount = BetAmount.ToString() ,
+            bet_id = bet_id.ToString() ,
+            game_id = game_id.ToString() ,
+            client_id = client_id.ToString()
         };
-        string jsonString = JsonUtility.ToJson(Data,true);
-        //Debug.Log(jsonString);
+
+        string jsonString = JsonUtility.ToJson(Data , true);
+        Debug.Log("JSON Payload: " + jsonString);  // Debug the JSON sent
         StartCoroutine(PlaceBet(jsonString));
     }
 
@@ -69,26 +85,26 @@ public class BetPlacingAPI : MonoBehaviour
         // Send request
         yield return request.SendWebRequest();
         //Debug.Log("Called");
-
+        Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
         if (request.result == UnityWebRequest.Result.Success)
         {
-           // Debug.Log("Received: " + request.downloadHandler.text);
+            Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             BetResponse responseData = JsonUtility.FromJson<BetResponse>(request.downloadHandler.text);
-            //Debug.Log($"message : {responseData.message}," +
-            //    $"betId : {responseData.bet_id}," +
-            //    $"newWalletBalance : {responseData.new_wallet_balance}," +
-            //    $"status : {responseData.status}," +
-            //    $"error : {responseData.error}");
 
             BetResponse betResponse = new BetResponse
             {
                 message = responseData.message ,
                 bet_id = responseData.bet_id ,
                 new_wallet_balance = responseData.new_wallet_balance ,
-                status = responseData.status ,
-                error = responseData.error ,
+                externalResponse_ = new ExternalResponse
+                {
+                    client_id = responseData.externalResponse_.client_id ,
+                    totalBets = responseData.externalResponse_.totalBets ,
+                    totalWins = responseData.externalResponse_.totalWins
+                }
             };
 
             response = betResponse;
@@ -96,15 +112,12 @@ public class BetPlacingAPI : MonoBehaviour
         }
         else
         {
-            
-            
             HandleRetry();
         }
     }
 
     private void HandleRetry ()
     {
-
         if (tries < maxtries)
         {
             customerId++;
@@ -114,7 +127,7 @@ public class BetPlacingAPI : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("request is unsuccessfull");
+            Debug.LogWarning("Request unsuccessful after maximum retries.");
         }
     }
 }
