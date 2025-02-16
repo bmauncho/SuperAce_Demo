@@ -69,7 +69,7 @@ public class BetPlacingAPI : MonoBehaviour
         };
 
         string jsonString = JsonUtility.ToJson(Data , true);
-        Debug.Log("JSON Payload: " + jsonString);  // Debug the JSON sent
+        //Debug.Log("JSON Payload: " + jsonString);  // Debug the JSON sent
         StartCoroutine(PlaceBet(jsonString));
     }
 
@@ -85,8 +85,8 @@ public class BetPlacingAPI : MonoBehaviour
         // Send request
         yield return request.SendWebRequest();
         //Debug.Log("Called");
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
+        //Debug.Log("Status Code: " + request.responseCode);
+        //Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);

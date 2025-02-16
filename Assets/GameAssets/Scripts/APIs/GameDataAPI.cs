@@ -73,7 +73,7 @@ public class GameDataAPI : MonoBehaviour
         };
 
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonString);
+        //Debug.Log(jsonString);
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
@@ -86,7 +86,7 @@ public class GameDataAPI : MonoBehaviour
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
-        Debug.Log("Sending data...");
+        //Debug.Log("Sending data...");
         yield return request.SendWebRequest();
         infos.Clear();
         rows.Clear();

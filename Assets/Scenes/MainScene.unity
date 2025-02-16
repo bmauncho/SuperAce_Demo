@@ -5625,9 +5625,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   response:
     message: Bet placed successfully
-    bet_id: 8274781
+    bet_id: 6313971
     game_id: 0
-    new_wallet_balance: 8571.6
+    new_wallet_balance: 13188.6
     externalResponse_:
       client_id: 
       totalBets: 0

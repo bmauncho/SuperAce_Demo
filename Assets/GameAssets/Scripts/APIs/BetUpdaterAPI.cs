@@ -62,7 +62,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
         // Send the request
         yield return request.SendWebRequest();
-
+        Debug.Log("Status Code: " + request.responseCode);
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);
