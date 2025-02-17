@@ -89,7 +89,7 @@ public class BetPlacingAPI : MonoBehaviour
         //Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             BetResponse responseData = JsonUtility.FromJson<BetResponse>(request.downloadHandler.text);

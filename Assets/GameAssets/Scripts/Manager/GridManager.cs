@@ -492,7 +492,9 @@ public class GridManager : MonoBehaviour
         {
             Debug.Log("scatter win");   
         }
-        else if (CommandCentre.Instance.WinLoseManager_.IsWin())
+
+         
+        if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();

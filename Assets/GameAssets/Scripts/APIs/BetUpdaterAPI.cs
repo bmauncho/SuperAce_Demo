@@ -48,7 +48,7 @@ public class BetUpdaterAPI : MonoBehaviour
             client_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString()
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonPayload);
+        //Debug.Log(jsonPayload);
         StartCoroutine(SendUpdateBetRequest(jsonPayload));
     }
 
@@ -62,11 +62,11 @@ public class BetUpdaterAPI : MonoBehaviour
 
         // Send the request
         yield return request.SendWebRequest();
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log("Status Code: " + request.error);
+        //Debug.Log("Status Code: " + request.responseCode);
+        //Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);
