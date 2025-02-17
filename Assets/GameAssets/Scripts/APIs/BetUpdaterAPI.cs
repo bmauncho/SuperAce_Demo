@@ -23,7 +23,7 @@ public class UpdateBetResponse
 }
 public class BetUpdaterAPI : MonoBehaviour
 {
-    private const string ApiUrl = "https://admin1.ibibe.africa/api/update_bet";
+    private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/update_bet";
     public UpdateBetResponse updateBetResponse_;
 
 
@@ -63,6 +63,7 @@ public class BetUpdaterAPI : MonoBehaviour
         // Send the request
         yield return request.SendWebRequest();
         Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Received: " + request.downloadHandler.text);
