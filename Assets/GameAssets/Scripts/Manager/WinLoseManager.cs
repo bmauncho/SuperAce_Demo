@@ -22,7 +22,8 @@ public class WinLoseManager : MonoBehaviour
     PoolManager poolManager;
     CardFxManager cardFxManager;
     public List<winData> data = new List<winData>();
-    public List<winData> scatterdata = new List<winData>();
+    public List<winData> tempData = new List<winData>();
+    //public List<winData> scatterdata = new List<winData>();
 
     public int totalobjectstojump = 2;
     public int objectsJumped = 0;
@@ -49,6 +50,13 @@ public class WinLoseManager : MonoBehaviour
         {
             // Add the card data if it's not a duplicate
             data.Add(new winData
+            {
+                name = _data.name ,
+                row = row ,
+                col = col ,
+            });
+
+            tempData.Add(new winData
             {
                 name = _data.name ,
                 row = row ,
@@ -85,6 +93,8 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator showWinningCards ()
     {
+        
+        Debug.Log($"TempData count: {tempData.Count}");
         objectsJumped = 0;
         CommandCentre.Instance.ComboManager_.IncreaseComboCounter();
         CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
@@ -261,6 +271,7 @@ public class WinLoseManager : MonoBehaviour
         cardFxManager.DeactivateCardFxMask();
         ResetWinDataList();
         ClearAddedKeys();
+        // Show current win
 
         if (CommandCentre.Instance.TurboManager_.TurboSpin_)
         {
@@ -271,8 +282,12 @@ public class WinLoseManager : MonoBehaviour
             gridManager.refillGrid(hiddenCards);
         }
 
-        // Show current win
-        CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+        if (checkForOtherCards())
+        {
+            CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+        }
+        tempData.Clear();
+
         yield return null;
     }
 
@@ -309,8 +324,12 @@ public class WinLoseManager : MonoBehaviour
         CommandCentre.Instance.FreeGameManager_.DeactivateFreeGameIntro();
         data.Clear();
         cardFxManager.DeactivateCardFxMask();
-        CommandCentre.Instance.DemoManager_.isScatterSpin = false;
-        CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            CommandCentre.Instance.DemoManager_.isScatterSpin = false;
+            CommandCentre.Instance.DemoManager_.DemoSequence_.setUpFirstFreeCards();
+        }
+        
         CommandCentre.Instance.MainMenuController_.CanSpin = true;
     }
 
@@ -473,24 +492,75 @@ public class WinLoseManager : MonoBehaviour
 
     public bool IsWin ()
     {
-        return data.Count > 0;
+        return data.Count >= 3;
     }
 
     public bool IsScatterWin ()
     {
-        HashSet<int> distinctColumns = new HashSet<int>(); // To store distinct column indices
+        HashSet<int> distinctColumns = new HashSet<int>(); // Store unique column indices
+        List<winData> toRemove = new List<winData>(); // Store SCATTER entries for removal
+        GameDataAPI gameDataAPI = CommandCentre.Instance.APIManager_.GameDataAPI_;
+        if (tempData == null || tempData.Count == 0)
+        {
+            Debug.LogWarning("TempData is empty or null.");
+            return false;
+        }
 
-        foreach (var entry in data)
+        if (gameDataAPI.IsFreeGame())
+        {
+            return true;
+        }
+
+        foreach (var entry in tempData)
         {
             if (entry != null && entry.name == "SCATTER")
             {
-                distinctColumns.Add(entry.col); // Add the column index to the HashSet
+                //Debug.Log($"Found SCATTER at column: {entry.col}"); // Debugging
+                distinctColumns.Add(entry.col);
+                toRemove.Add(entry);
             }
         }
 
-        // Check if there are 3 or more distinct columns with "SCATTER" entries
-        return distinctColumns.Count >= 3;
+        Debug.Log($"Distinct columns count: {distinctColumns.Count}");
+
+        // Ensure at least 3 unique columns contain SCATTER cards
+        if (distinctColumns.Count < 3)
+        {
+            foreach (var entry in toRemove)
+            {
+                data.Remove(entry);
+                tempData.Remove(entry);
+            }
+            return false;
+        }
+
+        return true;
     }
 
+
+
+    public bool checkForOtherCards ()
+    {
+        HashSet<string> otherCardsList = new HashSet<string>();
+        if (tempData == null || tempData.Count == 0)
+        {
+            Debug.LogWarning("checkForOtherCards - TempData is empty or null.");
+            return false;
+        }
+        foreach (var entry in tempData)
+        {
+            if (entry != null && entry.name != "SCATTER")
+            {
+                otherCardsList.Add(entry.name);
+            }
+        }
+
+        if(otherCardsList.Count > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
 }

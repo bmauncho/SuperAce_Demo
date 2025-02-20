@@ -33,10 +33,6 @@ public class APIManager : MonoBehaviour
     public BetUpdaterAPI betUpdaterAPI_;
     public RefillCardsAPI refillCardsAPI_;
 
-    public void FetchGameData ()
-    {
-        GameDataAPI_.FetchInfo ();
-    }
 
     public void PlaceBet ()
     {

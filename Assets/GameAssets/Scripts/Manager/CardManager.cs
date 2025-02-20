@@ -203,6 +203,7 @@ public class CardManager : MonoBehaviour
         }
        
 
+        
        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))

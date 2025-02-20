@@ -63,12 +63,12 @@ public class FreeGameWinUI : MonoBehaviour
         float theAmount = 0f;
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            theAmount = CommandCentre.Instance.CashManager_.CurrentWinings;
+            theAmount = CommandCentre.Instance.FreeGameManager_.winAmount;
 
         }
         else
         {
-            theAmount = CommandCentre.Instance.CashManager_.CurrentWinings;
+            theAmount = CommandCentre.Instance.FreeGameManager_.winAmount;
         }
         return theAmount;
     }

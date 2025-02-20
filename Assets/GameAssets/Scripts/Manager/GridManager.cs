@@ -73,22 +73,22 @@ public class GridManager : MonoBehaviour
                 foreach (var _obj in obj.cardPositionInRow)
                 {
                     var cardPos = _obj.GetComponent<CardPos>();
-                    if (cardPos)
+                    if (cardPos != null)
                     {
                         var card = cardPos.TheOwner;
-                        if (card)
+                        if (card != null)
                         {
                             poolManager.ReturnCard(card);
                             cardPos.TheOwner = null;
                         }
                         else
                         {
-                            Debug.LogWarning($"CardPos found :{cardPos.name} but TheOwner is null: {card.name}");
+                            Debug.LogWarning($"CardPos found: {cardPos.name}, but TheOwner is null.");
                         }
                     }
                     else
                     {
-                        Debug.LogWarning($"Transform does not have CardPos");
+                        Debug.LogWarning($"Transform does not have CardPos: {_obj.name}");
                     }
                 }
             }
@@ -487,20 +487,27 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.APIManager_.refillCardsAPI_.isError =false;
         }
 
-
         if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
         {
-            Debug.Log("scatter win");   
+            Debug.Log("Scatter win");
         }
+        
 
-         
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
-            CommandCentre.Instance.CashManager_.updateThecashUi();
-            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
-            CommandCentre.Instance.APIManager_.UpdateBet();
-            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
-            CommandCentre.Instance.WinLoseManager_.winSequence();
+            if(CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
+            {
+                CommandCentre.Instance.CashManager_.updateThecashUi();
+                CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+                CommandCentre.Instance.APIManager_.UpdateBet();
+                yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+                CommandCentre.Instance.WinLoseManager_.winSequence();
+            }
+            else
+            {
+                CommandCentre.Instance.APIManager_.UpdateBet();
+                CommandCentre.Instance.WinLoseManager_.winSequence();
+            }
         }
         else
         {
@@ -527,24 +534,41 @@ public class GridManager : MonoBehaviour
 
     IEnumerator Autospin ()
     {
-        // Wait until spinning is allowed
+        FreeGameManager freeGameManager = CommandCentre.Instance.FreeGameManager_;
+        
+        Debug.Log($"Is free game: {freeGameManager.IsFreeGame}, Is spin init: {freeGameManager.IsSpinInit}");
         yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
-
-        // Check if auto-spin is enabled and perform the spin
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
             if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
             {
-                CommandCentre.Instance.AutoSpinManager_.DisableAutoSpin();
-                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin =false;
+                CommandCentre.Instance.AutoSpinManager_.AutospinToggle.isOn = false;
+                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
             }
             else
             {
-                //Debug.Log("Can auto spin");
                 CommandCentre.Instance.MainMenuController_.Spin();
             }
-           
         }
+        else
+        {
+            if (freeGameManager.IsFreeGame && freeGameManager.IsSpinInit)
+            {
+                // Wait until spinning is allowed
+
+                Debug.Log("Can auto spin in free game");
+                CommandCentre.Instance.MainMenuController_.Spin();
+            }
+            else
+            {
+                Debug.Log("Cant auto spin in free game");
+                if (freeGameManager.IsFreeGame && !freeGameManager.IsSpinInit)
+                {
+                    freeGameManager.IsSpinInit = true;
+                }
+            }
+        }
+      
     }
 
 

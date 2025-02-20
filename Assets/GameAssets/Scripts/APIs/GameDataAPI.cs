@@ -30,7 +30,7 @@ public class rowData
     public List<CardData> infos = new List<CardData>();
 }
 public class GameDataAPI : MonoBehaviour
-{
+{   
     [Header("API Settings")]
     public WinLoseManager winloseManager;
     private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace/";
@@ -39,6 +39,7 @@ public class GameDataAPI : MonoBehaviour
     public ApiResponse finalData;
     public float BetAmount;
     public float AmountWon;
+    public float FreeSpins;
     public int clientId = 12345;
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
@@ -47,7 +48,7 @@ public class GameDataAPI : MonoBehaviour
     public bool isDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     public List<bool> canRefill = new List<bool>();
-    
+    bool canshowSpins = false;
     private void Start ()
     {
         isDataFetched = false;
@@ -64,7 +65,7 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
-
+        if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
         _GameInfo Data = new _GameInfo
         {
             game = new _game(),
@@ -83,67 +84,83 @@ public class GameDataAPI : MonoBehaviour
         bool isDone = false;
         var request = new UnityWebRequest(url , "POST");
         byte [] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type" , "application/json");
-        //Debug.Log("Sending data...");
+
         yield return request.SendWebRequest();
+
         infos.Clear();
         rows.Clear();
-        //Debug.Log("Status Code: " + request.responseCode);
-        if (request.result == UnityWebRequest.Result.Success)
+
+        if (request.result != UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Received: " + request.downloadHandler.text);
-            string output = request.downloadHandler.text;
-            object parsedResponse = JsonConvert.DeserializeObject(output);
-            string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
+            Debug.LogError($"Request failed: {request.error}");
+            isDone = true;
+            isDataFetched = false;
+            yield break;
+        }
 
-           // Debug.Log("Received: " + formattedOutput);
-            var response = JsonConvert.DeserializeObject<ApiResponse>(output);
-            if (response?.data?.cards != null)
+        string output = request.downloadHandler.text;
+        Debug.Log("Received: " + output);
+
+        var response = JsonConvert.DeserializeObject<ApiResponse>(output);
+        if (response?.message == "Could not process request at this time")
+        {
+            isDone = true;
+            isDataFetched = false;
+            yield break;
+        }
+
+        if (response?.data?.cards != null)
+        {
+            AmountWon = response.data.AmountWon;
+            FreeSpins = response.data.freeSpins;
+            if (FreeSpins > 0)
             {
-                // Debug the deserialized data
-                //Debug.Log("Status: " + response.status);
-                //Debug.Log("Free Spins: " + response.data.freeSpins);
-                //Debug.Log("Amount Won: " + response.data.AmountWon);
-                
-                for (int i = 0 ; i < response.data.cards.Length ; i++)
+                Debug.Log("Free Spins: " + FreeSpins);
+            }
+
+            for (int i = 0 ; i < response.data.cards.Length ; i++)
+            {
+                var cardRow = response.data.cards [i];
+                if (cardRow != null)
                 {
-                    var cardRow = response.data.cards [i];
-                    if (cardRow != null)
+                    for (int j = 0 ; j < cardRow.Length ; j++)
                     {
-                        for (int j = 0 ; j < cardRow.Length ; j++)
+                        var card = cardRow [j];
+
+                        CardData cardData_ = new CardData
                         {
-                            var card = cardRow [j];
+                            name = card.name ,
+                            golden = card.golden ,
+                            substitute = card.substitute ,
+                            transformed = card.transformed ,
+                        };
+                        logReceivedData(i , j , cardData_);
 
-                            CardData cardData_ = new CardData
-                            {
-                                name = card.name ,
-                                golden = card.golden ,
-                                substitute = card.substitute ,
-                                transformed = card.transformed ,
-                            };
-                            logReceivedData(i,j,cardData_);
-
-                            if (cardData_.transformed)
-                            {
-                                winloseManager.GetWinningCard(cardData_ , i , j);
-                            }
+                        if (cardData_.transformed || ( IsFreeGame() && cardData_.name == "SCATTER" ))
+                        {
+                            //Debug.Log("Scatter found");
+                            winloseManager.GetWinningCard(cardData_ , i , j);
                         }
                     }
-                    AmountWon = response.data.AmountWon;
-                    isDone = true;
-                    isDataFetched = true;
                 }
             }
-            
+
+            isDone = true;
+            isDataFetched = true;
         }
+
+        OnComplete?.Invoke(); // Ensure callback is executed
     }
+
 
     public bool IsFreeGame ()
     {
-        return finalData.data.freeSpins >= 10;
+        return FreeSpins >= 10;
     }
+
 
     public CardData GetCardInfo ( int col , int row )
     {
@@ -185,7 +202,7 @@ public class GameDataAPI : MonoBehaviour
             {
                 CardData data = rows [row].infos [col];
 
-                if (data.transformed || !string.IsNullOrEmpty(data.substitute))
+                if (data.transformed /*|| !string.IsNullOrEmpty(data.substitute)*/)
                 {
                     winningCards [data] = (row, col);
                     winCardCount++;

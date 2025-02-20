@@ -77,7 +77,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-       // Debug.Log(jsonString);
+        Debug.Log(jsonString);
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -91,14 +91,31 @@ public class RefillCardsAPI : MonoBehaviour
         request.SetRequestHeader("accept" , "application/json");
         request.SetRequestHeader("Content-Type" , "application/json");
 
-       // Debug.Log($"Sending data...: {jsonData}");
-        yield return request.SendWebRequest();
+        float timer = 0f;
+        var asyncOperation = request.SendWebRequest();
 
+        while (!asyncOperation.isDone)
+        {
+            if (timer > 3f) // Timeout check
+            {
+                Debug.LogError("Request timed out, skipping...");
+                //failsafe
+                HandleFailure();
+                yield break;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+
+
+        Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
             isError = false;
-           // Debug.Log("Data successfully sent!");
-           // Debug.Log($"Response: {request.downloadHandler.text}");
+            // Debug.Log("Data successfully sent!");
+            // Debug.Log($"Response: {request.downloadHandler.text}");
             string output = request.downloadHandler.text;
 
             object parsedResponse = JsonConvert.DeserializeObject(output);
@@ -108,8 +125,8 @@ public class RefillCardsAPI : MonoBehaviour
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
 
-            if(response.message != "no transformable symbols found")
-            { 
+            if (response.message != "no transformable symbols found")
+            {
                 if (response?.data?.cards != null)
                 {
                     tries = 0;
@@ -148,14 +165,14 @@ public class RefillCardsAPI : MonoBehaviour
                 if (receivedData_.Count <= 0)
                 {
                     int index = 0;
-                    for(int i = 0 ;i<4 ; i++)
+                    for (int i = 0 ; i < 4 ; i++)
                     {
                         // Initialize a new receivedData object
                         var newReceivedData = new receivedData();
 
                         // Add it to the list
                         receivedData_.Add(newReceivedData);
-                        for(int j = 0 ;j<5 ; j++)
+                        for (int j = 0 ; j < 5 ; j++)
                         {
                             var newCardData = new CardData();
 
@@ -167,14 +184,34 @@ public class RefillCardsAPI : MonoBehaviour
                                 newCardData.name = newCardData.substitute;
                                 newCardData.substitute = null;
                             }
+
                             // Add the new CardData to the receivedData's data list
                             newReceivedData.data.Add(newCardData);
                             index++;
                         }
                     }
                     yield return new WaitUntil(() => index >= 20);
+
+                    foreach (var item in receivedData_)
+                    {
+                        foreach (var card in item.data)
+                        {
+                            //Debug.Log(card.name);
+
+                            if (card.name == "WILD")
+                            {
+                                card.name = "SCATTER";
+                            }
+                            else if (card.substitute == "WILD")
+                            {
+                                card.substitute = "SCATTER";
+                            }
+                        }
+                    }
                 }
-                refillDataFetched =true;
+
+
+                refillDataFetched = true;
             }
         }
         else
@@ -226,6 +263,37 @@ public class RefillCardsAPI : MonoBehaviour
             refillDataFetched=true;
         }
     }
+
+    private void HandleFailure ()
+    {
+        for (int i = 0 ; i < sentData_.Count ; i++)
+        {
+            // Initialize a new receivedData object
+            var newReceivedData = new receivedData();
+
+            // Add it to the list
+            receivedData_.Add(newReceivedData);
+
+            for (int j = 0 ; j < sentData_ [i].data.Count ; j++)
+            {
+                // Initialize a new CardData object
+                var newCardData = new CardData();
+
+                // Set the value of newCardData
+                newCardData = sentData_ [i].data [j];
+                if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
+                {
+                    newCardData = new CardData();
+                    newCardData.name = newCardData.substitute;
+                    newCardData.substitute = null;
+                }
+                // Add the new CardData to the receivedData's data list
+                newReceivedData.data.Add(newCardData);
+            }
+        }
+        refillDataFetched = true;
+    }
+
 
 
     void logSentData ( int rows , int cols , CardData cardData )

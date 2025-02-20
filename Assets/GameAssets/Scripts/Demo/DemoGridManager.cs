@@ -547,7 +547,7 @@ public class DemoGridManager : MonoBehaviour
 
             if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
             {
-                CommandCentre.Instance.AutoSpinManager_.DisableAutoSpin();
+                CommandCentre.Instance.AutoSpinManager_.AutospinToggle.isOn = false;
                 CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
             }
             else

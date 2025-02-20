@@ -100,10 +100,18 @@ public class CashManager : MonoBehaviour
     {
         CurrentWinings = CurrentWinings + Amount;
         UpdateWinnings();
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.FreeGameManager_.winAmount = CurrentWinings;
+        }
     }
 
     public void ResetWinings ()
     {
+        if(CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.FreeGameManager_.winAmount = CurrentWinings;
+        }
         CurrentWinings = 0;
         UpdateWinnings ();
     }

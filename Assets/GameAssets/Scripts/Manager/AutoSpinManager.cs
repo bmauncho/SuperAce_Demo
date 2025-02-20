@@ -40,7 +40,7 @@ public class AutoSpinManager : MonoBehaviour
        AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , .5f)
           .OnComplete(() =>
           {
-              AutospinToggle.isOn = false;
+              //AutospinToggle.isOn = false;
               if (CommandCentre.Instance.DemoManager_.IsDemo)
               {
                   DemoAutospinToggle.isOn = false;

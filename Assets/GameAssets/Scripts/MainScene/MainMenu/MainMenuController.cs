@@ -136,29 +136,36 @@ public class MainMenuController : MonoBehaviour
 
     private IEnumerator FetchDataAndSpin ()
     {
-        //Debug.Log(CommandCentre.Instance.DemoManager_.IsDemo);
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            
             bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
             CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
 
-            // Wait until data is fetched, without freezing the game
-            while (!datafetched)
+            float timeout = 3f; // Set timeout duration (e.g., 5 seconds)
+            float elapsedTime = 0f;
+
+            while (!datafetched && elapsedTime < timeout)
             {
-                datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
                 yield return null; // Wait for the next frame
+                elapsedTime += Time.deltaTime;
+                datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
             }
-            // Once data is fetched, start the spinning process
+
+            if (!datafetched)
+            {
+                Debug.LogWarning("Data fetching timed out!");
+                CanSpin = true;
+                yield break; // Exit the coroutine if timeout occurs
+            }
+
             StartCoroutine(SpinReel(false));
         }
         else
         {
-            
-            // Once data is fetched, start the spinning process
             StartCoroutine(SpinReel(true));
         }
     }
+
 
     IEnumerator SpinReel (bool isDemo)
     {

@@ -14,7 +14,10 @@ public class FreeGameIntro : MonoBehaviour
         GetComponent<CanvasGroup>().DOFade(0 , .5f);
         transform.DOScale(1.3f , .5f).OnComplete(() =>
         {
-            this.gameObject.SetActive(false);
+            transform.DOScale(1 , .25f).OnComplete(() =>
+            {
+                this.gameObject.SetActive(false);
+            });
         });
     }
 
