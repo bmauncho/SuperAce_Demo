@@ -92,7 +92,8 @@ public class GameDataAPI : MonoBehaviour
 
         infos.Clear();
         rows.Clear();
-
+        Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Status Code: " + request.error);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"Request failed: {request.error}");
@@ -105,6 +106,10 @@ public class GameDataAPI : MonoBehaviour
         Debug.Log("Received: " + output);
 
         var response = JsonConvert.DeserializeObject<ApiResponse>(output);
+        object parsedResponse = JsonConvert.DeserializeObject(output);
+        string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
+
+        Debug.Log("Received: " + formattedOutput);
         if (response?.message == "Could not process request at this time")
         {
             isDone = true;

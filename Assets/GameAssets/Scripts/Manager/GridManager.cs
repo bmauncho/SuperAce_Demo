@@ -536,7 +536,7 @@ public class GridManager : MonoBehaviour
     {
         FreeGameManager freeGameManager = CommandCentre.Instance.FreeGameManager_;
         
-        Debug.Log($"Is free game: {freeGameManager.IsFreeGame}, Is spin init: {freeGameManager.IsSpinInit}");
+        //Debug.Log($"Is free game: {freeGameManager.IsFreeGame}, Is spin init: {freeGameManager.IsSpinInit}");
         yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
@@ -556,12 +556,12 @@ public class GridManager : MonoBehaviour
             {
                 // Wait until spinning is allowed
 
-                Debug.Log("Can auto spin in free game");
+                //Debug.Log("Can auto spin in free game");
                 CommandCentre.Instance.MainMenuController_.Spin();
             }
             else
             {
-                Debug.Log("Cant auto spin in free game");
+                //Debug.Log("Cant auto spin in free game");
                 if (freeGameManager.IsFreeGame && !freeGameManager.IsSpinInit)
                 {
                     freeGameManager.IsSpinInit = true;

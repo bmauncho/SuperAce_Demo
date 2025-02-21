@@ -94,7 +94,7 @@ public class WinLoseManager : MonoBehaviour
     public IEnumerator showWinningCards ()
     {
         
-        Debug.Log($"TempData count: {tempData.Count}");
+       // Debug.Log($"TempData count: {tempData.Count}");
         objectsJumped = 0;
         CommandCentre.Instance.ComboManager_.IncreaseComboCounter();
         CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
@@ -502,7 +502,7 @@ public class WinLoseManager : MonoBehaviour
         GameDataAPI gameDataAPI = CommandCentre.Instance.APIManager_.GameDataAPI_;
         if (tempData == null || tempData.Count == 0)
         {
-            Debug.LogWarning("TempData is empty or null.");
+            //Debug.LogWarning("TempData is empty or null.");
             return false;
         }
 
@@ -521,7 +521,7 @@ public class WinLoseManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"Distinct columns count: {distinctColumns.Count}");
+        //Debug.Log($"Distinct columns count: {distinctColumns.Count}");
 
         // Ensure at least 3 unique columns contain SCATTER cards
         if (distinctColumns.Count < 3)
@@ -544,7 +544,7 @@ public class WinLoseManager : MonoBehaviour
         HashSet<string> otherCardsList = new HashSet<string>();
         if (tempData == null || tempData.Count == 0)
         {
-            Debug.LogWarning("checkForOtherCards - TempData is empty or null.");
+            //Debug.LogWarning("checkForOtherCards - TempData is empty or null.");
             return false;
         }
         foreach (var entry in tempData)

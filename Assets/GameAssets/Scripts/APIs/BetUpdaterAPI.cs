@@ -62,11 +62,11 @@ public class BetUpdaterAPI : MonoBehaviour
 
         // Send the request
         yield return request.SendWebRequest();
-        //Debug.Log("Status Code: " + request.responseCode);
-        //Debug.Log("Status Code: " + request.error);
+        Debug.Log("Status Code: " + request.responseCode);
+        Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            //Debug.Log("Received: " + request.downloadHandler.text);
+            Debug.Log("Received: " + request.downloadHandler.text);
 
             // Parse successful response
             UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);
