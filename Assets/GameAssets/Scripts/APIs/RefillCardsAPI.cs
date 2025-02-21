@@ -37,6 +37,7 @@ public class RefillCardsAPI : MonoBehaviour
     public int tries;
     public bool refillDataFetched=false;
     public bool isError;
+    public bool IsServerError;
 
     [ContextMenu("Fetch Data")]
     public void FetchData ()
@@ -266,32 +267,36 @@ public class RefillCardsAPI : MonoBehaviour
 
     private void HandleFailure ()
     {
-        for (int i = 0 ; i < sentData_.Count ; i++)
-        {
-            // Initialize a new receivedData object
-            var newReceivedData = new receivedData();
+        #region
+        //for (int i = 0 ; i < sentData_.Count ; i++)
+        //{
+        //    // Initialize a new receivedData object
+        //    var newReceivedData = new receivedData();
 
-            // Add it to the list
-            receivedData_.Add(newReceivedData);
+        //    // Add it to the list
+        //    receivedData_.Add(newReceivedData);
 
-            for (int j = 0 ; j < sentData_ [i].data.Count ; j++)
-            {
-                // Initialize a new CardData object
-                var newCardData = new CardData();
+        //    for (int j = 0 ; j < sentData_ [i].data.Count ; j++)
+        //    {
+        //        // Initialize a new CardData object
+        //        var newCardData = new CardData();
 
-                // Set the value of newCardData
-                newCardData = sentData_ [i].data [j];
-                if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
-                {
-                    newCardData = new CardData();
-                    newCardData.name = newCardData.substitute;
-                    newCardData.substitute = null;
-                }
-                // Add the new CardData to the receivedData's data list
-                newReceivedData.data.Add(newCardData);
-            }
-        }
+        //        // Set the value of newCardData
+        //        newCardData = sentData_ [i].data [j];
+        //        if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
+        //        {
+        //            newCardData = new CardData();
+        //            newCardData.name = newCardData.substitute;
+        //            newCardData.substitute = null;
+        //        }
+        //        // Add the new CardData to the receivedData's data list
+        //        newReceivedData.data.Add(newCardData);
+        //    }
+        //}
+        #endregion
+        IsServerError = true;
         refillDataFetched = true;
+
     }
 
 

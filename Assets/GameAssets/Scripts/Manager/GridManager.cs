@@ -33,6 +33,8 @@ public class GridManager : MonoBehaviour
     [Header("Lists")]
     public List<cardPositions> rowData = new List<cardPositions>(5);
 
+    public GameObject ServerError;
+
     private void Start ()
     {
         poolManager = CommandCentre.Instance.PoolManager_;
@@ -501,7 +503,23 @@ public class GridManager : MonoBehaviour
                 CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
                 CommandCentre.Instance.APIManager_.UpdateBet();
                 yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
-                CommandCentre.Instance.WinLoseManager_.winSequence();
+                if(!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
+                {
+                    CommandCentre.Instance.WinLoseManager_.winSequence();
+                }
+                else
+                {
+                    
+                    ServerError.SetActive(true);
+                    yield return new WaitForSeconds(1.5f);
+
+                    //hide error ui
+                    ServerError.SetActive(true);
+
+                    CommandCentre.Instance.MainMenuController_.CanSpin = true;
+                    CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError = false;
+                    yield return StartCoroutine(Autospin());
+                }
             }
             else
             {

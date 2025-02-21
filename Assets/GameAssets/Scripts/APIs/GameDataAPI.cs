@@ -74,7 +74,7 @@ public class GameDataAPI : MonoBehaviour
         };
 
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        //Debug.Log(jsonString);
+        Debug.Log(jsonString);
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
