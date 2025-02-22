@@ -5,12 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+
+[System.Serializable]
+public class GameData
+{
+    public string id = "32";
+    public string name = "Super Ace";
+}
+
 [System.Serializable]
 public class refillApi
 {
-    public _game game;
+    public GameData game;
     public float betAmount;
     public string gameMode = "NORMAL";
+    public string clientId = "12345";
     public CardData [] [] cards;
 }
 
@@ -68,7 +77,7 @@ public class RefillCardsAPI : MonoBehaviour
             }
         }
 
-        _game gameinfo = new _game();
+        GameData gameinfo = new GameData();
         api = new refillApi
         {
             game = gameinfo ,
@@ -97,7 +106,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         while (!asyncOperation.isDone)
         {
-            if (timer > 3f) // Timeout check
+            if (timer > 25f) // Timeout check
             {
                 Debug.LogError("Request timed out, skipping...");
                 //failsafe
@@ -219,6 +228,7 @@ public class RefillCardsAPI : MonoBehaviour
         {
             //Debug.Log("Failed to get data!");
             isError = true;
+            IsServerError = true;
             Debug.LogError($"Error sending data: {request.error} | Response Code: {request.responseCode}");
             HandleRetry("Error sending data: " + request.error);
         }

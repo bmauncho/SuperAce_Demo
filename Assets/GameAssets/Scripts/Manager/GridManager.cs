@@ -514,7 +514,7 @@ public class GridManager : MonoBehaviour
                     yield return new WaitForSeconds(1.5f);
 
                     //hide error ui
-                    ServerError.SetActive(true);
+                    ServerError.SetActive(false);
 
                     CommandCentre.Instance.MainMenuController_.CanSpin = true;
                     CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError = false;
@@ -530,19 +530,21 @@ public class GridManager : MonoBehaviour
         else
         {
             int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
-            //Debug.Log($"which combo : {combo}");
-            if (combo == 5)
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
-                //Debug.Log("Combo 5 - win");
+                //Debug.Log($"which combo : {combo}");
+                if (combo == 5)
+                {
+                    //Debug.Log("Combo 5 - win");
+                }
+                if (combo >= 3)
+                {
+                    //show total win
+                    CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+                    yield return new WaitForSeconds(5f);
+                    CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
+                }
             }
-            if (combo >= 3)
-            {
-                //show total win
-                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
-                yield return new WaitForSeconds(5f);
-                CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
-            }
-
             CommandCentre.Instance.MainMenuController_.CanSpin = true;
 
             yield return StartCoroutine(Autospin());

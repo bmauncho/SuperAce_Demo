@@ -19,10 +19,11 @@ public class _GameInfo
 [System.Serializable]
 public class _game
 {
-    public string id = "2";
+    public string id = "32";
     public string name = "SUPER_ACE";
     public string mode = "NORMAL";
 }
+
 
 [System.Serializable]
 public class rowData
@@ -30,9 +31,11 @@ public class rowData
     public List<CardData> infos = new List<CardData>();
 }
 public class GameDataAPI : MonoBehaviour
-{   
+{
+    UnityWebRequest request;
     [Header("API Settings")]
     public WinLoseManager winloseManager;
+    public int game_id = 32;
     private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace/";
 
     [Header("API Response")]
@@ -68,7 +71,12 @@ public class GameDataAPI : MonoBehaviour
         if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
         _GameInfo Data = new _GameInfo
         {
-            game = new _game(),
+            game = new _game
+            {
+                id = game_id.ToString() ,
+                name = "SUPER_ACE" ,
+                mode = "NORMAL"
+            } ,
             betAmount = BetAmount,
             clientId = clientId.ToString(),
         };
@@ -82,7 +90,7 @@ public class GameDataAPI : MonoBehaviour
     IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
     {
         bool isDone = false;
-        var request = new UnityWebRequest(url , "POST");
+        request = new UnityWebRequest(url , "POST");
         byte [] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -103,7 +111,7 @@ public class GameDataAPI : MonoBehaviour
         }
 
         string output = request.downloadHandler.text;
-        Debug.Log("Received: " + output);
+        //Debug.Log("Received: " + output);
 
         var response = JsonConvert.DeserializeObject<ApiResponse>(output);
         object parsedResponse = JsonConvert.DeserializeObject(output);
@@ -279,5 +287,8 @@ public class GameDataAPI : MonoBehaviour
         return modifiedRows;
     }
 
-
+    public UnityWebRequest response ()
+    {
+        return request;
+    }
 }

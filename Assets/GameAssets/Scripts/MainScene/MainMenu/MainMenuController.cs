@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+
 using UnityEngine;
 
 public class MainMenuController : MonoBehaviour
@@ -18,6 +19,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject BetingMenu;
     public GameObject WinMoreMenu;
     public GameObject InsufficientAmount;
+    public GameObject ServerError;
 
     [Space(10)]
     [Header("References")]
@@ -141,7 +143,7 @@ public class MainMenuController : MonoBehaviour
             bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
             CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
 
-            float timeout = 3f; // Set timeout duration (e.g., 5 seconds)
+            float timeout = 25f; // Set timeout duration (e.g., 5 seconds)
             float elapsedTime = 0f;
 
             while (!datafetched && elapsedTime < timeout)
@@ -154,6 +156,12 @@ public class MainMenuController : MonoBehaviour
             if (!datafetched)
             {
                 Debug.LogWarning("Data fetching timed out!");
+                var request = CommandCentre.Instance.APIManager_.GameDataAPI_.response();
+                Debug.Log("Status Code: " + request.responseCode);
+                Debug.Log("Status Code: " + request.error);
+                ServerError.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1.5f);
+                ServerError.gameObject.SetActive(false);
                 CanSpin = true;
                 yield break; // Exit the coroutine if timeout occurs
             }

@@ -42171,6 +42171,7 @@ MonoBehaviour:
   BetingMenu: {fileID: 236762429}
   WinMoreMenu: {fileID: 5674821848187828459}
   InsufficientAmount: {fileID: 3738450029756614932}
+  ServerError: {fileID: 1738878216}
   Startfx_: {fileID: 1115435530}
 --- !u!1 &564910326
 GameObject:
@@ -47638,6 +47639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winloseManager: {fileID: 1537336882}
+  game_id: 32
   BetAmount: 0
   AmountWon: 0
   FreeSpins: 0
@@ -53369,56 +53371,43 @@ MonoBehaviour:
   api:
     game:
       id: 2
-      name: Super Ace
-      mode: NORMAL
+      name: SUPER_ACE
     betAmount: 0
     gameMode: NORMAL
+    clientId: 12345
   gameDataAPI_: {fileID: 653306915}
   sentData_:
   - data:
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
     - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
-    - name: HEART
+    - name: ACE
       substitute: 
       golden: 0
       transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
+    - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
   - data:
-    - name: CLUB
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
     - name: SPADE
       substitute: 
       golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: KING
-      substitute: 
-      golden: 0
       transformed: 1
-    - name: WILD
-      substitute: CLUB
-      golden: 0
-      transformed: 0
-  - data:
-    - name: KING
+    - name: SPADE
       substitute: 
       golden: 0
       transformed: 1
@@ -53426,71 +53415,88 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: WILD
-      substitute: DIAMOND
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: QUEEN
+      substitute: 
       golden: 0
       transformed: 0
     - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
-    - name: DIAMOND
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
-  - data:
-    - name: ACE
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 1
-    - name: KING
-      substitute: 
-      golden: 0
-      transformed: 1
   receivedData_:
   - data:
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
     - name: QUEEN
       substitute: 
       golden: 0
       transformed: 0
-    - name: HEART
+    - name: ACE
       substitute: 
       golden: 0
       transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
+    - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
   - data:
-    - name: CLUB
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
     - name: SPADE
       substitute: 
       golden: 0
-      transformed: 0
-    - name: DIAMOND
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
       substitute: 
       golden: 0
       transformed: 0
@@ -53498,56 +53504,52 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
-    - name: SCATTER
-      substitute: CLUB
+  - data:
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
       golden: 0
       transformed: 0
   - data:
-    - name: DIAMOND
+    - name: QUEEN
       substitute: 
-      golden: 0
-      transformed: 0
-    - name: HEART
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: SCATTER
-      substitute: DIAMOND
       golden: 0
       transformed: 0
     - name: CLUB
       substitute: 
       golden: 0
       transformed: 0
-    - name: DIAMOND
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
-  - data:
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: DIAMOND
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: ACE
-      substitute: 
-      golden: 0
-      transformed: 0
-    - name: QUEEN
+    - name: KING
       substitute: 
       golden: 0
       transformed: 0
   maxtries: 3
-  tries: 0
+  tries: 3
   refillDataFetched: 1
-  isError: 0
+  isError: 1
   IsServerError: 0
 --- !u!1 &857952519
 GameObject:
@@ -136420,30 +136422,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 250.9824
-      objectReference: {fileID: 0}
-    - target: {fileID: 43072937987929268, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25.8939
-      objectReference: {fileID: 0}
     - target: {fileID: 916844593156559302, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -136532,113 +136510,9 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 989973740}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 125.491196
-      objectReference: {fileID: 0}
-    - target: {fileID: 3428733880813626480, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25.8939
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 62.745598
-      objectReference: {fileID: 0}
-    - target: {fileID: 4083543172488033559, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25.8939
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 188.2368
-      objectReference: {fileID: 0}
-    - target: {fileID: 4741996521119909463, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25.8939
-      objectReference: {fileID: 0}
     - target: {fileID: 7705933430431402908, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Name
       value: SettingsMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7705933430431402908, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8066624033876582207, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -37.761993
-      objectReference: {fileID: 0}
-    - target: {fileID: 8066624033876582207, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214972516777851054, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214972516777851054, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214972516777851054, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214972516777851054, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8214972516777851054, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -25.8939
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
