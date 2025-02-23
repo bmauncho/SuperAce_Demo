@@ -143,7 +143,7 @@ public class MainMenuController : MonoBehaviour
             bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
             CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
 
-            float timeout = 25f; // Set timeout duration (e.g., 5 seconds)
+            float timeout = 30f; // Set timeout duration (e.g., 5 seconds)
             float elapsedTime = 0f;
 
             while (!datafetched && elapsedTime < timeout)
@@ -156,9 +156,9 @@ public class MainMenuController : MonoBehaviour
             if (!datafetched)
             {
                 Debug.LogWarning("Data fetching timed out!");
-                var request = CommandCentre.Instance.APIManager_.GameDataAPI_.response();
-                Debug.Log("Status Code: " + request.responseCode);
-                Debug.Log("Status Code: " + request.error);
+                //var request = CommandCentre.Instance.APIManager_.GameDataAPI_.response();
+                //Debug.Log("Status Code: " + request.responseCode);
+                //Debug.Log("Status Code: " + request.error);
                 ServerError.gameObject.SetActive(true);
                 yield return new WaitForSeconds(1.5f);
                 ServerError.gameObject.SetActive(false);

@@ -13,7 +13,8 @@ public class _GameInfo
     public _game game;
     public float betAmount = 1000;
     public string clientId = "12345";
-
+    public string playerId = "22";
+    public string action = "";
 }
 
 [System.Serializable]
@@ -68,21 +69,47 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
+        Debug.Log("Fetching Card Data!");
         if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
-        _GameInfo Data = new _GameInfo
+        _GameInfo Data = new _GameInfo();
+
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            game = new _game
+            Debug.Log("Fetch normal Game!");
+            Data = new _GameInfo
             {
-                id = game_id.ToString() ,
-                name = "SUPER_ACE" ,
-                mode = "NORMAL"
-            } ,
-            betAmount = BetAmount,
-            clientId = clientId.ToString(),
-        };
+                game = new _game
+                {
+                    id = game_id.ToString() ,
+                    name = "SUPER_ACE" ,
+                    mode = "NORMAL"
+                } ,
+                betAmount = BetAmount ,
+                clientId = clientId.ToString() ,
+                playerId = "22",
+                action = "freeSpins" ,
+            };
+        }
+        else
+        {
+            Debug.Log("Fetch Free Game!");
+            Data = new _GameInfo
+            {
+                game = new _game
+                {
+                    id = game_id.ToString() ,
+                    name = "SUPER_ACE" ,
+                    mode = "NORMAL"
+                } ,
+                betAmount = BetAmount ,
+                clientId = clientId.ToString() ,
+                playerId = "22"
+            };
+        }
+        
 
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        Debug.Log(jsonString);
+        Debug.Log($"Spin Payload : {jsonString}");
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }

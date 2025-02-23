@@ -18,7 +18,16 @@ public class GridManager : MonoBehaviour
     [Header("Data")]
     public bool isFirstPlay = true;
     public bool isRefreshDone = true;
-    public bool isRefilling = false;
+    [SerializeField]private bool _isRefilling;
+    public bool isRefilling
+    {
+        get => _isRefilling;
+        set
+        {
+            _isRefilling = value;
+           // Debug.Log($"isRefilling set to {value} by: {new System.Diagnostics.StackTrace()}");
+        }
+    }
 
     [Header("Data")]
     public GameObject cardPositionsHolder;
@@ -479,6 +488,7 @@ public class GridManager : MonoBehaviour
         if (isRefilling)
         {
             isRefilling = false;
+            //Debug.Log($"Is refilling {isRefilling}");
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
             yield return new WaitForSeconds(.25f);
@@ -493,7 +503,7 @@ public class GridManager : MonoBehaviour
         {
             Debug.Log("Scatter win");
         }
-        
+        //Debug.Log($"Is refilling {isRefilling}");
 
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
@@ -546,7 +556,8 @@ public class GridManager : MonoBehaviour
                 }
             }
             CommandCentre.Instance.MainMenuController_.CanSpin = true;
-
+            isRefilling = false;
+            //Debug.Log($"Is refilling {isRefilling}");
             yield return StartCoroutine(Autospin());
         }
     }

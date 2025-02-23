@@ -51,6 +51,7 @@ public class RefillCardsAPI : MonoBehaviour
     [ContextMenu("Fetch Data")]
     public void FetchData ()
     {
+        Debug.Log("Fetching refill Data!");
         isError = false;
         refillDataFetched = false;
         sentData_.Clear();
@@ -87,7 +88,7 @@ public class RefillCardsAPI : MonoBehaviour
 
         // Serialize to JSON
         string jsonString = JsonConvert.SerializeObject(api , Formatting.Indented);
-        Debug.Log(jsonString);
+        Debug.Log($"Refill cards Payload : {jsonString}");
 
         StartCoroutine(StartFetchingData(jsonString));
     }
@@ -131,7 +132,7 @@ public class RefillCardsAPI : MonoBehaviour
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            //Debug.Log("Received: " + formattedOutput);
+            Debug.Log("Received: " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
 

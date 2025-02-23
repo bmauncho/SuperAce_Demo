@@ -275,19 +275,42 @@ public class WinLoseManager : MonoBehaviour
 
         if (CommandCentre.Instance.TurboManager_.TurboSpin_)
         {
-            gridManager.refillTurbo(hiddenCards);
+            yield return StartCoroutine(refill(true,hiddenCards));
         }
         else
         {
-            gridManager.refillGrid(hiddenCards);
+            yield return StartCoroutine(refill(false , hiddenCards));
         }
 
         if (checkForOtherCards())
         {
             CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         }
-        tempData.Clear();
+        else
+        {
+            //Debug.Log($"is scatter win : {IsScatterWin()} is other cards : { checkForOtherCards()}");
+            if(IsScatterWin() && !checkForOtherCards())
+            {
+                CommandCentre.Instance.GridManager_.isRefilling =false;
+            }
+        }
+            tempData.Clear();
 
+
+
+        yield return null;
+    }
+
+    IEnumerator refill(bool isTurbo,int hiddenCards )
+    {
+        if(isTurbo)
+        {
+            gridManager.refillTurbo(hiddenCards);
+        }
+        else
+        {
+            gridManager.refillGrid(hiddenCards);
+        }
         yield return null;
     }
 

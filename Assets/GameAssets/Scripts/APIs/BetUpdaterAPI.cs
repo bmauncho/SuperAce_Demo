@@ -48,7 +48,7 @@ public class BetUpdaterAPI : MonoBehaviour
             client_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString()
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
-        //Debug.Log(jsonPayload);
+        Debug.Log($" Bet Updater Payload : {jsonPayload}");
         StartCoroutine(SendUpdateBetRequest(jsonPayload));
     }
 

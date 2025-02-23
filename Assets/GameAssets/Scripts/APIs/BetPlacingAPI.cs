@@ -69,7 +69,7 @@ public class BetPlacingAPI : MonoBehaviour
         };
 
         string jsonString = JsonUtility.ToJson(Data , true);
-        //Debug.Log("JSON Payload: " + jsonString);  // Debug the JSON sent
+        Debug.Log("Bet placing Payload: " + jsonString);  // Debug the JSON sent
         StartCoroutine(PlaceBet(jsonString));
     }
 

@@ -45,19 +45,6 @@ public class ButtonPressed : MonoBehaviour
                         DisableButtonInteractvity();
                         CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
                     }
-
-                    //if (commandCentre.GridManager_.isGridFilled() && !CommandCentre.Instance.WinLoseManager_.IsWin())
-                    //{
-                    //    EnableButtonInteractvity();
-                    //    commandCentre.MainMenuController_.CanSpin = true;
-                    //    CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
-                    //}
-                    //else
-                    //{
-                    //    DisableButtonInteractvity();
-                    //    commandCentre.MainMenuController_.CanSpin = false;
-                    //    CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
-                    //}
                 }
             }
             else if(IsToggle)
