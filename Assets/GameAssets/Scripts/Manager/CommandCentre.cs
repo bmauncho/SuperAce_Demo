@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
+
 public class CommandCentre : MonoBehaviour
 {
     public static CommandCentre Instance;
@@ -41,5 +42,9 @@ public class CommandCentre : MonoBehaviour
 
         DOTween.SetTweensCapacity(2000, 150);
         Application.targetFrameRate = 60;
+        if (!ConfigMan.Instance)
+        {
+            APIManager_.ManualStart();
+        }
     }
 }

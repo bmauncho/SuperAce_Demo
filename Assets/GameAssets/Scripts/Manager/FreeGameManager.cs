@@ -22,7 +22,7 @@ public class FreeGameManager : MonoBehaviour
         FreeGameIntro_.Activate();
         ToggleFreeGame(true);
         ToggleComboBanner(true);
-        resetFreeSpins();
+        //resetFreeSpins();
     }
     [ContextMenu("Deactivate FreeGameIntro")]
     public void DeactivateFreeGameIntro ()
@@ -69,7 +69,7 @@ public class FreeGameManager : MonoBehaviour
     {
         ToggleFreeGame(false);
         ToggleComboBanner(false);
-        resetFreeSpins();
+        //resetFreeSpins();
         CommandCentre.Instance.SoundManager_.PlayAmbientSound("FunkCasino");
         float amount = winAmount;
         Debug.Log(amount);
@@ -97,4 +97,10 @@ public class FreeGameManager : MonoBehaviour
         FreeSpinCounter = 10;
         FreeSpinsAmount.text = FreeSpinCounter.ToString();
     }
+
+    public void increaseSpins ()
+    {
+        FreeSpinCounter += 10;
+    }
+
 }

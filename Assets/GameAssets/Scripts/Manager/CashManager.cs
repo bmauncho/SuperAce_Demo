@@ -35,6 +35,12 @@ public class CashManager : MonoBehaviour
         updateThecashUi();
     }
 
+    public void UpdateCashAmount(float amount )
+    {
+        CashAmount = amount;
+        updateThecashUi();
+    }
+
     private void Update ()
     {
         if (CommandCentre.Instance)

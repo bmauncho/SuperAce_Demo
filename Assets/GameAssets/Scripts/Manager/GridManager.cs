@@ -502,6 +502,7 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
         {
             Debug.Log("Scatter win");
+            
         }
         //Debug.Log($"Is refilling {isRefilling}");
 

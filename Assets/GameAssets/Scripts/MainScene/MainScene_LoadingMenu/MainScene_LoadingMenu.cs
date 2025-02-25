@@ -22,6 +22,7 @@ public class MainScene_LoadingMenu : MonoBehaviour
         GetComponent<CanvasGroup>().DOFade(0 , .5f);
         transform.DOScale(1.3f , .5f).OnComplete(() =>
         {
+            ConfigMan.Instance.TheDebugObj.SetActive(false);
             Deactivate ();
         });
     }

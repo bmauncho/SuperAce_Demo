@@ -416,6 +416,7 @@ public class DemoWinLoseManager : MonoBehaviour
 
         // Activate the free game mechanics
         CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
+        CommandCentre.Instance.FreeGameManager_.increaseSpins();
         CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
         CommandCentre.Instance.SoundManager_.PlaySound("scatterWin");
         // Wait for the intro to complete
