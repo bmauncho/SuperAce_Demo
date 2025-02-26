@@ -488,6 +488,7 @@ public class GridManager : MonoBehaviour
         if (isRefilling)
         {
             isRefilling = false;
+            CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
             //Debug.Log($"Is refilling {isRefilling}");
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
@@ -540,6 +541,7 @@ public class GridManager : MonoBehaviour
         }
         else
         {
+            CommandCentre.Instance.WinLoseManager_.isWinsequence= false;
             int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
             if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {

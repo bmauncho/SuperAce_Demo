@@ -91544,6 +91544,7 @@ MonoBehaviour:
   tempData: []
   totalobjectstojump: 2
   objectsJumped: 0
+  isWinsequence: 0
 --- !u!1 &1546284185 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2941599081452217922, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}

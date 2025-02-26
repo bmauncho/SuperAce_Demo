@@ -28,7 +28,7 @@ public class WinLoseManager : MonoBehaviour
     public int totalobjectstojump = 2;
     public int objectsJumped = 0;
     private  HashSet<string> addedKeys = new HashSet<string>();
-
+    public bool isWinsequence;
     private void Start ()
     {
         gridManager = CommandCentre.Instance.GridManager_;
@@ -86,6 +86,7 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator startWinSequence ()
     {
+        isWinsequence = true;
         yield return StartCoroutine(showWinningCards());
       
         yield return null;

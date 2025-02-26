@@ -24,8 +24,17 @@ public class ButtonPressed : MonoBehaviour
                 {
                     if (commandCentre.MainMenuController_.CanSpin)
                     {
-                        EnableButtonInteractvity();
-                        CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                        if (CommandCentre.Instance.GridManager_.isRefilling 
+                            || CommandCentre.Instance.WinLoseManager_.isWinsequence)
+                        {
+                            DisableButtonInteractvity();
+                            CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+                        }
+                        else
+                        {
+                            EnableButtonInteractvity();
+                            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                        }
                     }
                     else
                     {
@@ -37,8 +46,18 @@ public class ButtonPressed : MonoBehaviour
                 {
                     if (commandCentre.MainMenuController_.CanSpin)
                     {
-                        EnableButtonInteractvity();
-                        CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                        if (CommandCentre.Instance.GridManager_.isRefilling
+                          || CommandCentre.Instance.WinLoseManager_.isWinsequence)
+                        {
+                            DisableButtonInteractvity();
+                            CommandCentre.Instance.MainMenuController_.isBtnPressed = true;
+                        }
+                        else
+                        {
+                            EnableButtonInteractvity();
+                            CommandCentre.Instance.MainMenuController_.isBtnPressed = false;
+                        }
+
                     }
                     else
                     {

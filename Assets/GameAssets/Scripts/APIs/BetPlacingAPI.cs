@@ -45,6 +45,13 @@ public class BetPlacingAPI : MonoBehaviour
     public int maxtries;
     public bool IsUpdated;
 
+    private void Start ()
+    {
+        response = new BetResponse
+        {
+            new_wallet_balance = PlayerPrefs.GetFloat("TotalCash")
+        };
+    }
     private void Update ()
     {
         if (CommandCentre.Instance)

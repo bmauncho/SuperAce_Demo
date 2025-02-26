@@ -100,7 +100,12 @@ public class FreeGameManager : MonoBehaviour
 
     public void increaseSpins ()
     {
+        //if (!IsSpinInit)
+        //{
+            
+        //}
         FreeSpinCounter += 10;
+        FreeSpinsAmount.text = FreeSpinCounter.ToString();
     }
 
 }
