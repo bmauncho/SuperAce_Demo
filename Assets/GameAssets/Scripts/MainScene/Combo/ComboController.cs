@@ -66,11 +66,21 @@ public class ComboController : MonoBehaviour
     [ContextMenu("show free gamecombo ui")]
     public void ShowUi ()
     {
+        int index = 0;
         for (int i = 0 ; i < TheCombos.Length+1 ; i++) // Iterate up to TheCombos.Length - 1
         {
             TheCombos [0].gameObject.SetActive(true);
             int currentIndex = i;
             StartCoroutine(ActivateComboUI(currentIndex));
+            index++;
+        }
+
+        if(index >= TheCombos.Length)
+        {
+            for(int i = 0 ;i < TheCombos.Length ; i++)
+            {
+                TheCombos[i].gameObject.SetActive(i == whichCombo);
+            }
         }
     }
 

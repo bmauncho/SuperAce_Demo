@@ -12,13 +12,18 @@ public class FreeGameIntro : MonoBehaviour
     void FadeOut ()
     {
         GetComponent<CanvasGroup>().DOFade(0 , .5f);
-        transform.DOScale(1.3f , .5f).OnComplete(() =>
+        transform.DOScale(1.3f , 0.5f).OnComplete(() =>
         {
-            transform.DOScale(1 , .25f).OnComplete(() =>
+            transform.DOScale(1 , 0.25f).OnComplete(() =>
             {
-                this.gameObject.SetActive(false);
+                CommandCentre.Instance.FreeGameManager_.showComboUi(true);
+                DOVirtual.DelayedCall(0.3f , () => // Adjust delay time as needed
+                {
+                    this.gameObject.SetActive(false);
+                });
             });
         });
+
     }
 
     public void Deactivate ()

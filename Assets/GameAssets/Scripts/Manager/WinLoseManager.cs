@@ -293,11 +293,10 @@ public class WinLoseManager : MonoBehaviour
             if(IsScatterWin() && !checkForOtherCards())
             {
                 CommandCentre.Instance.GridManager_.isRefilling =false;
+                CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
             }
         }
-            tempData.Clear();
-
-
+        tempData.Clear();
 
         yield return null;
     }

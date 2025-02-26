@@ -536,6 +536,8 @@ public class GridManager : MonoBehaviour
             else
             {
                 CommandCentre.Instance.APIManager_.UpdateBet();
+                CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
+                CommandCentre.Instance.ComboManager_.ResetComboCounter();
                 CommandCentre.Instance.WinLoseManager_.winSequence();
             }
         }

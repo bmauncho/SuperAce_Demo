@@ -23,6 +23,7 @@ public class FreeGameManager : MonoBehaviour
         ToggleFreeGame(true);
         ToggleComboBanner(true);
         //resetFreeSpins();
+        Invoke(nameof(ShowFreeComboUi) , 1f);
     }
     [ContextMenu("Deactivate FreeGameIntro")]
     public void DeactivateFreeGameIntro ()
@@ -55,6 +56,23 @@ public class FreeGameManager : MonoBehaviour
             Combos.ActivateNormalCombo();
             BannerController_.ActivateNormalBanner();
             
+        }
+    }
+
+    void ShowFreeComboUi ()
+    {
+        showComboUi();
+    }
+
+    public void showComboUi (bool freeGame = true)
+    {
+        if (freeGame)
+        {
+            Combos.ShowFreeGameCombo();
+        }
+        else
+        {
+            Combos.ShowNormalGameCombo();
         }
     }
 

@@ -25,4 +25,14 @@ public class ComboUI : MonoBehaviour
     {
         FreeGameCombo.gameObject.SetActive (false);
     }
+
+    public void ShowFreeGameCombo ()
+    {
+        FreeGameCombo.ShowUi ();
+    }
+
+    public void ShowNormalGameCombo ()
+    {
+        NormalCombo.ShowUi();
+    }
 }

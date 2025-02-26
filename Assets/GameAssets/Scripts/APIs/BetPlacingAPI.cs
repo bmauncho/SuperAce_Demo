@@ -105,6 +105,7 @@ public class BetPlacingAPI : MonoBehaviour
             {
                 message = responseData.message ,
                 bet_id = responseData.bet_id ,
+                game_id = responseData.game_id,
                 new_wallet_balance = responseData.new_wallet_balance ,
                 externalResponse_ = new ExternalResponse
                 {

@@ -70,6 +70,7 @@ public class MainMenuController : MonoBehaviour
     public void DisableWinMoreMenu ()
     {
         WinMoreMenu.SetActive(false);
+        CommandCentre.Instance.FreeGameManager_.showComboUi(false);
     }
 
     void Update ()
