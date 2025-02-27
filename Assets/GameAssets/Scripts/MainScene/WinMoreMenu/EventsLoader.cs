@@ -40,8 +40,8 @@ public class EventsLoader : MonoBehaviour
             .OnComplete(() =>
             { 
                 timer = interval;
-                Deactivate();
                 onComplete.Invoke();
+                Deactivate();
             });
     }
 
