@@ -5638,7 +5638,7 @@ MonoBehaviour:
   client_id: 12345
   tries: 0
   maxtries: 3
-  IsUpdated: 1
+  IsUpdated: 0
 --- !u!1 &131502636
 GameObject:
   m_ObjectHideFlags: 0
@@ -136735,6 +136735,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 989973740}
+    - target: {fileID: 3463035555253363786, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7705933430431402908, guid: c8d73e02be70c6a4eb815a2d672fd32b, type: 3}
       propertyPath: m_Name
       value: SettingsMenu

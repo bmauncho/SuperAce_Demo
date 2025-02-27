@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -96,25 +97,28 @@ public class BetPlacingAPI : MonoBehaviour
         Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            string output = request.downloadHandler.text;
+            var responseData = JsonConvert.DeserializeObject<BetResponse>(output);
 
-            // Parse successful response
-            BetResponse responseData = JsonUtility.FromJson<BetResponse>(request.downloadHandler.text);
+            // Pretty-print JSON response
+            string formattedOutput = JsonConvert.SerializeObject(responseData , Formatting.Indented);
+            Debug.Log("PlaceBet API Received: " + formattedOutput);
 
             BetResponse betResponse = new BetResponse
             {
                 message = responseData.message ,
                 bet_id = responseData.bet_id ,
-                game_id = responseData.game_id,
+                game_id = responseData.game_id ,
                 new_wallet_balance = responseData.new_wallet_balance ,
-                externalResponse_ = new ExternalResponse
+                externalResponse_ = responseData.externalResponse_ != null ? new ExternalResponse
                 {
                     client_id = responseData.externalResponse_.client_id ,
                     totalBets = responseData.externalResponse_.totalBets ,
                     totalWins = responseData.externalResponse_.totalWins
-                }
+                } : null // Handle case where externalResponse_ is null
             };
 
+            Debug.Log($"previous cashAmount : {CommandCentre.Instance.CashManager_.CashAmount} : current amount : {responseData.new_wallet_balance}");
             response = betResponse;
             IsUpdated = true;
         }

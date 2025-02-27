@@ -128,8 +128,8 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
-                //CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
-                //Debug.Log(playerInfo.wallet_balance);
+                CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
+                Debug.Log(playerInfo.wallet_balance);
             }
             else
             {

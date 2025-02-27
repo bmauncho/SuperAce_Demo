@@ -9,31 +9,8 @@ public class CashManager : MonoBehaviour
 {
     public List<TextMeshProUGUI> CashAmountText = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> WinCashAmountText = new List<TextMeshProUGUI>();
-    public float CashAmount = 0;
+    public double CashAmount = 0f;
     public float CurrentWinings;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        float MoneyIntheBank = 0;
-        if (PlayerPrefs.HasKey("TotalCash"))
-        {
-            MoneyIntheBank = PlayerPrefs.GetFloat("TotalCash");
-        }
-        else
-        {
-            MoneyIntheBank = 2000;
-            float MoneyOuttheBank = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-            if (MoneyOuttheBank > 0)
-            {
-                MoneyIntheBank = MoneyOuttheBank;
-            }
-        }
-        
-        CashAmount = MoneyIntheBank;
-        //Debug.Log(CashAmount);
-        updateThecashUi();
-    }
 
     public void UpdateCashAmount(float amount )
     {
@@ -45,23 +22,22 @@ public class CashManager : MonoBehaviour
     {
         if (CommandCentre.Instance)
         {
-            //if (CashAmount <= 0)
-            //{
-            //    CashAmount = 2000;
-            //}
             updateThecashUi();
         }
     }
 
     public void IncreaseCash ( float amount )
     {
+        Debug.Log("Increasing Cash by: " + amount);
         CashAmount += amount;
-
         updateThecashUi();
+        Debug.Log("New Cash Amount: " + CashAmount);
     }
+
 
     public void DecreaseCash ( float amount )
     {
+        Debug.Log("Decreasing Cash by: " + amount);
         CashAmount -= amount;
         if (CashAmount < 0)
         {
@@ -69,23 +45,24 @@ public class CashManager : MonoBehaviour
         }
 
         updateThecashUi();
+        Debug.Log("New Cash Amount: " + CashAmount);
     }
 
 
     public void SaveCashAmount()
     {
-        PlayerPrefs.SetFloat("TotalCash", CashAmount);
+        PlayerPrefs.SetString("TotalCash", CashAmount.ToString());
     }
 
     public void updateThecashUi ()
     {
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            CashAmountText [1].SetText("DEMO MODE");
+            CashAmountText [1].text = "DEMO MODE";
         }
         else
         {
-            CashAmountText [0].SetText(CashAmount.ToString("N2"));
+            CashAmountText [0].text = CashAmount.ToString("N2");
         }
         SaveCashAmount();
     }

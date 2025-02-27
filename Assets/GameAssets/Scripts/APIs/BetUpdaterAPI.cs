@@ -17,7 +17,7 @@ public class UpdateBetResponse
     [HideInInspector]public string message;
     public int bet_id;
     public float amount_won;
-    public float new_wallet_balance;
+    public double new_wallet_balance;
     [HideInInspector] public string status;
     [HideInInspector] public string error; // For error handling
 }
@@ -66,10 +66,15 @@ public class BetUpdaterAPI : MonoBehaviour
         Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Received: " + request.downloadHandler.text);
+            //Debug.Log("Received: " + request.downloadHandler.text);
+            string output = request.downloadHandler.text;
+            var response = JsonConvert.DeserializeObject<UpdateBetResponse>(output);
+            object parsedResponse = JsonConvert.DeserializeObject(output);
+            string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
+            Debug.Log("UpdateBet api Received: " + formattedOutput);
             // Parse successful response
-            UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(request.downloadHandler.text);
+            UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(output);
 
            // Debug.Log($"message : {responseData.message}," +
              // $"betId : {responseData.bet_id}," +
@@ -90,6 +95,7 @@ public class BetUpdaterAPI : MonoBehaviour
             };
 
             updateBetResponse_ = data;
+            Debug.Log($"previous cashAmount : {CommandCentre.Instance.CashManager_.CashAmount} : current amount : {updateBetResponse_.new_wallet_balance}");
             CommandCentre.Instance.CashManager_.CashAmount = updateBetResponse_.new_wallet_balance;
         }
     }
