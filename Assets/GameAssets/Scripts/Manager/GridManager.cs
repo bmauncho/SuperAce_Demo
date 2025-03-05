@@ -170,6 +170,16 @@ public class GridManager : MonoBehaviour
         {
             CommandCentre.Instance.SoundManager_.startSound();
         }
+
+        List<int> scatterCols = ScatterColPosition();
+        bool hasMultipleScatters = scatterCols.Count > 1;
+        int scatterIndex = 0;
+
+        StartCoroutine(FillColumns(columnCount , rowCount , decks , delayIncrement , scatterCols));
+    }
+
+    IEnumerator FillColumns ( int columnCount , int rowCount , Deck [] decks , float delayIncrement , List<int> scatterCols )
+    {
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -177,71 +187,150 @@ public class GridManager : MonoBehaviour
                 Debug.LogError($"Deck at column {col} is null or out of bounds.");
                 continue;
             }
-            
+
             Deck currentDeck = decks [col];
-            for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
+
+            if (scatterCols.Contains(col) && scatterCols.IndexOf(col) >= 2) // Third scatter column or beyond
             {
-                if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
-                {
-                    Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
-                    continue;
-                }
+                yield return new WaitUntil(() => ColumnFilled(scatterCols [scatterCols.IndexOf(col) - 1])); // Wait for the previous scatter column to fill
 
-                GameObject newCard = currentDeck.DrawCard();
-                if (newCard == null)
-                {
-                    currentDeck.ResetDeck();
-                    newCard = currentDeck.DrawCard();
-                    Debug.LogError($"Failed to draw card from deck {col}.");
-                    continue;
-                }
+                ActivateEffects(); // Activate effects before filling the scatter column
+            }
 
-                if (isFirstPlay)
-                {
-                    cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
-                }
-                else
-                {
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
-                }
+            yield return StartCoroutine(FillColumn(col , rowCount , currentDeck , delayIncrement));
 
-                currentDeck.ResetDeck();
-                Transform targetPos = rowData [row].cardPositionInRow [col].transform;
-                if (targetPos == null)
-                {
-                    Debug.LogError($"Target position for row {row}, col {col} is null.");
-                    continue;
-                }
-
-                newCard.transform.SetParent(targetPos);
-                newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-                float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement; // Adjust delay for reversed order
-
-                Sequence cardSequence = DOTween.Sequence();
-                cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
-                    .SetEase(Ease.OutQuad)
-                    .OnComplete(() =>
-                    {
-                        newCard.transform.localPosition = Vector3.zero;
-                        CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
-                        if (cardPosComponent != null)
-                        {
-                            cardPosComponent.TheOwner = newCard;
-                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
-                            {
-                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
-                        }
-
-                        CalculateObjectsPlaced();
-                    }));
-                cardSequence.PrependInterval(delay);
+            if (scatterCols.Contains(col) && scatterCols.IndexOf(col) >= 2)
+            {
+                DeactivateEffects(); // Deactivate effects after the column is filled
             }
         }
+    }
+
+    IEnumerator FillColumn ( int col , int rowCount , Deck currentDeck , float delayIncrement )
+    {
+        for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
+        {
+            if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
+            {
+                Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
+                continue;
+            }
+
+            GameObject newCard = currentDeck.DrawCard();
+            if (newCard == null)
+            {
+                currentDeck.ResetDeck();
+                newCard = currentDeck.DrawCard();
+                Debug.LogError($"Failed to draw card from deck {col}.");
+                continue;
+            }
+
+            if (isFirstPlay)
+            {
+                cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
+            }
+            else
+            {
+                cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+            }
+
+            currentDeck.ResetDeck();
+            Transform targetPos = rowData [row].cardPositionInRow [col].transform;
+            if (targetPos == null)
+            {
+                Debug.LogError($"Target position for row {row}, col {col} is null.");
+                continue;
+            }
+
+            newCard.transform.SetParent(targetPos);
+            newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+            float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement;
+
+            Sequence cardSequence = DOTween.Sequence();
+            cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    newCard.transform.localPosition = Vector3.zero;
+                    CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
+                    if (cardPosComponent != null)
+                    {
+                        cardPosComponent.TheOwner = newCard;
+                        if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                        {
+                            CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
+                    }
+
+                    CalculateObjectsPlaced();
+                }));
+            cardSequence.PrependInterval(delay);
+
+            yield return new WaitForSeconds(delayIncrement);
+        }
+    }
+
+    void ActivateEffects ()
+    {
+        // Add effect activation logic here
+        Debug.Log("Activating scatter effects.");
+    }
+
+    void DeactivateEffects ()
+    {
+        // Add effect deactivation logic here
+        Debug.Log("Deactivating scatter effects.");
+    }
+
+    bool ColumnFilled ( int col )
+    {
+        for (int row = 0 ; row < rowData.Count ; row++)
+        {
+            if (rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
+            {
+                Debug.LogError($"Invalid rowData at row {row}, col {col}.");
+                return false;
+            }
+
+            CardPos cardPos = rowData [row].cardPositionInRow [col].GetComponent<CardPos>();
+            if (cardPos == null || cardPos.TheOwner == null)
+            {
+                return false; // If any position is empty, the column is not filled
+            }
+        }
+
+        return true; // If all positions are occupied, the column is filled
+    }
+
+
+
+    public List<int> ScatterColPosition ()
+    {
+        List<int> scatterInCol = new List<int>();
+        GameDataAPI gameDataAPI_ = CommandCentre.Instance.APIManager_.GameDataAPI_;
+        for(int i = 0;i<gameDataAPI_.rows.Count ; i++)
+        {
+            bool isfound = false;
+            for(int j = 0 ; j < gameDataAPI_.rows [i].infos.Count ; j++)
+            {
+                if (gameDataAPI_.rows [i].infos [j].name == "Scatter")
+                {
+                    isfound = true;
+                }
+                break;
+            }
+
+            if (isfound)
+            {
+                scatterInCol.Add(i);
+            }
+
+        }
+        return scatterInCol;
     }
 
 
