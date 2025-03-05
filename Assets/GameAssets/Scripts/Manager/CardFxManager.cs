@@ -90,6 +90,14 @@ public class CardFxManager : MonoBehaviour
         }
     }
 
+    public void DeactivatePerColumn (int col)
+    {
+        for (int j = 4 - 1 ; j >= 0 ; j--)
+        {
+            CardFxMask [j].cardFxPos [col].SetActive(false);
+        }
+    }
+
 
     public void ActivateCardFxMask(int whichrow, int whichcol )
     {
@@ -100,6 +108,20 @@ public class CardFxManager : MonoBehaviour
                 if(CardFxMask [whichrow].cardFxPos [whichcol] == CardFxMask [j].cardFxPos [i])
                 {
                     CardFxMask [whichrow].cardFxPos [whichcol].SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void DeactivateWhichCardFxMask ( int whichrow , int whichcol )
+    {
+        for (int i = 0 ; i < 5 ; i++)
+        {
+            for (int j = 4 - 1 ; j >= 0 ; j--)
+            {
+                if (CardFxMask [whichrow].cardFxPos [whichcol] == CardFxMask [j].cardFxPos [i])
+                {
+                    CardFxMask [whichrow].cardFxPos [whichcol].SetActive(false);
                 }
             }
         }
@@ -117,6 +139,4 @@ public class CardFxManager : MonoBehaviour
             }
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -43,6 +44,7 @@ public class GridManager : MonoBehaviour
     public List<cardPositions> rowData = new List<cardPositions>(5);
 
     public GameObject ServerError;
+    public ScatterUIFx scatterUIFx_;
 
     private void Start ()
     {
@@ -150,19 +152,19 @@ public class GridManager : MonoBehaviour
             }
             else
             {
-                NormalFillGrid(columnCount , rowCount , decks , delayIncrement);
+                StartCoroutine(NormalFillGrid(columnCount , rowCount , decks , delayIncrement));
             }
 
         }
 
     }
 
-    void NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
+    IEnumerator NormalFillGrid ( int columnCount , int rowCount , Deck [] decks , float delayIncrement )
     {
         if (decks == null || decks.Length == 0)
         {
             Debug.LogError("Decks array is null or empty.");
-            return;
+            yield break;
         }
 
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
@@ -171,15 +173,12 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.SoundManager_.startSound();
         }
 
-        List<int> scatterCols = ScatterColPosition();
-        bool hasMultipleScatters = scatterCols.Count > 1;
-        int scatterIndex = 0;
+        if (ScatterColPosition().Count > 1)
+        {
+            CommandCentre.Instance.CardFxManager_.ActivateCardMask();
+            CommandCentre.Instance.CardFxManager_.ActivateAllCardFxMask();
+        }
 
-        StartCoroutine(FillColumns(columnCount , rowCount , decks , delayIncrement , scatterCols));
-    }
-
-    IEnumerator FillColumns ( int columnCount , int rowCount , Deck [] decks , float delayIncrement , List<int> scatterCols )
-    {
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -187,152 +186,210 @@ public class GridManager : MonoBehaviour
                 Debug.LogError($"Deck at column {col} is null or out of bounds.");
                 continue;
             }
-
+            
             Deck currentDeck = decks [col];
-
-            if (scatterCols.Contains(col) && scatterCols.IndexOf(col) >= 2) // Third scatter column or beyond
+            Debug.Log($"Contains Scatter: {ScatterColPosition().Contains(col)}");
+            int firstScatterCol = ScatterColPosition().Count > 0 ? ScatterColPosition().Min() : -1;
+            if (col >= firstScatterCol && firstScatterCol != -1)
             {
-                yield return new WaitUntil(() => ColumnFilled(scatterCols [scatterCols.IndexOf(col) - 1])); // Wait for the previous scatter column to fill
+                //Activate bg
 
-                ActivateEffects(); // Activate effects before filling the scatter column
-            }
-
-            yield return StartCoroutine(FillColumn(col , rowCount , currentDeck , delayIncrement));
-
-            if (scatterCols.Contains(col) && scatterCols.IndexOf(col) >= 2)
-            {
-                DeactivateEffects(); // Deactivate effects after the column is filled
-            }
-        }
-    }
-
-    IEnumerator FillColumn ( int col , int rowCount , Deck currentDeck , float delayIncrement )
-    {
-        for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
-        {
-            if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
-            {
-                Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
-                continue;
-            }
-
-            GameObject newCard = currentDeck.DrawCard();
-            if (newCard == null)
-            {
-                currentDeck.ResetDeck();
-                newCard = currentDeck.DrawCard();
-                Debug.LogError($"Failed to draw card from deck {col}.");
-                continue;
-            }
-
-            if (isFirstPlay)
-            {
-                cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
-            }
-            else
-            {
-                cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
-            }
-
-            currentDeck.ResetDeck();
-            Transform targetPos = rowData [row].cardPositionInRow [col].transform;
-            if (targetPos == null)
-            {
-                Debug.LogError($"Target position for row {row}, col {col} is null.");
-                continue;
-            }
-
-            newCard.transform.SetParent(targetPos);
-            newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
-            float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement;
-
-            Sequence cardSequence = DOTween.Sequence();
-            cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
-                .SetEase(Ease.OutQuad)
-                .OnComplete(() =>
+                yield return new WaitForSeconds(.5f);
+                int rowFinished = 0;
+                //activate effect
+                ActivateEffects(col);
+                for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
                 {
-                    newCard.transform.localPosition = Vector3.zero;
-                    CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
-                    if (cardPosComponent != null)
+                    if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
                     {
-                        cardPosComponent.TheOwner = newCard;
-                        if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
-                        {
-                            CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
-                        }
+                        Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
+                        continue;
+                    }
+
+                    GameObject newCard = currentDeck.DrawCard();
+                    if (newCard == null)
+                    {
+                        currentDeck.ResetDeck();
+                        newCard = currentDeck.DrawCard();
+                        Debug.LogError($"Failed to draw card from deck {col}.");
+                        continue;
+                    }
+
+                    if (isFirstPlay)
+                    {
+                        cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
                     }
                     else
                     {
-                        Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
+                        cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                     }
 
-                    CalculateObjectsPlaced();
-                }));
-            cardSequence.PrependInterval(delay);
+                    currentDeck.ResetDeck();
+                    Transform targetPos = rowData [row].cardPositionInRow [col].transform;
+                    if (targetPos == null)
+                    {
+                        Debug.LogError($"Target position for row {row}, col {col} is null.");
+                        continue;
+                    }
 
-            yield return new WaitForSeconds(delayIncrement);
+                    newCard.transform.SetParent(targetPos);
+                    newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                    float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement+0.2f; // Adjust delay for reversed order
+
+                    Sequence cardSequence = DOTween.Sequence();
+                    cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .OnComplete(() =>
+                        {
+                            newCard.transform.localPosition = Vector3.zero;
+                            CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
+                            if (cardPosComponent != null)
+                            {
+                                cardPosComponent.TheOwner = newCard;
+                                if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                                {
+                                    CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
+                            }
+
+                            CalculateObjectsPlaced();
+                            rowFinished++;
+                        }));
+                    cardSequence.PrependInterval(delay);
+                }
+
+                yield return new WaitUntil(()=> rowFinished == rowCount);
+                yield return new WaitForSeconds(.5f);
+                //Deactivate effect
+                DeactivateEffects(col);
+                if (col > 1)
+                {
+                    int thecol = col - 1;
+                    CommandCentre.Instance.CardFxManager_.DeactivatePerColumn(thecol);
+                }
+                else
+                {
+                    CommandCentre.Instance.CardFxManager_.DeactivatePerColumn(col);
+                }
+
+            }
+            else
+            {
+                for (int row = rowCount - 1 ; row >= 0 ; row--) // Reverse row loop
+                {
+                    if (rowData == null || row >= rowData.Count || rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
+                    {
+                        Debug.LogError($"Row data or card position for row {row}, col {col} is invalid.");
+                        continue;
+                    }
+
+                    GameObject newCard = currentDeck.DrawCard();
+                    if (newCard == null)
+                    {
+                        currentDeck.ResetDeck();
+                        newCard = currentDeck.DrawCard();
+                        Debug.LogError($"Failed to draw card from deck {col}.");
+                        continue;
+                    }
+
+                    if (isFirstPlay)
+                    {
+                        cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
+                    }
+                    else
+                    {
+                        cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    }
+
+                    currentDeck.ResetDeck();
+                    Transform targetPos = rowData [row].cardPositionInRow [col].transform;
+                    if (targetPos == null)
+                    {
+                        Debug.LogError($"Target position for row {row}, col {col} is null.");
+                        continue;
+                    }
+
+                    newCard.transform.SetParent(targetPos);
+                    newCard.transform.rotation = Quaternion.Euler(0 , 180f , 0);
+                    float delay = ( col * rowCount + ( rowCount - 1 - row ) ) * delayIncrement; // Adjust delay for reversed order
+
+                    Sequence cardSequence = DOTween.Sequence();
+                    cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .OnComplete(() =>
+                        {
+                            newCard.transform.localPosition = Vector3.zero;
+                            CardPos cardPosComponent = targetPos.GetComponent<CardPos>();
+                            if (cardPosComponent != null)
+                            {
+                                cardPosComponent.TheOwner = newCard;
+                                if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                                {
+                                    CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError($"CardPos component is missing on target position at row {row}, col {col}.");
+                            }
+
+                            CalculateObjectsPlaced();
+                        }));
+                    cardSequence.PrependInterval(delay);
+                }
+            }
         }
     }
-
-    void ActivateEffects ()
-    {
-        // Add effect activation logic here
-        Debug.Log("Activating scatter effects.");
-    }
-
-    void DeactivateEffects ()
-    {
-        // Add effect deactivation logic here
-        Debug.Log("Deactivating scatter effects.");
-    }
-
-    bool ColumnFilled ( int col )
-    {
-        for (int row = 0 ; row < rowData.Count ; row++)
-        {
-            if (rowData [row] == null || rowData [row].cardPositionInRow == null || col >= rowData [row].cardPositionInRow.Count)
-            {
-                Debug.LogError($"Invalid rowData at row {row}, col {col}.");
-                return false;
-            }
-
-            CardPos cardPos = rowData [row].cardPositionInRow [col].GetComponent<CardPos>();
-            if (cardPos == null || cardPos.TheOwner == null)
-            {
-                return false; // If any position is empty, the column is not filled
-            }
-        }
-
-        return true; // If all positions are occupied, the column is filled
-    }
-
-
-
     public List<int> ScatterColPosition ()
     {
         List<int> scatterInCol = new List<int>();
         GameDataAPI gameDataAPI_ = CommandCentre.Instance.APIManager_.GameDataAPI_;
-        for(int i = 0;i<gameDataAPI_.rows.Count ; i++)
+
+        for (int i = 0 ; i < gameDataAPI_.rows.Count ; i++)
         {
-            bool isfound = false;
-            for(int j = 0 ; j < gameDataAPI_.rows [i].infos.Count ; j++)
+            for (int j = 0 ; j < gameDataAPI_.rows [i].infos.Count ; j++)
             {
-                if (gameDataAPI_.rows [i].infos [j].name == "Scatter")
+                if (gameDataAPI_.rows [i].infos [j].name == "SCATTER")
                 {
-                    isfound = true;
+                    scatterInCol.Add(i);
+                    break; // Exit loop early since we found a scatter in this column
                 }
-                break;
             }
-
-            if (isfound)
-            {
-                scatterInCol.Add(i);
-            }
-
         }
+
         return scatterInCol;
     }
 
+    public bool isSameColumn(int col )
+    {
+        foreach(var col_ in ScatterColPosition ())
+        {
+            if( col == col_)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    void ActivateEffects (int col)
+    {
+        // Add effect activation logic here
+        Debug.Log("Activating scatter effects.");
+        scatterUIFx_.showeffect(col);
+    }
+
+    void DeactivateEffects (int col)
+    {
+        // Add effect deactivation logic here
+        Debug.Log("Deactivating scatter effects.");
+        scatterUIFx_.HideEffect(col);
+    }
 
 
     public void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
@@ -632,6 +689,12 @@ public class GridManager : MonoBehaviour
         }
         else
         {
+            //Deactivate BgCardfx   
+            if (CommandCentre.Instance.CardFxManager_.cardFxMask.activeSelf)
+            {
+                CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
+            }
+           
             CommandCentre.Instance.WinLoseManager_.isWinsequence= false;
             int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
             if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)

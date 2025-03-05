@@ -27,9 +27,11 @@ public class ScatterUIFx : MonoBehaviour
 
     public void showeffect (int col)
     {
-        for(int i = 0;i<colFx.Length ; i++)
-        {
-            colFx [i].gameObject.SetActive(i == col );
-        }
+        colFx [col].gameObject.SetActive(true);
+    }
+
+    public void HideEffect (int col)
+    {
+        colFx [col].gameObject.SetActive(false);
     }
 }
