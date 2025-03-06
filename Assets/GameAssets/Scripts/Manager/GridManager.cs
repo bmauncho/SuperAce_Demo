@@ -179,6 +179,8 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.CardFxManager_.ActivateAllCardFxMask();
         }
 
+        GameDataAPI gameDataAPI_ = CommandCentre.Instance.APIManager_.GameDataAPI_;
+
         for (int col = 0 ; col < columnCount ; col++)
         {
             if (col >= decks.Length || decks [col] == null)
@@ -190,10 +192,11 @@ public class GridManager : MonoBehaviour
             Deck currentDeck = decks [col];
             Debug.Log($"Contains Scatter: {ScatterColPosition().Contains(col)}");
             int firstScatterCol = ScatterColPosition().Count > 0 ? ScatterColPosition().Min() : -1;
-            if (col >= firstScatterCol && firstScatterCol != -1)
+            if (col >= 2 && ScatterColPosition().Count>1 /*&& firstScatterCol != -1*/)
             {
                 //Activate bg
-
+          
+                DeactivateEffects(col);
                 yield return new WaitForSeconds(.5f);
                 int rowFinished = 0;
                 //activate effect
@@ -263,13 +266,34 @@ public class GridManager : MonoBehaviour
                 }
 
                 yield return new WaitUntil(()=> rowFinished == rowCount);
-                yield return new WaitForSeconds(.5f);
+                //yield return new WaitForSeconds(.5f);
                 //Deactivate effect
                 DeactivateEffects(col);
                 if (col > 1)
                 {
                     int thecol = col - 1;
                     CommandCentre.Instance.CardFxManager_.DeactivatePerColumn(thecol);
+
+                    for (int j = 0 ; j < 4 ; j++)
+                    {
+                        if (gameDataAPI_.rows [j].infos [thecol].name == "SCATTER")
+                        {
+                            CommandCentre.Instance.CardFxManager_.ActivateCardFxMask(j , thecol);
+                        }
+                    }
+
+                    if (col == 2)
+                    {
+                        CommandCentre.Instance.CardFxManager_.DeactivatePerColumn(0);
+                        for (int j = 0 ; j < 4; j++)
+                        {
+                            if (gameDataAPI_.rows [j].infos [0].name == "SCATTER")
+                            {
+                                CommandCentre.Instance.CardFxManager_.ActivateCardFxMask(j , 0);
+                            }
+                        }
+                    }
+
                 }
                 else
                 {
