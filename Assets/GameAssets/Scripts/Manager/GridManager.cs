@@ -190,7 +190,7 @@ public class GridManager : MonoBehaviour
             }
             
             Deck currentDeck = decks [col];
-            Debug.Log($"Contains Scatter: {ScatterColPosition().Contains(col)}");
+            //Debug.Log($"Contains Scatter: {ScatterColPosition().Contains(col)}");
             int firstScatterCol = ScatterColPosition().Count > 0 ? ScatterColPosition().Min() : -1;
             if (col >= 2 && ScatterColPosition().Count>1 /*&& firstScatterCol != -1*/)
             {
@@ -528,6 +528,7 @@ public class GridManager : MonoBehaviour
 
     public void refillGrid ( int objectshidden )
     {
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
@@ -548,8 +549,12 @@ public class GridManager : MonoBehaviour
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
 
+                    CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
+                    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                    {
+                        continue; // Skip placing this card
+                    }
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
-
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                     newCard.transform.SetParent(targetPos);
@@ -581,6 +586,7 @@ public class GridManager : MonoBehaviour
 
     public void refillTurbo (int objectshidden)
     {
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
@@ -599,6 +605,11 @@ public class GridManager : MonoBehaviour
                 {
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
+                    CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
+                    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                    {
+                        continue; // Skip placing this card
+                    }
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
@@ -658,8 +669,8 @@ public class GridManager : MonoBehaviour
         if (isRefilling)
         {
             isRefilling = false;
-            CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
-            //Debug.Log($"Is refilling {isRefilling}");
+
+            yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
             yield return new WaitForSeconds(.25f);
@@ -667,7 +678,8 @@ public class GridManager : MonoBehaviour
             {
                 CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
             }
-            CommandCentre.Instance.APIManager_.refillCardsAPI_.isError =false;
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
+            //Debug.Log($"Is refilling {isRefilling}");
         }
 
         if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())

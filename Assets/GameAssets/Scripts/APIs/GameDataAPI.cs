@@ -82,7 +82,7 @@ public class GameDataAPI : MonoBehaviour
                 {
                     id = game_id.ToString() ,
                     name = "SUPER_ACE" ,
-                    mode = "NORMAL"
+                    mode = "FREE"
                 } ,
                 betAmount = BetAmount ,
                 clientId = clientId.ToString() ,

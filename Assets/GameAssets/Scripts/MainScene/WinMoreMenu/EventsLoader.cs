@@ -35,7 +35,7 @@ public class EventsLoader : MonoBehaviour
         {
             rotationTweener.Kill();
         }
-        Debug.Log("Loading content");
+       // Debug.Log("Loading content");
         rotationTweener = Spinner.transform.DORotate(new Vector3(0 , 0 , degreesPerSecond * interval) , interval , RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
@@ -49,7 +49,7 @@ public class EventsLoader : MonoBehaviour
     public void Activate ()
     {
         this.gameObject.SetActive(true);
-        Debug.Log("Load content");
+        //Debug.Log("Load content");
     }
     public void Deactivate ()
     {

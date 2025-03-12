@@ -298,18 +298,18 @@ public class DemoWinLoseManager : MonoBehaviour
             Card cardComponent = card.GetComponent<Card>();
 
             // Handle golden cards
-            if (cardComponent.golden && !cardComponent.JACK && !cardComponent.scatter)
+            if (cardComponent.golden && !cardComponent.wild && !cardComponent.scatter)
             {
                 //Debug.Log(" Handle golden cards-1");
                 StartCoroutine(rotateNormalGoldenCards(card , col , row));
             }
             // Handle JACK cards
-            else if (cardComponent.JACK && !cardComponent.golden && !cardComponent.scatter)
+            else if (cardComponent.wild && !cardComponent.golden && !cardComponent.scatter)
             {
                 StartCoroutine(RotateWildCards(card , col , row));
             }
             // Handle scatter cards
-            else if (cardComponent.scatter && !cardComponent.JACK && !cardComponent.golden)
+            else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)
             {
                 scatterCards.Add(card);
             }

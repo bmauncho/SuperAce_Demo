@@ -8,7 +8,7 @@ public class Card : MonoBehaviour
 {
     public CardType ActiveCardType;
     public bool golden;
-    public bool JACK;
+    public bool wild;
     public bool scatter;
 
     public GameObject CardModel;
@@ -36,7 +36,7 @@ public class Card : MonoBehaviour
     public void showNormalCard (Sprite _cardBg,Sprite _theCard)
     {
         golden = false;
-        JACK = false;
+        wild = false;
         scatter = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
@@ -54,7 +54,7 @@ public class Card : MonoBehaviour
     public void showGoldenCard ( Sprite _cardBg , Sprite _theCard ,Sprite _outline)
     {
         golden = true;
-        JACK = false;
+       wild = false;
         scatter = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
@@ -72,7 +72,7 @@ public class Card : MonoBehaviour
 
     public void showScatterCard ()
     {
-        JACK = false;
+        wild = false;
         scatter = true;
         golden = false;
         disableModel();
@@ -96,7 +96,7 @@ public class Card : MonoBehaviour
 
     public void showSmall_Jocker ( Sprite _cardBg , Sprite _theCard , Sprite _outline )
     {
-        JACK = true;
+        wild = true;
         golden = true;
         scatter = false;
         enableModel();
@@ -115,7 +115,7 @@ public class Card : MonoBehaviour
 
     public void showBig_Jocker ( Sprite _cardBg , Sprite _theCard , Sprite _outline )
     {
-        JACK = true;
+        wild = true;
         golden = true;
         scatter = false;
         enableModel();
@@ -135,7 +135,7 @@ public class Card : MonoBehaviour
 
     public void resetCard ()
     {
-        JACK =false;
+        wild =false;
         golden = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
