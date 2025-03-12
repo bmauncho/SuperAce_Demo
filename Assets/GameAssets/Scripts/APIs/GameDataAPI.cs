@@ -184,6 +184,11 @@ public class GameDataAPI : MonoBehaviour
                             //Debug.Log("Scatter found");
                             winloseManager.GetWinningCard(cardData_ , i , j);
                         }
+
+                        if(cardData_.substitute == "BIG_JOKER")
+                        {
+                            Debug.Log($"Big Joker SUB found COL: {j} ROW:{i}");
+                        }
                     }
                 }
             }
@@ -317,5 +322,21 @@ public class GameDataAPI : MonoBehaviour
     public UnityWebRequest response ()
     {
         return request;
+    }
+
+    public List<Tuple<int , int>> GetBigJokerIndices ()
+    {
+        List<Tuple<int , int>> BigJokerCards = new List<Tuple<int , int>>();
+        for (int i = 0 ; i < rows.Count ; i++)
+        {
+            for (int j = 0 ; j < rows [i].infos.Count ; j++)
+            {
+                if (rows [i].infos [j].substitute == "BIG_JOKER")
+                {
+                    BigJokerCards.Add(new Tuple<int , int>(i , j));
+                }
+            }
+        }
+        return BigJokerCards;
     }
 }

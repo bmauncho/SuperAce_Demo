@@ -158,7 +158,12 @@ public class RefillCardsAPI : MonoBehaviour
                                     substitute = card.substitute ,
                                 };
                                 logReceivedData(i , j , cardData_);
+                                if (cardData_.substitute == "BIG_JOKER")
+                                {
+                                    Debug.Log($"Big Joker Found col {j} row {i}");
+                                }
                             }
+
                         }
                     }
                     refillDataFetched = true;
@@ -189,16 +194,19 @@ public class RefillCardsAPI : MonoBehaviour
 
                             // Set the value of newCardData
                             newCardData = sentData_ [i].data [j];
-                            if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
-                            {
-                                newCardData = new CardData();
-                                newCardData.name = newCardData.substitute;
-                                newCardData.substitute = null;
-                            }
+                            //if (!string.IsNullOrEmpty(sentData_ [i].data [j].substitute))
+                            //{
+                            //    newCardData = new CardData();
+                            //    newCardData.name = newCardData.substitute;
+                            //}
 
                             // Add the new CardData to the receivedData's data list
                             newReceivedData.data.Add(newCardData);
                             index++;
+                            if(newCardData.substitute == "BIG_JOKER")
+                            {
+                                Debug.Log($"Big Joker Found col {j} row {i}");
+                            }
                         }
                     }
                     yield return new WaitUntil(() => index >= 20);
@@ -355,4 +363,20 @@ public class RefillCardsAPI : MonoBehaviour
         info = receivedData_ [row].data [col];
         return receivedData_.Count > 0 ? info : null ;
     }
+
+    public List<Tuple<int,int>> GetBigJockerIndices ()
+    {
+        List<Tuple<int , int>> indices = new List<Tuple<int , int>>();
+        for (int i = 0 ; i < receivedData_.Count ; i++)
+        {
+            for (int j = 0 ; j < receivedData_ [i].data.Count ; j++)
+            {
+                if (receivedData_ [i].data [j].substitute == "BIG_JOKER")
+                {
+                    indices.Add(new Tuple<int , int>(i , j));
+                }
+            }
+        }
+        return indices;
+    } 
 }
