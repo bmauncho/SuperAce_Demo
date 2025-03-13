@@ -122,7 +122,7 @@ public class FreeGameManager : MonoBehaviour
         //{
             
         //}
-        FreeSpinCounter += 10;
+        FreeSpinCounter += (int)CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins;
         FreeSpinsAmount.text = FreeSpinCounter.ToString();
     }
 

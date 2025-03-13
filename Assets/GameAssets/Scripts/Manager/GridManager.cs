@@ -528,6 +528,7 @@ public class GridManager : MonoBehaviour
 
     public void refillGrid ( int objectshidden )
     {
+        Debug.Log($" isrefill-tubo & iswin {CommandCentre.Instance.APIManager_.refillCardsAPI_.IsWin()}");
         APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
@@ -550,10 +551,13 @@ public class GridManager : MonoBehaviour
                     GameObject newCard = currentDeck.DrawCard();
 
                     CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
-                    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
-                    {
-                        continue; // Skip placing this card
-                    }
+                    //if (CommandCentre.Instance.APIManager_.refillCardsAPI_.IsWin())
+                    //{
+                    //    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                    //    {
+                    //        continue; // Skip placing this card
+                    //    }
+                    //}
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
@@ -586,6 +590,7 @@ public class GridManager : MonoBehaviour
 
     public void refillTurbo (int objectshidden)
     {
+        Debug.Log($" isrefill-tubo & iswin {CommandCentre.Instance.APIManager_.refillCardsAPI_.IsWin()}");
         APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
@@ -606,10 +611,14 @@ public class GridManager : MonoBehaviour
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
                     CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
-                    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
-                    {
-                        continue; // Skip placing this card
-                    }
+                    //if (CommandCentre.Instance.APIManager_.refillCardsAPI_.IsWin())
+                    //{
+                    //    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                    //    {
+                    //        continue; // Skip placing this card
+                    //    }
+                    //}
+
                     cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
@@ -671,6 +680,7 @@ public class GridManager : MonoBehaviour
             isRefilling = false;
 
             yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
+
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();
             yield return new WaitForSeconds(.25f);

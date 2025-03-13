@@ -378,5 +378,59 @@ public class RefillCardsAPI : MonoBehaviour
             }
         }
         return indices;
-    } 
+    }
+
+    public bool IsWin ()
+    {
+        List<bool> colHasWinCards = new List<bool>();
+        Dictionary<CardData , (int row, int col)> winningCards = new Dictionary<CardData , (int row, int col)>();
+        int columnCount = receivedData_[0].data.Count;
+
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            int winCardCount = 0;
+
+            for (int row = 0 ; row < receivedData_.Count ; row++)
+            {
+                CardData data = receivedData_ [row].data [col];
+
+                if (data.transformed)
+                {
+                    winningCards [data] = (row, col);
+                    winCardCount++;
+                }
+            }
+
+
+            colHasWinCards.Add(winCardCount > 0);
+        }
+        int consecutiveCount = 0;
+        bool firstThreeValid = colHasWinCards.Count >= 3 && colHasWinCards [0] && colHasWinCards [1] && colHasWinCards [2];
+
+        if (firstThreeValid)
+        {
+            for (int i = 0 ; i < colHasWinCards.Count ; i++)
+            {
+                if (colHasWinCards [i])
+                {
+                    consecutiveCount++;
+                }
+                else
+                {
+                    if (consecutiveCount >= 3)
+                    {
+                        return true; // Exit early after notifying
+                    }
+                    consecutiveCount = 0; // Reset count if a break occurs
+                }
+            }
+
+            // Final check in case the last columns form a valid group
+            if (consecutiveCount >= 3)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

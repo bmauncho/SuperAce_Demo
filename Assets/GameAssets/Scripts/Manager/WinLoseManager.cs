@@ -298,22 +298,20 @@ public class WinLoseManager : MonoBehaviour
             if(IsScatterWin() && !checkForOtherCards())
             {
                 CommandCentre.Instance.GridManager_.isRefilling =false;
-                CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
+                if(BigJockerRotatedCards.Count <= 0)
+                {
+                    CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
+                }
             }
         }
         yield return new WaitUntil(() => !CommandCentre.Instance.GridManager_.isRefilling);
 
         if (BigJockerRotatedCards.Count > 0)
         {
+            isJumpingCards = true;
             yield return new WaitForSeconds(.25f);
             Debug.Log(" BigJockerRotatedCards More Than 0");
-            isJumpingCards = true;
-            HashSet<Tuple<int , int>> usedIndexes = new HashSet<Tuple<int , int>>();
-            foreach (var entry in BigJockerRotatedCards)
-            {
-                usedIndexes.UnionWith(entry.Item2); // Add all elements from each HashSet
-            }
-
+            
             List<Tuple<int , int>> IndexesList = CommandCentre.Instance.APIManager_.refillCardsAPI_.GetBigJockerIndices();
            
             for (int i = 0;i<BigJockerRotatedCards.Count;i++)
@@ -327,8 +325,25 @@ public class WinLoseManager : MonoBehaviour
                 }
                 else
                 {
-                    holderList.AddRange(IndexesList.GetRange(i , 1));
+                    holderList.AddRange(IndexesList);
                 }
+
+                if (holderList == null)
+                {
+                    Debug.LogError("holderList is NULL!");
+                }
+                else if (holderList.Count == 0)
+                {
+                    Debug.LogWarning("jumpCards is EMPTY!");
+                }
+                else
+                {
+                    foreach (var card in holderList)
+                    {
+                        Debug.Log($"Jump Cards: col {card.Item1}, row {card.Item2}");
+                    }
+                }
+
                 yield return StartCoroutine(jumpBigJockerCards(BigJockerRotatedCards [i].Item1 ,holderList));
             }
 
@@ -379,6 +394,7 @@ public class WinLoseManager : MonoBehaviour
 
         // Activate the free game mechanics
         CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
+        Debug.Log("Adding spins");
         CommandCentre.Instance.FreeGameManager_.increaseSpins();
         CommandCentre.Instance.FreeGameManager_.ActivateFreeGameIntro();
         CommandCentre.Instance.SoundManager_.PlaySound("scatterWin");
@@ -454,12 +470,16 @@ public class WinLoseManager : MonoBehaviour
 
     private IEnumerator jumpBigJockerCards (GameObject target , List<Tuple<int ,int>> jumpCards)
     {
+        if(jumpCards == null || jumpCards.Count == 0)
+        {
+            isJumpingCards = false;
+            yield break;
+        }
         // shake
         Tween myTween2 = target.transform.DOShakeRotation(1f , 15 , 10 , 90 , false);
         yield return myTween2.WaitForCompletion();
         Debug.Log($"start jumping");
-        GameObject newCard1 = poolManager.GetCard();
-        GameObject newCard2 = poolManager.GetCard();
+ 
 
         // set the cards as BigJocker 
 
@@ -471,8 +491,12 @@ public class WinLoseManager : MonoBehaviour
         int randomColumnIndex2 = 0;
         int randomRowIndex2 = 0;
 
+      
+
         if (jumpCards.Count >= 2)
         {
+            GameObject newCard1 = poolManager.GetCard();
+            GameObject newCard2 = poolManager.GetCard();
             randomColumnIndex1 = jumpCards [0].Item1;
             randomRowIndex1 = jumpCards [0].Item2;
             randomColumnIndex2 = jumpCards [1].Item1;
@@ -547,12 +571,12 @@ public class WinLoseManager : MonoBehaviour
         }
         else
         {
-            randomColumnIndex1 = jumpCards [0].Item2;
-            randomRowIndex1 = jumpCards [0].Item1;
+            GameObject newCard1 = poolManager.GetCard();
+            randomColumnIndex1 = jumpCards [0].Item1;
+            randomRowIndex1 = jumpCards [0].Item2;
             newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
 
             newCard1.SetActive(true);
-            newCard2.SetActive(true);
             Debug.Log($"Assign");
             newCard1.transform.SetParent(gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform);
 
@@ -561,7 +585,6 @@ public class WinLoseManager : MonoBehaviour
 
             CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
             CommandCentre.Instance.CardManager_.setSpecificCard(newCard1.GetComponent<Card>() , "BIG_JOKER");
-            CommandCentre.Instance.CardManager_.setSpecificCard(newCard2.GetComponent<Card>() , "BIG_JOKER");
             var jumpSequence = DOTween.Sequence();
             // DOTween jump animations
             Debug.Log($"StartSequnce");

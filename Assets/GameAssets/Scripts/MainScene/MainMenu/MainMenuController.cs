@@ -182,17 +182,18 @@ public class MainMenuController : MonoBehaviour
         
         if (!isDemo)
         {
-            CommandCentre.Instance.APIManager_.PlaceBet();
-            CommandCentre.Instance.GridManager_.refreshGrid();
             if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
                 if (CommandCentre.Instance.FreeGameManager_.FreeSpinCounter <= 0)
                 {
                     CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
                     CommandCentre.Instance.FreeGameManager_.IsFreeGame = false;
+                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy);
                 }
             }
 
+            CommandCentre.Instance.APIManager_.PlaceBet();
+            CommandCentre.Instance.GridManager_.refreshGrid();
             normlSpin();
         }
         else
