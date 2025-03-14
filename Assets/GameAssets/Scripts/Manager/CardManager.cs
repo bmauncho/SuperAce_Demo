@@ -225,33 +225,18 @@ public class CardManager : MonoBehaviour
             return;
 
         CardData cardInfo = new CardData();
-        if (gridManager.isRefilling)
+
+        cardInfo = new CardData()
         {
-            cardInfo = new CardData()
-            {
-                name = apiManager.refillCardsAPI_.GetCardInfo(col , row).name ,
-                substitute = apiManager.refillCardsAPI_.GetCardInfo(col , row).substitute ,
-                golden = apiManager.refillCardsAPI_.GetCardInfo(col , row).golden ,
-                transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
-            };
+            name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
+            substitute = apiManager.GameDataAPI_.GetCardInfo(col , row).substitute ,
+            golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
+            transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
+        };
 
-            apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
 
-        }
-        else
-        {
-            cardInfo = new CardData()
-            {
-                name = apiManager.GameDataAPI_.GetCardInfo(col , row).name ,
-                substitute = apiManager.GameDataAPI_.GetCardInfo(col , row).substitute ,
-                golden = apiManager.GameDataAPI_.GetCardInfo(col , row).golden ,
-                transformed = apiManager.GameDataAPI_.GetCardInfo(col , row).transformed ,
-            };
-        }
-       
 
-        
-       // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
+        // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.golden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {

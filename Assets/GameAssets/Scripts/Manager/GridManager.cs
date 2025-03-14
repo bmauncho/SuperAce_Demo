@@ -552,9 +552,12 @@ public class GridManager : MonoBehaviour
                     CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
                     if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
                     {
-                        continue; // Skip placing this card
+                        if (cardPos.TheOwner != null)
+                        {
+                            continue; // Skip placing this card
+                        }
                     }
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.SetUpRefillCards(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                     newCard.transform.SetParent(targetPos);
@@ -608,9 +611,12 @@ public class GridManager : MonoBehaviour
                     CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
                     if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
                     {
-                        continue; // Skip placing this card
+                        if (rowData [row].cardPositionInRow [col].GetComponent<CardPos>().TheOwner != null)
+                        {
+                            continue; // Skip placing this card
+                        }
                     }
-                    cardManager.setUpCard(newCard.GetComponent<Card>() , col , row);
+                    cardManager.SetUpRefillCards(newCard.GetComponent<Card>() , col , row);
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
 
@@ -635,6 +641,17 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    void AddSpins ()
+    {
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0)
+            {
+                CommandCentre.Instance.FreeGameManager_.increaseSpins();
+            }
+        }
+    }
+
     void CalculateObjectsPlaced ()
     {
         objectsPlaced++;
@@ -648,6 +665,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
+            //AddSpins();
             if (isFirstPlay)
             {
                 isFirstPlay = false;
@@ -764,6 +782,17 @@ public class GridManager : MonoBehaviour
         yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
+            if (freeGameManager.IsFreeGame)
+            {
+                if(CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy||
+                   CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
+                {
+                    Debug.Log("Deactivate Free Game");
+                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
+                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+                    Debug.Log("Free Game Deactivated");
+                }
+            }
             if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
             {
                 CommandCentre.Instance.AutoSpinManager_.AutospinToggle.isOn = false;
@@ -771,6 +800,14 @@ public class GridManager : MonoBehaviour
             }
             else
             {
+                if (CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy ||
+                  CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
+                {
+                    Debug.Log("Deactivate Free Game");
+                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
+                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+                    Debug.Log("Free Game Deactivated");
+                }
                 CommandCentre.Instance.MainMenuController_.Spin();
             }
         }

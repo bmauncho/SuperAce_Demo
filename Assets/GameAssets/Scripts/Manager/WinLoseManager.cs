@@ -306,30 +306,48 @@ public class WinLoseManager : MonoBehaviour
         if (BigJockerRotatedCards.Count > 0)
         {
             yield return new WaitForSeconds(.25f);
-            Debug.Log(" BigJockerRotatedCards More Than 0");
+            Debug.Log("BigJockerRotatedCards More Than 0");
             isJumpingCards = true;
-            HashSet<Tuple<int , int>> usedIndexes = new HashSet<Tuple<int , int>>();
-            foreach (var entry in BigJockerRotatedCards)
-            {
-                usedIndexes.UnionWith(entry.Item2); // Add all elements from each HashSet
-            }
 
-            List<Tuple<int , int>> IndexesList = CommandCentre.Instance.APIManager_.refillCardsAPI_.GetBigJockerIndices();
-           
-            for (int i = 0;i<BigJockerRotatedCards.Count;i++)
+            HashSet<Tuple<int , int>> usedIndices = new HashSet<Tuple<int , int>>();
+            List<Tuple<int , int>> indexesList = CommandCentre.Instance.APIManager_.refillCardsAPI_.GetBigJockerIndices();
+
+            int bigJockerCount = BigJockerRotatedCards.Count;
+            int indicesPerCard = indexesList.Count / bigJockerCount;
+            int extraIndices = indexesList.Count % bigJockerCount;
+
+            int currentIndex = 0;
+            int completed = 0;
+
+            for (int i = 0 ; i < bigJockerCount ; i++)
             {
                 List<Tuple<int , int>> holderList = new List<Tuple<int , int>>();
+                int countToAssign = indicesPerCard + ( i < extraIndices ? 1 : 0 ); // Distribute extra indices evenly
 
-                if(i+1< IndexesList.Count)
+                for (int j = 0 ; j < countToAssign && currentIndex < indexesList.Count ; j++)
                 {
-                    int count = Mathf.Min(2 , IndexesList.Count - i); // Ensures we don't exceed the list size
-                    holderList.AddRange(IndexesList.GetRange(i , count));
+                    if (!usedIndices.Contains(indexesList [currentIndex]))
+                    {
+                        holderList.Add(indexesList [currentIndex]);
+                        usedIndices.Add(indexesList [currentIndex]);
+                        currentIndex++;
+                    }
                 }
-                else
+
+                if (holderList.Count == 0)
                 {
-                    holderList.AddRange(IndexesList.GetRange(i , 1));
+                    completed++;
+                    continue;
                 }
-                yield return StartCoroutine(jumpBigJockerCards(BigJockerRotatedCards [i].Item1 ,holderList));
+
+                yield return StartCoroutine(jumpBigJockerCards(BigJockerRotatedCards [i].Item1 , holderList));
+                completed++;
+            }
+
+            Debug.Log(completed);
+            if (completed >= bigJockerCount)
+            {
+                isJumpingCards = false;
             }
 
             yield return new WaitUntil(() => !isJumpingCards);
@@ -452,164 +470,84 @@ public class WinLoseManager : MonoBehaviour
     }
 
 
-    private IEnumerator jumpBigJockerCards (GameObject target , List<Tuple<int ,int>> jumpCards)
+    private IEnumerator jumpBigJockerCards ( GameObject target , List<Tuple<int , int>> jumpCards )
     {
-        // shake
+        if (jumpCards.Count <= 0)
+        {
+            yield break;
+        }
+
+        // Shake animation
         Tween myTween2 = target.transform.DOShakeRotation(1f , 15 , 10 , 90 , false);
         yield return myTween2.WaitForCompletion();
-        Debug.Log($"start jumping");
-        GameObject newCard1 = poolManager.GetCard();
-        GameObject newCard2 = poolManager.GetCard();
+        Debug.Log($"Start jumping");
 
-        // set the cards as BigJocker 
-
+        // Store initial position and rotation
         Vector3 initialPosition = target.transform.position;
         Quaternion initialRotation = target.transform.rotation;
 
-        int randomColumnIndex1 = 0;
-        int randomRowIndex1 = 0;
-        int randomColumnIndex2 = 0;
-        int randomRowIndex2 = 0;
+        List<GameObject> newCards = new List<GameObject>();
 
-        if (jumpCards.Count >= 2)
+        foreach (var jumpCard in jumpCards)
         {
-            randomColumnIndex1 = jumpCards [0].Item1;
-            randomRowIndex1 = jumpCards [0].Item2;
-            randomColumnIndex2 = jumpCards [1].Item1;
-            randomRowIndex2 = jumpCards [1].Item2;
+            GameObject newCard = poolManager.GetCard();
+            newCard.transform.SetPositionAndRotation(initialPosition , initialRotation);
+            newCard.SetActive(true);
 
-            newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
-            newCard2.transform.SetPositionAndRotation(initialPosition , initialRotation);
+            int columnIndex = jumpCard.Item1;
+            int rowIndex = jumpCard.Item2;
 
-            newCard1.SetActive(true);
-            newCard2.SetActive(true);
-            Debug.Log($"Assign");
-            newCard1.transform.SetParent(gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform);
-            newCard2.transform.SetParent(gridManager.rowData [randomColumnIndex2].cardPositionInRow [randomRowIndex2].transform);
+            // Assign the new card to the grid
+            Transform targetTransform = gridManager.rowData [columnIndex].cardPositionInRow [rowIndex].transform;
+            newCard.transform.SetParent(targetTransform);
 
-            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
-            gridManager.rowData [randomColumnIndex2].cardPositionInRow [randomRowIndex2].GetComponent<CardPos>().TheOwner.SetActive(false);
-            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner = newCard1;
-            gridManager.rowData [randomColumnIndex2].cardPositionInRow [randomRowIndex2].GetComponent<CardPos>().TheOwner = newCard2;
+            CardPos cardPos = targetTransform.GetComponent<CardPos>();
+            cardPos.TheOwner.SetActive(false);
+            cardPos.TheOwner = newCard;
 
-            CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
-            CommandCentre.Instance.CardManager_.setSpecificCard(newCard1.GetComponent<Card>() , "BIG_JOKER");
-            CommandCentre.Instance.CardManager_.setSpecificCard(newCard2.GetComponent<Card>() , "BIG_JOKER");
-            var jumpSequence = DOTween.Sequence();
-            // DOTween jump animations
-            Debug.Log($"StartSequnce");
-            jumpSequence.Join(newCard1.transform.DOJump(
-                gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform.position ,
-                3.0f , 1 , 1.0f).OnComplete(() =>
-                {
-                    objectsJumped++;
-                    // Debug.Log($"Card 1 jumped: {objectsJumped}/{totalobjectstojump}");
-                    newCard1.transform.localPosition = Vector3.zero;
-                    newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                }));
+            // Set the new card as a BigJoker
+            CommandCentre.Instance.CardManager_.setSpecificCard(newCard.GetComponent<Card>() , "BIG_JOKER");
 
-            jumpSequence.Join(newCard2.transform.DOJump(
-                gridManager.rowData [randomColumnIndex2].cardPositionInRow [randomRowIndex2].transform.position ,
-                3.0f , 1 , 1.0f).OnComplete(() =>
-                {
-                    objectsJumped++;
-                    // Debug.Log($"Card 2 jumped: {objectsJumped}/{totalobjectstojump}");
-                    newCard2.transform.localPosition = Vector3.zero;
-                    newCard2.transform.rotation = Quaternion.Euler(0 , 180 , 0); ;
-                }));
-
-
-            // Play the jump sequence and wait for it to complete
-            if (jumpSequence.IsActive())
-            {
-                // Debug.Log("Waiting for jump sequence to complete...");
-                yield return jumpSequence.Play().WaitForCompletion();
-            }
-
-            //Debug.Log("Jump complete");
-            yield return new WaitForSeconds(0.5f);
-            //Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
-
-            if (!IsObjectsJumpComplete())
-            {
-                while (!IsObjectsJumpComplete())
-                {
-                    objectsJumped++;
-                }
-            }
-
-            if (IsObjectsJumpComplete())
-            {
-                //Debug.Log("wincheck");
-                isJumpingCards = false;
-            }
-
+            newCards.Add(newCard);
         }
-        else
+
+        // Return inactive cards to the pool
+        CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
+
+        // Create DOTween sequence for jumping
+        var jumpSequence = DOTween.Sequence();
+        Debug.Log($"Start sequence");
+
+        foreach (var newCard in newCards)
         {
-            randomColumnIndex1 = jumpCards [0].Item2;
-            randomRowIndex1 = jumpCards [0].Item1;
-            newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
-
-            newCard1.SetActive(true);
-            newCard2.SetActive(true);
-            Debug.Log($"Assign");
-            newCard1.transform.SetParent(gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform);
-
-            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
-            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner = newCard1;
-
-            CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
-            CommandCentre.Instance.CardManager_.setSpecificCard(newCard1.GetComponent<Card>() , "BIG_JOKER");
-            CommandCentre.Instance.CardManager_.setSpecificCard(newCard2.GetComponent<Card>() , "BIG_JOKER");
-            var jumpSequence = DOTween.Sequence();
-            // DOTween jump animations
-            Debug.Log($"StartSequnce");
-            jumpSequence.Join(newCard1.transform.DOJump(
-                gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform.position ,
-                3.0f , 1 , 1.0f).OnComplete(() =>
+            Transform targetPos = newCard.transform.parent;
+            jumpSequence.Join(newCard.transform.DOJump(
+                targetPos.position , 3.0f , 1 , 1.0f).OnComplete(() =>
                 {
                     objectsJumped++;
-                    // Debug.Log($"Card 1 jumped: {objectsJumped}/{totalobjectstojump}");
-                    newCard1.transform.localPosition = Vector3.zero;
-                    newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                    newCard.transform.localPosition = Vector3.zero;
+                    newCard.transform.rotation = Quaternion.Euler(0 , 180 , 0);
                 }));
-
-            // Play the jump sequence and wait for it to complete
-            if (jumpSequence.IsActive())
-            {
-                // Debug.Log("Waiting for jump sequence to complete...");
-                yield return jumpSequence.Play().WaitForCompletion();
-            }
-
-            //Debug.Log("Jump complete");
-            yield return new WaitForSeconds(0.5f);
-            //Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
-
-            if (!IsObjectsJumpComplete())
-            {
-                while (!IsObjectsJumpComplete())
-                {
-                    objectsJumped++;
-                }
-            }
-
-            if (IsObjectsJumpComplete())
-            {
-                //Debug.Log("wincheck");
-                isJumpingCards = false;
-            }
         }
-      
-    
 
-        // Get unique random index for newCard2
+        if (jumpSequence.IsActive())
+        {
+            yield return jumpSequence.Play().WaitForCompletion();
+        }
 
+        yield return new WaitForSeconds(0.5f);
 
-        
+        while (!IsObjectsJumpComplete())
+        {
+            objectsJumped++;
+        }
 
-        yield return null ;
+        if (IsObjectsJumpComplete())
+        {
+            isJumpingCards = false;
+        }
     }
+
 
     public bool IsObjectsJumpComplete ()
     {

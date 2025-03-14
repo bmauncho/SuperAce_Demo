@@ -190,6 +190,10 @@ public class MainMenuController : MonoBehaviour
                 {
                     CommandCentre.Instance.FreeGameManager_.DeactivateFreeGame();
                     CommandCentre.Instance.FreeGameManager_.IsFreeGame = false;
+                    Debug.Log("Deactivate Free Game");
+                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
+                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+                    Debug.Log("Free Game Deactivated");
                 }
             }
 

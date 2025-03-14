@@ -75,7 +75,7 @@ public class GameDataAPI : MonoBehaviour
 
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            Debug.Log("Fetch normal Game!");
+            Debug.Log("Fetch Free Game!");
             Data = new _GameInfo
             {
                 game = new _game
@@ -92,7 +92,8 @@ public class GameDataAPI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Fetch Free Game!");
+            Debug.Log("Fetch normal Game!");
+            
             Data = new _GameInfo
             {
                 game = new _game
