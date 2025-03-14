@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 [System.Serializable]
@@ -388,6 +389,28 @@ public class GridManager : MonoBehaviour
         return scatterInCol;
     }
 
+    public bool scatterWon ()
+    {
+        if(ScatterColPosition().Count > 2 )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void addfreeSpins ()
+    {
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            if (scatterWon() && 
+                CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 && 
+                CommandCentre.Instance.FreeGameManager_.FreeSpinCounter<10)
+            {
+                CommandCentre.Instance.FreeGameManager_.increaseSpins();
+            }
+        }
+    }
+
     public bool isSameColumn(int col )
     {
         foreach(var col_ in ScatterColPosition ())
@@ -657,6 +680,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
+            addfreeSpins();
             if (isFirstPlay)
             {
                 isFirstPlay = false;
@@ -678,7 +702,6 @@ public class GridManager : MonoBehaviour
         if (isRefilling)
         {
             isRefilling = false;
-
             yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
 
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
@@ -686,7 +709,11 @@ public class GridManager : MonoBehaviour
             yield return new WaitForSeconds(.25f);
             if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
             {
-                CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
+                Debug.Log($"isrecheckwin : {CommandCentre.Instance.APIManager_.GameDataAPI_.IsRecheckWin()}");
+                if (CommandCentre.Instance.APIManager_.GameDataAPI_.IsRecheckWin())
+                {
+                    CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
+                }
             }
             CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
             //Debug.Log($"Is refilling {isRefilling}");
@@ -695,6 +722,7 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
         {
             Debug.Log("Scatter win");
+            //CommandCentre.Instance.FreeGameManager_.increaseSpins();
             
         }
         //Debug.Log($"Is refilling {isRefilling}");
@@ -774,6 +802,10 @@ public class GridManager : MonoBehaviour
         yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
         if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
         {
+            if (CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy)
+            {
+                yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy);
+            }
             if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
             {
                 CommandCentre.Instance.AutoSpinManager_.AutospinToggle.isOn = false;
@@ -789,7 +821,11 @@ public class GridManager : MonoBehaviour
             if (freeGameManager.IsFreeGame && freeGameManager.IsSpinInit)
             {
                 // Wait until spinning is allowed
-
+                if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
+                {
+                    Debug.Log("Scatter win -AutoSpin");
+                    CommandCentre.Instance.FreeGameManager_.increaseSpins();
+                }
                 //Debug.Log("Can auto spin in free game");
                 CommandCentre.Instance.MainMenuController_.Spin();
             }

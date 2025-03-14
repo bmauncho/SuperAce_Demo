@@ -53,6 +53,7 @@ public class GameDataAPI : MonoBehaviour
     public RefillCardsAPI refillCardsAPI;
     public List<bool> canRefill = new List<bool>();
     bool canshowSpins = false;
+    public bool isRecheckingWins;
     private void Start ()
     {
         isDataFetched = false;
@@ -289,7 +290,65 @@ public class GameDataAPI : MonoBehaviour
         }
     }
 
-   
+    public bool IsRecheckWin ()
+    {
+        isRecheckingWins = true;
+        List<bool> colHasWinCards = new List<bool>();
+        Dictionary<CardData , (int row, int col)> winningCards = new Dictionary<CardData , (int row, int col)>();
+        int columnCount = rows [0].infos.Count;
+
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            int winCardCount = 0;
+
+            for (int row = 0 ; row < rows.Count ; row++)
+            {
+                CardData data = rows [row].infos [col];
+
+                if (data.transformed)
+                {
+                    winningCards [data] = (row, col);
+                    winCardCount++;
+                }
+            }
+
+
+            colHasWinCards.Add(winCardCount > 0);
+        }
+        int consecutiveCount = 0;
+        bool firstThreeValid = colHasWinCards.Count >= 3 && colHasWinCards [0] && colHasWinCards [1] && colHasWinCards [2];
+
+        if (firstThreeValid)
+        {
+            for (int i = 0 ; i < colHasWinCards.Count ; i++)
+            {
+                if (colHasWinCards [i])
+                {
+                    consecutiveCount++;
+                }
+                else
+                {
+                    if (consecutiveCount >= 3)
+                    {
+                        isRecheckingWins = false;
+                        return true; // Exit early after notifying
+                    }
+                    consecutiveCount = 0; // Reset count if a break occurs
+                }
+            }
+
+            // Final check in case the last columns form a valid group
+            if (consecutiveCount >= 3)
+            {
+                isRecheckingWins = false;
+                return true;
+            }
+        }
+        isRecheckingWins = false;
+        return false;
+    }
+
+
 
     private void NotifyWinningCards ( Dictionary<CardData , (int row, int col)> winningCards )
     {

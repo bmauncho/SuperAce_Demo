@@ -313,7 +313,7 @@ public class WinLoseManager : MonoBehaviour
             Debug.Log(" BigJockerRotatedCards More Than 0");
             
             List<Tuple<int , int>> IndexesList = CommandCentre.Instance.APIManager_.refillCardsAPI_.GetBigJockerIndices();
-           
+            HashSet<Tuple<int , int>> UsedIndexesList = new HashSet<Tuple<int , int>>();
             for (int i = 0;i<BigJockerRotatedCards.Count;i++)
             {
                 List<Tuple<int , int>> holderList = new List<Tuple<int , int>>();
@@ -322,10 +322,12 @@ public class WinLoseManager : MonoBehaviour
                 {
                     int count = Mathf.Min(2 , IndexesList.Count - i); // Ensures we don't exceed the list size
                     holderList.AddRange(IndexesList.GetRange(i , count));
+                    UsedIndexesList.AddRange(holderList);
                 }
                 else
                 {
                     holderList.AddRange(IndexesList);
+                    UsedIndexesList.AddRange(holderList);
                 }
 
                 if (holderList == null)
@@ -344,7 +346,13 @@ public class WinLoseManager : MonoBehaviour
                     }
                 }
 
-                yield return StartCoroutine(jumpBigJockerCards(BigJockerRotatedCards [i].Item1 ,holderList));
+                yield return StartCoroutine(
+                    jumpBigJockerCards(BigJockerRotatedCards [i].Item1 ,
+                    holderList,
+                    BigJockerRotatedCards.Count,
+                    IndexesList.Count,
+                    UsedIndexesList.ToList()
+                    ));
             }
 
             yield return new WaitUntil(() => !isJumpingCards);
@@ -468,8 +476,20 @@ public class WinLoseManager : MonoBehaviour
     }
 
 
-    private IEnumerator jumpBigJockerCards (GameObject target , List<Tuple<int ,int>> jumpCards)
+    private IEnumerator jumpBigJockerCards (GameObject target , List<Tuple<int ,int>> jumpCards,int targetcount,int targetIndices, List<Tuple<int , int>> usedPositions )
     {
+
+        for(int i = 0 ; i < jumpCards.Count ; i++)
+        {
+            for(int j = 0 ; j < usedPositions.Count ; j++)
+            {
+                if (jumpCards [i].Item1 == usedPositions [j].Item1 && jumpCards [i].Item2 == usedPositions [j].Item2)
+                {
+                    jumpCards.RemoveAt(i);
+                }
+            }
+        }   
+
         if(jumpCards == null || jumpCards.Count == 0)
         {
             isJumpingCards = false;
@@ -491,9 +511,63 @@ public class WinLoseManager : MonoBehaviour
         int randomColumnIndex2 = 0;
         int randomRowIndex2 = 0;
 
-      
+        if(targetcount == targetIndices || 
+            jumpCards.Count<2 ||
+            targetIndices == targetcount + 1)
+        {
+            GameObject newCard1 = poolManager.GetCard();
+            randomColumnIndex1 = jumpCards [0].Item1;
+            randomRowIndex1 = jumpCards [0].Item2;
+            newCard1.transform.SetPositionAndRotation(initialPosition , initialRotation);
 
-        if (jumpCards.Count >= 2)
+            newCard1.SetActive(true);
+            Debug.Log($"Assign");
+            newCard1.transform.SetParent(gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform);
+
+            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner.SetActive(false);
+            gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].GetComponent<CardPos>().TheOwner = newCard1;
+
+            CommandCentre.Instance.PoolManager_.ReturnAllInactiveCardsToPool();
+            CommandCentre.Instance.CardManager_.setSpecificCard(newCard1.GetComponent<Card>() , "BIG_JOKER");
+            var jumpSequence = DOTween.Sequence();
+            // DOTween jump animations
+            Debug.Log($"StartSequnce");
+            jumpSequence.Join(newCard1.transform.DOJump(
+                gridManager.rowData [randomColumnIndex1].cardPositionInRow [randomRowIndex1].transform.position ,
+                3.0f , 1 , 1.0f).OnComplete(() =>
+                {
+                    objectsJumped++;
+                    // Debug.Log($"Card 1 jumped: {objectsJumped}/{totalobjectstojump}");
+                    newCard1.transform.localPosition = Vector3.zero;
+                    newCard1.transform.rotation = Quaternion.Euler(0 , 180 , 0);
+                }));
+
+            // Play the jump sequence and wait for it to complete
+            if (jumpSequence.IsActive())
+            {
+                // Debug.Log("Waiting for jump sequence to complete...");
+                yield return jumpSequence.Play().WaitForCompletion();
+            }
+
+            //Debug.Log("Jump complete");
+            yield return new WaitForSeconds(0.5f);
+            //Debug.Log($"Jump Check : {IsObjectsJumpComplete()}");
+
+            if (!IsObjectsJumpComplete())
+            {
+                while (!IsObjectsJumpComplete())
+                {
+                    objectsJumped++;
+                }
+            }
+
+            if (IsObjectsJumpComplete())
+            {
+                //Debug.Log("wincheck");
+                isJumpingCards = false;
+            }
+        }
+        else if(targetIndices == targetcount * 2)
         {
             GameObject newCard1 = poolManager.GetCard();
             GameObject newCard2 = poolManager.GetCard();
@@ -567,7 +641,6 @@ public class WinLoseManager : MonoBehaviour
                 //Debug.Log("wincheck");
                 isJumpingCards = false;
             }
-
         }
         else
         {
@@ -623,14 +696,6 @@ public class WinLoseManager : MonoBehaviour
                 isJumpingCards = false;
             }
         }
-      
-    
-
-        // Get unique random index for newCard2
-
-
-        
-
         yield return null ;
     }
 
