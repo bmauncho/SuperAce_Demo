@@ -689,7 +689,7 @@ public class GridManager : MonoBehaviour
         if (isRefilling)
         {
             isRefilling = false;
-
+            yield return new WaitForSeconds(.5f);
             yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
             CommandCentre.Instance.CashManager_.updateThecashUi();

@@ -208,6 +208,7 @@ public class WinLoseManager : MonoBehaviour
 
     IEnumerator HideNormalCards ()
     {
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         int hiddenCards = 0;
         List<GameObject> scatterCards = new List<GameObject>();
         List<GameObject> bigJockerCards = new List<GameObject>();
@@ -235,13 +236,46 @@ public class WinLoseManager : MonoBehaviour
             // Handle golden cards
             if (cardComponent.golden && !cardComponent.wild && !cardComponent.scatter)
             {
+                CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
+                if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                {
+                    StartCoroutine(rotateNormalGoldenCards(card , col , row));
+                }
+                else
+                {
+                    card.SetActive(false);
+                    poolManager.ReturnCard(card);
+                    cardPos.TheOwner = null;
+                    hiddenCards++;
+                }
                 //Debug.Log(" Handle golden cards-1");
-                StartCoroutine(rotateNormalGoldenCards(card,col,row));
+               
             }
             // Handle wild cards
             else if (cardComponent.wild && cardComponent.golden && !cardComponent.scatter)
             {
-                StartCoroutine(WildCardsSequence(card,col,row));
+                if(!cardComponent.littleJocker && cardComponent.BigJocker)
+                {
+                    CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
+                    if (cardInfo.name == "BIG_JOKER")
+                    {
+                        StartCoroutine(WildCardsSequence(card , col , row));
+                    }
+                    else
+                    {
+                        card.SetActive(false);
+                        poolManager.ReturnCard(card);
+                        cardPos.TheOwner = null;
+                        hiddenCards++;
+                    }
+                }
+                else
+                {
+                    card.SetActive(false);
+                    poolManager.ReturnCard(card);
+                    cardPos.TheOwner = null;
+                    hiddenCards++;
+                }
             }
             // Handle scatter cards
             else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)

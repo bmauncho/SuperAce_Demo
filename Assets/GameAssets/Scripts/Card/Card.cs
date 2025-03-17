@@ -10,6 +10,8 @@ public class Card : MonoBehaviour
     public bool golden;
     public bool wild;
     public bool scatter;
+    public bool BigJocker;
+    public bool littleJocker;
 
     public GameObject CardModel;
 
@@ -99,6 +101,8 @@ public class Card : MonoBehaviour
         wild = true;
         golden = true;
         scatter = false;
+        littleJocker = true;
+        BigJocker = false;
         enableModel();
         CardBg.gameObject.SetActive(true);
         theCard.gameObject.SetActive(true);
@@ -118,6 +122,8 @@ public class Card : MonoBehaviour
         wild = true;
         golden = true;
         scatter = false;
+        BigJocker = true;
+        littleJocker=false;
         enableModel();
         CardBg.gameObject.SetActive(true);
         theCard.gameObject.SetActive(true);

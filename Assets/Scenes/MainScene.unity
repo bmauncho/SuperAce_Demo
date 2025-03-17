@@ -97381,6 +97381,7 @@ MonoBehaviour:
       substitute: 
       golden: 0
       transformed: 0
+  FreeSpins: 0
   maxtries: 3
   tries: 3
   refillDataFetched: 1
