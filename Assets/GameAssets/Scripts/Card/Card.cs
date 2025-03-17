@@ -54,7 +54,7 @@ public class Card : MonoBehaviour
     public void showGoldenCard ( Sprite _cardBg , Sprite _theCard ,Sprite _outline)
     {
         golden = true;
-       wild = false;
+        wild = false;
         scatter = false;
         enableModel();
         CardBg.gameObject.SetActive(true);

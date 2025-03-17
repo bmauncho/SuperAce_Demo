@@ -157,6 +157,7 @@ public class GameDataAPI : MonoBehaviour
         {
             AmountWon = response.data.AmountWon;
             FreeSpins = response.data.freeSpins;
+            Debug.Log($"FreeSpins : {FreeSpins}");
             if (FreeSpins > 0)
             {
                 Debug.Log("Free Spins: " + FreeSpins);

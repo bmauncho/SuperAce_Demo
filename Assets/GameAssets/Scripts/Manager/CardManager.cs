@@ -188,7 +188,7 @@ public class CardManager : MonoBehaviour
         {
             //Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
-            Debug.Log($"activecardType : {card.ActiveCardType} == {(CardType)cardType}");
+            //Debug.Log($"activecardType : {card.ActiveCardType} == {(CardType)cardType}");
 
             if (card.ActiveCardType == CardType.SCATTER)
             {

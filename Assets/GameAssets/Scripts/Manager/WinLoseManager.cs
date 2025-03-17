@@ -210,7 +210,7 @@ public class WinLoseManager : MonoBehaviour
     {
         int hiddenCards = 0;
         List<GameObject> scatterCards = new List<GameObject>();
-        
+        List<GameObject> bigJockerCards = new List<GameObject>();
 
         for (int i = 0 ; i < data.Count ; i++)
         {
@@ -239,9 +239,9 @@ public class WinLoseManager : MonoBehaviour
                 StartCoroutine(rotateNormalGoldenCards(card,col,row));
             }
             // Handle wild cards
-            else if (cardComponent.wild && !cardComponent.golden && !cardComponent.scatter)
+            else if (cardComponent.wild && cardComponent.golden && !cardComponent.scatter)
             {
-                StartCoroutine(RotateWildCards(card,col,row));
+                StartCoroutine(WildCardsSequence(card,col,row));
             }
             // Handle scatter cards
             else if (cardComponent.scatter && !cardComponent.wild && !cardComponent.golden)
@@ -426,7 +426,7 @@ public class WinLoseManager : MonoBehaviour
         // set golden cards to either bigJoker or little jocker
          
         CommandCentre.Instance.CardManager_.SetUpRefillCards(card.GetComponent<Card>(),col,row);
-        Debug.Log(card.GetComponent<Card>().ActiveCardType);
+        //Debug.Log(card.GetComponent<Card>().ActiveCardType);
         if(card.GetComponent<Card>().ActiveCardType == CardType.BIG_JOKER)
         {
             HashSet<Tuple<int , int>> positions = new HashSet<Tuple<int , int>>
@@ -441,7 +441,7 @@ public class WinLoseManager : MonoBehaviour
     }
 
 
-    private IEnumerator RotateWildCards (GameObject goldenCard, int col = 0 , int row = 0 )
+    private IEnumerator WildCardsSequence (GameObject goldenCard, int col = 0 , int row = 0 )
     {
         if (goldenCard.GetComponent<Card>().ActiveCardType == CardType.BIG_JOKER)
         {
@@ -451,11 +451,11 @@ public class WinLoseManager : MonoBehaviour
             };
             BigJockerRotatedCards.Add(new Tuple<GameObject , HashSet<Tuple<int , int>>>(goldenCard , positions));
         }
-
-        goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
-        {
-            StartCoroutine(PunchScaleRotatedCards(goldenCard.transform,col,row));
-        });
+        yield return new WaitForSeconds(.5f);
+        //goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
+        //{
+        //    StartCoroutine(PunchScaleRotatedCards(goldenCard.transform,col,row));
+        //});
 
         yield return null;
     }

@@ -182,7 +182,10 @@ public class MainMenuController : MonoBehaviour
         
         if (!isDemo)
         {
-            CommandCentre.Instance.APIManager_.PlaceBet();
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+            {
+                CommandCentre.Instance.APIManager_.PlaceBet();
+            }
             CommandCentre.Instance.GridManager_.refreshGrid();
             if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {

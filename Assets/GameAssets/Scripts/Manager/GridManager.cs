@@ -645,8 +645,10 @@ public class GridManager : MonoBehaviour
     {
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0)
+            if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 &&
+                !CommandCentre.Instance.WinLoseManager_.IsWin())
             {
+                Debug.Log($"isWin{CommandCentre.Instance.WinLoseManager_.IsWin()}");
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }
         }
@@ -665,7 +667,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
-            //AddSpins();
+            AddSpins();
             if (isFirstPlay)
             {
                 isFirstPlay = false;
@@ -813,6 +815,16 @@ public class GridManager : MonoBehaviour
         }
         else
         {
+
+            if (CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy ||
+                  CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
+            {
+                Debug.Log("Deactivate Free Game");
+                yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
+                !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+                Debug.Log("Free Game Deactivated");
+            }
+
             if (freeGameManager.IsFreeGame && freeGameManager.IsSpinInit)
             {
                 // Wait until spinning is allowed
@@ -826,6 +838,7 @@ public class GridManager : MonoBehaviour
                 if (freeGameManager.IsFreeGame && !freeGameManager.IsSpinInit)
                 {
                     freeGameManager.IsSpinInit = true;
+                    CommandCentre.Instance.MainMenuController_.Spin();
                 }
             }
         }

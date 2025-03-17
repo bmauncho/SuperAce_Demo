@@ -42,6 +42,7 @@ public class RefillCardsAPI : MonoBehaviour
     public GameDataAPI gameDataAPI_;
     public List<sentData> sentData_ = new List<sentData>();
     public List<receivedData> receivedData_ = new List<receivedData>();
+    public int FreeSpins;
     public int maxtries = 3;
     public int tries;
     public bool refillDataFetched=false;
@@ -135,9 +136,10 @@ public class RefillCardsAPI : MonoBehaviour
             Debug.Log("Received: " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
-
+            FreeSpins = response.data.freeSpins;
             if (response.message != "no transformable symbols found")
             {
+
                 if (response?.data?.cards != null)
                 {
                     tries = 0;
