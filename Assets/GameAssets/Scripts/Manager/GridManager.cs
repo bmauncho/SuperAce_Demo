@@ -704,11 +704,8 @@ public class GridManager : MonoBehaviour
 
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
 
-        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-        {
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
-            CommandCentre.Instance.CashManager_.updateThecashUi();
-        }
+        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
+        CommandCentre.Instance.CashManager_.updateThecashUi();
 
         yield return new WaitForSeconds(.25f);
 
