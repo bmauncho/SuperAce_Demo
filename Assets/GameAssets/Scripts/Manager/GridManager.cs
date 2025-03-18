@@ -667,7 +667,7 @@ public class GridManager : MonoBehaviour
 
         if (isGridFilled())
         {
-            AddSpins();
+            //AddSpins();
             if (isFirstPlay)
             {
                 isFirstPlay = false;
@@ -677,173 +677,166 @@ public class GridManager : MonoBehaviour
             StartCoroutine(CheckAndContinue());
         }
     }
-
     IEnumerator CheckAndContinue ()
     {
-        if (CommandCentre.Instance.APIManager_.betPlacingAPI_.IsUpdated)
-        {
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.new_wallet_balance;
-            CommandCentre.Instance.CashManager_.updateThecashUi();
-        }
-
         if (isRefilling)
         {
-            isRefilling = false;
-            yield return new WaitForSeconds(.5f);
-            yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
-            CommandCentre.Instance.CashManager_.updateThecashUi();
-            yield return new WaitForSeconds(.25f);
-            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
-            {
-                CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
-            }
-            CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
-            //Debug.Log($"Is refilling {isRefilling}");
+            Debug.Log("Refilling"); 
+            yield return StartCoroutine(HandleRefill());
         }
-
-        if (CommandCentre.Instance.WinLoseManager_.IsScatterWin())
-        {
-            Debug.Log("Scatter win");
-            
-        }
-        //Debug.Log($"Is refilling {isRefilling}");
 
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
-            if(CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
+            Debug.Log("Handling win");
+            yield return StartCoroutine(HandleWin());
+        }
+        else
+        {
+            Debug.Log("handling no win");
+            yield return StartCoroutine(HandleNoWin());
+        }
+    }
+
+    IEnumerator HandleRefill ()
+    {
+        isRefilling = false;
+        yield return new WaitForSeconds(.5f);
+
+        yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
+
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
+            CommandCentre.Instance.CashManager_.updateThecashUi();
+        }
+
+        yield return new WaitForSeconds(.25f);
+
+        if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
+        {
+            CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
+        }
+
+        CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
+    }
+
+    IEnumerator HandleWin ()
+    {
+        if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
+        {
+            CommandCentre.Instance.CashManager_.updateThecashUi();
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+            CommandCentre.Instance.APIManager_.UpdateBet();
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+
+            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
             {
-                CommandCentre.Instance.CashManager_.updateThecashUi();
-                CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
-                CommandCentre.Instance.APIManager_.UpdateBet();
-                yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
-                if(!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
-                {
-                    CommandCentre.Instance.WinLoseManager_.winSequence();
-                }
-                else
-                {
-                    
-                    ServerError.SetActive(true);
-                    yield return new WaitForSeconds(1.5f);
-
-                    //hide error ui
-                    ServerError.SetActive(false);
-
-                    CommandCentre.Instance.MainMenuController_.CanSpin = true;
-                    CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError = false;
-                    yield return StartCoroutine(Autospin());
-                }
+                CommandCentre.Instance.WinLoseManager_.winSequence();
             }
             else
             {
-                CommandCentre.Instance.APIManager_.UpdateBet();
-                CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
-                CommandCentre.Instance.ComboManager_.ResetComboCounter();
-                CommandCentre.Instance.WinLoseManager_.winSequence();
+                yield return StartCoroutine(HandleServerError());
             }
         }
         else
         {
-            //Deactivate BgCardfx   
-            if (CommandCentre.Instance.CardFxManager_.cardFxMask.activeSelf)
-            {
-                CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
-            }
-           
-            CommandCentre.Instance.WinLoseManager_.isWinsequence= false;
-            int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
-            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-            {
-                //Debug.Log($"which combo : {combo}");
-                if (combo == 5)
-                {
-                    //Debug.Log("Combo 5 - win");
-                }
-                if (combo >= 3)
-                {
-                    //show total win
-                    CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
-                    yield return new WaitForSeconds(5f);
-                    CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
-                }
-            }
-            CommandCentre.Instance.MainMenuController_.CanSpin = true;
-            isRefilling = false;
-            //Debug.Log($"Is refilling {isRefilling}");
-            yield return StartCoroutine(Autospin());
+            CommandCentre.Instance.APIManager_.UpdateBet();
+            CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
+            CommandCentre.Instance.ComboManager_.ResetComboCounter();
+            CommandCentre.Instance.WinLoseManager_.winSequence();
         }
     }
+
+    IEnumerator HandleNoWin ()
+    {
+        if (CommandCentre.Instance.CardFxManager_.cardFxMask.activeSelf)
+        {
+            CommandCentre.Instance.CardFxManager_.DeactivateCardFxMask();
+        }
+
+        CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
+
+        int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            if (combo >= 3)
+            {
+                CommandCentre.Instance.PayOutManager_.ShowTotalWinings();
+                yield return new WaitForSeconds(5f);
+                CommandCentre.Instance.PayOutManager_.HideTotalWinnings();
+            }
+        }
+
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
+        isRefilling = false;
+
+        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+            if(CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0)
+            {
+                CommandCentre.Instance.FreeGameManager_.increaseSpins();
+            }
+        }
+
+        yield return StartCoroutine(Autospin());
+    }
+
+    IEnumerator HandleServerError ()
+    {
+        ServerError.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        ServerError.SetActive(false);
+
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
+        CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError = false;
+        yield return StartCoroutine(Autospin());
+    }
+
 
 
     IEnumerator Autospin ()
     {
         FreeGameManager freeGameManager = CommandCentre.Instance.FreeGameManager_;
-        
-        //Debug.Log($"Is free game: {freeGameManager.IsFreeGame}, Is spin init: {freeGameManager.IsSpinInit}");
-        yield return new WaitUntil(() => CommandCentre.Instance.MainMenuController_.CanSpin);
-        if (CommandCentre.Instance.AutoSpinManager_.IsAutoSpin)
+        AutoSpinManager autoSpinManager = CommandCentre.Instance.AutoSpinManager_;
+        MainMenuController mainMenuController = CommandCentre.Instance.MainMenuController_;
+        PayOutManager payOutManager = CommandCentre.Instance.PayOutManager_;
+        yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
+        yield return new WaitUntil(() => mainMenuController.CanSpin);
+
+        // Ensure FreeGameWinUi is deactivated before proceeding
+        if (payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy || payOutManager.WinUI_.FreeGameWinUi.activeSelf)
         {
-            if (freeGameManager.IsFreeGame)
+            Debug.Log("Deactivate Free Game");
+            yield return new WaitUntil(() => !payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy &&
+                                             !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
+            Debug.Log("Free Game Deactivated");
+        }
+
+        if (autoSpinManager.IsAutoSpin)
+        {
+            if (autoSpinManager.AutoSpinIndex_ < 1)
             {
-                if(CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy||
-                   CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
-                {
-                    Debug.Log("Deactivate Free Game");
-                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
-                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
-                    Debug.Log("Free Game Deactivated");
-                }
-            }
-            if (CommandCentre.Instance.AutoSpinManager_.AutoSpinIndex_ < 1)
-            {
-                CommandCentre.Instance.AutoSpinManager_.AutospinToggle.isOn = false;
-                CommandCentre.Instance.AutoSpinManager_.IsAutoSpin = false;
+                autoSpinManager.AutospinToggle.isOn = false;
+                autoSpinManager.IsAutoSpin = false;
             }
             else
             {
-                if (CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy ||
-                  CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
-                {
-                    Debug.Log("Deactivate Free Game");
-                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
-                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
-                    Debug.Log("Free Game Deactivated");
-                }
-                CommandCentre.Instance.MainMenuController_.Spin();
+                mainMenuController.Spin();
             }
         }
         else
         {
-
-            if (CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy ||
-                  CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf)
+            if (freeGameManager.IsFreeGame)
             {
-                Debug.Log("Deactivate Free Game");
-                yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
-                !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
-                Debug.Log("Free Game Deactivated");
-            }
-
-            if (freeGameManager.IsFreeGame && freeGameManager.IsSpinInit)
-            {
-                // Wait until spinning is allowed
-
-                //Debug.Log("Can auto spin in free game");
-                CommandCentre.Instance.MainMenuController_.Spin();
-            }
-            else
-            {
-                //Debug.Log("Cant auto spin in free game");
-                if (freeGameManager.IsFreeGame && !freeGameManager.IsSpinInit)
+                if (!freeGameManager.IsSpinInit)
                 {
                     freeGameManager.IsSpinInit = true;
-                    CommandCentre.Instance.MainMenuController_.Spin();
                 }
+                mainMenuController.Spin();
             }
         }
-      
     }
+
 
 
     public bool isGridFilled ()
