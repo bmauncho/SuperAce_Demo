@@ -206587,7 +206587,7 @@ MonoBehaviour:
       _Subsitute:
         subsitute_: 
         isGolden: 0
-      isGolden: 1
+      isGolden: 0
     - name: HEART
       _Subsitute:
         subsitute_: DIAMOND

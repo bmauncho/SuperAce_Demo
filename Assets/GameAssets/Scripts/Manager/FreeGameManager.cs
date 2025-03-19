@@ -120,10 +120,19 @@ public class FreeGameManager : MonoBehaviour
     {
         //if (!IsSpinInit)
         //{
-            
+
         //}
-        FreeSpinCounter += Mathf.FloorToInt(CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins);
-        FreeSpinsAmount.text = FreeSpinCounter.ToString();
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
+            FreeSpinCounter = 10;
+            FreeSpinsAmount.text = FreeSpinCounter.ToString();
+        }
+        else
+        {
+            FreeSpinCounter += Mathf.FloorToInt(CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins);
+            FreeSpinsAmount.text = FreeSpinCounter.ToString();
+        }
+           
     }
 
 }

@@ -67,15 +67,6 @@ public class WinUI : MonoBehaviour
             {
                 FreeGameWinUi.GetComponent<FreeGameWinUI>().canUpdateWinnings = false;
                 FreeGameWinUi.SetActive (false);
-                if (CommandCentre.Instance.DemoManager_.IsDemo)
-                {
-                    CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
-                    CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateDemoBtn();
-                    CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateSuggestion_1();
-                    CommandCentre.Instance.DemoManager_.IsDemo = false;
-                    CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
-                    CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
-                }
             });
     }
 }

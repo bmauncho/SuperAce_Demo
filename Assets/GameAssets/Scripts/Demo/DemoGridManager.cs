@@ -260,7 +260,6 @@ public class DemoGridManager : MonoBehaviour
                 {
                     Deck currentDeck = decks [col];
                     GameObject newCard = currentDeck.DrawCard();
-
                     cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
 
                     currentDeck.ResetDeck();
@@ -508,6 +507,17 @@ public class DemoGridManager : MonoBehaviour
                         CommandCentre.Instance.DemoManager_.IsDemo =false;
 
                     }
+                    yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy ||
+                    !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+
+                    CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
+                    CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateDemoBtn();
+                    CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateSuggestion_1();
+                    CommandCentre.Instance.DemoManager_.IsDemo = false;
+                    CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
+                    CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
+                    Debug.Log("DemoDone");
+
                 }
 
             }

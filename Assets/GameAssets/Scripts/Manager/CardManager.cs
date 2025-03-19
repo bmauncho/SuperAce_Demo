@@ -108,6 +108,7 @@ public class CardManager : MonoBehaviour
         if (!card)
             return;
         CardData cardInfo = new CardData();
+        
         cardInfo = new CardData()
         {
             name = card.ActiveCardType.ToString() ,
@@ -115,11 +116,11 @@ public class CardManager : MonoBehaviour
             golden = false ,
             transformed = false,
         };
-
+        Debug.Log($"cardname : {cardInfo.name}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
-            //Debug.Log($"Successfully parsed card type: {cardType}");
+            Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
 
             if (card.ActiveCardType == CardType.SCATTER)
@@ -322,25 +323,84 @@ public class CardManager : MonoBehaviour
             {
                 if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
                 {
-                    cardInfo = new DemoCardsInfo
+                    Debug.Log(1);
+                   
+
+                    if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.isGolden)
                     {
-                        name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
-                    };
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                            isGolden = true
+                        };
+                    }
+                    else
+                    {
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                        };
+                    }
+                }
+                else
+                {
+                    Debug.Log(2);
+                    if (demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.isGolden)
+                    {
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                            isGolden = true
+                        };
+                    }
+                    else
+                    {
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                        };
+                    }
                 }
             }
             else
             {
                 if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
                 {
-                    cardInfo = new DemoCardsInfo
+                    Debug.Log(3);
+                    if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ == null)
                     {
-                        name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
-                    };
+                        cardInfo = new DemoCardsInfo
+                        {
+                            name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
+                            _Subsitute = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute ,
+                            isGolden = demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden ,
+
+                        };
+                    }
+                    else
+                    {
+                        if (demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.isGolden)
+                        {
+                            cardInfo = new DemoCardsInfo
+                            {
+                                name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                                isGolden = true
+                            };
+                        }
+                        else
+                        {
+                            cardInfo = new DemoCardsInfo
+                            {
+                                name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
+                            };
+                        }
+                    }
                 }
                 else
                 {
                     if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ == "")
                     {
+                        Debug.Log(4);
                         cardInfo = new DemoCardsInfo
                         {
                             name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -349,6 +409,7 @@ public class CardManager : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log(5);
                         cardInfo = new DemoCardsInfo
                         {
                             name = demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ ,
@@ -360,7 +421,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("refresh");
+            Debug.Log("refresh");
             cardInfo = new DemoCardsInfo
             {
                 name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -369,7 +430,7 @@ public class CardManager : MonoBehaviour
 
             };
         }
-       // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
+       Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
