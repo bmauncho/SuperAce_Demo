@@ -323,7 +323,7 @@ public class CardManager : MonoBehaviour
             {
                 if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
                 {
-                    Debug.Log(1);
+                   // Debug.Log(1);
                    
 
                     if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.isGolden)
@@ -344,7 +344,7 @@ public class CardManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(2);
+                    //Debug.Log(2);
                     if (demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.isGolden)
                     {
                         cardInfo = new DemoCardsInfo
@@ -366,7 +366,7 @@ public class CardManager : MonoBehaviour
             {
                 if (!demoManager.DemoSequence_.GetDemoCardInfo(col , row).isGolden)
                 {
-                    Debug.Log(3);
+                   // Debug.Log(3);
                     if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ == null)
                     {
                         cardInfo = new DemoCardsInfo
@@ -400,7 +400,7 @@ public class CardManager : MonoBehaviour
                 {
                     if(demoManager.DemoSequence_.GetDemoCardInfo(col , row)._Subsitute.subsitute_ == "")
                     {
-                        Debug.Log(4);
+                       // Debug.Log(4);
                         cardInfo = new DemoCardsInfo
                         {
                             name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -421,7 +421,7 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("refresh");
+            //Debug.Log("refresh");
             cardInfo = new DemoCardsInfo
             {
                 name = demoManager.DemoSequence_.GetDemoCardInfo(col , row).name ,
@@ -430,7 +430,7 @@ public class CardManager : MonoBehaviour
 
             };
         }
-       Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
+      // Debug.Log($"card name - {cardInfo.name} : Is it golden - {cardInfo.isGolden}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {

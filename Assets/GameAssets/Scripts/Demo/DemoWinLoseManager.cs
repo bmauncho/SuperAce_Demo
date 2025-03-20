@@ -373,19 +373,19 @@ public class DemoWinLoseManager : MonoBehaviour
         {
             name = demoSequence.GetDemoCardInfo(col , row)._Subsitute.subsitute_
         };
-        Debug.Log($"cardname {cardInfo.name} col {col} row {row}");
+        //Debug.Log($"cardname {cardInfo.name} col {col} row {row}");
         // set golden cards to either bigJoker or little jocker
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
-            Debug.Log($"Successfully parsed card type: {cardType}");
+            //Debug.Log($"Successfully parsed card type: {cardType}");
             card.GetComponent<Card>().ActiveCardType = (CardType)cardType;
-            Debug.Log($"{card.GetComponent<Card>().ActiveCardType}");
+            //Debug.Log($"{card.GetComponent<Card>().ActiveCardType}");
         }
-        Debug.Log($"{cardType}");
+        //Debug.Log($"{cardType}");
 
-        Debug.Log($"{card.GetComponent<Card>().ActiveCardType.ToString()}");
+        //Debug.Log($"{card.GetComponent<Card>().ActiveCardType.ToString()}");
         CommandCentre.Instance.CardManager_.setcard(card.GetComponent<Card>() , col , row);
-        Debug.Log($"ActiveCardType {card.GetComponent<Card>().ActiveCardType}");
+        //Debug.Log($"ActiveCardType {card.GetComponent<Card>().ActiveCardType}");
         yield return new WaitForSeconds(.5f);
         card.transform.DORotate(new Vector3(0 , 180f , 0) , .2f);
         yield return new WaitForSeconds(.5f);

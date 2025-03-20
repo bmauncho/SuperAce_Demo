@@ -28,16 +28,16 @@ public class CashManager : MonoBehaviour
 
     public void IncreaseCash ( float amount )
     {
-        Debug.Log("Increasing Cash by: " + amount);
+        //Debug.Log("Increasing Cash by: " + amount);
         CashAmount += amount;
         updateThecashUi();
-        Debug.Log("New Cash Amount: " + CashAmount);
+       // Debug.Log("New Cash Amount: " + CashAmount);
     }
 
 
     public void DecreaseCash ( float amount )
     {
-        Debug.Log("Decreasing Cash by: " + amount);
+        //Debug.Log("Decreasing Cash by: " + amount);
         CashAmount -= amount;
         if (CashAmount < 0)
         {
@@ -45,7 +45,7 @@ public class CashManager : MonoBehaviour
         }
 
         updateThecashUi();
-        Debug.Log("New Cash Amount: " + CashAmount);
+        //Debug.Log("New Cash Amount: " + CashAmount);
     }
 
 
