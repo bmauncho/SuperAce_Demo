@@ -36,4 +36,6 @@ public class MainScene_LoadingMenu : MonoBehaviour
     {
         this .gameObject.SetActive(true);   
     }
+
+
 }

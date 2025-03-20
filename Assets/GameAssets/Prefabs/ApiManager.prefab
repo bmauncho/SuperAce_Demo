@@ -1,0 +1,547 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3063595591308019056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8442868314819435404}
+  - component: {fileID: 875733543459342965}
+  m_Layer: 0
+  m_Name: GameDataApi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8442868314819435404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063595591308019056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2440861901263560797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &875733543459342965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063595591308019056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd5de64aabb28c49a64f7a793f13782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winloseManager: {fileID: 0}
+  game_id: 32
+  BetAmount: 0
+  AmountWon: 0
+  FreeSpins: 0
+  clientId: 12345
+  rows:
+  - infos:
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 0
+  - infos:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+  isDataFetched: 1
+  refillCardsAPI: {fileID: 5166648452775935905}
+  canRefill: 
+--- !u!1 &4183610493645565346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4439925499801515795}
+  - component: {fileID: 2832469048057786593}
+  m_Layer: 0
+  m_Name: BetPlacingApi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4439925499801515795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183610493645565346}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2440861901263560797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2832469048057786593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183610493645565346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f55204c115d3464598c8477aee6435b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  response:
+    message: Bet placed successfully
+    bet_id: 6313971
+    game_id: 0
+    new_wallet_balance: 13188.6
+    externalResponse_:
+      client_id: 
+      totalBets: 0
+      totalWins: 0
+  BetAmount: 2
+  customerId: 22
+  game_id: 32
+  client_id: 12345
+  tries: 0
+  maxtries: 3
+  IsUpdated: 0
+--- !u!1 &5030040289956170747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17759521086939694}
+  - component: {fileID: 1038807943836087863}
+  m_Layer: 0
+  m_Name: BetUpdaterApi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &17759521086939694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030040289956170747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2440861901263560797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1038807943836087863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5030040289956170747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d89dd979c45dc94cad5b57b50d446df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateBetResponse_:
+    message: 
+    bet_id: 0
+    amount_won: 0
+    new_wallet_balance: 0
+    status: 
+    error: 
+--- !u!1 &5346431199101012067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 898922190130349774}
+  - component: {fileID: 5166648452775935905}
+  m_Layer: 0
+  m_Name: refill cards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &898922190130349774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5346431199101012067}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2440861901263560797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5166648452775935905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5346431199101012067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e912e26d29e37cc43bd24037ec08d432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  api:
+    game:
+      id: 2
+      name: SUPER_ACE
+    betAmount: 0
+    gameMode: NORMAL
+    clientId: 12345
+  gameDataAPI_: {fileID: 875733543459342965}
+  sentData_:
+  - data:
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+  receivedData_:
+  - data:
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: HEART
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: ACE
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: SPADE
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 0
+  - data:
+    - name: QUEEN
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: CLUB
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: JACK
+      substitute: 
+      golden: 0
+      transformed: 1
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+    - name: KING
+      substitute: 
+      golden: 0
+      transformed: 0
+  FreeSpins: 0
+  maxtries: 3
+  tries: 3
+  refillDataFetched: 1
+  isError: 1
+  IsServerError: 0
+--- !u!1 &8078582907056984300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2440861901263560797}
+  - component: {fileID: 2139345479391032266}
+  m_Layer: 0
+  m_Name: ApiManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2440861901263560797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078582907056984300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8442868314819435404}
+  - {fileID: 4439925499801515795}
+  - {fileID: 17759521086939694}
+  - {fileID: 898922190130349774}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2139345479391032266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078582907056984300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd434b0e41049044ba01197a4cc79451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerLink: https://admin-api.ibibe.africa
+  GameDataAPI_: {fileID: 875733543459342965}
+  betPlacingAPI_: {fileID: 2832469048057786593}
+  betUpdaterAPI_: {fileID: 1038807943836087863}
+  refillCardsAPI_: {fileID: 5166648452775935905}
+  Player_Id: 22
+  Game_Id: 1234
+  Client_id: 12345
+  playerInfo:
+    id: 
+    names: 
+    msisdn: 
+    account_number: 
+    email_address: 
+    is_blacklisted: 
+    wallet_balance: 
+    created_at: 
+    last_bet_date: 
+    last_win_date: 
+  TransactionsText: []

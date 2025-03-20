@@ -141,8 +141,8 @@ public class MainMenuController : MonoBehaviour
     {
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            bool datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
-            CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();
+            bool datafetched = APIManager.instance.GameDataAPI_.isDataFetched;
+            APIManager.instance.GameDataAPI_.FetchInfo();
 
             float timeout = 30f; // Set timeout duration (e.g., 5 seconds)
             float elapsedTime = 0f;
@@ -151,13 +151,13 @@ public class MainMenuController : MonoBehaviour
             {
                 yield return null; // Wait for the next frame
                 elapsedTime += Time.deltaTime;
-                datafetched = CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched;
+                datafetched = APIManager.instance.GameDataAPI_.isDataFetched;
             }
 
             if (!datafetched)
             {
                 Debug.LogWarning("Data fetching timed out!");
-                //var request = CommandCentre.Instance.APIManager_.GameDataAPI_.response();
+                //var request = APIManager.instance.GameDataAPI_.response();
                 //Debug.Log("Status Code: " + request.responseCode);
                 //Debug.Log("Status Code: " + request.error);
                 ServerError.gameObject.SetActive(true);
@@ -184,7 +184,7 @@ public class MainMenuController : MonoBehaviour
         {
             if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
-                CommandCentre.Instance.APIManager_.PlaceBet();
+                APIManager.instance.PlaceBet();
             }
             CommandCentre.Instance.GridManager_.refreshGrid();
             if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
@@ -226,7 +226,7 @@ public class MainMenuController : MonoBehaviour
         {
             CommandCentre.Instance.CashManager_.ResetWinings();
         }
-        CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched = false;
+        APIManager.instance.GameDataAPI_.isDataFetched = false;
     }
 
     void DemoSpin ()

@@ -1,6 +1,7 @@
 using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -68,6 +69,7 @@ public class MakeWithdrawalData
 
 public class APIManager : MonoBehaviour
 {
+    public static APIManager instance;
     public string ServerLink = "https://admin-api.ibibe.africa";
     public GameDataAPI GameDataAPI_;
     public BetPlacingAPI betPlacingAPI_;
@@ -78,20 +80,30 @@ public class APIManager : MonoBehaviour
     public string Game_Id = "1234";
     public string Client_id = "12345";
 
+    public string CashAmount = string.Empty;
+
     public PlayerInfo playerInfo;
     public TMP_Text [] TransactionsText;
-
+    private void Start ()
+    {
+        DontDestroyOnLoad(this);
+        instance = this;
+        if (!ConfigMan.Instance)
+        {
+            ManualStart();
+        }
+    }
     public void ManualStart ()
     {
         for (int i = 0 ; i < TransactionsText.Length ; i++)
         {
             TransactionsText [i].text = "";
         }
-        if (CommandCentre.Instance.DemoManager_.IsDemo)
-        {
-            playerInfo.names = "Demo";
-            playerInfo.wallet_balance = 2000.ToString();
-        }
+        //if (CommandCentre.Instance.DemoManager_.IsDemo)
+        //{
+        //    playerInfo.names = "Demo";
+        //    playerInfo.wallet_balance = 2000.ToString();
+        //}
         FetchPlayerInfo();
     }
 
@@ -105,14 +117,15 @@ public class APIManager : MonoBehaviour
     }
     public void FetchPlayerInfo ()
     {
-        if (CommandCentre.Instance.DemoManager_.IsDemo)
-        {
-            CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
-        }
-        else
-        {
-            StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
-        }
+        //if (CommandCentre.Instance.DemoManager_.IsDemo)
+        //{
+        //    CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
+        //}
+        //else
+        //{
+            
+        //}
+        StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
     IEnumerator _FetchPlayerInfo ( string url )
     {
@@ -128,8 +141,9 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
-                CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
+               // CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
                 Debug.Log(playerInfo.wallet_balance);
+                CashAmount = playerInfo.wallet_balance;
             }
             else
             {

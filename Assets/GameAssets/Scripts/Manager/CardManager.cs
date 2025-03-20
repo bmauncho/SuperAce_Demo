@@ -31,7 +31,7 @@ public class CardManager : MonoBehaviour
 
     private void Start ()
     {
-        apiManager = CommandCentre.Instance.APIManager_;
+        apiManager = APIManager.instance;
         demoManager = CommandCentre.Instance.DemoManager_;
         gridManager = CommandCentre.Instance.GridManager_;
     }
@@ -116,11 +116,11 @@ public class CardManager : MonoBehaviour
             golden = false ,
             transformed = false,
         };
-        Debug.Log($"cardname : {cardInfo.name}");
+        //Debug.Log($"cardname : {cardInfo.name}");
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
-            Debug.Log($"Successfully parsed card type: {cardType}");
+            //Debug.Log($"Successfully parsed card type: {cardType}");
             card.ActiveCardType = (CardType)cardType;
 
             if (card.ActiveCardType == CardType.SCATTER)

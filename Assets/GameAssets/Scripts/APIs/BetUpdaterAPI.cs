@@ -29,7 +29,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
     private void Start ()
     {
-        updateBetResponse_.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
+        //updateBetResponse_.new_wallet_balance = CommandCentre.Instance.CashManager_.CashAmount;
     }
     [ContextMenu("setUpBalance")]
     void setUpBalance ()
@@ -40,12 +40,12 @@ public class BetUpdaterAPI : MonoBehaviour
     [ContextMenu("UpdateBet")]
     public void UpdateBet ()
     {
-        //Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id); 
+        //Debug.Log(APIManager.instance.betPlacingAPI_.response.bet_id); 
         BetUpDateData Data = new BetUpDateData
         {
-            bet_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id.ToString(),
-            amount_won = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString(),
-            client_id = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString()
+            bet_id = APIManager.instance.betPlacingAPI_.response.bet_id.ToString(),
+            amount_won = APIManager.instance.GameDataAPI_.AmountWon.ToString(),
+            client_id = APIManager.instance.betPlacingAPI_.client_id.ToString()
         };
         string jsonPayload = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log($" Bet Updater Payload : {jsonPayload}");

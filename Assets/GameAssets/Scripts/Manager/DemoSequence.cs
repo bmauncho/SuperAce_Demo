@@ -1441,8 +1441,8 @@ public class DemoSequence : MonoBehaviour
         info.name = demoCards [row].cards[col].name;
         info._Subsitute = demoCards [row].cards [col]._Subsitute;
         info.isGolden = demoCards [row].cards [col].isGolden;
-        Debug.Log($"row {row} col {col}");
-        Debug.Log($"name : {info.name} substitute : {info._Subsitute.subsitute_} substitueis golden{info._Subsitute.isGolden} isGolden : {info.isGolden}");
+       // Debug.Log($"row {row} col {col}");
+        //Debug.Log($"name : {info.name} substitute : {info._Subsitute.subsitute_} substitueis golden{info._Subsitute.isGolden} isGolden : {info.isGolden}");
         return info;
     }
 

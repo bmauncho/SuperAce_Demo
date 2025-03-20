@@ -16,9 +16,6 @@ public class Loader : MonoBehaviour
     {
         loadUp();
     }
-
-   
-
     void loadUp ()
     {
         Tween tween = DOTween.To(() => Loadingbar.fillAmount , x => Loadingbar.fillAmount = x , 1f , load_time)
@@ -29,7 +26,7 @@ public class Loader : MonoBehaviour
                  ContinueBtn.DOSizeDelta(new Vector2(150 , 40) , .25f);
                  Invoke(nameof(ActivateContinueText) , .15f);
                  LoadingText.gameObject.SetActive( false );
-                 CommandCentre.Instance.APIManager_.fetchConfigData();
+                 APIManager.instance.fetchConfigData();
                  Invoke(nameof(Deactivate) , .5f);
 
              });

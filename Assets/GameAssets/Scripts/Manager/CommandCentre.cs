@@ -26,7 +26,6 @@ public class CommandCentre : MonoBehaviour
     public TurboManager TurboManager_;
     public CardFxManager CardFxManager_;
     public DemoManager DemoManager_;
-    public APIManager APIManager_;
 
     private void Awake ()
     {
@@ -42,9 +41,5 @@ public class CommandCentre : MonoBehaviour
 
         DOTween.SetTweensCapacity(2000, 150);
         Application.targetFrameRate = 60;
-        if (!ConfigMan.Instance)
-        {
-            APIManager_.ManualStart();
-        }
     }
 }

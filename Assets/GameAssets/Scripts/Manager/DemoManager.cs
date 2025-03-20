@@ -103,8 +103,6 @@ public class DemoManager : MonoBehaviour
         DemoGridManager_.isFirstPlay = false;
         CommandCentre.Instance .MainMenuController_.DisableWinMoreMenu();
         CommandCentre.Instance .MainMenuController_.EnableGameplayMenu();
-        CommandCentre.Instance.CashManager_.CashAmount = 2000;
-        CommandCentre.Instance.CashManager_.updateThecashUi();
         CommandCentre.Instance.BetManager_.refreshBetSlip();
         ActivateDemoUI ();
         Invoke(nameof(DemoSpin) , 1f);
@@ -144,13 +142,18 @@ public class DemoManager : MonoBehaviour
     public void RealMode ()
     {
         DeactivateDemoFeature();
-        CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
         CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateDemoBtn();
         CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateSuggestion_1();
         CommandCentre.Instance.DemoManager_.IsDemo = false;
-        CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
+        CommandCentre.Instance.MainMenuController_.IsDemo = false;
+        Debug.Log($"Is Demo {CommandCentre.Instance.DemoManager_.IsDemo}");
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
+        CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
+        CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
         CommandCentre.Instance.MainMenuController_.EnableGameplayMenu();
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
+        CommandCentre.Instance.BetManager_.refreshBetSlip();
+        Debug.Log("Change to normal game");
     }
 
     public void Demofill ()
