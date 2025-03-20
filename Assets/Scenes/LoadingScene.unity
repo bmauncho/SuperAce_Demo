@@ -7748,6 +7748,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8141804621813473620}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8144598126553198695
 GameObject:
   m_ObjectHideFlags: 0
@@ -7778,7 +7790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b2fffcfcd4a2d42b0c0353a3eaa803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  load_time: 1
+  load_time: 0
 --- !u!114 &8157755447044062150
 MonoBehaviour:
   m_ObjectHideFlags: 0
