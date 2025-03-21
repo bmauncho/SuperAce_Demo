@@ -117,6 +117,18 @@ public class APIManager : MonoBehaviour
         fetchConfigData();
     }
 
+    public void SetUpCashAmount ()
+    {
+        if (ConfigMan.Instance.IsDemo)
+        {
+            CashAmount = "2000";
+        }
+        else
+        {
+            CashAmount = playerInfo.wallet_balance;
+        }
+    }
+
     public void FetchPlayerInfo ()
     {
         StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
@@ -266,6 +278,10 @@ public class APIManager : MonoBehaviour
             if (ConfigMan.Instance.IsDemo)
             {
                 CashAmount = "2000";
+            }
+            else
+            {
+               CashAmount = playerInfo.wallet_balance;
             }
         }
         else

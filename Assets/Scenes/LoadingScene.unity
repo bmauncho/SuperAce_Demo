@@ -497,6 +497,34 @@ PrefabInstance:
       propertyPath: m_PixelPerfect
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1813027422}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetUpCashAmount
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: APIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5146508981381219761, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5352971873612766072, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8009,20 +8037,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8144598126553198696}
         m_TargetAssemblyTypeName: LoadingMenu, Assembly-CSharp
-        m_MethodName: nextScene
+        m_MethodName: ActivateNextScene
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8141804621813473620}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
-        m_MethodName: set_interactable
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8062,6 +8078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   load_time: 0
+  button: {fileID: 7567906492933744461}
 --- !u!114 &8157755447044062150
 MonoBehaviour:
   m_ObjectHideFlags: 0
