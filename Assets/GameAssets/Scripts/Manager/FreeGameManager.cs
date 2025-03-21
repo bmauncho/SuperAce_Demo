@@ -118,10 +118,7 @@ public class FreeGameManager : MonoBehaviour
 
     public void increaseSpins ()
     {
-        //if (!IsSpinInit)
-        //{
-
-        //}
+        Debug.Log("Adding free spins");
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
             FreeSpinCounter = 10;
@@ -131,8 +128,7 @@ public class FreeGameManager : MonoBehaviour
         {
             FreeSpinCounter += Mathf.FloorToInt(APIManager.instance.GameDataAPI_.FreeSpins);
             FreeSpinsAmount.text = FreeSpinCounter.ToString();
-        }
-           
+        }  
     }
 
 }
