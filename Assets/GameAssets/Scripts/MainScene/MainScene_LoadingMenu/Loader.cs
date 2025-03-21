@@ -26,7 +26,6 @@ public class Loader : MonoBehaviour
                  ContinueBtn.DOSizeDelta(new Vector2(150 , 40) , .25f);
                  Invoke(nameof(ActivateContinueText) , .15f);
                  LoadingText.gameObject.SetActive( false );
-                 APIManager.instance.fetchConfigData();
                  Invoke(nameof(Deactivate) , .5f);
 
              });

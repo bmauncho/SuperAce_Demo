@@ -15,7 +15,7 @@ MonoBehaviour:
   assetVersion: 2
   m_TextWrappingMode: 1
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   m_enableTintAllSprites: 0
   m_enableParseEscapeCharacters: 1
@@ -33,20 +33,58 @@ MonoBehaviour:
   m_defaultTextMeshProUITextContainerSize: {x: 200, y: 50}
   m_autoSizeTextContainer: 0
   m_IsTextObjectScaleStatic: 0
-  m_fallbackFontAssets: []
+  m_fallbackFontAssets:
+  - {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  - {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  - {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  - {fileID: 11400000, guid: 44eb99416ad464293b8298b8e6361e9f, type: 2}
+  - {fileID: 11400000, guid: ec8a93d6a6fa948999fbf8c865d8b988, type: 2}
+  - {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  - {fileID: 11400000, guid: 8da73d23d37674d2180cfa146ecaf85c, type: 2}
+  - {fileID: 11400000, guid: 0bd6040c0b4e04929837297c08185c3b, type: 2}
+  - {fileID: 11400000, guid: bf2d33e6d270f4e1885375ebe09ffc8d, type: 2}
+  - {fileID: 11400000, guid: 57dbf8ac12fa4472baba087396d756db, type: 2}
+  - {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  - {fileID: 11400000, guid: 787a8456d9b03114fb9964b1da8ac6ed, type: 2}
+  - {fileID: 11400000, guid: c2d5f90e1505113468f3dbcc55e6e80d, type: 2}
+  - {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  - {fileID: 11400000, guid: bb33e1e19f3f8854c982f9c149384e61, type: 2}
+  - {fileID: 11400000, guid: d33cbab6f211c4e4a83f4f2c03a48636, type: 2}
+  - {fileID: 11400000, guid: e17b3934ee1ceab428855bbd7c6439c8, type: 2}
+  - {fileID: 11400000, guid: 46321299bf80b4641856c26ff5588823, type: 2}
+  - {fileID: 11400000, guid: da42cccd76e88ec4aa2972ecb6aca2f4, type: 2}
+  - {fileID: 11400000, guid: c809473b0d1da4c4583923b2ff0af7b8, type: 2}
+  - {fileID: 11400000, guid: ea3809b2503daff40a0d6621a37ad5da, type: 2}
+  - {fileID: 11400000, guid: ab88837746dcc43469f73fc94740b889, type: 2}
+  - {fileID: 11400000, guid: 36e5f20ad66624d49b3f313ae32a5bee, type: 2}
+  - {fileID: 11400000, guid: a956c3d558d1b094eb78254420dcae42, type: 2}
+  - {fileID: 11400000, guid: ff63177094da7684aa31b386993d3341, type: 2}
+  - {fileID: 11400000, guid: 054957c07dd808d4680b1b44c716bf93, type: 2}
+  - {fileID: 11400000, guid: 2017cc6d3d0132d46b6add8b6cf3fba1, type: 2}
+  - {fileID: 11400000, guid: 5fd89e3750956704c8e5a1ad1b9ad10c, type: 2}
+  - {fileID: 11400000, guid: ed45ea56fa03e9a4d99e417f785b49ab, type: 2}
+  - {fileID: 11400000, guid: 7b4bb4fe570f28d459becc3a6fd81288, type: 2}
+  - {fileID: 11400000, guid: e8da34567346dd146a8589389cdda54e, type: 2}
+  - {fileID: 11400000, guid: c95e88b6b364ce646b8bce021f412ce7, type: 2}
+  - {fileID: 11400000, guid: 17a54636a03f64b1a946c9ddf57ba96a, type: 2}
+  - {fileID: 11400000, guid: e69e4e6d42f2a48d3808ccfc8ca95a07, type: 2}
+  - {fileID: 11400000, guid: d178d2896f04df6479e6b109ea7f015d, type: 2}
+  - {fileID: 11400000, guid: 0c569090aab58bf488eda62d74b3f60c, type: 2}
+  - {fileID: 11400000, guid: c9adb1f542a93ae489bacfeae21e8394, type: 2}
+  - {fileID: 11400000, guid: 0c569090aab58bf488eda62d74b3f60c, type: 2}
+  - {fileID: 11400000, guid: e57e24eb17323944fab5758d8cd12a7a, type: 2}
+  - {fileID: 11400000, guid: 5eb0cf951de26436e81fbfb0bf57e19f, type: 2}
   m_matchMaterialPreset: 1
   m_HideSubTextObjects: 0
-  m_defaultSpriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45,
-    type: 2}
+  m_defaultSpriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}
   m_defaultSpriteAssetPath: Sprite Assets/
   m_enableEmojiSupport: 1
   m_MissingCharacterSpriteUnicode: 0
   m_EmojiFallbackTextAssets: []
   m_defaultColorGradientPresetsPath: Color Gradient Presets/
-  m_defaultStyleSheet: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e,
-    type: 2}
+  m_defaultStyleSheet: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e, type: 2}
   m_StyleSheetsResourcePath: 
   m_leadingCharacters: {fileID: 4900000, guid: d82c1b31c7e74239bff1220585707d2b, type: 3}
-  m_followingCharacters: {fileID: 4900000, guid: fade42e8bc714b018fac513c043d323b,
-    type: 3}
+  m_followingCharacters: {fileID: 4900000, guid: fade42e8bc714b018fac513c043d323b, type: 3}
   m_UseModernHangulLineBreakingRules: 0

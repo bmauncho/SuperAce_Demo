@@ -769,7 +769,7 @@ public class GridManager : MonoBehaviour
 
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            if(APIManager.instance.GameDataAPI_.FreeSpins > 0)
+            if(APIManager.instance.GameDataAPI_.FreeSpins > 0 && APIManager.instance.GameDataAPI_.FreeSpins < 10)
             {
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }

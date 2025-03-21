@@ -10,6 +10,7 @@ public class LoadingMenu : MonoBehaviour
     {
         timestamp = Time.time + load_time;
         StartCoroutine(loadYourAsyncScene());
+        APIManager.instance.fetchConfigData();
     }
 
     IEnumerator loadYourAsyncScene ()
@@ -18,7 +19,8 @@ public class LoadingMenu : MonoBehaviour
         asyncOperation.allowSceneActivation = false;
         while (!asyncOperation.isDone)
         {
-            if (asyncOperation.progress >= 0.9f && Time.time > timestamp)
+            if (asyncOperation.progress >= 0.9f && Time.time > timestamp 
+                && !string.IsNullOrEmpty(APIManager.instance.CashAmount))
             {
                 ConfigMan.Instance.TheDebugObj.SetActive(false);
                 asyncOperation.allowSceneActivation = true;
@@ -26,7 +28,7 @@ public class LoadingMenu : MonoBehaviour
 
             yield return null;
         }
-
         
+
     }
 }

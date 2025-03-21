@@ -88,10 +88,6 @@ public class APIManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        if (!ConfigMan.Instance)
-        {
-            ManualStart();
-        }
     }
     public void ManualStart ()
     {
@@ -99,11 +95,6 @@ public class APIManager : MonoBehaviour
         {
             TransactionsText [i].text = "";
         }
-        //if (CommandCentre.Instance.DemoManager_.IsDemo)
-        //{
-        //    playerInfo.names = "Demo";
-        //    playerInfo.wallet_balance = 2000.ToString();
-        //}
         FetchPlayerInfo();
     }
 
@@ -115,16 +106,19 @@ public class APIManager : MonoBehaviour
             TransactionsText [i].text = thetrans;
         }
     }
+
+    public void fetchConfigs ()
+    {
+        Player_Id = ConfigMan.Instance.PlayerId;
+        Client_id = ConfigMan.Instance.ClientId;
+        Game_Id = ConfigMan.Instance.GameId;
+
+        //set Up Data
+        fetchConfigData();
+    }
+
     public void FetchPlayerInfo ()
     {
-        //if (CommandCentre.Instance.DemoManager_.IsDemo)
-        //{
-        //    CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
-        //}
-        //else
-        //{
-            
-        //}
         StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
     IEnumerator _FetchPlayerInfo ( string url )
@@ -251,15 +245,32 @@ public class APIManager : MonoBehaviour
         if (ConfigMan.Instance.ReceivedConfigs)
         {
             Player_Id = ConfigMan.Instance.PlayerId.ToString();
+
+            if(!string.IsNullOrEmpty(Player_Id))
+            {
+                GameDataAPI_.PlayerId = int.Parse(Player_Id);
+                betPlacingAPI_.playerId = int.Parse(Player_Id);
+            }
+
             if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
             {
-                Game_Id = ConfigMan.Instance.GameId;
+                GameDataAPI_.game_id = int.Parse(Game_Id);
+                betPlacingAPI_.game_id = int.Parse(Game_Id);
             }
             if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
             {
-                Client_id = ConfigMan.Instance.ClientId;
+                GameDataAPI_.clientId = int.Parse(Client_id);
+                betPlacingAPI_.client_id = int.Parse(Client_id);
             }
 
+            if (ConfigMan.Instance.IsDemo)
+            {
+                CashAmount = "2000";
+            }
+        }
+        else
+        {
+            ManualStart();
         }
     }
 

@@ -40,6 +40,8 @@ public class CommandCentre : MonoBehaviour
         }
 
         DOTween.SetTweensCapacity(2000, 150);
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
+
+        APIManager.instance.GameDataAPI_.winloseManager = WinLoseManager_;
     }
 }

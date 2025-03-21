@@ -37,6 +37,9 @@ public class GameDataAPI : MonoBehaviour
     [Header("API Settings")]
     public WinLoseManager winloseManager;
     public int game_id = 32;
+    public int clientId = 12345;
+    public int PlayerId = 22;
+
     private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace/";
 
     [Header("API Response")]
@@ -44,7 +47,6 @@ public class GameDataAPI : MonoBehaviour
     public float BetAmount;
     public float AmountWon;
     public float FreeSpins;
-    public int clientId = 12345;
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
@@ -86,7 +88,7 @@ public class GameDataAPI : MonoBehaviour
                 } ,
                 betAmount = BetAmount ,
                 clientId = clientId.ToString() ,
-                playerId = "22",
+                playerId = PlayerId.ToString(),
                 action = "freeSpins" ,
             };
         }
@@ -104,7 +106,7 @@ public class GameDataAPI : MonoBehaviour
                 } ,
                 betAmount = BetAmount ,
                 clientId = clientId.ToString() ,
-                playerId = "22"
+                playerId = PlayerId.ToString() ,
             };
         }
         
