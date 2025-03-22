@@ -121,8 +121,8 @@ public class RefillCardsAPI : MonoBehaviour
 
 
 
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log("Status Code: " + request.error);
+        //Debug.Log("Status Code: " + request.responseCode);
+        //Debug.Log("Status Code: " + request.error);
         if (request.result == UnityWebRequest.Result.Success)
         {
             isError = false;
@@ -133,7 +133,7 @@ public class RefillCardsAPI : MonoBehaviour
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            Debug.Log("Received: " + formattedOutput);
+            Debug.Log("Received refill cards : " + formattedOutput);
 
             var response = JsonConvert.DeserializeObject<ApiResponse>(output);
             FreeSpins = response.data.freeSpins;
@@ -162,7 +162,7 @@ public class RefillCardsAPI : MonoBehaviour
                                 logReceivedData(i , j , cardData_);
                                 if (cardData_.substitute == "BIG_JOKER")
                                 {
-                                    Debug.Log($"Big Joker Found col {j} row {i}");
+                                    //Debug.Log($"Big Joker Found col {j} row {i}");
                                 }
                             }
 
@@ -207,7 +207,7 @@ public class RefillCardsAPI : MonoBehaviour
                             index++;
                             if(newCardData.substitute == "BIG_JOKER")
                             {
-                                Debug.Log($"Big Joker Found col {j} row {i}");
+                               // Debug.Log($"Big Joker Found col {j} row {i}");
                             }
                         }
                     }
