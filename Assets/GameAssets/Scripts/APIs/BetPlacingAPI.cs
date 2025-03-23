@@ -52,7 +52,18 @@ public class BetPlacingAPI : MonoBehaviour
         {
             new_wallet_balance = PlayerPrefs.GetFloat("TotalCash")
         };
+
+       
+        Invoke(nameof(SetUP) , .2f);
     }
+
+    void SetUP ()
+    {
+        client_id = int.Parse(APIManager.instance.Client_id);
+        game_id = int.Parse(APIManager.instance.Game_Id);
+        playerId = int.Parse(APIManager.instance.Player_Id);
+    }
+
     private void Update ()
     {
         if (CommandCentre.Instance)
@@ -93,8 +104,8 @@ public class BetPlacingAPI : MonoBehaviour
         // Send request
         yield return request.SendWebRequest();
         //Debug.Log("Called");
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response
+        //Debug.Log("Status Code: " + request.responseCode);
+        //Debug.Log("Response: " + request.downloadHandler.text);  // Print the API error response//
         if (request.result == UnityWebRequest.Result.Success)
         {
             string output = request.downloadHandler.text;

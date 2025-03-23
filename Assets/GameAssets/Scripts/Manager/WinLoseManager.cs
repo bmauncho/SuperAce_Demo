@@ -340,7 +340,7 @@ public class WinLoseManager : MonoBehaviour
         if (BigJockerRotatedCards.Count > 0)
         {
             yield return new WaitForSeconds(.25f);
-            Debug.Log("BigJockerRotatedCards More Than 0");
+            //Debug.Log("BigJockerRotatedCards More Than 0");
             isJumpingCards = true;
 
             HashSet<Tuple<int , int>> usedIndices = new HashSet<Tuple<int , int>>();
@@ -378,7 +378,7 @@ public class WinLoseManager : MonoBehaviour
                 completed++;
             }
 
-            Debug.Log(completed);
+            //Debug.Log(completed);
             if (completed >= bigJockerCount)
             {
                 isJumpingCards = false;
@@ -514,7 +514,7 @@ public class WinLoseManager : MonoBehaviour
         // Shake animation
         Tween myTween2 = target.transform.DOShakeRotation(1f , 15 , 10 , 90 , false);
         yield return myTween2.WaitForCompletion();
-        Debug.Log($"Start jumping");
+        //Debug.Log($"Start jumping");
 
         // Store initial position and rotation
         Vector3 initialPosition = target.transform.position;
@@ -550,7 +550,7 @@ public class WinLoseManager : MonoBehaviour
 
         // Create DOTween sequence for jumping
         var jumpSequence = DOTween.Sequence();
-        Debug.Log($"Start sequence");
+       // Debug.Log($"Start sequence");
 
         foreach (var newCard in newCards)
         {

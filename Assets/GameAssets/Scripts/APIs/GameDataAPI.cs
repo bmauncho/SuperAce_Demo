@@ -58,6 +58,14 @@ public class GameDataAPI : MonoBehaviour
     private void Start ()
     {
         isDataFetched = false;
+        Invoke(nameof(SetUP) , .2f);
+    }
+
+    void SetUP ()
+    {
+        clientId = int.Parse(APIManager.instance.Client_id);
+        game_id = int.Parse(APIManager.instance.Game_Id);
+        PlayerId = int.Parse(APIManager.instance.Player_Id);
     }
 
     private void Update ()
@@ -130,8 +138,8 @@ public class GameDataAPI : MonoBehaviour
 
         infos.Clear();
         rows.Clear();
-        Debug.Log("Status Code: " + request.responseCode);
-        Debug.Log("Status Code: " + request.error);
+       // Debug.Log("Status Code: " + request.responseCode);
+        //Debug.Log("Status Code: " + request.error);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"Request failed: {request.error}");
@@ -147,7 +155,7 @@ public class GameDataAPI : MonoBehaviour
         object parsedResponse = JsonConvert.DeserializeObject(output);
         string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-        Debug.Log("Received: " + formattedOutput);
+        Debug.Log("Received spin cards : " + formattedOutput);
         if (response?.message == "Could not process request at this time")
         {
             isDone = true;
