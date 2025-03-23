@@ -112,9 +112,6 @@ public class APIManager : MonoBehaviour
         Player_Id = ConfigMan.Instance.PlayerId;
         Client_id = ConfigMan.Instance.ClientId;
         Game_Id = ConfigMan.Instance.GameId;
-
-        //set Up Data
-        fetchConfigData();
     }
 
     public void SetUpCashAmount ()
@@ -148,8 +145,6 @@ public class APIManager : MonoBehaviour
                 Debug.Log("Received: " + www.downloadHandler.text);
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
                // CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
-                Debug.Log(playerInfo.wallet_balance);
-                CashAmount = playerInfo.wallet_balance;
             }
             else
             {

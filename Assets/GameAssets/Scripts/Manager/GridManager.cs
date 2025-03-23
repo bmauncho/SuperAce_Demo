@@ -611,7 +611,7 @@ public class GridManager : MonoBehaviour
                     CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
                     if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
                     {
-                        if (rowData [row].cardPositionInRow [col].GetComponent<CardPos>().TheOwner != null)
+                        if (cardPos.TheOwner != null)
                         {
                             continue; // Skip placing this card
                         }
