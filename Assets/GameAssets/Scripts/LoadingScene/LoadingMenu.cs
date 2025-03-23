@@ -9,6 +9,7 @@ public class LoadingMenu : MonoBehaviour
     float timestamp;
     public AsyncOperation asyncOperation;
     public GameObject button;
+    bool isPressed = false;
     private void Start ()
     {
         nextScene();
@@ -29,6 +30,8 @@ public class LoadingMenu : MonoBehaviour
 
     public void ActivateNextScene ()
     {
+        if (isPressed) {return; }
+        isPressed = true;
         StartCoroutine(Activation());
     }
 
@@ -47,6 +50,7 @@ public class LoadingMenu : MonoBehaviour
         }
         button.GetComponent<Button>().interactable = false;
         ConfigMan.Instance.TheDebugObj.SetActive(false);
+        isPressed = false;
         asyncOperation.allowSceneActivation = true;
         yield return null ;
     }
