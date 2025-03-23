@@ -19,7 +19,7 @@ public class refillApi
     public GameData game;
     public float betAmount;
     public string gameMode = "NORMAL";
-    public string clientId = "12345";
+    public string clientId = "1";
     public CardData [] [] cards;
 }
 

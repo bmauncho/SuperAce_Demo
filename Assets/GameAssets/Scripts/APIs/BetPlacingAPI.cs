@@ -39,7 +39,7 @@ public class BetPlacingAPI : MonoBehaviour
     public float BetAmount;
     public int playerId = 22;
     public int game_id = 32;
-    public int client_id = 12345;
+    public int client_id = 1;
 
     [Header("Retry Settings")]
     public int tries;

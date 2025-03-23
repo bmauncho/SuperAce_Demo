@@ -12,7 +12,7 @@ public class _GameInfo
 {
     public _game game;
     public float betAmount = 1000;
-    public string clientId = "12345";
+    public string clientId = "1";
     public string playerId = "22";
     public string action = "";
 }
@@ -47,6 +47,10 @@ public class GameDataAPI : MonoBehaviour
     public float BetAmount;
     public float AmountWon;
     public float FreeSpins;
+<<<<<<< Updated upstream
+=======
+    public int clientId = 1;
+>>>>>>> Stashed changes
     [Space(10)]
     public List<rowData> rows = new List<rowData>(5);
     List<CardData> infos = new List<CardData>();
