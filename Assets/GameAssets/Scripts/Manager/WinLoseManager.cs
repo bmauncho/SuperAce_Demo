@@ -41,9 +41,8 @@ public class WinLoseManager : MonoBehaviour
         cardFxManager = CommandCentre.Instance.CardFxManager_;
         data.Clear();
         addedKeys.Clear();
+        
     }
-
-   
 
     public void GetWinningCard ( CardData _data , int row , int col )
     {

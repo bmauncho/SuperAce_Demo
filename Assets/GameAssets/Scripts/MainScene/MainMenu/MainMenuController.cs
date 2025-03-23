@@ -141,32 +141,30 @@ public class MainMenuController : MonoBehaviour
     {
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            bool datafetched = APIManager.instance.GameDataAPI_.isDataFetched;
-            APIManager.instance.GameDataAPI_.FetchInfo();
+            Debug.Log("Fetching Data...");
+            APIManager.instance.GameDataAPI_.FetchInfo(); // Start fetching
 
-            float timeout = 30f; // Set timeout duration (e.g., 5 seconds)
+            float timeout = 30f;
             float elapsedTime = 0f;
 
-            while (!datafetched && elapsedTime < timeout)
+            while (!APIManager.instance.GameDataAPI_.isNewDataFetched && elapsedTime < timeout)
             {
-                yield return null; // Wait for the next frame
-                elapsedTime += Time.deltaTime;
-                datafetched = APIManager.instance.GameDataAPI_.isDataFetched;
+                Debug.Log($" Waiting... elapsedTime: {elapsedTime}, isDataFetched: {APIManager.instance.GameDataAPI_.isNewDataFetched} at mainmenu controller");
+                yield return new WaitForSeconds(0.5f); // Reduce CPU usage while waiting
+                elapsedTime += 0.5f;
             }
-
-            if (!datafetched)
+            Debug.Log($"isDataFetched: {APIManager.instance.GameDataAPI_.isNewDataFetched} at mainmenu controller");
+            if (!APIManager.instance.GameDataAPI_.isNewDataFetched)
             {
                 Debug.LogWarning("Data fetching timed out!");
-                //var request = APIManager.instance.GameDataAPI_.response();
-                //Debug.Log("Status Code: " + request.responseCode);
-                //Debug.Log("Status Code: " + request.error);
                 ServerError.gameObject.SetActive(true);
                 yield return new WaitForSeconds(1.5f);
                 ServerError.gameObject.SetActive(false);
                 CanSpin = true;
-                yield break; // Exit the coroutine if timeout occurs
+                yield break;
             }
 
+            Debug.Log(" Data successfully fetched. Spinning reel...");
             StartCoroutine(SpinReel(false));
         }
         else
@@ -174,6 +172,8 @@ public class MainMenuController : MonoBehaviour
             StartCoroutine(SpinReel(true));
         }
     }
+
+
 
 
     IEnumerator SpinReel (bool isDemo)

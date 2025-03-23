@@ -87,6 +87,8 @@ public class APIManager : MonoBehaviour
     private void Start ()
     {
         DontDestroyOnLoad(this);
+        DontDestroyOnLoad (gameObject);
+
         instance = this;
     }
     public void ManualStart ()
@@ -105,13 +107,6 @@ public class APIManager : MonoBehaviour
         {
             TransactionsText [i].text = thetrans;
         }
-    }
-
-    public void fetchConfigs ()
-    {
-        Player_Id = ConfigMan.Instance.PlayerId;
-        Client_id = ConfigMan.Instance.ClientId;
-        Game_Id = ConfigMan.Instance.GameId;
     }
 
     public void SetUpCashAmount ()
@@ -253,8 +248,10 @@ public class APIManager : MonoBehaviour
         if (ConfigMan.Instance.ReceivedConfigs)
         {
             Player_Id = ConfigMan.Instance.PlayerId.ToString();
+            Game_Id = ConfigMan.Instance.GameId.ToString();
+            Client_id = ConfigMan.Instance.ClientId.ToString();
 
-            if(!string.IsNullOrEmpty(Player_Id))
+            if (!string.IsNullOrEmpty(Player_Id))
             {
                 GameDataAPI_.PlayerId = int.Parse(Player_Id);
                 betPlacingAPI_.playerId = int.Parse(Player_Id);
@@ -262,9 +259,11 @@ public class APIManager : MonoBehaviour
 
             if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
             {
+                
                 GameDataAPI_.game_id = int.Parse(Game_Id);
                 betPlacingAPI_.game_id = int.Parse(Game_Id);
             }
+
             if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
             {
                 GameDataAPI_.clientId = int.Parse(Client_id);
@@ -277,7 +276,7 @@ public class APIManager : MonoBehaviour
             }
             else
             {
-               CashAmount = playerInfo.wallet_balance;
+                CashAmount = playerInfo.wallet_balance;
             }
             ManualStart();
         }

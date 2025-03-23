@@ -780,6 +780,7 @@ public class GridManager : MonoBehaviour
 
     IEnumerator HandleServerError ()
     {
+        Debug.Log("SeverError - update Grid");
         ServerError.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         ServerError.SetActive(false);

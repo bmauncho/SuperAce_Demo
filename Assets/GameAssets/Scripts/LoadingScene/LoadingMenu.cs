@@ -18,7 +18,6 @@ public class LoadingMenu : MonoBehaviour
     {
         timestamp = Time.time + load_time;
         StartCoroutine(loadYourAsyncScene());
-        //APIManager.instance.fetchConfigData();
     }
     IEnumerator loadYourAsyncScene ()
     {

@@ -35,7 +35,7 @@ public class GameDataAPI : MonoBehaviour
 {
     UnityWebRequest request;
     [Header("API Settings")]
-    public WinLoseManager winloseManager;
+    //public WinLoseManager winloseManager;
     public int game_id = 32;
     public int clientId = 12345;
     public int PlayerId = 22;
@@ -52,6 +52,7 @@ public class GameDataAPI : MonoBehaviour
     List<CardData> infos = new List<CardData>();
     //public List<rowData> rowsInterchanged = new List<rowData>(5);
     public bool isDataFetched = false;
+    public bool isNewDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     public List<bool> canRefill = new List<bool>();
     bool canshowSpins = false;
@@ -79,6 +80,7 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
+        isNewDataFetched = false;
         Debug.Log("Fetching Card Data!");
         if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
         _GameInfo Data = new _GameInfo();
@@ -125,7 +127,7 @@ public class GameDataAPI : MonoBehaviour
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }
 
-    IEnumerator _FetchGridInfo ( string url , string bodyJsonString , Action OnComplete = null )
+    IEnumerator _FetchGridInfo ( string url , string bodyJsonString )
     {
         bool isDone = false;
         request = new UnityWebRequest(url , "POST");
@@ -138,12 +140,11 @@ public class GameDataAPI : MonoBehaviour
 
         infos.Clear();
         rows.Clear();
-       // Debug.Log("Status Code: " + request.responseCode);
-        //Debug.Log("Status Code: " + request.error);
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError($"Request failed: {request.error}");
             isDone = true;
+            isNewDataFetched = false;
             isDataFetched = false;
             yield break;
         }
@@ -156,9 +157,11 @@ public class GameDataAPI : MonoBehaviour
         string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
         Debug.Log("Received spin cards : " + formattedOutput);
+
         if (response?.message == "Could not process request at this time")
         {
             isDone = true;
+            isNewDataFetched = false;
             isDataFetched = false;
             yield break;
         }
@@ -194,7 +197,7 @@ public class GameDataAPI : MonoBehaviour
                         if (cardData_.transformed || ( IsFreeGame() && cardData_.name == "SCATTER" ))
                         {
                             //Debug.Log("Scatter found");
-                            winloseManager.GetWinningCard(cardData_ , i , j);
+                            CommandCentre.Instance.WinLoseManager_.GetWinningCard(cardData_ , i , j);
                         }
 
                         if(cardData_.substitute == "BIG_JOKER")
@@ -207,9 +210,11 @@ public class GameDataAPI : MonoBehaviour
 
             isDone = true;
             isDataFetched = true;
+            isNewDataFetched = true;
+            Debug.Log("Is Data fetched :" + isDataFetched + "at GameDataApi");
+            Debug.Log("Is Data fetched :" + isNewDataFetched + "at GameDataApi");
         }
-
-        OnComplete?.Invoke(); // Ensure callback is executed
+        
     }
 
 
@@ -309,7 +314,7 @@ public class GameDataAPI : MonoBehaviour
             (int row, int col) = cardEntry.Value;
 
             // Notify the WinLoseManager
-            winloseManager.GetWinningCard(card , row , col);
+            CommandCentre.Instance.WinLoseManager_.GetWinningCard(card , row , col);
         }
     }
 
