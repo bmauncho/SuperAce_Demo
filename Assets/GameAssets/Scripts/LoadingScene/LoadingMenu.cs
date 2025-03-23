@@ -17,17 +17,18 @@ public class LoadingMenu : MonoBehaviour
     {
         timestamp = Time.time + load_time;
         StartCoroutine(loadYourAsyncScene());
-        APIManager.instance.fetchConfigData();
+        //APIManager.instance.fetchConfigData();
     }
 
     public void ActivateNextScene ()
     {
         if (asyncOperation.progress >= 0.9f && Time.time > timestamp
-                && !string.IsNullOrEmpty(APIManager.instance.CashAmount))
+                && !string.IsNullOrEmpty(APIManager.instance.CashAmount)||ConfigMan.Instance.ReceivedConfigs)
         {
             button.GetComponent<Button>().interactable =false;
             ConfigMan.Instance.TheDebugObj.SetActive(false);
             asyncOperation.allowSceneActivation = true;
+            APIManager.instance.fetchConfigData();
         }
     }
 

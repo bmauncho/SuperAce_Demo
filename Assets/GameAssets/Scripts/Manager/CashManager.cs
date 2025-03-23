@@ -13,7 +13,9 @@ public class CashManager : MonoBehaviour
     public float CurrentWinings;
     private void Start ()
     {
-        UpdateCashAmount(float.Parse(APIManager.instance.CashAmount ));
+        float theamount = 0;
+       float.TryParse(APIManager.instance.CashAmount, out theamount);
+        UpdateCashAmount(theamount);
     }
     public void UpdateCashAmount(float amount )
     {

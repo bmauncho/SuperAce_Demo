@@ -254,6 +254,7 @@ public class APIManager : MonoBehaviour
 
     public void fetchConfigData ()
     {
+        Debug.Log("FetchingConfig");
         if (ConfigMan.Instance.ReceivedConfigs)
         {
             Player_Id = ConfigMan.Instance.PlayerId.ToString();
@@ -283,6 +284,7 @@ public class APIManager : MonoBehaviour
             {
                CashAmount = playerInfo.wallet_balance;
             }
+            ManualStart();
         }
         else
         {
