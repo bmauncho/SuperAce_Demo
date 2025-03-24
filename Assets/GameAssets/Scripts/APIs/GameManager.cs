@@ -58,6 +58,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Instance = this;
     }
+    private void Start ()
+    {
+        ManualStart();
+    }
     public void ManualStart ()
     {
         for (int i = 0 ; i < TransactionsText.Length ; i++)
@@ -214,22 +218,20 @@ public class GameManager : MonoBehaviour
         Debug.Log("FetchingConfig");
         if (ConfigMan.Instance.ReceivedConfigs)
         {
-            if (Application.isEditor)
+
+            if (!string.IsNullOrEmpty(Player_Id))
             {
-                if (!string.IsNullOrEmpty(Player_Id))
-                {
-                    Player_Id = ConfigMan.Instance.PlayerId.ToString();
-                }
+                Player_Id = ConfigMan.Instance.PlayerId.ToString();
+            }
 
-                if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
-                {
-                    Game_Id = ConfigMan.Instance.GameId.ToString();
-                }
+            if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
+            {
+                Game_Id = ConfigMan.Instance.GameId.ToString();
+            }
 
-                if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
-                {
-                    Client_id = ConfigMan.Instance.ClientId.ToString();
-                }
+            if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
+            {
+                Client_id = ConfigMan.Instance.ClientId.ToString();
             }
 
             if (ConfigMan.Instance.IsDemo)
@@ -240,11 +242,24 @@ public class GameManager : MonoBehaviour
             {
                 CashAmount = playerInfo.wallet_balance;
             }
+
             ManualStart();
         }
         else
         {
             ManualStart();
+        }
+    }
+
+    public void UpdateAmount ()
+    {
+        if (ConfigMan.Instance.IsDemo)
+        {
+            CashAmount = "2000";
+        }
+        else
+        {
+            CashAmount = playerInfo.wallet_balance;
         }
     }
 }

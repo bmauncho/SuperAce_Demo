@@ -149,11 +149,11 @@ public class MainMenuController : MonoBehaviour
 
             while (!CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched && elapsedTime < timeout)
             {
-                Debug.Log($" Waiting... elapsedTime: {elapsedTime}, isDataFetched: {CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched} at mainmenu controller");
+               // Debug.Log($" Waiting... elapsedTime: {elapsedTime}, isDataFetched: {CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched} at mainmenu controller");
                 yield return new WaitForSeconds(0.5f); // Reduce CPU usage while waiting
                 elapsedTime += 0.5f;
             }
-            Debug.Log($"isDataFetched: {CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched} at mainmenu controller");
+            //Debug.Log($"isDataFetched: {CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched} at mainmenu controller");
             if (!CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched)
             {
                 Debug.LogWarning("Data fetching timed out!");
