@@ -179,7 +179,7 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.CardFxManager_.ActivateAllCardFxMask();
         }
 
-        GameDataAPI gameDataAPI_ = APIManager.instance.GameDataAPI_;
+        GameDataAPI gameDataAPI_ = CommandCentre.Instance.APIManager_.GameDataAPI_;
 
         for (int col = 0 ; col < columnCount ; col++)
         {
@@ -371,7 +371,7 @@ public class GridManager : MonoBehaviour
     public List<int> ScatterColPosition ()
     {
         List<int> scatterInCol = new List<int>();
-        GameDataAPI gameDataAPI_ = APIManager.instance.GameDataAPI_;
+        GameDataAPI gameDataAPI_ = CommandCentre.Instance.APIManager_.GameDataAPI_;
 
         for (int i = 0 ; i < gameDataAPI_.rows.Count ; i++)
         {
@@ -528,7 +528,7 @@ public class GridManager : MonoBehaviour
 
     public void refillGrid ( int objectshidden )
     {
-        APIManager apiManager = APIManager.instance;
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
@@ -589,7 +589,7 @@ public class GridManager : MonoBehaviour
 
     public void refillTurbo (int objectshidden)
     {
-        APIManager apiManager = APIManager.instance;
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
         objectsPlaced = totalObjectsToPlace - objectshidden;
@@ -645,7 +645,7 @@ public class GridManager : MonoBehaviour
     {
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            if (APIManager.instance.GameDataAPI_.FreeSpins > 0 &&
+            if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 &&
                 !CommandCentre.Instance.WinLoseManager_.IsWin())
             {
                 Debug.Log($"isWin{CommandCentre.Instance.WinLoseManager_.IsWin()}");
@@ -704,17 +704,17 @@ public class GridManager : MonoBehaviour
 
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
 
-        CommandCentre.Instance.CashManager_.CashAmount = APIManager.instance.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
+        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
         CommandCentre.Instance.CashManager_.updateThecashUi();
 
         yield return new WaitForSeconds(.25f);
 
-        if (!APIManager.instance.refillCardsAPI_.isError)
+        if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
         {
-            APIManager.instance.GameDataAPI_.RecheckWin();
+            CommandCentre.Instance.APIManager_.GameDataAPI_.RecheckWin();
         }
 
-        APIManager.instance.refillCardsAPI_.isError = false;
+        CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
     }
 
     IEnumerator HandleWin ()
@@ -722,11 +722,11 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
-            APIManager.instance.refillCardsAPI_.FetchData();
-            APIManager.instance.UpdateBet();
-            yield return new WaitUntil(() => APIManager.instance.refillCardsAPI_.refillDataFetched);
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+            CommandCentre.Instance.APIManager_.UpdateBet();
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
 
-            if (!APIManager.instance.refillCardsAPI_.IsServerError)
+            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
             {
                 CommandCentre.Instance.WinLoseManager_.winSequence();
             }
@@ -737,7 +737,7 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            APIManager.instance.UpdateBet();
+            CommandCentre.Instance.APIManager_.UpdateBet();
             CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             CommandCentre.Instance.WinLoseManager_.winSequence();
@@ -769,7 +769,7 @@ public class GridManager : MonoBehaviour
 
         if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            if(APIManager.instance.GameDataAPI_.FreeSpins > 0 && APIManager.instance.GameDataAPI_.FreeSpins < 10)
+            if(CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 && CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins < 10)
             {
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }
@@ -786,7 +786,7 @@ public class GridManager : MonoBehaviour
         ServerError.SetActive(false);
 
         CommandCentre.Instance.MainMenuController_.CanSpin = true;
-        APIManager.instance.refillCardsAPI_.IsServerError = false;
+        CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError = false;
         yield return StartCoroutine(Autospin());
     }
 

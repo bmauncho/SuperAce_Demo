@@ -48,8 +48,8 @@ public class PayOutManager : MonoBehaviour
             }
             else
             {
-                //CurrentWin = APIManager.instance.GameDataAPI_.finalData.AmountWon;
-                CurrentWin = APIManager.instance.GameDataAPI_.AmountWon;
+                //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
+                CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
             }
         }
         

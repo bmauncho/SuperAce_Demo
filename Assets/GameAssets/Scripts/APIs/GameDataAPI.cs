@@ -52,21 +52,20 @@ public class GameDataAPI : MonoBehaviour
     List<CardData> infos = new List<CardData>();
     //public List<rowData> rowsInterchanged = new List<rowData>(5);
     public bool isDataFetched = false;
-    public bool isNewDataFetched = false;
     public RefillCardsAPI refillCardsAPI;
     public List<bool> canRefill = new List<bool>();
     bool canshowSpins = false;
     private void Start ()
     {
         isDataFetched = false;
-        Invoke(nameof(SetUP) , .2f);
+        Invoke(nameof(SetUP) , .25f);
     }
 
     void SetUP ()
     {
-        clientId = int.Parse(APIManager.instance.Client_id);
-        game_id = int.Parse(APIManager.instance.Game_Id);
-        PlayerId = int.Parse(APIManager.instance.Player_Id);
+        clientId = CommandCentre.Instance.APIManager_.Client_id;
+        game_id = CommandCentre.Instance.APIManager_.Game_Id;
+        PlayerId = CommandCentre.Instance.APIManager_.Player_Id;
     }
 
     private void Update ()
@@ -80,7 +79,6 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
-        isNewDataFetched = false;
         Debug.Log("Fetching Card Data!");
         if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
         _GameInfo Data = new _GameInfo();
@@ -144,15 +142,22 @@ public class GameDataAPI : MonoBehaviour
         {
             Debug.LogError($"Request failed: {request.error}");
             isDone = true;
-            isNewDataFetched = false;
             isDataFetched = false;
             yield break;
         }
 
         string output = request.downloadHandler.text;
+        if (string.IsNullOrEmpty(output))
+        {
+            Debug.LogError("Empty response received.");
+            isDone = true;
+            isDataFetched = false;
+            yield break;
+        }
         //Debug.Log("Received: " + output);
 
         var response = JsonConvert.DeserializeObject<ApiResponse>(output);
+
         object parsedResponse = JsonConvert.DeserializeObject(output);
         string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
@@ -161,7 +166,6 @@ public class GameDataAPI : MonoBehaviour
         if (response?.message == "Could not process request at this time")
         {
             isDone = true;
-            isNewDataFetched = false;
             isDataFetched = false;
             yield break;
         }
@@ -210,9 +214,7 @@ public class GameDataAPI : MonoBehaviour
 
             isDone = true;
             isDataFetched = true;
-            isNewDataFetched = true;
             Debug.Log("Is Data fetched :" + isDataFetched + "at GameDataApi");
-            Debug.Log("Is Data fetched :" + isNewDataFetched + "at GameDataApi");
         }
         
     }

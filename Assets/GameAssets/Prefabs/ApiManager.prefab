@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd5de64aabb28c49a64f7a793f13782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winloseManager: {fileID: 0}
   game_id: 32
+  clientId: 12345
+  PlayerId: 22
   BetAmount: 0
   AmountWon: 0
   FreeSpins: 0
-  clientId: 12345
   rows:
   - infos:
     - name: SPADE
@@ -136,6 +136,7 @@ MonoBehaviour:
       golden: 0
       transformed: 0
   isDataFetched: 1
+  isNewDataFetched: 0
   refillCardsAPI: {fileID: 5166648452775935905}
   canRefill: 
 --- !u!1 &4183610493645565346
@@ -192,7 +193,7 @@ MonoBehaviour:
       totalBets: 0
       totalWins: 0
   BetAmount: 2
-  customerId: 22
+  playerId: 22
   game_id: 32
   client_id: 12345
   tries: 0
@@ -474,8 +475,8 @@ MonoBehaviour:
   FreeSpins: 0
   maxtries: 3
   tries: 3
-  refillDataFetched: 1
-  isError: 1
+  refillDataFetched: 0
+  isError: 0
   IsServerError: 0
 --- !u!1 &8078582907056984300
 GameObject:
@@ -525,23 +526,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd434b0e41049044ba01197a4cc79451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerLink: https://admin-api.ibibe.africa
   GameDataAPI_: {fileID: 875733543459342965}
   betPlacingAPI_: {fileID: 2832469048057786593}
   betUpdaterAPI_: {fileID: 1038807943836087863}
   refillCardsAPI_: {fileID: 5166648452775935905}
   Player_Id: 22
-  Game_Id: 1234
-  Client_id: 12345
-  playerInfo:
-    id: 
-    names: 
-    msisdn: 
-    account_number: 
-    email_address: 
-    is_blacklisted: 
-    wallet_balance: 
-    created_at: 
-    last_bet_date: 
-    last_win_date: 
-  TransactionsText: []
+  Game_Id: 32
+  Client_id: 1234
+  CashAmount: 

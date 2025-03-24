@@ -36,16 +36,16 @@ public class LoadingMenu : MonoBehaviour
 
     public IEnumerator Activation ()
     {
-        APIManager.instance.fetchConfigData();
+        GameManager.Instance.fetchConfigData();
         yield return new WaitUntil(() => asyncOperation.progress >= 0.9f && Time.time > timestamp);
         if (ConfigMan.Instance.IsDemo)
         {
-            APIManager.instance.CashAmount = "2000";
+            GameManager.Instance.CashAmount = "2000";
         }
         else
         {
-            yield return new WaitUntil(() => !string.IsNullOrEmpty( APIManager.instance.playerInfo.wallet_balance));
-            APIManager.instance.CashAmount = APIManager.instance.playerInfo.wallet_balance;
+            yield return new WaitUntil(() => !string.IsNullOrEmpty( GameManager.Instance.playerInfo.wallet_balance));
+            GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
         }
         button.GetComponent<Button>().interactable = false;
         ConfigMan.Instance.TheDebugObj.SetActive(false);

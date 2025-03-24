@@ -31,7 +31,7 @@ public class CardManager : MonoBehaviour
 
     private void Start ()
     {
-        apiManager = APIManager.instance;
+        apiManager = CommandCentre.Instance.APIManager_;
         demoManager = CommandCentre.Instance.DemoManager_;
         gridManager = CommandCentre.Instance.GridManager_;
     }

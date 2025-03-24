@@ -11,13 +11,7 @@ public class CashManager : MonoBehaviour
     public List<TextMeshProUGUI> WinCashAmountText = new List<TextMeshProUGUI>();
     public double CashAmount = 0f;
     public float CurrentWinings;
-    private void Start ()
-    {
-        float theamount = float.Parse(APIManager.instance.CashAmount);
-        Debug.Log("Cash Amount :" + theamount);
-        UpdateCashAmount(theamount);
-        Debug.Log("Updated cash Amount :" + CashAmount);
-    }
+
     public void UpdateCashAmount(float amount )
     {
         CashAmount = amount;

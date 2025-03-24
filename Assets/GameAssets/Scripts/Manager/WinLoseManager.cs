@@ -207,7 +207,7 @@ public class WinLoseManager : MonoBehaviour
 
     IEnumerator HideNormalCards ()
     {
-        APIManager apiManager = APIManager.instance;
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
         int hiddenCards = 0;
         List<GameObject> scatterCards = new List<GameObject>();
         List<GameObject> bigJockerCards = new List<GameObject>();
@@ -343,7 +343,7 @@ public class WinLoseManager : MonoBehaviour
             isJumpingCards = true;
 
             HashSet<Tuple<int , int>> usedIndices = new HashSet<Tuple<int , int>>();
-            List<Tuple<int , int>> indexesList = APIManager.instance.refillCardsAPI_.GetBigJockerIndices();
+            List<Tuple<int , int>> indexesList = CommandCentre.Instance.APIManager_.refillCardsAPI_.GetBigJockerIndices();
 
             int bigJockerCount = BigJockerRotatedCards.Count;
             int indicesPerCard = indexesList.Count / bigJockerCount;
@@ -596,7 +596,7 @@ public class WinLoseManager : MonoBehaviour
     {
         HashSet<int> distinctColumns = new HashSet<int>(); // Store unique column indices
         List<winData> toRemove = new List<winData>(); // Store SCATTER entries for removal
-        GameDataAPI gameDataAPI = APIManager.instance.GameDataAPI_;
+        GameDataAPI gameDataAPI = CommandCentre.Instance.APIManager_.GameDataAPI_;
         if (tempData == null || tempData.Count == 0)
         {
             //Debug.LogWarning("TempData is empty or null.");

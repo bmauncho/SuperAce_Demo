@@ -54,14 +54,14 @@ public class BetPlacingAPI : MonoBehaviour
         };
 
        
-        Invoke(nameof(SetUP) , .2f);
+        Invoke(nameof(SetUP) , .25f);
     }
 
     void SetUP ()
     {
-        client_id = int.Parse(APIManager.instance.Client_id);
-        game_id = int.Parse(APIManager.instance.Game_Id);
-        playerId = int.Parse(APIManager.instance.Player_Id);
+        client_id = CommandCentre.Instance.APIManager_.Client_id;
+        game_id = CommandCentre.Instance.APIManager_.Game_Id;
+        playerId = CommandCentre.Instance.APIManager_.Player_Id;
     }
 
     private void Update ()

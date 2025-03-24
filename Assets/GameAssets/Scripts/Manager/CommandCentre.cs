@@ -26,6 +26,7 @@ public class CommandCentre : MonoBehaviour
     public TurboManager TurboManager_;
     public CardFxManager CardFxManager_;
     public DemoManager DemoManager_;
+    public APIManager APIManager_;
 
     private void Awake ()
     {
