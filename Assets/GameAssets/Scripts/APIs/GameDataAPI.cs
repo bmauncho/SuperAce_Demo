@@ -174,7 +174,7 @@ public class GameDataAPI : MonoBehaviour
         {
             AmountWon = response.data.AmountWon;
             FreeSpins = response.data.freeSpins;
-            Debug.Log($"FreeSpins : {FreeSpins}");
+            //Debug.Log($"FreeSpins : {FreeSpins}");
             if (FreeSpins > 0)
             {
                 Debug.Log("Free Spins: " + FreeSpins);
@@ -206,7 +206,7 @@ public class GameDataAPI : MonoBehaviour
 
                         if(cardData_.substitute == "BIG_JOKER")
                         {
-                            Debug.Log($"Big Joker SUB found COL: {j} ROW:{i}");
+                            //Debug.Log($"Big Joker SUB found COL: {j} ROW:{i}");
                         }
                     }
                 }
@@ -214,7 +214,7 @@ public class GameDataAPI : MonoBehaviour
 
             isDone = true;
             isDataFetched = true;
-            Debug.Log("Is Data fetched :" + isDataFetched + "at GameDataApi");
+            //Debug.Log("Is Data fetched :" + isDataFetched + "at GameDataApi");
         }
         
     }

@@ -404,14 +404,14 @@ public class GridManager : MonoBehaviour
     void ActivateEffects (int col)
     {
         // Add effect activation logic here
-        Debug.Log("Activating scatter effects.");
+       // Debug.Log("Activating scatter effects.");
         scatterUIFx_.showeffect(col);
     }
 
     void DeactivateEffects (int col)
     {
         // Add effect deactivation logic here
-        Debug.Log("Deactivating scatter effects.");
+       // Debug.Log("Deactivating scatter effects.");
         scatterUIFx_.HideEffect(col);
     }
 
@@ -648,7 +648,7 @@ public class GridManager : MonoBehaviour
             if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 &&
                 !CommandCentre.Instance.WinLoseManager_.IsWin())
             {
-                Debug.Log($"isWin{CommandCentre.Instance.WinLoseManager_.IsWin()}");
+               // Debug.Log($"isWin{CommandCentre.Instance.WinLoseManager_.IsWin()}");
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }
         }
@@ -723,7 +723,7 @@ public class GridManager : MonoBehaviour
         {
             CommandCentre.Instance.CashManager_.updateThecashUi();
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
-            CommandCentre.Instance.APIManager_.UpdateBet();
+            
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
 
             if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
@@ -737,7 +737,7 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            CommandCentre.Instance.APIManager_.UpdateBet();
+
             CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             CommandCentre.Instance.WinLoseManager_.winSequence();
@@ -780,7 +780,7 @@ public class GridManager : MonoBehaviour
 
     IEnumerator HandleServerError ()
     {
-        Debug.Log("SeverError - update Grid");
+        //Debug.Log("SeverError - update Grid");
         ServerError.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         ServerError.SetActive(false);
@@ -800,14 +800,14 @@ public class GridManager : MonoBehaviour
         PayOutManager payOutManager = CommandCentre.Instance.PayOutManager_;
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
         yield return new WaitUntil(() => mainMenuController.CanSpin);
-
+        
         // Ensure FreeGameWinUi is deactivated before proceeding
         if (payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy || payOutManager.WinUI_.FreeGameWinUi.activeSelf)
         {
-            Debug.Log("Deactivate Free Game");
+            //Debug.Log("Deactivate Free Game");
             yield return new WaitUntil(() => !payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy &&
                                              !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
-            Debug.Log("Free Game Deactivated");
+            //Debug.Log("Free Game Deactivated");
         }
 
         if (autoSpinManager.IsAutoSpin)

@@ -817,7 +817,7 @@ MonoBehaviour:
     - line: '|     PS5: 1'
     - line: '|     QNX: 1'
     - line: '|     VisionOS: 1'
-    - line: '|     WebGL: 2'
+    - line: '|     WebGL: 1'
     - line: '|     Windows Store Apps: 1'
     - line: '|     XboxOne: 1'
     - line: '|     iPhone: 1'

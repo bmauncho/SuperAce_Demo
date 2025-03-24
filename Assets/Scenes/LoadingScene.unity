@@ -1161,6 +1161,7 @@ MonoBehaviour:
     last_bet_date: 
     last_win_date: 
   TransactionsText: []
+  isDataFetched: 0
 --- !u!4 &2049540708
 Transform:
   m_ObjectHideFlags: 0

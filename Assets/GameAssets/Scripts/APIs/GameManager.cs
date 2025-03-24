@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerInfo playerInfo;
     public TMP_Text [] TransactionsText;
+    public bool isDataFetched = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake ()
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void FetchPlayerInfo ()
     {
+        isDataFetched = false;
         StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
     IEnumerator _FetchPlayerInfo ( string url )
@@ -110,10 +112,12 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
+                isDataFetched = true;
                 // CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
             }
             else
             {
+                isDataFetched = true;
                 Debug.Log("Error: " + www.error);
             }
         } // The using block ensures www.Dispo

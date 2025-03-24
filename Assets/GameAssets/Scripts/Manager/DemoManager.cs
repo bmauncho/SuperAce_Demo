@@ -146,7 +146,7 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance.FreeGameManager_.winMoreMenu_.DeactivateSuggestion_1();
         CommandCentre.Instance.DemoManager_.IsDemo = false;
         CommandCentre.Instance.MainMenuController_.IsDemo = false;
-        Debug.Log($"Is Demo {CommandCentre.Instance.DemoManager_.IsDemo}");
+        //Debug.Log($"Is Demo {CommandCentre.Instance.DemoManager_.IsDemo}");
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
         CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
         CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();

@@ -44,13 +44,14 @@ public class LoadingMenu : MonoBehaviour
         }
         else
         {
-            yield return new WaitUntil(() => !string.IsNullOrEmpty( GameManager.Instance.playerInfo.wallet_balance));
+            yield return new WaitUntil(() => !string.IsNullOrEmpty( GameManager.Instance.playerInfo.wallet_balance ) && GameManager.Instance.isDataFetched);
             GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
         }
         button.GetComponent<Button>().interactable = false;
         ConfigMan.Instance.TheDebugObj.SetActive(false);
         isPressed = false;
         asyncOperation.allowSceneActivation = true;
+        yield return new WaitForSeconds(.5f);
         yield return null ;
     }
 

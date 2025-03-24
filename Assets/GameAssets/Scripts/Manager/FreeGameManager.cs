@@ -90,7 +90,7 @@ public class FreeGameManager : MonoBehaviour
         //resetFreeSpins();
         CommandCentre.Instance.SoundManager_.PlayAmbientSound("FunkCasino");
         float amount = winAmount;
-        Debug.Log(amount);
+        //Debug.Log(amount);
         if (amount > 0)
         {
             CommandCentre.Instance.PayOutManager_.WinUI_.ShowFreeGameWinUi_win();
