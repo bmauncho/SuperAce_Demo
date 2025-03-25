@@ -389,7 +389,6 @@ public class WinLoseManager : MonoBehaviour
         tempData.Clear();
         BigJockerRotatedCards.Clear();
         isWinsequence = false;
-        CommandCentre.Instance.APIManager_.UpdateBet();
         yield return null;
     }
 

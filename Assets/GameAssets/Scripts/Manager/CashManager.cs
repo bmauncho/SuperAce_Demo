@@ -11,10 +11,12 @@ public class CashManager : MonoBehaviour
     public List<TextMeshProUGUI> WinCashAmountText = new List<TextMeshProUGUI>();
     public double CashAmount = 0f;
     public float CurrentWinings;
+    private double currentAmount;
 
     public void UpdateCashAmount(float amount )
     {
         CashAmount = amount;
+        currentAmount = amount;
         updateThecashUi();
     }
 
@@ -62,7 +64,7 @@ public class CashManager : MonoBehaviour
         }
         else
         {
-            CashAmountText [0].text = CashAmount.ToString("N2");
+            CashAmountText [0].text = currentAmount.ToString("N2");
         }
         SaveCashAmount();
     }
