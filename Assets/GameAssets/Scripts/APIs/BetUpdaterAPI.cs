@@ -87,8 +87,12 @@ public class BetUpdaterAPI : MonoBehaviour
             updateBetResponse_ = data;
             Debug.Log($"previous cashAmount : {CommandCentre.Instance.CashManager_.CashAmount} : current amount : {updateBetResponse_.new_wallet_balance}");
             double newCashAmount = updateBetResponse_.new_wallet_balance;
-            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
-            Debug.Log($"Updated Cash Amount: {CommandCentre.Instance.CashManager_.CashAmount} : fetched amount{newCashAmount}");
+
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+            {
+                CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
+                Debug.Log($"Updated Cash Amount: {CommandCentre.Instance.CashManager_.CashAmount} : fetched amount{newCashAmount}");
+            }
         }
     }
 }

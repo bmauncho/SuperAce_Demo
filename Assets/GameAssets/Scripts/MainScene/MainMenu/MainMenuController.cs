@@ -200,6 +200,7 @@ public class MainMenuController : MonoBehaviour
                 }
             }
 
+
             normlSpin();
         }
         else
