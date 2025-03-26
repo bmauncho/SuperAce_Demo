@@ -25,7 +25,8 @@ public class BetUpdaterAPI : MonoBehaviour
 {
     private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/update_bet";
     public UpdateBetResponse updateBetResponse_;
-
+    public double CashAmount;
+    public double NewCashAmount;
 
     private void Start ()
     {
@@ -87,12 +88,8 @@ public class BetUpdaterAPI : MonoBehaviour
             updateBetResponse_ = data;
             Debug.Log($"previous cashAmount : {CommandCentre.Instance.CashManager_.CashAmount} : current amount : {updateBetResponse_.new_wallet_balance}");
             double newCashAmount = updateBetResponse_.new_wallet_balance;
-
-            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-            {
-                CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
-                Debug.Log($"Updated Cash Amount: {CommandCentre.Instance.CashManager_.CashAmount} : fetched amount{newCashAmount}");
-            }
+            CashAmount = newCashAmount;
+            NewCashAmount = CashAmount;
         }
     }
 }

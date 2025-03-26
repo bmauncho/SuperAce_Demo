@@ -704,15 +704,15 @@ public class GridManager : MonoBehaviour
 
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
 
-        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-        {
-            int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
-            if (combo <= 1)
-            {
-                CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
-                CommandCentre.Instance.CashManager_.updateThecashUi();
-            }
-        }
+        //if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        //{
+        //    int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
+        //    if (combo <= 1)
+        //    {
+        //        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
+        //        CommandCentre.Instance.CashManager_.updateThecashUi();
+        //    }
+        //}
 
         yield return new WaitForSeconds(.25f);
 
@@ -728,6 +728,7 @@ public class GridManager : MonoBehaviour
     {
         if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
         {
+            CommandCentre.Instance.APIManager_.UpdateBet();
             CommandCentre.Instance.CashManager_.updateThecashUi();
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
             
@@ -763,12 +764,6 @@ public class GridManager : MonoBehaviour
         int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
-            
-            if (combo >= 2)
-            {
-                CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
-                CommandCentre.Instance.CashManager_.updateThecashUi();
-            }
 
             if (combo >= 3)
             {
@@ -788,7 +783,18 @@ public class GridManager : MonoBehaviour
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }
         }
-        CommandCentre.Instance.APIManager_.UpdateBet();
+
+        if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0)
+        {
+            Debug.Log($"Add wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
+            double newCashAmount = CommandCentre.Instance.CashManager_.CashAmount;
+            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
+            CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
+            Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+        }
+
+
         yield return StartCoroutine(Autospin());
     }
 
@@ -823,6 +829,17 @@ public class GridManager : MonoBehaviour
                                              !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
             //Debug.Log("Free Game Deactivated");
         }
+
+        if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0)
+        {
+            Debug.Log($"Add wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
+            double newCashAmount = CommandCentre.Instance.CashManager_.CashAmount;
+            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
+            CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
+            Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+        }
+
 
         if (autoSpinManager.IsAutoSpin)
         {

@@ -11,8 +11,14 @@ public class CashManager : MonoBehaviour
     public List<TextMeshProUGUI> WinCashAmountText = new List<TextMeshProUGUI>();
     public double CashAmount = 0f;
     public float CurrentWinings;
-    private double currentAmount;
+    [SerializeField]private double currentAmount;
 
+    private void Start ()
+    {
+        float newCashAmount = float.Parse(GameManager.Instance.CashAmount);
+        Debug.Log($"current Amount {newCashAmount}");
+        UpdateCashAmount(newCashAmount);
+    }
     public void UpdateCashAmount(float amount )
     {
         CashAmount = amount;

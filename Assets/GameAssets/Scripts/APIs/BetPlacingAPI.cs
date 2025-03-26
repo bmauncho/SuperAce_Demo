@@ -133,7 +133,7 @@ public class BetPlacingAPI : MonoBehaviour
             response = betResponse;
             IsUpdated = true;
             float newCashAmount = response.new_wallet_balance;
-            CommandCentre.Instance.CashManager_.UpdateCashAmount(( newCashAmount ));
+            CommandCentre.Instance.CashManager_.UpdateCashAmount( newCashAmount );
         }
         else
         {
