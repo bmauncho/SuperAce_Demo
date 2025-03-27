@@ -704,16 +704,6 @@ public class GridManager : MonoBehaviour
 
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
 
-        //if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-        //{
-        //    int combo = CommandCentre.Instance.ComboManager_.ComboCounter;
-        //    if (combo <= 1)
-        //    {
-        //        CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.updateBetResponse_.new_wallet_balance;
-        //        CommandCentre.Instance.CashManager_.updateThecashUi();
-        //    }
-        //}
-
         yield return new WaitForSeconds(.25f);
 
         if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.isError)
@@ -729,7 +719,10 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
         {
             CommandCentre.Instance.APIManager_.UpdateBet();
-            CommandCentre.Instance.CashManager_.updateThecashUi();
+            if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+            {
+                CommandCentre.Instance.CashManager_.updateThecashUi();
+            }
             CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
             
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
@@ -784,8 +777,10 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0)
+        if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0 && 
+            !CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
+            Debug.Log($"is free Game {CommandCentre.Instance.FreeGameManager_.IsFreeGame}");
             Debug.Log($"Add wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
             CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
             double newCashAmount = CommandCentre.Instance.CashManager_.CashAmount;
@@ -828,16 +823,6 @@ public class GridManager : MonoBehaviour
             yield return new WaitUntil(() => !payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy &&
                                              !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
             //Debug.Log("Free Game Deactivated");
-        }
-
-        if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0)
-        {
-            Debug.Log($"Add wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
-            CommandCentre.Instance.CashManager_.CashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
-            double newCashAmount = CommandCentre.Instance.CashManager_.CashAmount;
-            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
-            CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
-            Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
         }
 
 
