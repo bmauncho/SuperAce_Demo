@@ -70992,6 +70992,7 @@ MonoBehaviour:
   - {fileID: 6946983444839638495}
   CashAmount: 0
   CurrentWinings: 0
+  currentAmount: 0
 --- !u!1 &556535946
 GameObject:
   m_ObjectHideFlags: 0
@@ -97408,7 +97409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 8527106825086873834, guid: 56c4937550b77be468d705d8f0c0e6c5, type: 3}
-  poolSize: 300
+  poolSize: 440
   CardPosholder: {fileID: 857952519}
   InactiveCardList: []
   Poolinitialized: 0

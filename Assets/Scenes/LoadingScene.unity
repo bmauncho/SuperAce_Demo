@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player_Id: 22
   Game_Id: 32
-  Client_id: 12345
+  Client_id: 1
   CashAmount: 
   playerInfo:
     id: 

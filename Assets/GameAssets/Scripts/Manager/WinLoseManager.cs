@@ -540,7 +540,9 @@ public class WinLoseManager : MonoBehaviour
 
             // Set the new card as a BigJoker
             CommandCentre.Instance.CardManager_.setSpecificCard(newCard.GetComponent<Card>() , "BIG_JOKER");
-
+            CardData cardInfo = new CardData();
+            cardInfo.name = "BIG_JOKER";
+            CommandCentre.Instance.APIManager_.GameDataAPI_.rows [columnIndex].infos [rowIndex] = cardInfo;
             newCards.Add(newCard);
         }
 

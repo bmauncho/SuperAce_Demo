@@ -169,6 +169,7 @@ public class CardManager : MonoBehaviour
             apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
         }
     }
+
     public void SetUpRefillCards( Card card , int col , int row )
     {
         if (!card)
@@ -183,7 +184,7 @@ public class CardManager : MonoBehaviour
             transformed = apiManager.refillCardsAPI_.GetCardInfo(col , row).transformed ,
         };
 
-        apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
+        //apiManager.GameDataAPI_.rows [row].infos [col] = cardInfo;
 
         if (Enum.TryParse(typeof(CardType) , cardInfo.name , out var cardType))
         {
@@ -311,6 +312,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    #region
     public void setUpDemoCards ( Card card , int col , int row )
     {
         if (!card)
@@ -467,7 +469,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-
+    #endregion
     public Sprite thecard ( CardType cardType )
     {
         

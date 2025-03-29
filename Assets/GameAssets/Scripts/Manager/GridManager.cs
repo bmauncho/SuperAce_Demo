@@ -558,6 +558,7 @@ public class GridManager : MonoBehaviour
                         }
                     }
                     cardManager.SetUpRefillCards(newCard.GetComponent<Card>() , col , row);
+                    Debug.Log(newCard.GetComponent<Card>().ActiveCardType.ToString());
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                     newCard.transform.SetParent(targetPos);
@@ -578,10 +579,7 @@ public class GridManager : MonoBehaviour
                         }));
                     cardSequence.PrependInterval(delay);
                 }
-                else
-                {
-                    cardManager.UpdateGrid(col , row);
-                }
+                cardManager.UpdateGrid(col , row);
             }
         }
 
@@ -628,7 +626,7 @@ public class GridManager : MonoBehaviour
                         .SetEase(Ease.OutQuad)
                         .OnComplete(() =>
                         {
-                            if(newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
                             {
                                 CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
                             }
@@ -636,20 +634,9 @@ public class GridManager : MonoBehaviour
                             targetPos.GetComponent<CardPos>().TheOwner = newCard;
                             CalculateObjectsPlaced();
                         }));
-                }
-            }
-        }
-    }
 
-    void AddSpins ()
-    {
-        if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-        {
-            if (CommandCentre.Instance.APIManager_.GameDataAPI_.FreeSpins > 0 &&
-                !CommandCentre.Instance.WinLoseManager_.IsWin())
-            {
-               // Debug.Log($"isWin{CommandCentre.Instance.WinLoseManager_.IsWin()}");
-                CommandCentre.Instance.FreeGameManager_.increaseSpins();
+                    cardManager.UpdateGrid(col , row);
+                }
             }
         }
     }
@@ -685,11 +672,13 @@ public class GridManager : MonoBehaviour
             yield return StartCoroutine(HandleRefill());
         }
 
+        //if won 
         if (CommandCentre.Instance.WinLoseManager_.IsWin())
         {
             Debug.Log("Handling win");
             yield return StartCoroutine(HandleWin());
         }
+        //if lost
         else
         {
             Debug.Log("handling no win");
@@ -700,6 +689,7 @@ public class GridManager : MonoBehaviour
     IEnumerator HandleRefill ()
     {
         isRefilling = false;
+        yield return null;
         yield return new WaitForSeconds(.5f);
 
         yield return new WaitUntil(() => !CommandCentre.Instance.WinLoseManager_.isWinsequence);
