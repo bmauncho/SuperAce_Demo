@@ -19,7 +19,7 @@ public class Loader : MonoBehaviour
     void loadUp ()
     {
         Tween tween = DOTween.To(() => Loadingbar.fillAmount , x => Loadingbar.fillAmount = x , 1f , load_time)
-            .OnUpdate(() => LoadingText.text = $"Loading...{Mathf.FloorToInt(loadingPercentage())}%")
+            .OnUpdate(() => LoadingText.text = $"{Mathf.FloorToInt(loadingPercentage())}%")
              .OnComplete(() =>
              {
                  ContinueBtn.gameObject.SetActive( true );

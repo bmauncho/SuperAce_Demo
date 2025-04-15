@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1212726061877189621}
   - component: {fileID: 7978470163173698830}
   - component: {fileID: 4962147774381174657}
+  - component: {fileID: 8376921955840504945}
   m_Layer: 5
   m_Name: Win
   m_TagString: Untagged
@@ -172,6 +173,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8376921955840504945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135093254576039283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4b49b61d0c84677af1f5fe68031f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myText: {fileID: 4962147774381174657}
+  CODE: L_85
 --- !u!1 &221082613415676531
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3764122578344701329}
+  - component: {fileID: 1478581276855339579}
   m_Layer: 5
   m_Name: The WinText
   m_TagString: Untagged
@@ -247,7 +263,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4951052276987099442}
   m_Father: {fileID: 2383116061625932484}
@@ -257,6 +273,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 56.37}
   m_SizeDelta: {x: 331.832, y: 164.1673}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1478581276855339579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568884202195337881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56b2b1180ff13648b774769e294aba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1095903404610789287
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,13 +368,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8730762710227721028}
   - component: {fileID: 3777853946816334932}
+  - component: {fileID: 6145912340144930380}
   m_Layer: 5
   m_Name: FreeGameWin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8730762710227721028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -380,6 +409,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6145912340144930380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487257444457278235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75b15cf9af0efe44a3bd8f3921c6450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetAmount: 10
+  currentAmount: 0
+  CurrentWinAmount: {fileID: 8297540413206439074}
+  Duration: 2.5
+  canUpdateWinnings: 0
+  TheWinAmountText: {fileID: 4815793579965319140}
 --- !u!1 &1494491503183025958
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6538025298839420831}
+  - component: {fileID: 3363957553459892929}
   m_Layer: 5
   m_Name: The WinText
   m_TagString: Untagged
@@ -416,6 +464,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 182.1}
   m_SizeDelta: {x: 331.832, y: 164.1673}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3363957553459892929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494491503183025958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56b2b1180ff13648b774769e294aba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1503776496749352844
 GameObject:
   m_ObjectHideFlags: 0
@@ -5604,7 +5664,7 @@ RectTransform:
   m_GameObject: {fileID: 2493133799402021547}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2341839437504748983}
@@ -6418,6 +6478,7 @@ GameObject:
   - component: {fileID: 1071019571370937451}
   - component: {fileID: 4056886628223896956}
   - component: {fileID: 567383119325025908}
+  - component: {fileID: 7342841948594812023}
   m_Layer: 5
   m_Name: Super
   m_TagString: Untagged
@@ -6543,6 +6604,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7342841948594812023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4050280341449421435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4b49b61d0c84677af1f5fe68031f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myText: {fileID: 567383119325025908}
+  CODE: L_84
 --- !u!1 &4086850814027921125
 GameObject:
   m_ObjectHideFlags: 0
@@ -6592,6 +6667,7 @@ GameObject:
   - component: {fileID: 631780468336953165}
   - component: {fileID: 4715199683877641533}
   - component: {fileID: 8547961774618738439}
+  - component: {fileID: 5193544596083025440}
   m_Layer: 5
   m_Name: Win
   m_TagString: Untagged
@@ -6717,6 +6793,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5193544596083025440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115723503855161102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4b49b61d0c84677af1f5fe68031f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myText: {fileID: 8547961774618738439}
+  CODE: L_83
 --- !u!1 &4122976889338326457
 GameObject:
   m_ObjectHideFlags: 0
@@ -6780,7 +6870,7 @@ RectTransform:
   m_GameObject: {fileID: 4528843249318699537}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2483615813691073705}
@@ -12415,6 +12505,7 @@ GameObject:
   - component: {fileID: 3648511934046014666}
   - component: {fileID: 8368162942762494599}
   - component: {fileID: 828743464446059564}
+  - component: {fileID: 4969436712987664825}
   m_Layer: 5
   m_Name: Super
   m_TagString: Untagged
@@ -12540,6 +12631,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4969436712987664825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295495137776162266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4b49b61d0c84677af1f5fe68031f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myText: {fileID: 828743464446059564}
+  CODE: L_82
 --- !u!1 &8300197520684582957
 GameObject:
   m_ObjectHideFlags: 0
@@ -12826,7 +12931,7 @@ RectTransform:
   m_GameObject: {fileID: 8728647324000912070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2686927908575785843}
@@ -13442,7 +13547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19946204, guid: cbaf2c9f645e7d148aa4402a74bf6e9f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19946204, guid: cbaf2c9f645e7d148aa4402a74bf6e9f, type: 3}
       propertyPath: m_Materials.Array.size
@@ -13743,7 +13848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19985258, guid: 80c6b5d330112ef41800a729a58d22e7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19985258, guid: 80c6b5d330112ef41800a729a58d22e7, type: 3}
       propertyPath: m_Materials.Array.size
@@ -13912,7 +14017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19900436, guid: 661f21b6e6d0a6543a4a1a9122f017b0, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 19900436, guid: 661f21b6e6d0a6543a4a1a9122f017b0, type: 3}
       propertyPath: m_Materials.Array.size
