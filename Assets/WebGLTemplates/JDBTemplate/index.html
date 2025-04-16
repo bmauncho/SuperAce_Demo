@@ -15,7 +15,7 @@
         <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
 
         <div id="unity-loading-bar">
-              <img src="./LogoAnim.png" alt="Example gif">
+            <img src="./LogoAnim.png" alt="Example gif">
             <div id="unity-progress-bar-back">
                 <div id="unity-progress-bar-full">
                     <div id="unity-progress-bar-empty"></div>
@@ -30,10 +30,10 @@
           navigator.serviceWorker.register("ServiceWorker.js");
         }
         });
-        console.log("Message Listener Create");
+       // console.log("Message Listener Create");
 
         window.addEventListener("message", (event) => {
-            console.log("Message Listener addded");
+            //console.log("Message Listener addded");
             console.log(event.message);
             //console.log(event.data);
 
@@ -46,15 +46,16 @@
 
             // Handle the message
             //instance.SendMessage("FetchUserInfo", "GetPageData", event.data);
-            const { action, userId, mode, gameId, language, clientId } = event.data;
+            const { action, userId, mode, gameId, language, clientId,currency } = event.data;
 
             if (action === "setUserId") {
-                console.log("Received userId in Unity iframe:", userId);
+                //console.log("Received userId in Unity iframe:", userId);
                 instance.SendMessage("FetchUserInfo", "SetPlayerId", userId);
                 instance.SendMessage("FetchUserInfo", "SetMode", mode);
                 instance.SendMessage("FetchUserInfo", "SetGameId", gameId);
                 instance.SendMessage("FetchUserInfo", "SetClientId", clientId);
                 instance.SendMessage("FetchUserInfo", "SetLanguage", language);
+                instance.SendMessage("FetchUserInfo", "SetCurrency", currency);
                 // Here, you can pass the userId to Unity using the UnityInstance API
                 if (typeof instance !== "undefined") {
                     //instance.SendMessage("FetchUserInfo", "SetUserId", userId); // Example Unity call
@@ -177,6 +178,8 @@
             instance = unityInstance;
             loadingBar.style.display = "none";
             window.parent.postMessage("RequestInfo", "*");
+            //console.log(getLocaltime());
+           // console.log(new Date().getTimezoneOffset() / -60);
            // unityInstance.SendMessage("FetchUserInfo", "SetUserId", "23");
 
         }).catch((message) => {
@@ -189,3 +192,7 @@
 </body>
 
 </html>
+
+<script>function getLocaltime() {
+        return new Date().toLocaleTimeString();
+    }</script>

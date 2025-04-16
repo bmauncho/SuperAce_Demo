@@ -1,31 +1,35 @@
-using UnityEngine;
-public enum TheInfo
+namespace Config_Assets
 {
-    Mission_Description,
-    Favorite_Info,
-    FreeGift,
-    RichCard
-}
-public class ExtraInfo : MonoBehaviour
-{
-    public InfoHolder[] TheTabs;
-    public void ShowInfo(TheInfo Which)
+    using UnityEngine;
+    public enum TheInfo
     {
-        for(int i = 0; i < TheTabs.Length; i++)
+        Mission_Description,
+        Favorite_Info,
+        FreeGift,
+        RichCard,
+        FreeGame
+    }
+    public class ExtraInfo : MonoBehaviour
+    {
+        public InfoHolder[] TheTabs;
+        public void ShowInfo(TheInfo Which)
         {
-            if (TheTabs[i].WhichInfo == Which)
+            for (int i = 0; i < TheTabs.Length; i++)
             {
-                TheTabs[i].gameObject.SetActive(true);
+                if (TheTabs[i].WhichInfo == Which)
+                {
+                    TheTabs[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    TheTabs[i].gameObject.SetActive(false);
+                }
             }
-            else
+            if (Which != TheInfo.FreeGift)
             {
-                TheTabs[i].gameObject.SetActive(false);
+                gameObject.SetActive(true);
             }
+
         }
-        if (Which != TheInfo.FreeGift)
-        {
-            gameObject.SetActive(true);
-        }
-       
     }
 }

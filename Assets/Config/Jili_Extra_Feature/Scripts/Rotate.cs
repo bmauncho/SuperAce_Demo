@@ -1,12 +1,15 @@
-using UnityEngine;
-
-public class Rotate : MonoBehaviour
+namespace Config_Assets
 {
-    public float Speed = 20;
-    public Vector3 Dir;
-    
-    void Update()
+    using UnityEngine;
+
+    public class Rotate : MonoBehaviour
     {
-        transform.Rotate(Dir * Speed * Time.deltaTime);
+        public float Speed = 20;
+        public Vector3 Dir;
+
+        void Update()
+        {
+            transform.Rotate(Dir * Speed * Time.deltaTime);
+        }
     }
 }

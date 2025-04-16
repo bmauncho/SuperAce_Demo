@@ -1,9 +1,12 @@
-using UnityEngine;
-
-public class Events : MonoBehaviour
+namespace Config_Assets
 {
-    private void OnEnable()
+    using UnityEngine;
+
+    public class Events : MonoBehaviour
     {
-        ExtraMan.Instance.fakeLoading.Open(3);
+        private void OnEnable()
+        {
+            ExtraMan.Instance.fakeLoading.Open(3);
+        }
     }
 }

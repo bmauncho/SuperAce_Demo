@@ -1,3 +1,4 @@
+using Config_Assets;
 using System.Collections;
 using System.Text;
 using TMPro;
@@ -43,8 +44,8 @@ public class GameManager : MonoBehaviour
     private const string ServerLink = "https://admin-api.ibibe.africa";
 
     public string Player_Id = "22";
-    public string Game_Id = "1234";
-    public string Client_id = "12345";
+    public string Game_Id = "32";
+    public string Client_id = "1";
 
     public string CashAmount = string.Empty;
 

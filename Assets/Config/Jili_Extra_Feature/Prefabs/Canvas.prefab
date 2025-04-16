@@ -58,7 +58,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1280, y: 720}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -115,10 +115,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce2d40bdd14a4d04b880aa73307703b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsLandScape: 0
+  IsLandScape: 1
   CurrentScale: {x: 0, y: 0}
   ScaleMultiplier: {x: 0, y: 0}
   NewScaleMultiplier: 0
+  ScaleFactor: 0
+  canvasScaler: {fileID: 5324619616962153965}
 --- !u!1001 &996141033911578831
 PrefabInstance:
   m_ObjectHideFlags: 0

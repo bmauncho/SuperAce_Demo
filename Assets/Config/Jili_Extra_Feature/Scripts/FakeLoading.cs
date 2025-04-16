@@ -1,26 +1,36 @@
-using UnityEngine;
-
-public class FakeLoading : MonoBehaviour
+namespace Config_Assets
 {
-    public float timestamp;
-    public void Open(float thet=3)
+    using UnityEngine;
+
+    public class FakeLoading : MonoBehaviour
     {
-        timestamp += thet;
-        if (timestamp > 3)
+        public float timestamp;
+        public void Open(float thet = 3)
         {
-            timestamp = 3;
+            timestamp += thet;
+            if (timestamp > 3)
+            {
+                timestamp = 3;
+            }
+            gameObject.SetActive(true);
         }
-        gameObject.SetActive(true);
-    }
-    void Update()
-    {
-        if (timestamp <0)
+        [ContextMenu("TestLoad")]
+        void TestLoading()
         {
-            gameObject.SetActive(false);
+            Open(5);
         }
-        else
+        void Update()
         {
-            timestamp -= Time.deltaTime;
+            if (!ExtraMan.Instance.games_Catalog.IsLoaded)
+                return;
+            if (timestamp < 0)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                timestamp -= Time.deltaTime;
+            }
         }
     }
 }
