@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     public string CashAmount = string.Empty;
 
     public PlayerInfo playerInfo;
-    public TMP_Text [] TransactionsText;
+    //public TMP_Text [] TransactionsText;
     public bool isDataFetched = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -59,26 +59,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Instance = this;
     }
-    private void Start ()
-    {
-        ManualStart();
-    }
-    public void ManualStart ()
-    {
-        for (int i = 0 ; i < TransactionsText.Length ; i++)
-        {
-            TransactionsText [i].text = "";
-        }
-        FetchPlayerInfo();
-    }
 
-    public void ShowTransaction ( string thetrans )
+    public void manualStart ()
     {
-        thetrans = "Transaction 15614 - 040024 -" + thetrans;
-        for (int i = 0 ; i < TransactionsText.Length ; i++)
-        {
-            TransactionsText [i].text = thetrans;
-        }
+        FetchPlayerInfo();
     }
 
     public void SetUpCashAmount ()
@@ -98,6 +82,7 @@ public class GameManager : MonoBehaviour
         isDataFetched = false;
         StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
+
     IEnumerator _FetchPlayerInfo ( string url )
     {
         using (UnityWebRequest www = UnityWebRequestHelper.GetWithTimestamp(url))
@@ -122,101 +107,6 @@ public class GameManager : MonoBehaviour
             }
         } // The using block ensures www.Dispo
     }
-
-    [ContextMenu("ListCustomers")]
-    public void ListCustomers ()
-    {
-        StartCoroutine(_FetchCustomers(ServerLink + "/api/v1/customer/details"));
-    }
-    IEnumerator _FetchCustomers ( string url )
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
-        {
-            www.useHttpContinue = false;
-            www.SetRequestHeader("Cache-Control" , "no-cache, no-store, must-revalidate");
-            www.SetRequestHeader("Pragma" , "no-cache");
-            www.SetRequestHeader("Expires" , "0");
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-            }
-            else
-            {
-                Debug.Log("Error: " + www.error);
-            }
-        } // The using block ensures www.Dispo
-    }
-
-    public void MakeWithdrawal ( float _Amount )
-    {
-        MakeWithdrawalData Data = new MakeWithdrawalData();
-        Data.customer_id = int.Parse(Player_Id);
-        Data.amount = _Amount;
-        string jsonString = JsonUtility.ToJson(Data);
-        string TheUrl = ServerLink + "/api/withdraw/money";
-        StartCoroutine(_MakeWithdrawal(ServerLink + "/api/v1/withdraw/money" , jsonString));
-    }
-    IEnumerator _MakeWithdrawal ( string url , string bodyJsonString )
-    {
-        var request = new UnityWebRequest(url , "POST");
-        byte [] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type" , "application/json");
-        request.SetRequestHeader("Cache-Control" , "no-cache, no-store, must-revalidate");
-        request.SetRequestHeader("Pragma" , "no-cache");
-        request.SetRequestHeader("Expires" , "0");
-        yield return request.SendWebRequest();
-        //Debug.Log("Status Code: " + request.responseCode);
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Received: " + request.downloadHandler.text);
-
-            FetchPlayerInfo();
-
-        }
-        else
-        {
-            Debug.Log("Error: " + request.error);
-        }
-    }
-
-    public void AddCashAmount ( float _Amount )
-    {
-        AddCashData Data = new AddCashData();
-        Data.transaction_id = UnityEngine.Random.Range(100 , 10000000).ToString() + "_" + UnityEngine.Random.Range(100 , 10000000).ToString();
-        Data.customer_id = int.Parse(Player_Id);
-        Data.amount = _Amount;
-        string jsonString = JsonUtility.ToJson(Data);
-        StartCoroutine(_AddCashAmount(ServerLink + "/api/v1/add_game_payment" , jsonString));
-    }
-    IEnumerator _AddCashAmount ( string url , string bodyJsonString )
-    {
-        var request = new UnityWebRequest(url , "POST");
-        byte [] bodyRaw = Encoding.UTF8.GetBytes(bodyJsonString);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type" , "application/json");
-        request.SetRequestHeader("Cache-Control" , "no-cache, no-store, must-revalidate");
-        request.SetRequestHeader("Pragma" , "no-cache");
-        request.SetRequestHeader("Expires" , "0");
-        yield return request.SendWebRequest();
-        //Debug.Log("Status Code: " + request.responseCode);
-        if (request.result == UnityWebRequest.Result.Success)
-        {
-            Debug.Log("Received: " + request.downloadHandler.text);
-
-            FetchPlayerInfo();
-
-        }
-        else
-        {
-            Debug.Log("Error: " + request.error);
-        }
-    }
-
     public void fetchConfigData ()
     {
         Debug.Log("FetchingConfig");
