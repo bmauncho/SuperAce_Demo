@@ -137,11 +137,11 @@ public class GameManager : MonoBehaviour
                 CashAmount = playerInfo.wallet_balance;
             }
 
-            ManualStart();
+            manualStart();
         }
         else
         {
-            ManualStart();
+            manualStart();
         }
     }
 
