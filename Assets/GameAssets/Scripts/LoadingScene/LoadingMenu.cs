@@ -24,18 +24,22 @@ public class LoadingMenu : MonoBehaviour
 
     public void nextScene ()
     {
-        timestamp = Time.time + load_time;
         StartCoroutine(loadYourAsyncScene());
     }
 
     IEnumerator loadYourAsyncScene ()
     {
-        sceneHandle = mainScene.LoadSceneAsync(LoadSceneMode.Additive , false);
+        sceneHandle = Addressables.LoadSceneAsync(mainScene,LoadSceneMode.Additive , false);
         yield return sceneHandle;
 
         if (sceneHandle.Status != AsyncOperationStatus.Succeeded)
         {
             Debug.LogError("Failed to load scene from Addressables.");
+        }
+
+        if (sceneHandle.Status == AsyncOperationStatus.Succeeded)
+        {
+            Debug.Log("Scene loaded successfully.");
         }
     }
 
@@ -53,8 +57,7 @@ public class LoadingMenu : MonoBehaviour
 
         yield return new WaitUntil(() =>
             sceneHandle.IsValid() &&
-            sceneHandle.PercentComplete >= 0.9f &&
-            Time.time > timestamp);
+            sceneHandle.PercentComplete >= 0.9f);
 
         if (ConfigMan.Instance.IsDemo)
         {
@@ -68,13 +71,12 @@ public class LoadingMenu : MonoBehaviour
             GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
         }
 
-        button.GetComponent<Button>().interactable = false;
         ConfigMan.Instance.TheDebugObj.SetActive(false);
         isPressed = false;
 
         // Now activate the loaded scene
         yield return sceneHandle.Result.ActivateAsync();
-
+        SceneManager.UnloadSceneAsync(0);
         yield return new WaitForSeconds(0.5f);
     }
 }
