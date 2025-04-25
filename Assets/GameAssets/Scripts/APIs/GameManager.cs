@@ -1,7 +1,4 @@
-using Config_Assets;
 using System.Collections;
-using System.Text;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 [System.Serializable]
@@ -18,63 +15,54 @@ public class PlayerInfo
     public string last_bet_date;
     public string last_win_date;
 }
-[System.Serializable]
-public class AddCashData
-{
-    public int customer_id = 12;
-    public string payment_method = "visa";
-    public string transaction_id = "HGFBTNNRKgagagaT";
-    public float amount = 20;
-}
-[System.Serializable]
-public class AddCashResponse
-{
-
-}
-
-[System.Serializable]
-public class MakeWithdrawalData
-{
-    public int customer_id = 12;
-    public float amount = 20;
-}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     private const string ServerLink = "https://admin-api.ibibe.africa";
-
-    public string Player_Id = "22";
-    public string Game_Id = "32";
-    public string Client_id = "1";
-
-    public string CashAmount = string.Empty;
-
-    public PlayerInfo playerInfo;
-    //public TMP_Text [] TransactionsText;
-    public bool isDataFetched = false;
+    [SerializeField] private bool isDataFetched = false;
+    [SerializeField] private string Player_Id;
+    [SerializeField] private string Game_Id;
+    [SerializeField] private string Client_id;
+    [SerializeField] private string CashAmount = string.Empty;
+    [SerializeField] private PlayerInfo playerInfo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    private void Awake ()
+    void Start()
     {
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(gameObject);
         Instance = this;
     }
 
-    public void manualStart ()
+    public void FetchConfigData ()
     {
-        FetchPlayerInfo();
-    }
-
-    public void SetUpCashAmount ()
-    {
-        if (ConfigMan.Instance.IsDemo)
+        Debug.Log("FetchingConfig");
+        if (ConfigMan.Instance.ReceivedConfigs)
         {
-            CashAmount = "2000";
+
+            if (!string.IsNullOrEmpty(Player_Id))
+            {
+                Player_Id = ConfigMan.Instance.PlayerId;
+            }
+
+            if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
+            {
+                Game_Id = ConfigMan.Instance.GameId;
+            }
+
+            if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
+            {
+                Client_id = ConfigMan.Instance.ClientId;
+            }
+
+            if (ConfigMan.Instance.IsDemo)
+            {
+                CashAmount = "2000";
+            }
+
+            FetchPlayerInfo();
         }
         else
         {
-            CashAmount = playerInfo.wallet_balance;
+            FetchPlayerInfo();
         }
     }
 
@@ -98,63 +86,39 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
                 playerInfo = JsonUtility.FromJson<PlayerInfo>(www.downloadHandler.text);
+                CashAmount = playerInfo.wallet_balance;
                 isDataFetched = true;
-                // CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(playerInfo.wallet_balance));
             }
             else
             {
                 isDataFetched = true;
                 Debug.Log("Error: " + www.error);
-            }
-        } // The using block ensures www.Dispo
-    }
-    public void fetchConfigData ()
-    {
-        Debug.Log("FetchingConfig");
-        if (ConfigMan.Instance.ReceivedConfigs)
-        {
-
-            if (!string.IsNullOrEmpty(Player_Id))
-            {
-                Player_Id = ConfigMan.Instance.PlayerId.ToString();
-            }
-
-            if (!string.IsNullOrEmpty(ConfigMan.Instance.GameId))
-            {
-                Game_Id = ConfigMan.Instance.GameId.ToString();
-            }
-
-            if (!string.IsNullOrEmpty(ConfigMan.Instance.ClientId))
-            {
-                Client_id = ConfigMan.Instance.ClientId.ToString();
-            }
-
-            if (ConfigMan.Instance.IsDemo)
-            {
                 CashAmount = "2000";
             }
-            else
-            {
-                CashAmount = playerInfo.wallet_balance;
-            }
-
-            manualStart();
-        }
-        else
-        {
-            manualStart();
-        }
+        } 
     }
 
-    public void UpdateAmount ()
+    public bool IsDataFetched ()
     {
-        if (ConfigMan.Instance.IsDemo)
-        {
-            CashAmount = "2000";
-        }
-        else
-        {
-            CashAmount = playerInfo.wallet_balance;
-        }
+        return isDataFetched;
+    }
+
+    public string GetPlayerId ()
+    {
+        return Player_Id;
+    }
+
+    public string GetGameId ()
+    {
+        return Game_Id;
+    }
+
+    public string GetClientId ()
+    {
+        return Client_id;
+    }
+    public string GetCashAmount ()
+    {
+        return CashAmount;
     }
 }

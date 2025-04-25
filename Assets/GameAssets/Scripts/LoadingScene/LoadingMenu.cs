@@ -48,35 +48,35 @@ public class LoadingMenu : MonoBehaviour
         if (isPressed) return;
 
         isPressed = true;
-        StartCoroutine(Activation());
+        //StartCoroutine(Activation());
     }
 
-    public IEnumerator Activation ()
-    {
-        GameManager.Instance.fetchConfigData();
+    //public IEnumerator Activation ()
+    //{
+    //    //GameManager.Instance.fetchConfigData();
 
-        yield return new WaitUntil(() =>
-            sceneHandle.IsValid() &&
-            sceneHandle.PercentComplete >= 0.9f);
+    //    yield return new WaitUntil(() =>
+    //        sceneHandle.IsValid() &&
+    //        sceneHandle.PercentComplete >= 0.9f);
 
-        if (ConfigMan.Instance.IsDemo)
-        {
-            GameManager.Instance.CashAmount = "2000";
-        }
-        else
-        {
-            yield return new WaitUntil(() =>
-                !string.IsNullOrEmpty(GameManager.Instance.playerInfo.wallet_balance) &&
-                GameManager.Instance.isDataFetched);
-            GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
-        }
+    //    if (ConfigMan.Instance.IsDemo)
+    //    {
+    //        GameManager.Instance.CashAmount = "2000";
+    //    }
+    //    else
+    //    {
+    //        yield return new WaitUntil(() =>
+    //            !string.IsNullOrEmpty(GameManager.Instance.playerInfo.wallet_balance) &&
+    //            GameManager.Instance.isDataFetched);
+    //        GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
+    //    }
 
-        ConfigMan.Instance.TheDebugObj.SetActive(false);
-        isPressed = false;
+    //    ConfigMan.Instance.TheDebugObj.SetActive(false);
+    //    isPressed = false;
 
-        // Now activate the loaded scene
-        yield return sceneHandle.Result.ActivateAsync();
-        SceneManager.UnloadSceneAsync(0);
-        yield return new WaitForSeconds(0.5f);
-    }
+    //    // Now activate the loaded scene
+    //    yield return sceneHandle.Result.ActivateAsync();
+    //    SceneManager.UnloadSceneAsync(0);
+    //    yield return new WaitForSeconds(0.5f);
+    //}
 }

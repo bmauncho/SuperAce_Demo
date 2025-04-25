@@ -79,6 +79,7 @@ public class GameDataAPI : MonoBehaviour
     [ContextMenu("FetchInfo")]
     public void FetchInfo ()
     {
+        isDataFetched = false;
         Debug.Log("Fetching Card Data!");
         if (CommandCentre.Instance.GridManager_.isRefilling) return; // Prevent API call during refilling
         _GameInfo Data = new _GameInfo();
@@ -165,6 +166,7 @@ public class GameDataAPI : MonoBehaviour
 
         if (response?.message == "Could not process request at this time")
         {
+            Debug.Log(response?.message);
             isDone = true;
             isDataFetched = false;
             yield break;
@@ -216,7 +218,7 @@ public class GameDataAPI : MonoBehaviour
             isDataFetched = true;
             //Debug.Log("Is Data fetched :" + isDataFetched + "at GameDataApi");
         }
-        
+        Debug.Log("Finished");
     }
 
 
