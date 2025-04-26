@@ -1,11 +1,152 @@
 using UnityEngine;
 using System.Runtime.InteropServices;
 using UnityEngine.UI;
+using System;
+using Config_Assets;
 public class FetchUserInfo : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern string getLocaltime();
+    public string theurl;
     public ConfigMan configMan;
-    public Toggle DemoToggle;
-   
+    [System.Serializable]
+    public class GameData
+    {
+        public string currency;
+        public string clientId;
+        public string gameId;
+        public string language;
+        public string mode;
+        public string token;
+        public string userId;
+        public string timestamp;
+    }
+    public GameData data;
+    private void Start()
+    {
+        CheckUrl();
+    }
+    void CheckUrl()
+    {
+        //string theurl = "https://crazy777-73k.pages.dev/?data=tf44b2k3okJFt9pGNyYRuixDm3dsOeOWHPU/O1ljGkwmLaIiAXyDTdqJVoK7VVNcvSDYqwuRK5jY3SBxShazLzJ5R+QJK92quO+MUKSCGYXTITqWIEQsNRvXjtrlSAbm2v4R/iS65S6q/et+HmnmE0XYMybNY/L9UEG6f+o/svXWmwlxThOWTUHFJhjRLhgMaCQS1fUHV5PK319TfGM40GDqKj9OrlW2nZ+FZ/RCJ6k5J3iIn4JtN2gYowHgYbokUrEexMUv+99be1bUwMQFLEbvnE8XozdN9ekkS7gdEBg=";
+        if (!Application.isEditor)
+        {
+            theurl = GetComponent<URLReader>().ReadURL();
+        }
+        string[] tockens = theurl.Split("data=");
+        for(int i = 0; i < tockens.Length; i++)
+        {
+            //Debug.Log(tockens[i]);
+        }
+        //tockens = tockens[tockens.Length-1].Split("data=");
+        if (tockens.Length <2)
+            return;
+        string thetocken=tockens[1];
+       // Debug.Log(thetocken);
+        string DecryptedText = GetComponent<UrlDecryptTocken>().DecryptString(thetocken);
+       // Debug.Log(DecryptedText);
+
+        data = JsonUtility.FromJson<GameData>(DecryptedText);
+
+       
+        //TimeSpan ToMidnight = TimeSpan.FromHours(24) - TimeSpan;
+      //  float TimeElapsed=
+       // data.TimestampTime = localTime;
+       // data.timestamp = localTime.ToString();
+        if (data.userId != "")
+        {
+            SetPlayerId(data.userId);
+            SetClientId(data.clientId);
+            SetGameId(data.gameId);
+            SetLanguage(data.language);
+            SetMode(int.Parse(data.mode));
+            //SetMode(data.mode);
+            SetCurrency(data.currency);
+            SetLanguage(data.language);
+
+            string isoTime = data.timestamp;
+            DateTime utcTime = DateTime.Parse(isoTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            DateTime localTime = utcTime.ToLocalTime();
+            //Debug.Log("Local Time: " + localTime.ToString());
+            double timediff = GetTimeElapsed(localTime).TotalSeconds;
+            if (timediff > (60 * 10))
+            {
+               // Debug.Log("ShouldQuit");
+                configMan.ExpiredSessionObj.SetActive(true);
+                //Application.Quit();
+            }
+
+        }
+        
+      //  Debug.Log(GetTimeElapsed(localTime).TotalSeconds);
+        // Debug.Log("TheUrl_"+theurl);
+    }
+    public TimeSpan GetTimeElapsed(DateTime Timestamp)
+    {
+        DateTime currenttime = CurrentTime();
+        TimeSpan Diff = currenttime-Timestamp;
+        return Diff;
+    }
+    public DateTime CurrentTime()
+    {
+        DateTime appStart = LocalTime();
+        return appStart;
+    }
+    public DateTime LocalTime()
+    {
+        DateTime thetime = new DateTime();
+        if (Application.isEditor)
+        {
+            thetime = System.DateTime.Now;
+        }
+        else
+        {
+            string _thetime = getLocaltime();
+            thetime = ParseString(_thetime);
+        }
+        return thetime;
+    }
+    public DateTime ParseString(string TheDate)
+    {
+        // Original date string
+        string dateString = TheDate;
+
+        // Step 1: Clean the string by removing the day of the week and timezone info
+        string cleanDateString = dateString.Split('(')[0].Trim(); // Remove anything after the first '('
+        cleanDateString = cleanDateString.Replace("GMT", "").Trim(); // Remove the GMT part
+
+        // Step 2: Reformat the string to a standard format (yyyy-MM-dd HH:mm:ss)
+        // The clean string should look like: "Mar 26 2025 16:04:17"
+        // Convert it to the format "2025-03-26 16:04:17"
+
+        string[] dateParts = cleanDateString.Split(' '); // Split the string by spaces
+        string month = dateParts[1]; // "Mar"
+        string day = dateParts[2]; // "26"
+        string year = dateParts[3]; // "2025"
+        string time = dateParts[4]; // "16:04:17"
+
+        // Convert month name to month number
+        string monthNumber = DateTime.ParseExact(month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month.ToString("D2");
+
+        // Construct the formatted string as "yyyy-MM-dd HH:mm:ss"
+        string formattedDateString = $"{year}-{monthNumber}-{day} {time}";
+
+        // Step 3: Try parsing the newly formatted string
+        DateTime parsedDate = new DateTime();
+        if (DateTime.TryParseExact(formattedDateString, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out parsedDate))
+        {
+            // Successfully parsed the date
+            // Debug.Log("Parsed DateTime: " + parsedDate);
+            return parsedDate;
+        }
+        else
+        {
+            // Parsing failed
+            // Debug.LogError("Failed to parse date string.");
+
+        }
+        return parsedDate;
+    }
     public void SetPlayerId(string userId)
     {
         configMan.PassPlayerId(userId);
@@ -24,24 +165,31 @@ public class FetchUserInfo : MonoBehaviour
         {
             configMan.IsDemo = false;
         }
-        if (DemoToggle)
+        if (configMan.DemoToggle)
         {
-            DemoToggle.isOn = configMan.IsDemo;
+           configMan.DemoToggle.isOn = configMan.IsDemo;
         }
     }
-    public void SetGameId(int id)
+  
+    public void SetGameId(string id)
     {
 
         //Debug.Log("TheGameId: " + id.ToString());
-        configMan.PassGameId(id.ToString());
-       configMan.GameIdText.text =  id.ToString();
+        configMan.PassGameId(id);
+       configMan.GameIdText.text =  id;
 
     }
-    public void SetClientId(int id)
+    public void SetClientId(string id)
     {
         //Debug.Log("TheGameId: " + id.ToString());
-        configMan.PassClientId(id.ToString());
-       configMan.ClientIdText.text = id.ToString();
+        configMan.PassClientId(id);
+       configMan.ClientIdText.text = id;
+
+    }
+    public void SetCurrency(string Which)
+    {
+        Debug.Log("TheCurrency: " + Which.ToString());
+        configMan.PassCurrency(Which);
 
     }
     public void SetLanguage(string id)

@@ -1,12 +1,15 @@
-using UnityEngine;
-using TMPro;
-public class JiliLevelText : MonoBehaviour
+namespace Config_Assets
 {
-    public TMP_Text TheText;
-    void Update()
+    using UnityEngine;
+    using TMPro;
+    public class JiliLevelText : MonoBehaviour
     {
-        string TheString = "Current JILI LV";
-        TheString = Extra_LanguageMan.instance.FetchTranslation(TheString);
-        TheText.text = TheString+" " + ExtraMan.Instance.giftsMan.GetJiliLevel().ToString();
+        public TMP_Text TheText;
+        void Update()
+        {
+            string TheString = "Current JILI LV";
+            TheString = Extra_LanguageMan.instance.FetchTranslation(TheString);
+            TheText.text = TheString + " " + ExtraMan.Instance.giftsMan.GetJiliLevel().ToString();
+        }
     }
 }

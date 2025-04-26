@@ -8,13 +8,17 @@ public class ViewMan : MonoBehaviour
 {
     public bool IsLandScape;
     public Vector2 CurrentScale;
-    Vector2 RefScale=new Vector2(1280,720);
+    Vector2 RefScale = new Vector2(1280, 720);
     public Vector2 ScaleMultiplier;
     public float NewScaleMultiplier;
+    public float ScaleFactor;
     float forceupdatetimestamp;
     public CanvasScaler canvasScaler;
+    AnimationCurve ScaleCurve = new AnimationCurve();
     private void Start()
     {
+        ScaleCurve.AddKey(0, 1.5f);
+        ScaleCurve.AddKey(1, 1);
         forceupdatetimestamp = Time.time + 3;
         RefreshAll();
     }
@@ -24,9 +28,9 @@ public class ViewMan : MonoBehaviour
         ScaleMultiplier.x = RefScale.x / CurrentScale.x;
         ScaleMultiplier.y = RefScale.y / CurrentScale.y;
         NewScaleMultiplier = (ScaleMultiplier.x / ScaleMultiplier.y);
-        if (NewScaleMultiplier > 1.5f)
+        if (NewScaleMultiplier > 1.21f)
         {
-            if (IsLandScape||forceupdatetimestamp>Time.time)
+            if (IsLandScape || forceupdatetimestamp > Time.time)
             {
                 SetPotrait();
             }
@@ -40,23 +44,30 @@ public class ViewMan : MonoBehaviour
         }
         if (canvasScaler)
         {
-            if (NewScaleMultiplier < 2.9f)
+            ScaleFactor = ((3.2f / NewScaleMultiplier));
+            ScaleFactor *= ScaleCurve.Evaluate(ScaleFactor);
+            if (NewScaleMultiplier < 3.2f)
             {
-                canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+                canvasScaler.matchWidthOrHeight = 1;
+
+                // canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+                canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             }
             else
             {
+                canvasScaler.matchWidthOrHeight = ScaleFactor;
+
                 canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             }
         }
 
     }
-    
+
     [ContextMenu("Landscape")]
     public void SetLandscape()
     {
         IsLandScape = true;
-      
+
         RefreshAll();
     }
     [ContextMenu("Potrait")]
@@ -67,8 +78,8 @@ public class ViewMan : MonoBehaviour
     }
     void RefreshAll()
     {
-        ViewControl[] views=FindObjectsOfType<ViewControl>();
-        for(int i = 0; i < views.Length; i++)
+        ViewControl[] views = FindObjectsOfType<ViewControl>();
+        for (int i = 0; i < views.Length; i++)
         {
             views[i].Refresh();
         }
@@ -77,7 +88,7 @@ public class ViewMan : MonoBehaviour
         {
             viewsObj[i].Refresh();
         }
-       
+
 #if UNITY_EDITOR
         if (!Application.isPlaying)
         {

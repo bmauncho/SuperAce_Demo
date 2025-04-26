@@ -1,10 +1,13 @@
-using UnityEngine;
-
-public class InfoBtn : MonoBehaviour
+namespace Config_Assets
 {
-    public TheInfo theInfo;
-    public void Pressed()
+    using UnityEngine;
+
+    public class InfoBtn : MonoBehaviour
     {
-        ExtraMan.Instance.infoTab.ShowInfo(theInfo);
+        public TheInfo theInfo;
+        public void Pressed()
+        {
+            ExtraMan.Instance.infoTab.ShowInfo(theInfo);
+        }
     }
 }

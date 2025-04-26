@@ -1,11 +1,14 @@
-using UnityEngine;
-using TMPro;
-public class MissionCountdownText : MonoBehaviour
+namespace Config_Assets
 {
-    public TMP_Text TimeText;
-  
-    void Update()
+    using UnityEngine;
+    using TMPro;
+    public class MissionCountdownText : MonoBehaviour
     {
-        TimeText.text = ExtraMan.Instance.missionsMan.GetTime();
+        public TMP_Text TimeText;
+
+        void Update()
+        {
+            TimeText.text = ExtraMan.Instance.missionsMan.GetTime();
+        }
     }
 }

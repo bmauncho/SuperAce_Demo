@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1605375483383027245}
   - component: {fileID: 8103334293320232336}
+  - component: {fileID: 9176973539931826550}
+  - component: {fileID: 437604835640908597}
   m_Layer: 0
   m_Name: FetchUserInfo
   m_TagString: Untagged
@@ -45,7 +47,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configMan: {fileID: 0}
-  DemoToggle: {fileID: 0}
-  Test_PlayerId: 5
-  Test_GameId: 20
-  Test_ClientId: 100
+--- !u!114 &9176973539931826550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629232463755467495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac5bec74764245559c87d9a777088dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &437604835640908597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629232463755467495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae10053b406d342ef893c4b9ac8f3c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalText: 
+  encryptedText: WoDChCdH8cJVdGVQVtwF2ISiv2E/d4tKz9nAIgLbHaMF9KMjcQmlj0poaFUq1z4/vLo/rdKUoh5DVUxp4DYLjosIZHEa40jioSlL6qmseCtYE5LjdPrtp1f5WC2enO16zKbWdJZ+7FehhjSLW3b2SjF19spHJRSxVxqN9mo/c5l2YxpPQFJj9VzfOcvFLoDdTEc6CufHzLvJ+pAnRZzKzCL0v/0HtJCSQnVGqczwcIWwnUEka7dER1bM4UgkZG4R8zgV4MHPmZNtgYGoieCQNpCGRUrD3RwcGGKPapJWvRE=
+  decryptedText: '{"currency":"usd","gameId":"12","language":"en","mode":"1","token":"5f49347bb8404c54cb920d0f5252bac4dbaf1f0d6794e197f11ad22a82a1edde","userId":"5f49347bb8404c54cb920d0f5252bac4dbaf1f0d6794e197f11ad22a82a1edde"}'
+  key: BsPi9P8ERUUO2ggT
+  iv: nHT+A7JiElP4pe3P

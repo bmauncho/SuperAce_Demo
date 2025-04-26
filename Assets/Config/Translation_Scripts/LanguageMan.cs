@@ -47,13 +47,13 @@ public class LanguageMan : MonoBehaviour
         RefreshAll();
         if (Data.Length == 0)
         {
-            
+
 
         }
         SetExtraLanguage();
 
     }
-   
+
 
     public string RequestForText(string CODE)
     {
@@ -61,7 +61,7 @@ public class LanguageMan : MonoBehaviour
         {
             if (CODE == Data[i])
             {
-                return Data[i + (int)ActiveLanguage+1];
+                return Data[i + (int)ActiveLanguage + 1];
             }
         }
 
@@ -73,7 +73,7 @@ public class LanguageMan : MonoBehaviour
         if (!Application.isPlaying)
             return;
         FetchTextController[] texts = FindObjectsOfType<FetchTextController>();
-        for(int i = 0; i < texts.Length; i++)
+        for (int i = 0; i < texts.Length; i++)
         {
             texts[i].RefreshFetch();
         }
@@ -89,11 +89,11 @@ public class LanguageMan : MonoBehaviour
             string thetext = texts[i].GetComponent<TMP_Text>().text;
             for (int r = 0; r < Data.Length; r++)
             {
-//                Debug.Log(Data[r]);
+                //                Debug.Log(Data[r]);
                 if (Data[r] == thetext)
                 {
                     Debug.Log(Data[r]);
-
+                    texts[i].myText = texts[i].GetComponent<TextMeshProUGUI>();
                     texts[i].CODE = Data[r - 1];
 #if UNITY_EDITOR
                     EditorUtility.SetDirty(texts[i]);
@@ -101,7 +101,7 @@ public class LanguageMan : MonoBehaviour
                     found = true;
                     break;
                 }
-                
+
             }
             if (!found)
             {

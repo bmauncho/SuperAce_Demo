@@ -31,27 +31,27 @@ public class LoadingMenu : MonoBehaviour
     {
         if (isPressed) {return; }
         isPressed = true;
-        StartCoroutine(Activation());
+        //StartCoroutine(Activation());
     }
 
     public IEnumerator Activation ()
     {
-        GameManager.Instance.fetchConfigData();
-        yield return new WaitUntil(() => asyncOperation.progress >= 0.9f && Time.time > timestamp);
-        if (ConfigMan.Instance.IsDemo)
-        {
-            GameManager.Instance.CashAmount = "2000";
-        }
-        else
-        {
-            yield return new WaitUntil(() => !string.IsNullOrEmpty( GameManager.Instance.playerInfo.wallet_balance ) && GameManager.Instance.isDataFetched);
-            GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
-        }
-        button.GetComponent<Button>().interactable = false;
-        ConfigMan.Instance.TheDebugObj.SetActive(false);
-        isPressed = false;
-        asyncOperation.allowSceneActivation = true;
-        yield return new WaitForSeconds(.5f);
+        //GameManager.Instance.fetchConfigData();
+        //yield return new WaitUntil(() => asyncOperation.progress >= 0.9f && Time.time > timestamp);
+        //if (ConfigMan.Instance.IsDemo)
+        //{
+        //    GameManager.Instance.CashAmount = "2000";
+        //}
+        //else
+        //{
+        //    yield return new WaitUntil(() => !string.IsNullOrEmpty( GameManager.Instance.playerInfo.wallet_balance ) && GameManager.Instance.isDataFetched);
+        //    GameManager.Instance.CashAmount = GameManager.Instance.playerInfo.wallet_balance;
+        //}
+        //button.GetComponent<Button>().interactable = false;
+        //ConfigMan.Instance.TheDebugObj.SetActive(false);
+        //isPressed = false;
+        //asyncOperation.allowSceneActivation = true;
+        //yield return new WaitForSeconds(.5f);
         yield return null ;
     }
 

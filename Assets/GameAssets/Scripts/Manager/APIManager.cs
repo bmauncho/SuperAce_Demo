@@ -54,10 +54,10 @@ public class APIManager : MonoBehaviour
 
     void SetUP ()
     {
-        Client_id = int.Parse(GameManager.Instance.Client_id);
-        Game_Id = int.Parse(GameManager.Instance.Game_Id);
-        Player_Id = int.Parse(GameManager.Instance.Player_Id);
-        CashAmount = GameManager.Instance.CashAmount;
+        Client_id = int.Parse(GameManager.Instance.GetClientId());
+        Game_Id = int.Parse(GameManager.Instance.GetGameId());
+        Player_Id = int.Parse(GameManager.Instance.GetPlayerId());
+        CashAmount = GameManager.Instance.GetCashAmount();
         CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(CashAmount));
     }
 

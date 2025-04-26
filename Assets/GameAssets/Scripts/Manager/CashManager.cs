@@ -15,7 +15,7 @@ public class CashManager : MonoBehaviour
 
     private void Start ()
     {
-        float newCashAmount = float.Parse(GameManager.Instance.CashAmount);
+        float newCashAmount = float.Parse(GameManager.Instance.GetCashAmount());
         Debug.Log($"current Amount {newCashAmount}");
         UpdateCashAmount(newCashAmount);
     }

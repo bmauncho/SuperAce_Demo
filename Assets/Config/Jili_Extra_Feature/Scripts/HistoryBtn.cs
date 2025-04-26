@@ -1,10 +1,18 @@
-using UnityEngine;
-
-public class HistoryBtn : MonoBehaviour
+namespace Config_Assets
 {
-    public string TheName = "Game_A";
-    public void Pressed()
+    using UnityEngine;
+    using UnityEngine.UI;
+    public class HistoryBtn : MonoBehaviour
     {
-        GetComponentInParent<HistoryMan>().OpenHistory(this);
+        public string TheName = "Game_A";
+        public Image TheImg;
+        public void Pressed()
+        {
+            GetComponentInParent<HistoryMan>().OpenHistory(this);
+        }
+        public void UpdateImage(Sprite _S)
+        {
+            TheImg.sprite = _S;
+        }
     }
 }

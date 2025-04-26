@@ -14,17 +14,21 @@ public class ConfigMan : MonoBehaviour
     public string PlayerId;
     public string GameId;
     public string ClientId;
+    public string Currency;
     public ConfigRefresh Refresh;
-
+    public CurrencyMan currencyMan;
 
     [Header("Debug Canvas")]
     public GameObject TheDebugObj;
     public TMP_InputField PlayerIdText;
     public TMP_InputField GameIdText;
     public TMP_InputField ClientIdText;
+    public Toggle DemoToggle;
+    public GameObject ExpiredSessionObj;
 
     void Start()
     {
+
         DontDestroyOnLoad(this);
         Instance = this;
         if (!Application.isEditor)
@@ -63,23 +67,33 @@ public class ConfigMan : MonoBehaviour
     {
         PlayerId = TheId;
         ReceivedConfigs = true;
-        Debug.Log("TheFetchedPlayerIdIs_" + TheId);
+       // Debug.Log("TheFetchedPlayerIdIs_" + TheId);
         Invoke(nameof(RefreshConfig), 0.1f);
     }
     void RefreshConfig()
     {
+        Debug.Log("ConfigReceived" +
+            "\nPlayerId:" + PlayerId +
+            "\nClientId:" + ClientId + "" +
+            "\nGameId:" + GameId+"" +
+            "\nDemoMode:"+IsDemo.ToString());
         Refresh.Invoke();
 
+    }
+    public void PassCurrency(string Which)
+    {
+        Currency = Which;
+        // Debug.Log("TheFetchedGameIdIs_" + GameId);
     }
     public void PassGameId(string Id)
     {
         GameId = Id;
-        Debug.Log("TheFetchedGameIdIs_" + GameId);
+       // Debug.Log("TheFetchedGameIdIs_" + GameId);
     }
     public void PassClientId(string Id)
     {
         ClientId = Id;
-        Debug.Log("TheFetchedClientIdIs_" + ClientId);
+       // Debug.Log("TheFetchedClientIdIs_" + ClientId);
     }
     public void CheckTextInput()
     {

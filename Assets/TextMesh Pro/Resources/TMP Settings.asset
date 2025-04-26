@@ -34,18 +34,10 @@ MonoBehaviour:
   m_autoSizeTextContainer: 0
   m_IsTextObjectScaleStatic: 0
   m_fallbackFontAssets:
-  - {fileID: 11400000, guid: dfb2a0701c7796b42b9d6caf871206b6, type: 2}
-  - {fileID: 11400000, guid: 03e09f045ea0fdc47a2c7c2ffc769ae6, type: 2}
-  - {fileID: 11400000, guid: 65092e959f77ced4eb09c3864f633dba, type: 2}
-  - {fileID: 11400000, guid: 496f86f99ee9d424faa51e9e5ce63b85, type: 2}
-  - {fileID: 11400000, guid: 157a16d0d8a6d044f8aff582ce2278aa, type: 2}
-  - {fileID: 11400000, guid: 9a471983f9d0a5b4fb9338bc942b5e0a, type: 2}
-  - {fileID: 11400000, guid: 7741b8a2ac861844699cee54e8e77c4c, type: 2}
-  - {fileID: 11400000, guid: 8fe9f51e5d1c00e439e39e53e563d20f, type: 2}
-  - {fileID: 11400000, guid: 533a0ce72ee242e468205b063d363edb, type: 2}
-  - {fileID: 11400000, guid: ce17d247bed03a64c979d3bf27a3268b, type: 2}
-  - {fileID: 11400000, guid: a17abeda36fc2f94c96da6eff6bf4cf3, type: 2}
-  - {fileID: 11400000, guid: 136e9eecc6b78254fb8f4957946d90b6, type: 2}
+  - {fileID: 11400000, guid: 8da73d23d37674d2180cfa146ecaf85c, type: 2}
+  - {fileID: 11400000, guid: 0bd6040c0b4e04929837297c08185c3b, type: 2}
+  - {fileID: 11400000, guid: bf2d33e6d270f4e1885375ebe09ffc8d, type: 2}
+  - {fileID: 11400000, guid: 57dbf8ac12fa4472baba087396d756db, type: 2}
   m_matchMaterialPreset: 1
   m_HideSubTextObjects: 0
   m_defaultSpriteAsset: {fileID: 11400000, guid: c41005c129ba4d66911b75229fd70b45, type: 2}

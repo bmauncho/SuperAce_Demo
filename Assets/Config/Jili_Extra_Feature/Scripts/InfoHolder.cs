@@ -1,6 +1,13 @@
-using UnityEngine;
-
-public class InfoHolder : MonoBehaviour
+namespace Config_Assets
 {
-    public TheInfo WhichInfo;
+    using UnityEngine;
+
+    public class InfoHolder : MonoBehaviour
+    {
+        public TheInfo WhichInfo;
+        public void UseRichCard()
+        {
+            ExtraMan.Instance.richCardMan.richCard_ThisGame.UseRichCard();
+        }
+    }
 }

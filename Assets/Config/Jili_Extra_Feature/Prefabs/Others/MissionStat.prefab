@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4537483863740912532}
   - component: {fileID: 2842704774710390231}
   - component: {fileID: 1250919524148990364}
+  - component: {fileID: 4264679459243513787}
   m_Layer: 5
   m_Name: MissionStat
   m_TagString: Untagged
@@ -131,7 +132,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4537483863740912532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4264679459243513787}
+        m_TargetAssemblyTypeName: InfoBtn, Assembly-CSharp
+        m_MethodName: Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1250919524148990364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +162,20 @@ MonoBehaviour:
   TotalBetText: {fileID: 4150426451700907739}
   FillSlider: {fileID: 7908499178429206656}
   Level: 0
+  IconImage: {fileID: 3501172576426003274}
+--- !u!114 &4264679459243513787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41015912014746120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7405b901f66bd4cbca157b369ad1441e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theInfo: 3
 --- !u!1 &349857089209670658
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +224,7 @@ GameObject:
   - component: {fileID: 5437942228053026696}
   - component: {fileID: 3501172576426003274}
   m_Layer: 5
-  m_Name: Image
+  m_Name: IconImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,7 +277,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 801415238, guid: 27e3f8f19843247c1b59647206959a43, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab199deb91e4542d180c4e137c7a71ae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
