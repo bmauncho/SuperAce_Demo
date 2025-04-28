@@ -81555,18 +81555,18 @@ MonoBehaviour:
   - "\uB180\uB2E4"
   - "\u1000\u1005\u102C\u1038\u1015\u102B\u104B\r"
   - L_11
-  - 'Balance:'
-  - "\u5E73\u8861\uFF1A"
-  - "\u30D0\u30E9\u30F3\u30B9\uFF1A"
-  - 'Balance:'
-  - 'Salio:'
-  - 'Balance:'
-  - "\u0E2A\u0E21\u0E14\u0E38\u0E25:"
-  - 'Keseimbangan:'
-  - "S\u1EF1 c\xE2n b\u1EB1ng:"
-  - "Equil\xEDbrio:"
-  - "\uADE0\uD615:"
-  - "\u101C\u1000\u103A\u1000\u103B\u1014\u103A-\r"
+  - Balance
+  - "\u5E73\u8861"
+  - "\u30D0\u30E9\u30F3\u30B9"
+  - Balance
+  - Mizani
+  - Balance
+  - "\u0E2A\u0E21\u0E14\u0E38\u0E25"
+  - Keseimbangan
+  - "S\u1EF1 c\xE2n b\u1EB1ng"
+  - "Equil\xEDbrio"
+  - "\uADE0\uD615"
+  - "\u101C\u1000\u103A\u1000\u103B\u1014\u103A\r"
   - L_12
   - 'Bet:'
   - "\u8CED\u6CE8\uFF1A"
@@ -81600,7 +81600,7 @@ MonoBehaviour:
   - "Ha estado inactivo durante demasiado tiempo, inicie sesi\xF3n nuevamente."
   - Umekuwa bila kufanya kitu kwa muda mrefu sana, tafadhali ingia tena.
   - "Du har v\xE6ret inaktiv for l\xE6nge, \u200B\u200Blog venligst ind igen."
-  - "\u0E04\u0E38\u0E13\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E40\u0E1B\u0E47\u0E19\u0E40\u0E27\u0E25\u0E32\u0E19\u0E32\u0E19\u0E40\u0E01\u0E34\u0E19\u0E44\u0E1B
+  - "\u0E04\u0E38\u0E13\u0E44\u0E21\u0E48\u0E44\u0E14\u0E49\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E21\u0E32\u0E19\u0E32\u0E19\u0E40\u0E01\u0E34\u0E19\u0E44\u0E1B
     \u0E01\u0E23\u0E38\u0E13\u0E32\u0E40\u0E02\u0E49\u0E32\u0E2A\u0E39\u0E48\u0E23\u0E30\u0E1A\u0E1A\u0E2D\u0E35\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07"
   - Anda sudah terlalu lama menganggur, silakan login lagi.
   - "B\u1EA1n \u0111\xE3 kh\xF4ng ho\u1EA1t \u0111\u1ED9ng qu\xE1 l\xE2u, vui l\xF2ng
@@ -81682,7 +81682,7 @@ MonoBehaviour:
   - "\u5C55\u793A\u6AC3"
   - "\u30B7\u30E7\u30FC\u30B1\u30FC\u30B9"
   - Escaparate
-  - Onyesho
+  - Maonyesho
   - Udstillingsvindue
   - "\u0E15\u0E39\u0E49\u0E42\u0E0A\u0E27\u0E4C"
   - Memamerkan
@@ -81710,8 +81710,8 @@ MonoBehaviour:
   - Ukiona [][][][][][] kwenye Kichina au lugha maalum, fanya yafuatayo... /Tafuta
     "Mipangilio ya TMP" kwenye kivinjari chako /Ongeza NatoSansKR,NatoSansMyanr,NatoSansTC
     na NatoSansThai kwenye "FallBack Font Assets" kwenye "TMP Settings.
-  - "Hvis du ser [][][][][] p\xE5 kinesisk eller specialsprog, skal du g\xF8re f\xF8lgende...
-    /S\xF8g efter \"TMP-indstillinger\" p\xE5 din browser /Tilf\xF8j NatoSansKR,NatoSansMyanr,NatoSansTC
+  - "Hvis du ser [][][][][] p\xE5 kinesisk eller specialsprog, g\xF8r f\xF8lgende...
+    /S\xF8g efter \"TMP-indstillinger\" i din browser /Tilf\xF8j NatoSansKR,NatoSansMyanr,NatoSansTC
     og NatoSansThai til \"FallBack Font Assets\" p\xE5 \"TMP-indstillinger."
   - "\u0E2B\u0E32\u0E01\u0E04\u0E38\u0E13\u0E40\u0E2B\u0E47\u0E19 [][][][][] \u0E43\u0E19\u0E20\u0E32\u0E29\u0E32\u0E08\u0E35\u0E19\u0E2B\u0E23\u0E37\u0E2D\u0E20\u0E32\u0E29\u0E32\u0E1E\u0E34\u0E40\u0E28\u0E29
     \u0E43\u0E2B\u0E49\u0E17\u0E33\u0E14\u0E31\u0E07\u0E15\u0E48\u0E2D\u0E44\u0E1B\u0E19\u0E35\u0E49...
@@ -81726,9 +81726,8 @@ MonoBehaviour:
   - "N\u1EBFu b\u1EA1n th\u1EA5y [[][][][] tr\xEAn ti\u1EBFng Trung ho\u1EB7c c\xE1c
     ng\xF4n ng\u1EEF \u0111\u1EB7c bi\u1EC7t, h\xE3y l\xE0m nh\u01B0 sau... /T\xECm
     ki\u1EBFm \"C\xE0i \u0111\u1EB7t TMP\" tr\xEAn tr\xECnh duy\u1EC7t c\u1EE7a b\u1EA1n
-    /Th\xEAm NatoSansKR,NatoSansMyanr,NatoSansTC v\xE0 NatoSansThai v\xE0o \"T\xE0i
-    s\u1EA3n ph\xF4ng ch\u1EEF d\u1EF1 ph\xF2ng\" tr\xEAn \"C\xE0i \u0111\u1EB7t
-    TMP."
+    /Th\xEAm NatoSansKR,NatoSansMyanr,NatoSansTC v\xE0 NatoSansThai v\xE0o \"N\u1ED9i
+    dung ph\xF4ng ch\u1EEF d\u1EF1 ph\xF2ng\" tr\xEAn \"C\xE0i \u0111\u1EB7t TMP."
   - "Se voc\xEA vir [][][][][] em chin\xEAs ou idiomas especiais, fa\xE7a o seguinte...
     /Procure por \"Configura\xE7\xF5es TMP\" em seu navegador /Adicione NatoSansKR,NatoSansMyanr,NatoSansTC
     e NatoSansThai aos \"Ativos de fonte FallBack\" em \"Configura\xE7\xF5es TMP."
@@ -81763,7 +81762,7 @@ MonoBehaviour:
     \u101C\u102F\u1015\u103A\u1006\u1031\u102C\u1004\u103A\u1001\u103B\u1000\u103A\r"
   - L_23
   - After the  golden pocker wins, it will turn into wild in the same place
-  - "\u91D1\u64B2\u514B\u7372\u52DD\u5F8C\uFF0C \u5B83\u6703\u5728\u540C\u4E00\u500B\u5730\u65B9\u8B8A\u6210\u91CE\u751F\u7684"
+  - "\u9EC3\u91D1\u64B2\u514B\u7372\u52DD\u5F8C\uFF0C \u5B83\u6703\u5728\u540C\u4E00\u500B\u5730\u65B9\u8B8A\u6210\u91CE\u751F\u7684"
   - "\u30B4\u30FC\u30EB\u30C7\u30F3\u30DD\u30C3\u30AB\u30FC\u304C\u52DD\u3063\u305F\u5F8C\u3001
     \u540C\u3058\u5834\u6240\u3067\u91CE\u751F\u5316\u3059\u308B\u3060\u308D\u3046"
   - "Despu\xE9s de que gane la ficha dorada, se volver\xE1 salvaje en el mismo lugar"
@@ -82121,7 +82120,7 @@ MonoBehaviour:
     pekee. 5. "Alama ya Joker" mbadala kwa wote     alama isipokuwa Tawanya.'
   - "1. \"Joker-symbolet\" transformerer kun      fra \"Gyldent Symbol\" af     
     eliminering. 2. \"Joker-kortet\" kommer i to      tilstande: \"Big Joker Card\"
-    og      \"Lille Joker Card\". 3. Landing \"Big Joker Symbol\", det      vil erstatte
+    og      \"Lille Joker-kort\". 3. Landing \"Big Joker Symbol\", det      vil erstatte
     1 til 4 antal      symboler (undtagen scatter og     Joker Symbol) tilf\xE6ldigt
     v\xE6lge p\xE5      hjul 2 til 5 af \"Big Joker Symbol\". 4. Lander \"Lille Joker-symbolet\",    
     Det \"gyldne symbol\" forvandles til      Kun \"Joker Symbol\". 5. \"Joker Symbol\"
@@ -82478,8 +82477,8 @@ MonoBehaviour:
     x2, x4, x6, x10 \uB808\uBCA8(\uBB34\uB8CC)       \uAC8C\uC784. 3. \uBB34\uB8CC
     \uAC8C\uC784\uC758 \uADDC\uCE59\uC740 \uB2E4\uC74C\uACFC \uAC19\uC2B5\uB2C8\uB2E4.     
     \uC77C\uBC18\uC801\uC778 \uAC8C\uC784, \uC720\uC77C\uD55C \uCC28\uC774\uC810     
-    \"\uCF64\uBCF4 \uC2B9\uC218\" \uC218\uC900\uC5D0\uC11C. 4. Free\uC5D0\uC11C 3
-    \" \" \uCC29\uB959      \uAC8C\uC784\uC740 \uCD94\uAC00 5\uB97C \uBB34\uB8CC\uB85C
+    \"\uCF64\uBCF4 \uC2B9\uC218\" \uC218\uC900\uC5D0\uC11C. 4. Free\uC5D0 3 \" \"
+    \uCC29\uB959      \uAC8C\uC784\uC740 \uCD94\uAC00 5\uB97C \uBB34\uB8CC\uB85C
     \uD2B8\uB9AC\uAC70\uD569\uB2C8\uB2E4.      \uC2A4\uD0DD\uC774 \uAC00\uB2A5\uD55C
     \uC2A4\uD540."
   - "1. \u1006\u1004\u103A\u1038\u101E\u1000\u103A 3 \u101E\u102D\u102F\u1037\u1019\u101F\u102F\u1010\u103A
@@ -82576,7 +82575,7 @@ MonoBehaviour:
   - "1. Super Ace es una video tragamonedas con 5      carretes, 4 filas y 1024 v\xEDas.
     2. Todas las ganancias se pagan con el carrete m\xE1s a la izquierda      justo
     en los carretes adyacentes. 3. Durante el juego, todos ganan.      Los s\xEDmbolos
-    \"voltear\xE1n\" nuevamente. despu\xE9s del     \"voltear\" aparecer\xE1n nuevos
+    \"voltear\xE1n\" nuevamente. Despu\xE9s del     \"voltear\" aparecer\xE1n nuevos
     s\xEDmbolos      reemplaz\xF3 al ganador anterior      s\xEDmbolo(s) y vuelva
     a evaluar para obtener m\xE1s informaci\xF3n.      gana. Si no hay s\xEDmbolos
     ganadores      despu\xE9s de la reevaluaci\xF3n, la actual     la cantidad ganadora
@@ -82757,7 +82756,7 @@ MonoBehaviour:
     for      spilleren modtager deres      gevinster. Hvor en afbrydelse      sker
     efter operat\xF8ren      modtager meddelelse om      kundens satsning og hvor     
     kunden kan ikke have l\xE6ngere       indflydelse p\xE5 resultatet af      begivenhed
-    eller gambling resultaterne af      gamble burde st\xE5.Et spil      runde afsluttes
+    eller gamble resultaterne af      gamble burde st\xE5.Et spil      runde afsluttes
     straks, n\xE5r      vinderloftet er n\xE5et, og      alle gevinster vil blive
     udbetalt.      Maksimal udbetaling: 10.000.000      Maksimale gevinstodds: 10.000x     
     Minimum indsats: 0,5     Maksimal indsats: \u200E1.000"
@@ -82779,7 +82778,7 @@ MonoBehaviour:
     \u0E01\u0E32\u0E23\u0E1E\u0E19\u0E31\u0E19\u0E02\u0E2D\u0E07\u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E41\u0E25\u0E30\u0E17\u0E35\u0E48\u0E44\u0E2B\u0E19     
     \u0E25\u0E39\u0E01\u0E04\u0E49\u0E32\u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E21\u0E35\u0E2D\u0E35\u0E01\u0E15\u0E48\u0E2D\u0E44\u0E1B      
     \u0E21\u0E35\u0E2D\u0E34\u0E17\u0E18\u0E34\u0E1E\u0E25\u0E15\u0E48\u0E2D\u0E1C\u0E25\u0E25\u0E31\u0E1E\u0E18\u0E4C\u0E02\u0E2D\u0E07     
-    \u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E2B\u0E23\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E1E\u0E19\u0E31\u0E19\u0E1C\u0E25\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23     
+    \u0E40\u0E2B\u0E15\u0E38\u0E01\u0E32\u0E23\u0E13\u0E4C\u0E2B\u0E23\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E1E\u0E19\u0E31\u0E19\u0E1C\u0E25\u0E02\u0E2D\u0E07     
     \u0E01\u0E32\u0E23\u0E1E\u0E19\u0E31\u0E19\u0E04\u0E27\u0E23\u0E22\u0E37\u0E19\u0E2B\u0E22\u0E31\u0E14\u0E40\u0E1B\u0E47\u0E19\u0E40\u0E01\u0E21     
     \u0E23\u0E2D\u0E1A\u0E08\u0E30\u0E2A\u0E34\u0E49\u0E19\u0E2A\u0E38\u0E14\u0E17\u0E31\u0E19\u0E17\u0E35\u0E40\u0E21\u0E37\u0E48\u0E2D     
     \u0E16\u0E36\u0E07\u0E02\u0E35\u0E14\u0E08\u0E33\u0E01\u0E31\u0E14\u0E01\u0E32\u0E23\u0E0A\u0E19\u0E30\u0E41\u0E25\u0E49\u0E27
@@ -83142,7 +83141,7 @@ MonoBehaviour:
   - "\u5358\u52DD\u7387\u8D85\u3048"
   - "El ratio de ganancia \xFAnica supera"
   - Uwiano wa ushindi mmoja umezidi
-  - Single win ratio overstiger
+  - Enkelt gevinstforhold overstiger
   - "\u0E2D\u0E31\u0E15\u0E23\u0E32\u0E01\u0E32\u0E23\u0E0A\u0E19\u0E30\u0E04\u0E23\u0E31\u0E49\u0E07\u0E40\u0E14\u0E35\u0E22\u0E27\u0E40\u0E01\u0E34\u0E19"
   - Rasio kemenangan tunggal melebihi
   - "T\u1EF7 l\u1EC7 th\u1EAFng \u0111\u01A1n v\u01B0\u1EE3t qu\xE1"
@@ -83167,7 +83166,7 @@ MonoBehaviour:
   - Stop if "Free Game" is Activated
   - "\u5982\u679C\u300C\u514D\u8CBB\u904A\u6232\u300D\u88AB\u555F\u52D5\u5247\u505C\u6B62"
   - "\u300C\u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u300D\u304C\u6709\u52B9\u306B\u306A\u3063\u3066\u3044\u308B\u5834\u5408\u306F\u505C\u6B62\u3057\u307E\u3059"
-  - "Detener si \"Juego gratis\" est\xE1 activado"
+  - "Det\xE9ngase si \"Juego gratis\" est\xE1 activado"
   - Acha ikiwa "Mchezo Usiolipishwa" umewashwa
   - Stop hvis "Gratis spil" er aktiveret
   - "\u0E2B\u0E22\u0E38\u0E14\u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19
@@ -83521,7 +83520,7 @@ MonoBehaviour:
   - "\u30B4\u30FC\u30EB\u30C7\u30F3\u30DD\u30C3\u30AB\u30FC\u304C\u52DD\u3063\u305F\u5F8C\u3001
     \u540C\u3058\u5834\u6240\u3067\u91CE\u751F\u5316\u3059\u308B\u3060\u308D\u3046"
   - "Despu\xE9s de que gane la ficha dorada, se volver\xE1 salvaje en el mismo lugar"
-  - Baada ya mshikaji dhahabu Kushinda, itageuka kuwa pori mahali pale pale
+  - Baada ya mshindi wa pocker wa dhahabu, itageuka kuwa pori mahali pale pale
   - Efter den gyldne pocker vinder, det bliver til vildt samme sted
   - "\u0E2B\u0E25\u0E31\u0E07\u0E08\u0E32\u0E01\u0E42\u0E01\u0E25\u0E40\u0E14\u0E49\u0E19\u0E1B\u0E4A\u0E2D\u0E01\u0E40\u0E01\u0E2D\u0E23\u0E4C\u0E0A\u0E19\u0E30
     \u0E21\u0E31\u0E19\u0E01\u0E47\u0E08\u0E30\u0E01\u0E25\u0E32\u0E22\u0E40\u0E1B\u0E47\u0E19\u0E1B\u0E48\u0E32\u0E43\u0E19\u0E17\u0E35\u0E48\u0E40\u0E14\u0E35\u0E22\u0E27\u0E01\u0E31\u0E19"
@@ -83558,7 +83557,7 @@ MonoBehaviour:
   - Try DEMO MODE
   - "\u5617\u8A66\u6F14\u793A\u6A21\u5F0F"
   - "\u30C7\u30E2\u30E2\u30FC\u30C9\u3092\u8A66\u3057\u3066\u307F\u308B"
-  - "Pruebe el MODO DEMOSTRACI\xD3N"
+  - Pruebe el MODO DEMO
   - Jaribu MODE DEMO
   - "Pr\xF8v DEMO MODE"
   - "\u0E25\u0E2D\u0E07\u0E42\u0E2B\u0E21\u0E14\u0E2A\u0E32\u0E18\u0E34\u0E15"
@@ -83639,18 +83638,19 @@ MonoBehaviour:
   - "\uC11C\uBC84 \uC624\uB958"
   - "\u1006\u102C\u1017\u102C \u1021\u1019\u103E\u102C\u1038\r"
   - L_99
-  - WIN
-  - "\u8D0F"
-  - "\u52DD\u3064"
-  - GANAR
-  - SHINDA
-  - VINDE
-  - "\u0E0A\u0E19\u0E30"
-  - MENANG
-  - "TH\u1EAENG"
-  - GANHAR
-  - "\uC774\uAE30\uB2E4"
-  - "\u1021\u1014\u102D\u102F\u1004\u103A\u101B"
+  - Load high quality next time
+  - "\u4E0B\u6B21\u52A0\u8F09\u9AD8\u54C1\u8CEA"
+  - "\u6B21\u56DE\u306F\u9AD8\u54C1\u8CEA\u3067\u8AAD\u307F\u8FBC\u307F\u307E\u3059"
+  - "Cargue alta calidad la pr\xF3xima vez"
+  - Pakia ubora wa juu wakati ujao
+  - "Indl\xE6s h\xF8j kvalitet n\xE6ste gang"
+  - "\u0E42\u0E2B\u0E25\u0E14\u0E04\u0E38\u0E13\u0E20\u0E32\u0E1E\u0E2A\u0E39\u0E07\u0E43\u0E19\u0E04\u0E23\u0E31\u0E49\u0E07\u0E15\u0E48\u0E2D\u0E44\u0E1B"
+  - Muat kualitas tinggi lain kali
+  - "T\u1EA3i ch\u1EA5t l\u01B0\u1EE3ng cao v\xE0o l\u1EA7n sau"
+  - "Carregue alta qualidade na pr\xF3xima vez"
+  - "\uB2E4\uC74C\uBC88\uC5D0\uB294 \uACE0\uD654\uC9C8 \uB85C\uB4DC"
+  - "\u1014\u1031\u102C\u1000\u103A\u1010\u1005\u103A\u1000\u103C\u102D\u1019\u103A
+    \u1021\u101B\u100A\u103A\u1021\u101E\u103D\u1031\u1038\u1019\u103C\u1004\u1037\u103A\u1010\u1004\u103A\u1015\u102B\u104B"
 --- !u!4 &641459411
 Transform:
   m_ObjectHideFlags: 0
@@ -242148,6 +242148,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GamePlayMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 6876553281742680784, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: CODE
+      value: L_83
+      objectReference: {fileID: 0}
     - target: {fileID: 7013645020180872862, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -242156,6 +242160,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 564760787}
+    - target: {fileID: 7231517496239430677, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
+      propertyPath: CODE
+      value: L_11
+      objectReference: {fileID: 0}
     - target: {fileID: 8932002295616963806, guid: 7acd97f6ecd51fc4badfe3cb85a6b5a0, type: 3}
       propertyPath: currentConnection
       value: 
