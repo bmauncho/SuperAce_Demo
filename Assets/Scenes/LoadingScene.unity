@@ -7198,6 +7198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2757d96228eff04ba87fed8100f6f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDemoMode: 0
   isDataFetched: 0
   Player_Id: 22
   Game_Id: 32
@@ -7214,6 +7215,7 @@ MonoBehaviour:
     created_at: 
     last_bet_date: 
     last_win_date: 
+  TransactionsText: []
 --- !u!4 &2049540708
 Transform:
   m_ObjectHideFlags: 0

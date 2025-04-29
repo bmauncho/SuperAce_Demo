@@ -46,7 +46,8 @@ public class APIManager : MonoBehaviour
     public int Client_id ;
 
     public string CashAmount = string.Empty;
-
+    public TMP_Text TranscationalText;
+    public GameObject ServerError;
     private void Start ()
     {
         Invoke(nameof(SetUP) , .2f);
@@ -59,6 +60,7 @@ public class APIManager : MonoBehaviour
         Player_Id = int.Parse(GameManager.Instance.GetPlayerId());
         CashAmount = GameManager.Instance.GetCashAmount();
         CommandCentre.Instance.CashManager_.UpdateCashAmount(float.Parse(CashAmount));
+        GameManager.Instance.AddTransactionText(TranscationalText);
     }
 
     public void PlaceBet ()
@@ -80,6 +82,19 @@ public class APIManager : MonoBehaviour
         string AmountWon = AmoutWon;
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
+    }
+
+    public void ShowWaring ()
+    {
+        StartCoroutine(serverError());
+    }
+
+    private IEnumerator serverError ()
+    {
+        ServerError.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        ServerError.SetActive(false);
+        yield return null;
     }
 }
 

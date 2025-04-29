@@ -143,6 +143,7 @@ public class GameDataAPI : MonoBehaviour
             Debug.LogError($"Request failed: {request.error}");
             isDone = true;
             isDataFetched = false;
+            CommandCentre.Instance.APIManager_.ShowWaring();
             yield break;
         }
 
@@ -152,6 +153,7 @@ public class GameDataAPI : MonoBehaviour
             Debug.LogError("Empty response received.");
             isDone = true;
             isDataFetched = false;
+            CommandCentre.Instance.APIManager_.ShowWaring();
             yield break;
         }
         //Debug.Log("Received: " + output);
@@ -167,6 +169,7 @@ public class GameDataAPI : MonoBehaviour
         {
             isDone = true;
             isDataFetched = false;
+            CommandCentre.Instance.APIManager_.ShowWaring();
             yield break;
         }
 
