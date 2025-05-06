@@ -121,6 +121,7 @@ public class GameDataAPI : MonoBehaviour
 
         string jsonString = JsonConvert.SerializeObject(Data , Formatting.Indented);
         Debug.Log($"Spin Payload : {jsonString}");
+        //string ApiUrl = ConfigMan.Instance.Base_url + "/spin/superace/";
         //CommandCentre.Instance.WinLoseManager_.ResetWinDataList();
         StartCoroutine(_FetchGridInfo(ApiUrl , jsonString));
     }

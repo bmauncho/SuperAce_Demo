@@ -15,6 +15,7 @@ public class ConfigMan : MonoBehaviour
     public string GameId;
     public string ClientId;
     public string Currency;
+    public string Base_url = "https://admin-api3.ibibe.africa";
     public ConfigRefresh Refresh;
     public CurrencyMan currencyMan;
 
@@ -38,10 +39,24 @@ public class ConfigMan : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if(IsTestMode())
         {
-            TheDebugObj.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.P)
+           )
+            {
+                TheDebugObj.SetActive(true);
+            }
         }
+        
+        
+    }
+    bool IsTestMode()
+    {
+        if (Base_url == "https://admin-api3.ibibe.africa")
+        {
+            return true;
+        }
+        return false;
     }
     public void ToggleDemoMode(Toggle which)
     {
@@ -70,13 +85,17 @@ public class ConfigMan : MonoBehaviour
        // Debug.Log("TheFetchedPlayerIdIs_" + TheId);
         Invoke(nameof(RefreshConfig), 0.1f);
     }
-    void RefreshConfig()
+    public void RefreshConfig()
     {
-        Debug.Log("ConfigReceived" +
+        if (IsTestMode())
+        {
+            Debug.Log("ConfigReceived" +
             "\nPlayerId:" + PlayerId +
             "\nClientId:" + ClientId + "" +
-            "\nGameId:" + GameId+"" +
-            "\nDemoMode:"+IsDemo.ToString());
+            "\nGameId:" + GameId + "" +
+             "\nBaseUrl:" + Base_url + "" +
+            "\nDemoMode:" + IsDemo.ToString());
+        }
         Refresh.Invoke();
 
     }

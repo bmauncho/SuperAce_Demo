@@ -64,6 +64,10 @@ namespace Config_Assets
         [ContextMenu("FetchGames")]
         public void FetchGames()
         {
+            if (ConfigMan.Instance)
+            {
+                ServerLink = ConfigMan.Instance.Base_url;
+            }
             ExtraMan.Instance.fakeLoading.Open(1);
             IsLoaded = false;
             StartCoroutine(_FetchGames(ServerLink + "/api/v1/games/"));

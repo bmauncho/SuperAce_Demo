@@ -36,7 +36,7 @@ public class MakeWithdrawalData
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private const string ServerLink = "https://admin-api.ibibe.africa";
+
     [SerializeField] private bool IsDemoMode;
     [SerializeField] private bool isDataFetched = false;
     [SerializeField] private string Player_Id;
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void FetchPlayerInfo ()
     {
         isDataFetched = false;
-        StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
+        StartCoroutine(_FetchPlayerInfo(ConfigMan.Instance.Base_url + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
 
     IEnumerator _FetchPlayerInfo ( string url )
@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
     [ContextMenu("ListCustomers")]
     public void ListCustomers ()
     {
-        StartCoroutine(_FetchCustomers(ServerLink + "/api/v1/customer/details"));
+        StartCoroutine(_FetchCustomers(ConfigMan.Instance.Base_url + "/api/v1/customer/details"));
     }
 
     IEnumerator _FetchCustomers ( string url )
@@ -209,8 +209,8 @@ public class GameManager : MonoBehaviour
         Data.customer_id = int.Parse(Player_Id);
         Data.amount = _Amount;
         string jsonString = JsonUtility.ToJson(Data);
-        string TheUrl = ServerLink + "/api/withdraw/money";
-        StartCoroutine(_MakeWithdrawal(ServerLink + "/api/v1/withdraw/money" , jsonString));
+        string TheUrl = ConfigMan.Instance.Base_url + "/api/withdraw/money";
+        StartCoroutine(_MakeWithdrawal(ConfigMan.Instance.Base_url + "/api/v1/withdraw/money" , jsonString));
     }
     IEnumerator _MakeWithdrawal ( string url , string bodyJsonString )
     {
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
         Data.customer_id = int.Parse(Player_Id);
         Data.amount = _Amount;
         string jsonString = JsonUtility.ToJson(Data);
-        StartCoroutine(_AddCashAmount(ServerLink + "/api/v1/add_game_payment" , jsonString));
+        StartCoroutine(_AddCashAmount(ConfigMan.Instance.Base_url + "/api/v1/add_game_payment" , jsonString));
     }
     IEnumerator _AddCashAmount ( string url , string bodyJsonString )
     {

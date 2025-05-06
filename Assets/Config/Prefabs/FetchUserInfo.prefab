@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1605375483383027245}
   - component: {fileID: 8103334293320232336}
-  - component: {fileID: 9176973539931826550}
   - component: {fileID: 437604835640908597}
   m_Layer: 0
   m_Name: FetchUserInfo
@@ -46,19 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96390999506404bc49f8a644452e5ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  theurl: 
   configMan: {fileID: 0}
---- !u!114 &9176973539931826550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7629232463755467495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aac5bec74764245559c87d9a777088dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  data:
+    currency: 
+    clientId: 
+    gameId: 
+    language: 
+    mode: 
+    token: 
+    userId: 
+    timestamp: 
+    Base_url: https://admin-api3.ibibe.africa
 --- !u!114 &437604835640908597
 MonoBehaviour:
   m_ObjectHideFlags: 0

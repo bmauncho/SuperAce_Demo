@@ -38,6 +38,10 @@ public class receivedData
 public class RefillCardsAPI : MonoBehaviour
 {
     public const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace?transform=true";
+    public int game_id = 32;
+    public int clientId = 12345;
+    public int PlayerId = 22;
+
     public refillApi api;
     public GameDataAPI gameDataAPI_;
     public List<sentData> sentData_ = new List<sentData>();
@@ -48,6 +52,18 @@ public class RefillCardsAPI : MonoBehaviour
     public bool refillDataFetched=false;
     public bool isError;
     public bool IsServerError;
+
+    private void Start ()
+    {
+        Invoke(nameof(SetUP) , .25f);
+    }
+
+    void SetUP ()
+    {
+        clientId = CommandCentre.Instance.APIManager_.Client_id;
+        game_id = CommandCentre.Instance.APIManager_.Game_Id;
+        PlayerId = CommandCentre.Instance.APIManager_.Player_Id;
+    }
 
     [ContextMenu("Fetch Data")]
     public void FetchData ()
@@ -79,7 +95,12 @@ public class RefillCardsAPI : MonoBehaviour
             }
         }
 
-        GameData gameinfo = new GameData();
+        GameData gameinfo = new GameData
+        {
+            id = game_id.ToString (),
+            name = "Super Ace",
+        };
+
         api = new refillApi
         {
             game = gameinfo ,
@@ -96,6 +117,7 @@ public class RefillCardsAPI : MonoBehaviour
 
     private IEnumerator StartFetchingData ( string jsonData )
     {
+        //string ApiUrl = ConfigMan.Instance.Base_url + "/spin/superace?transform=true";
         var request = new UnityWebRequest(ApiUrl , "POST");
         byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);

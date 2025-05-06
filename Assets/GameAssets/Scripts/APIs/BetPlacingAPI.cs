@@ -34,7 +34,7 @@ public class ExternalResponse
 public class BetPlacingAPI : MonoBehaviour
 {
     [Header("API Settings")]
-    private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
+    //private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse response;
     public float BetAmount;
     public int playerId = 22;
@@ -95,6 +95,7 @@ public class BetPlacingAPI : MonoBehaviour
 
     private IEnumerator PlaceBet ( string jsonPayload )
     {
+        string ApiUrl = ConfigMan.Instance.Base_url + "/api/v1/bet/place_bet";
         // Create UnityWebRequest
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
         byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
