@@ -79,11 +79,16 @@ public class RefillCardsAPI : MonoBehaviour
             }
         }
 
-        GameData gameinfo = new GameData();
+        GameData gameinfo = new GameData()
+        {
+            id = gameDataAPI_.game_id.ToString(),
+            name = "Super Ace",
+        };
         api = new refillApi
         {
             game = gameinfo ,
             betAmount = gameDataAPI_.BetAmount ,
+            clientId = gameDataAPI_.clientId.ToString(),
             cards = data ,
         };
 

@@ -146,7 +146,7 @@ public class BetPlacingAPI : MonoBehaviour
     {
         if (tries < maxtries)
         {
-            playerId++;
+            //playerId++;
             tries++;
             Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
             Bet();
