@@ -136,9 +136,14 @@ public class ConfigMan : MonoBehaviour
         // and if you need it as a string...
         string hash1 = BitConverter.ToString(bytes);
 
-        string timestamp= DateTime.Now.ToUniversalTime().ToString();
-        string final =timestamp+"_"+ hash1 + "_" + ClientId;
+        string timestamp= DateTime.Now.ToBinary().ToString();
+        string final =timestamp+ ClientId+ hash1;
         return final;
+    }
+    [ContextMenu("TestBetId")]
+    void TestBetId()
+    {
+        Debug.Log(GetBetId());
     }
 
 

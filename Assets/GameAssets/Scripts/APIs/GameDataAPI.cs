@@ -36,9 +36,9 @@ public class GameDataAPI : MonoBehaviour
     UnityWebRequest request;
     [Header("API Settings")]
     //public WinLoseManager winloseManager;
-    public int game_id = 32;
-    public int clientId = 12345;
-    public int PlayerId = 22;
+    public string game_id;
+    public string clientId;
+    public string PlayerId;
 
     private const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace/";
 
@@ -90,13 +90,13 @@ public class GameDataAPI : MonoBehaviour
             {
                 game = new _game
                 {
-                    id = game_id.ToString() ,
+                    id = game_id ,
                     name = "SUPER_ACE" ,
                     mode = "FREE"
                 } ,
                 betAmount = BetAmount ,
-                clientId = clientId.ToString() ,
-                playerId = PlayerId.ToString(),
+                clientId = clientId,
+                playerId = PlayerId,
                 action = "freeSpins" ,
             };
         }
@@ -108,13 +108,13 @@ public class GameDataAPI : MonoBehaviour
             {
                 game = new _game
                 {
-                    id = game_id.ToString() ,
+                    id = game_id ,
                     name = "SUPER_ACE" ,
                     mode = "NORMAL"
                 } ,
                 betAmount = BetAmount ,
-                clientId = clientId.ToString() ,
-                playerId = PlayerId.ToString() ,
+                clientId = clientId ,
+                playerId = PlayerId ,
             };
         }
         

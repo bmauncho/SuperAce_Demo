@@ -37,9 +37,9 @@ public class BetPlacingAPI : MonoBehaviour
     private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse response;
     public float BetAmount;
-    public int playerId = 22;
-    public int game_id = 32;
-    public int client_id = 12345;
+    public string playerId;
+    public string game_id;
+    public string client_id;
 
     [Header("Retry Settings")]
     public int tries;
@@ -80,11 +80,11 @@ public class BetPlacingAPI : MonoBehaviour
 
         BetRequest Data = new BetRequest
         {
-            player_id = playerId.ToString() ,
+            player_id = playerId ,
             amount = BetAmount.ToString() ,
-            bet_id = bet_id.ToString() ,
-            game_id = game_id.ToString() ,
-            client_id = client_id.ToString()
+            bet_id = ConfigMan.Instance.GetBetId() ,
+            game_id = game_id ,
+            client_id = client_id
         };
 
         string jsonString = JsonUtility.ToJson(Data , true);
