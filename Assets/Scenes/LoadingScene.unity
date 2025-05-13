@@ -7201,9 +7201,9 @@ MonoBehaviour:
   ServerLink: https://admin-api.ibibe.africa
   IsDemoMode: 0
   isDataFetched: 0
-  Player_Id: 22
-  Game_Id: 32
-  Client_id: 1
+  Player_Id: 4
+  Game_Id: 
+  Client_id: 
   CashAmount: 
   playerInfo:
     id: 
