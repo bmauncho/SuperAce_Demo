@@ -36,7 +36,7 @@ public class MakeWithdrawalData
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    private const string ServerLink = "https://admin-api.ibibe.africa";
+   public string ServerLink = "https://admin-api.ibibe.africa";
     [SerializeField] private bool IsDemoMode;
     [SerializeField] private bool isDataFetched = false;
     [SerializeField] private string Player_Id;
@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void FetchPlayerInfo ()
     {
         isDataFetched = false;
+        ServerLink = ConfigMan.Instance.Base_url;
         StartCoroutine(_FetchPlayerInfo(ServerLink + "/api/v1/customer/details?customer_id=" + Player_Id));
     }
 

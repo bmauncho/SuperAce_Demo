@@ -46,10 +46,10 @@ namespace Config_Assets
             {
                 if (ExtraMan.Instance.games_Catalog.gameList.games[i].approved == 1)
                 {
-                    int TheGameId = ExtraMan.Instance.games_Catalog.gameList.games[i].id;
+                    int TheGameId = ExtraMan.Instance.games_Catalog.gameList.games[i].thegame_id;
                     Game_Data _Game = ExtraMan.Instance.games_Catalog.gameList.games[i];
                     GameObject go = Instantiate(BtnPref, SpawnTrans);
-                    go.GetComponent<HistoryBtn>().UpdateImage(ExtraMan.Instance.games_Catalog.GetSavedIcon(TheGameId));
+                    go.GetComponent<HistoryBtn>().UpdateImage(ExtraMan.Instance.games_Catalog.GetSavedIcon(i));
                     go.GetComponent<HistoryBtn>().TheName = _Game.game_title;
                     SpawnedBtns.Add(go);
                 }

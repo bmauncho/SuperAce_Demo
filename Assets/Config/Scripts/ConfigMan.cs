@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using System.Security.Cryptography;
+using System;
+
 [System.Serializable]
 public class ConfigRefresh : UnityEvent { }
 public class ConfigMan : MonoBehaviour
@@ -15,6 +18,7 @@ public class ConfigMan : MonoBehaviour
     public string GameId;
     public string ClientId;
     public string Currency;
+    public string Base_url = "https://admin-api3.ibibe.africa";
     public ConfigRefresh Refresh;
     public CurrencyMan currencyMan;
 
@@ -38,11 +42,21 @@ public class ConfigMan : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKey(KeyCode.Z)
+            )
+           
         {
-            TheDebugObj.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                TheDebugObj.SetActive(true);
+
+            }
         }
+       
+
+
     }
+   
     public void ToggleDemoMode(Toggle which)
     {
         IsDemo = which.isOn;
@@ -70,13 +84,14 @@ public class ConfigMan : MonoBehaviour
        // Debug.Log("TheFetchedPlayerIdIs_" + TheId);
         Invoke(nameof(RefreshConfig), 0.1f);
     }
-    void RefreshConfig()
+    public void RefreshConfig()
     {
         Debug.Log("ConfigReceived" +
             "\nPlayerId:" + PlayerId +
             "\nClientId:" + ClientId + "" +
-            "\nGameId:" + GameId+"" +
-            "\nDemoMode:"+IsDemo.ToString());
+            "\nGameId:" + GameId + "" +
+             "\nBaseUrl:" + Base_url + "" +
+            "\nDemoMode:" + IsDemo.ToString());
         Refresh.Invoke();
 
     }
@@ -109,6 +124,21 @@ public class ConfigMan : MonoBehaviour
         {
             PassClientId(ClientIdText.text);
         }
+    }
+    public string GetBetId()
+    {
+        var bytes = new byte[16];
+        using (var rng = new RNGCryptoServiceProvider())
+        {
+            rng.GetBytes(bytes);
+        }
+
+        // and if you need it as a string...
+        string hash1 = BitConverter.ToString(bytes);
+
+        string timestamp= DateTime.Now.ToUniversalTime().ToString();
+        string final =timestamp+"_"+ hash1 + "_" + ClientId;
+        return final;
     }
 
 

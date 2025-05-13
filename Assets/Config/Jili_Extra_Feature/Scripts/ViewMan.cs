@@ -49,9 +49,16 @@ public class ViewMan : MonoBehaviour
             if (NewScaleMultiplier < 3.2f)
             {
                 canvasScaler.matchWidthOrHeight = 1;
+                if (IsLandScape)
+                {
+                    canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
-                // canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-                canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                }
+                else
+                {
+                    canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+
+                }
             }
             else
             {

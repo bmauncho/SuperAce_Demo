@@ -7,8 +7,14 @@ public class FetchUserInfo : MonoBehaviour
 {
     [DllImport("__Internal")]
     private static extern string getLocaltime();
-    public string theurl;
+
+    [Header("Assign 'ConfigMan' here")]
     public ConfigMan configMan;
+
+    [Space(10)]
+    [Header("These will autofill")]
+    public string Game_url;
+
     [System.Serializable]
     public class GameData
     {
@@ -20,6 +26,7 @@ public class FetchUserInfo : MonoBehaviour
         public string token;
         public string userId;
         public string timestamp;
+        public string Base_url = "https://admin-api3.ibibe.africa";
     }
     public GameData data;
     private void Start()
@@ -31,9 +38,9 @@ public class FetchUserInfo : MonoBehaviour
         //string theurl = "https://crazy777-73k.pages.dev/?data=tf44b2k3okJFt9pGNyYRuixDm3dsOeOWHPU/O1ljGkwmLaIiAXyDTdqJVoK7VVNcvSDYqwuRK5jY3SBxShazLzJ5R+QJK92quO+MUKSCGYXTITqWIEQsNRvXjtrlSAbm2v4R/iS65S6q/et+HmnmE0XYMybNY/L9UEG6f+o/svXWmwlxThOWTUHFJhjRLhgMaCQS1fUHV5PK319TfGM40GDqKj9OrlW2nZ+FZ/RCJ6k5J3iIn4JtN2gYowHgYbokUrEexMUv+99be1bUwMQFLEbvnE8XozdN9ekkS7gdEBg=";
         if (!Application.isEditor)
         {
-            theurl = GetComponent<URLReader>().ReadURL();
+            Game_url = Application.absoluteURL;
         }
-        string[] tockens = theurl.Split("data=");
+        string[] tockens = Game_url.Split("data=");
         for(int i = 0; i < tockens.Length; i++)
         {
             //Debug.Log(tockens[i]);
@@ -63,6 +70,7 @@ public class FetchUserInfo : MonoBehaviour
             //SetMode(data.mode);
             SetCurrency(data.currency);
             SetLanguage(data.language);
+            SetUrl(data.Base_url);
 
             string isoTime = data.timestamp;
             DateTime utcTime = DateTime.Parse(isoTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
@@ -156,7 +164,7 @@ public class FetchUserInfo : MonoBehaviour
     }
     public void SetMode(int mode)
     {
-        Debug.Log("TheMode: " +mode);
+       // Debug.Log("TheMode: " +mode);
         if (mode == 0)
         {
             configMan.IsDemo = true;
@@ -188,13 +196,18 @@ public class FetchUserInfo : MonoBehaviour
     }
     public void SetCurrency(string Which)
     {
-        Debug.Log("TheCurrency: " + Which.ToString());
+       // Debug.Log("TheCurrency: " + Which.ToString());
         configMan.PassCurrency(Which);
 
     }
+    public void SetUrl(string which)
+    {
+       // Debug.Log("url: " + which);
+        configMan.Base_url = which;
+    }
     public void SetLanguage(string id)
     {
-        Debug.Log("TheLanguage: " + id.ToString());
+       // Debug.Log("TheLanguage: " + id.ToString());
         if (id == "en")
         {
             LanguageMan.instance._SetLanguage(TheLanguage.English);

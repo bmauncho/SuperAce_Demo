@@ -7198,6 +7198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2757d96228eff04ba87fed8100f6f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ServerLink: https://admin-api.ibibe.africa
   IsDemoMode: 0
   isDataFetched: 0
   Player_Id: 22

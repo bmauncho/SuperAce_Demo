@@ -11,6 +11,7 @@ namespace Config_Assets
     public class Game_Data
     {
         public int id = 35;
+        public int thegame_id = 35;
         public string game_title = "Scratch Fortune Gem";
         public string game_image;
         public string game_image_url = "https://admin-api.ibibe.africa/gd";
@@ -64,6 +65,10 @@ namespace Config_Assets
         [ContextMenu("FetchGames")]
         public void FetchGames()
         {
+            if (ConfigMan.Instance)
+            {
+                ServerLink = ConfigMan.Instance.Base_url;
+            }
             ExtraMan.Instance.fakeLoading.Open(1);
             IsLoaded = false;
             StartCoroutine(_FetchGames(ServerLink + "/api/v1/games/"));
@@ -120,12 +125,12 @@ namespace Config_Assets
                     }
                     if (TheUrl != "")
                     {
-                        Sprite TheIcon = GetSavedIcon(gameList.games[i].id);
+                        Sprite TheIcon = GetSavedIcon(i);
                         // Debug.Log("ShouldDownload_" + gameList.games[i].id);
 
                         if (!TheIcon)
                         {
-                            StartCoroutine(DownloadImage(TheUrl, gameList.games[i].id));
+                            StartCoroutine(DownloadImage(TheUrl, i));
                         }
                         else
                         {
@@ -160,7 +165,7 @@ namespace Config_Assets
                     gameList.games[i].IsLoaded_RichCard = false;
                     string TheUrl = gameList.games[i].promotional_image_url;
 
-                    Sprite TheIcon = GetSavedRichCard(gameList.games[i].id);
+                    Sprite TheIcon = GetSavedRichCard(i);
                     // Debug.Log("ShouldDownload_" + gameList.games[i].id);
                     if (TheUrl == "")
                     {
@@ -168,7 +173,7 @@ namespace Config_Assets
                     }
                     if (!TheIcon && TheUrl != "")
                     {
-                        StartCoroutine(DownloadRichCardImage(TheUrl, gameList.games[i].id));
+                        StartCoroutine(DownloadRichCardImage(TheUrl, i));
                     }
                     else
                     {
@@ -185,6 +190,7 @@ namespace Config_Assets
         }
         public int Index_id(int thegameid)
         {
+            return thegameid;
             for (int i = 0; i < gameList.games.Length; i++)
             {
                 if (gameList.games[i].id == thegameid)
@@ -265,6 +271,8 @@ namespace Config_Assets
         }
         public Sprite GetSavedIcon(int theId)
         {
+           
+            Debug.Log(theId);
             string savePath = "/Icons";
             string FileName = "/Game_" + appversion + theId.ToString() + ".png";
             if (SystemInfo.deviceType == DeviceType.Handheld)

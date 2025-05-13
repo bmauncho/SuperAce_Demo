@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | {{{ PRODUCT_NAME }}}</title>
+    <title>{{{ PRODUCT_NAME }}}</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
@@ -14,13 +14,14 @@
 
         <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} tabindex="-1"></canvas>
 
-        <div id="unity-loading-bar">
-            <img src="./LogoAnim.png" alt="Example gif">
+        <div id="unity-loading-bar" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+            <img src="./LogoAnim.png" alt="Example gif" width="200" height="146"> <br />
             <div id="unity-progress-bar-back">
                 <div id="unity-progress-bar-full">
-                    <div id="unity-progress-bar-empty"></div>
+                    <div id="unity-progress-anim-bar-full">
+                        <div id="unity-progress-bar-empty"></div>
+                    </div>
                 </div>
-            </div>
             <div id="unity-warning"> </div>
         </div>
         <script>
@@ -70,8 +71,10 @@
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var warningBanner = document.querySelector("#unity-warning");
+            var progressBarFull = document.querySelector("#unity-progress-bar-full");
+            var progressBaranimFull = document.querySelector("#unity-progress-anim-bar-full");
+            var warningBanner = document.querySelector("#unity-warning");
+            let lastTime = performance.now();
 
 
 
@@ -172,12 +175,23 @@
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
+          createUnityInstance(canvas, config, (progress) => {
+              let currentTime = performance.now();
+              //console.log(currentTime + "|" + lastTime);
+              let deltaTime = (currentTime - lastTime) / 1000; // Convert ms to seconds
+             // console.log(deltaTime);
+              if (deltaTime > 3) {
+              progressBaranimFull.style.width = 100 * 1 + "%";
+
+          }else {
+              progressBaranimFull.style.width = 100 * 0 + "%";
+
+          }
+            progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
             instance = unityInstance;
             loadingBar.style.display = "none";
-            window.parent.postMessage("RequestInfo", "*");
+           // window.parent.postMessage("RequestInfo", "*");
             //console.log(getLocaltime());
            // console.log(new Date().getTimezoneOffset() / -60);
            // unityInstance.SendMessage("FetchUserInfo", "SetUserId", "23");
