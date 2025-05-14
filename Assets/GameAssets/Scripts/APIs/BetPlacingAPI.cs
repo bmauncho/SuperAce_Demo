@@ -17,8 +17,8 @@ public class BetRequest
 public class BetResponse
 {
     public string message = "Bet placed successfully";
-    public int bet_id;
-    public int game_id;
+    public string bet_id;
+    public string game_id;
     public float new_wallet_balance;
     public ExternalResponse externalResponse_;
 }
@@ -34,7 +34,7 @@ public class ExternalResponse
 public class BetPlacingAPI : MonoBehaviour
 {
     [Header("API Settings")]
-    private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
+    //private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse response;
     public float BetAmount;
     public string playerId;
@@ -82,7 +82,7 @@ public class BetPlacingAPI : MonoBehaviour
         {
             player_id = playerId ,
             amount = BetAmount.ToString() ,
-            bet_id = ConfigMan.Instance.GetBetId() ,
+            bet_id = CommandCentre.Instance.APIManager_.bet_id,
             game_id = game_id ,
             client_id = client_id
         };
@@ -95,6 +95,7 @@ public class BetPlacingAPI : MonoBehaviour
 
     private IEnumerator PlaceBet ( string jsonPayload )
     {
+        string ApiUrl = ConfigMan.Instance.Base_url + "/api/v1/bet/place_bet";
         // Create UnityWebRequest
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
         byte [] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
@@ -146,7 +147,6 @@ public class BetPlacingAPI : MonoBehaviour
     {
         if (tries < maxtries)
         {
-            //playerId++;
             tries++;
             Debug.Log($"Retrying... Attempt {tries}/{maxtries}");
             Bet();

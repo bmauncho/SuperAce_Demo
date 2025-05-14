@@ -141,6 +141,7 @@ public class MainMenuController : MonoBehaviour
     {
         if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
+            CommandCentre.Instance.APIManager_.bet_id = ConfigMan.Instance.GetBetId();
             Debug.Log("Fetching Data...");
             CommandCentre.Instance.APIManager_.GameDataAPI_.FetchInfo();  
 

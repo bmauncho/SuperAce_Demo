@@ -44,6 +44,7 @@ public class APIManager : MonoBehaviour
     public string Player_Id;
     public string Game_Id;
     public string Client_id ;
+    public string bet_id;
 
     public string CashAmount = string.Empty;
     public TMP_Text TranscationalText;
@@ -70,7 +71,7 @@ public class APIManager : MonoBehaviour
 
     public void UpdateBet ()
     {
-        string betid = ConfigMan.Instance.GetBetId();
+        string betid = bet_id;
         string AmountWon = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString();
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);
@@ -78,7 +79,7 @@ public class APIManager : MonoBehaviour
 
     public void UpdateBetAfterFreeGame (string AmoutWon)
     {
-        string betid = ConfigMan.Instance.GetBetId();
+        string betid = bet_id;
         string AmountWon = AmoutWon;
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);

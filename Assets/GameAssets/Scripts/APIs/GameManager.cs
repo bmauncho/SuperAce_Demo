@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             if (ConfigMan.Instance.ReceivedConfigs)
             {
 
-                if (!string.IsNullOrEmpty(Player_Id))
+                if (!string.IsNullOrEmpty(ConfigMan.Instance.PlayerId))
                 {
                     Player_Id = ConfigMan.Instance.PlayerId;
                 }
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 isDataFetched = true;
-                Debug.Log("Error: " + www.error);
+                Debug.Log("Error: " + www.result);
                 CashAmount = "2000";
             }
         } 

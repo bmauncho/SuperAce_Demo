@@ -15,7 +15,7 @@ public class BetUpDateData
 public class UpdateBetResponse
 {
     [HideInInspector]public string message;
-    public int bet_id;
+    public string bet_id;
     public float amount_won;
     public double new_wallet_balance;
     [HideInInspector] public string status;
@@ -23,7 +23,7 @@ public class UpdateBetResponse
 }
 public class BetUpdaterAPI : MonoBehaviour
 {
-    private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/update_bet";
+    //private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/update_bet";
     public UpdateBetResponse updateBetResponse_;
     public double CashAmount;
     public double NewCashAmount;
@@ -55,6 +55,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
     private IEnumerator SendUpdateBetRequest(string jsonPayload )
     {
+        string ApiUrl = ConfigMan.Instance.Base_url + "/api/v1/update_bet";
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
         byte [] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonPayload);
         request.uploadHandler = new UploadHandlerRaw(jsonToSend);
