@@ -48,8 +48,17 @@ public class PayOutManager : MonoBehaviour
             }
             else
             {
+
                 //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
-                CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+                //if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+                //{
+                //    CurrentWin = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+                //}
+                //else
+                //{
+                //    CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+                //}
+                    
             }
         }
         
@@ -67,6 +76,16 @@ public class PayOutManager : MonoBehaviour
     IEnumerator showinnings ()
     {
         WinUI_.ActivateCurrentWinings();
+        float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+        float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+        if (CommandCentre.Instance.GridManager_.isRefillingSequence())
+        {
+            CurrentWin = winnings;
+        }
+        else
+        {
+            CurrentWin = winnings2;
+        }
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
         yield return new WaitForSeconds(1f);
         HideCurrentWin();

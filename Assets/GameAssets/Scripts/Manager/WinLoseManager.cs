@@ -311,7 +311,7 @@ public class WinLoseManager : MonoBehaviour
         ResetWinDataList();
         ClearAddedKeys();
         // Show current win
-
+        CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
         if (CommandCentre.Instance.TurboManager_.TurboSpin_)
         {
             yield return StartCoroutine(refill(true,hiddenCards));
@@ -321,12 +321,9 @@ public class WinLoseManager : MonoBehaviour
             yield return StartCoroutine(refill(false , hiddenCards));
         }
 
-        if (checkForOtherCards())
+        if (!checkForOtherCards())
         {
-            CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
-        }
-        else
-        {
+            //CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
             //Debug.Log($"is scatter win : {IsScatterWin()} is other cards : { checkForOtherCards()}");
             if(IsScatterWin() && !checkForOtherCards())
             {

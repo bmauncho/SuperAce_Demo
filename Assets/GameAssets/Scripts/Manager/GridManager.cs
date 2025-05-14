@@ -524,10 +524,14 @@ public class GridManager : MonoBehaviour
         }
 
     }
-
-
+    public bool IsRefillingSequence = false;
+    public bool isRefillingSequence ()
+    {
+        return IsRefillingSequence;
+    }
     public void refillGrid ( int objectshidden )
     {
+        IsRefillingSequence = true;
         APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
@@ -587,6 +591,7 @@ public class GridManager : MonoBehaviour
 
     public void refillTurbo (int objectshidden)
     {
+        IsRefillingSequence = true;
         APIManager apiManager = CommandCentre.Instance.APIManager_;
         isRefilling = true;
         Deck [] decks = multiDeckManager.decks;
@@ -779,7 +784,7 @@ public class GridManager : MonoBehaviour
             Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
         }
 
-
+        IsRefillingSequence = false;
         yield return StartCoroutine(Autospin());
     }
 

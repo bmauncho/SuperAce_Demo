@@ -72,7 +72,19 @@ public class APIManager : MonoBehaviour
     public void UpdateBet ()
     {
         string betid = bet_id;
-        string AmountWon = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString();
+        string AmountWon = string.Empty;
+
+        if (CommandCentre.Instance.GridManager_.isRefillingSequence())
+        {
+            float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+            AmountWon = winnings.ToString();
+        }
+        else
+        {
+            float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+            AmountWon = winnings2.ToString();
+        }
+       
         Debug.Log("Amount won = " + AmountWon);
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);

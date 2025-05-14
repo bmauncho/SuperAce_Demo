@@ -39,6 +39,7 @@ public class RefillCardsAPI : MonoBehaviour
 {
     public const string ApiUrl = "https://proxy.api.ibibe.africa/spin/superace?transform=true";
     public refillApi api;
+    public ApiResponse response;
     public GameDataAPI gameDataAPI_;
     public List<sentData> sentData_ = new List<sentData>();
     public List<receivedData> receivedData_ = new List<receivedData>();
@@ -140,7 +141,7 @@ public class RefillCardsAPI : MonoBehaviour
 
             Debug.Log("Received refill cards : " + formattedOutput);
 
-            var response = JsonConvert.DeserializeObject<ApiResponse>(output);
+            response = JsonConvert.DeserializeObject<ApiResponse>(output);
             FreeSpins = response.data.freeSpins;
             if (response.message != "no transformable symbols found")
             {
