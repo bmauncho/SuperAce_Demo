@@ -73,6 +73,7 @@ public class APIManager : MonoBehaviour
     {
         string betid = bet_id;
         string AmountWon = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString();
+        Debug.Log("Amount won = " + AmountWon);
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);
     }
