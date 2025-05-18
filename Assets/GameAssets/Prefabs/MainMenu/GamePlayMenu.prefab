@@ -2083,11 +2083,11 @@ MonoBehaviour:
   timerDuration: 10
   suggestionsA: {fileID: 715739377318501827}
   suggestionsListA:
-  - Tap to Autoplay
-  - Hold For Setting
-  suggestionsB: {fileID: 0}
+  - 103
+  - 104
+  suggestionsB: {fileID: 3789746514809537914}
   suggestionsListB:
-  - Press Turbo Spin
+  - 105
   delayBeforeShow: 2
   showDuration: 3
   delayBetweenSuggestions: 2
@@ -6454,11 +6454,11 @@ MonoBehaviour:
   timerDuration: 10
   suggestionsA: {fileID: 773224002508270180}
   suggestionsListA:
-  - Tap to Autoplay
-  - Hold For Setting
+  - 103
+  - 104
   suggestionsB: {fileID: 1912526087205045664}
   suggestionsListB:
-  - Press Turbo Spin
+  - 105
   delayBeforeShow: 2
   showDuration: 3
   delayBetweenSuggestions: 2

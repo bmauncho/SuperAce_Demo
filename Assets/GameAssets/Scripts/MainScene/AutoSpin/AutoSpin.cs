@@ -63,7 +63,7 @@ public class AutoSpin : MonoBehaviour
         {
             yield return new WaitForSeconds(delayBeforeShow);
 
-            textComp.text = suggestions [i];
+            textComp.text = LanguageMan.instance.RequestForText(suggestions [i]);
             textComp.gameObject.SetActive(true);
 
             yield return new WaitForSeconds(showDuration);

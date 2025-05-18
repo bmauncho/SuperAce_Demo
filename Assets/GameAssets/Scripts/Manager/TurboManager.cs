@@ -18,15 +18,15 @@ public class TurboManager : MonoBehaviour
         TurboUI.GetComponent<CanvasGroup>().alpha = 0;
         if(IsTurboSpin_)
         {
-            TurboSpinText.text = "Turbo Spin Enabled";
+            TurboSpinText.text = LanguageMan.instance.RequestForText("L_100");
         }
         else if (IsSuperTurboSpin_)
         {
-            TurboSpinText.text = "Super Turbo Spin Enabled";
+            TurboSpinText.text = LanguageMan.instance.RequestForText("L_101"); ;
         }
         else if (IsNormalMode)
         {
-            TurboSpinText.text = "Super Turbo Spin Disabled";
+            TurboSpinText.text = LanguageMan.instance.RequestForText("L_102"); ;
         }
         mytween = TurboUI.GetComponent<CanvasGroup>().DOFade(1 , 1f)
             .OnComplete(() =>
