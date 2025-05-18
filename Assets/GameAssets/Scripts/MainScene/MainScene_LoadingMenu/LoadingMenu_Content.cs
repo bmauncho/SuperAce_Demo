@@ -1,94 +1,68 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadingMenu_Content : MonoBehaviour
 {
     public GameObject LeftBtn;
     public GameObject RightBtn;
-    public RectTransform ScrollContent;
-    Vector2 TargetPos;
-    float RightPos = 224f;
-    float LeftPos = -224f;
-    bool MovedLeft;
-    public GameObject Content_1;
-    public GameObject Content_2;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public ScrollRect scrollRect;
+    [SerializeField]bool MovedLeft;
+    public GameObject[] Content;
+    public int TargetIndex = 0;
+    public RectTransform targetChild;          // The child you want to scroll to
+
+    public void ScrollToTarget ()
     {
-        CheckPos();
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform content = scrollRect.content;
+        float contentWidth = content.rect.width;
+        float viewportWidth = scrollRect.viewport.rect.width;
+
+        // Get the child's anchored position and adjust for pivot
+        float targetPosX = targetChild.anchoredPosition.x;
+        float pivotOffset = targetChild.rect.width * ( 0.5f - targetChild.pivot.x ); // compensate for pivot
+        float correctedPosX = targetPosX + pivotOffset;
+
+        // Center the target and apply offset (e.g., scroll 54 units earlier)
+        float centerOffset = correctedPosX - ( viewportWidth / 2f );
+
+        float scrollableWidth = contentWidth - viewportWidth;
+        float normalizedX = centerOffset / scrollableWidth;
+        normalizedX = Mathf.Clamp01(normalizedX);
+
+        DOTween.To(() => scrollRect.horizontalNormalizedPosition ,
+                   x => scrollRect.horizontalNormalizedPosition = x ,
+                   normalizedX ,
+                   0.3f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void CheckPos ()
-    {
-        if (MovedLeft)
-        {
-            DeactivateRightBtn();
-            ActivateLeftBtn();
-
-        }
-        else
-        {
-            ActivateRightBtn();
-            DeactivateLeftBtn();
-        }
-    }
-    public void ScrollTheContent (float target)
-    {
-        TargetPos = new Vector2(target,ScrollContent.anchoredPosition.y);
-        ScrollContent.DOAnchorPos(TargetPos , .1f)
-            .OnComplete(() =>
-            {
-               CheckPos ();
-            });
-    }
 
     public void Deactivate ()
     {
         this.gameObject.SetActive(false);
     }
-
-    public void CanBounce ()
-    {
-        ScrollContent.DOPunchAnchorPos(new Vector2(.2f , 0) , .25f , 0 , .15f , false);
-    }
-
-    public void ActivateLeftBtn ()
-    {
-        LeftBtn.SetActive(true);
-    }
-
-    public void DeactivateLeftBtn ()
-    {
-        LeftBtn.SetActive(false);
-    }
-
-    public void ActivateRightBtn ()
-    {
-        RightBtn.SetActive(true);
-    }
-    public void DeactivateRightBtn ()
-    {
-        RightBtn.SetActive(false);
-    }
-
     public void MoveLeft ()
     {
-        MovedLeft = false;
-        Content_1.SetActive(true);
-        Content_2.SetActive(false);
-
-        ScrollTheContent(RightPos);
+        if (TargetIndex > 0)
+        {
+            TargetIndex--;
+            targetChild = Content [TargetIndex].GetComponent<RectTransform>();
+            MovedLeft = true;
+            ScrollToTarget();
+        }
     }
+
     public void MoveRight ()
     {
-        MovedLeft = true;
-        Content_1.SetActive(false);
-        Content_2.SetActive(true);
-        ScrollTheContent(LeftPos);
+        if (TargetIndex < Content.Length - 1)
+        {
+            TargetIndex++;
+            targetChild = Content [TargetIndex].GetComponent<RectTransform>();
+            MovedLeft = false;
+            ScrollToTarget();
+        }
     }
+
 }
