@@ -324,8 +324,6 @@ public class DemoWinLoseManager : MonoBehaviour
 
             }
         }
-       
-
 
         if (scatterCards.Count > 0)
         {
@@ -338,9 +336,13 @@ public class DemoWinLoseManager : MonoBehaviour
             CommandCentre.Instance.SoundManager_.PlaySound("hidecards");
             yield return new WaitForSeconds(1.5f);
             // Reset and refill processes
-            if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+            if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
             {
                 demoGridManager.refillTurbo(hiddenCards);
+            }
+            else if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                demoGridManager.refillSuperTurbo(hiddenCards);
             }
             else
             {

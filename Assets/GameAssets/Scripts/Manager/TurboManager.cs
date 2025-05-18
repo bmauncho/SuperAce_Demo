@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class TurboManager : MonoBehaviour
 {
-    public bool TurboSpin_ = false;
+    public bool IsNormalMode = true;
+    public bool IsTurboSpin_ = false;
+    public bool IsSuperTurboSpin_ = false;
     public GameObject TurboUI;
     public TMP_Text TurboSpinText;
-
-
+    public TurboSpin TurboSpin;
+    private Tween mytween;
     public void EnableTurbospin ()
     {
+        mytween.Kill();
         ActivateTurboUI();
         TurboUI.GetComponent<CanvasGroup>().alpha = 0;
-        TurboSpin_ = true;
-        TurboSpinText.text = "Turbo Spin Enabled";
-        TurboUI.GetComponent<CanvasGroup>().DOFade(1, 1f)
+        if(IsTurboSpin_)
+        {
+            TurboSpinText.text = "Turbo Spin Enabled";
+        }
+        else if (IsSuperTurboSpin_)
+        {
+            TurboSpinText.text = "Super Turbo Spin Enabled";
+        }
+        else if (IsNormalMode)
+        {
+            TurboSpinText.text = "Super Turbo Spin Disabled";
+        }
+        mytween = TurboUI.GetComponent<CanvasGroup>().DOFade(1 , 1f)
             .OnComplete(() =>
             {
                 Invoke(nameof(DisableTurboUI) , 2f);
@@ -26,8 +39,14 @@ public class TurboManager : MonoBehaviour
     {
         ActivateTurboUI();
         TurboUI.GetComponent<CanvasGroup>().alpha = 0;
-        TurboSpin_ = false;
-        TurboSpinText.text = "Turbo Spin Disabled";
+        if (IsTurboSpin_)
+        {
+            TurboSpinText.text = "Turbo Spin Disabled";
+        }
+        else if (IsSuperTurboSpin_)
+        {
+            TurboSpinText.text = "Super Turbo Spin Disabled";
+        }
         TurboUI.GetComponent<CanvasGroup>().DOFade(1 , .5f)
           .OnComplete(() =>
           {
@@ -37,8 +56,10 @@ public class TurboManager : MonoBehaviour
 
     public void ActivateTurboUI ()
     {
-
         TurboUI.SetActive(true);
+        IsNormalMode = TurboSpin.IsNormalSpin;
+        IsTurboSpin_ = TurboSpin.IsTurboSpin;
+        IsSuperTurboSpin_ = TurboSpin.IsSuperTurboSpin;
     }
 
     public void DisableTurboUI ()
@@ -49,5 +70,22 @@ public class TurboManager : MonoBehaviour
              TurboUI.SetActive(false);
          });
         
+    }
+
+    private void Update ()
+    {
+        if (CommandCentre.Instance)
+        {
+            if (IsNormalMode || IsTurboSpin_)
+            {
+                CommandCentre.Instance.GridManager_.moveDuration = 0.25f;
+                CommandCentre.Instance.DemoManager_.DemoGridManager_.moveDuration = 0.25f;
+            }
+            else if (IsSuperTurboSpin_)
+            {
+                CommandCentre.Instance.GridManager_.moveDuration = 0.1f;
+                CommandCentre.Instance.DemoManager_.DemoGridManager_.moveDuration = 0.1f;
+            }
+        }
     }
 }

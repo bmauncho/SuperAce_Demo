@@ -132,9 +132,13 @@ public class DemoGridManager : MonoBehaviour
         int columnCount = decks.Length; // Number of columns
         if (isGridSpaceAvailable())
         {
-            if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+            if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
             {
                 TurboFillGrid(columnCount , rowCount , decks);
+            }
+            else if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                SuperTurboFillGrid(columnCount , rowCount , decks);
             }
             else
             {
@@ -197,7 +201,8 @@ public class DemoGridManager : MonoBehaviour
 
     void TurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
     {
-         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
         for (int col = 0 ; col < columnCount ; col++)
         {
             for (int row = rowCount - 1 ; row >= 0 ; row--)
@@ -229,6 +234,50 @@ public class DemoGridManager : MonoBehaviour
                         targetPos.GetComponent<CardPos>().TheOwner = newCard;
                         CalculateObjectsPlaced();
                         if(newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                        {
+                            CommandCentre.Instance.SoundManager_.PlaySound("scatter_2");
+                        }
+                    }));
+            }
+        }
+        isFirstPlay = false;
+    }
+
+    void SuperTurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
+    {
+
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
+            {
+                Deck currentDeck = decks [col];
+                GameObject newCard = currentDeck.DrawCard();
+                if (isFirstPlay)
+                {
+                    cardManager.SetUpStartCards(newCard.GetComponent<Card>() , col , row);
+                }
+                else
+                {
+
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
+                }
+                currentDeck.ResetDeck();
+                Transform targetPos = colData [row].cardPositionInRow [col].transform;
+
+                newCard.transform.SetParent(targetPos);
+                newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
+
+                Sequence cardSequence = DOTween.Sequence();
+                cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+
+                        newCard.transform.localPosition = Vector3.zero;
+                        targetPos.GetComponent<CardPos>().TheOwner = newCard;
+                        CalculateObjectsPlaced();
+                        if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
                         {
                             CommandCentre.Instance.SoundManager_.PlaySound("scatter_2");
                         }
@@ -334,6 +383,52 @@ public class DemoGridManager : MonoBehaviour
         
     }
 
+    public void refillSuperTurbo ( int objectshidden )
+    {
+        isRefilling = true;
+        Deck [] decks = multiDeckManager.decks;
+        demoObjectsPlaced = totalDemoObjectsToPlace - objectshidden;
+        int rowCount = 4; // Number of rows
+        int columnCount = decks.Length; // Number of columns
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
+            {
+
+                GameObject cardPosHolder = colData [row].cardPositionInRow [col];
+                CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
+                GameObject card = cardPos.TheOwner;
+                if (!card)
+                {
+
+                    Deck currentDeck = decks [col];
+                    GameObject newCard = currentDeck.DrawCard();
+                    cardManager.setUpDemoCards(newCard.GetComponent<Card>() , col , row);
+                    currentDeck.ResetDeck();
+                    Transform targetPos = colData [row].cardPositionInRow [col].transform;
+
+                    newCard.transform.SetParent(targetPos);
+                    newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
+
+                    Sequence cardSequence = DOTween.Sequence();
+                    cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .OnComplete(() =>
+                        {
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                            }
+                            newCard.transform.localPosition = Vector3.zero;
+                            targetPos.GetComponent<CardPos>().TheOwner = newCard;
+                            CalculateObjectsPlaced();
+                        }));
+                }
+            }
+        }
+
+    }
+
     int freeGamerefills = 0;
 
     void CalculateObjectsPlaced ()
@@ -342,10 +437,15 @@ public class DemoGridManager : MonoBehaviour
 
         if (demoObjectsPlaced == 9)
         {
-            if (!CommandCentre.Instance.TurboManager_.TurboSpin_ && !isRefilling)
+            if (!isRefilling)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+                if (!CommandCentre.Instance.TurboManager_.IsTurboSpin_ 
+                    || !CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+                {
+                    CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+                }
             }
+          
         }
         if (isDemoGridFilled())
         {

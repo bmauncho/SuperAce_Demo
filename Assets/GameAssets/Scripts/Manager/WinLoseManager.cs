@@ -312,13 +312,17 @@ public class WinLoseManager : MonoBehaviour
         ClearAddedKeys();
         // Show current win
         CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
-        if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+        if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
         {
-            yield return StartCoroutine(refill(true,hiddenCards));
+            yield return StartCoroutine(refill(true,false,hiddenCards));
+        }
+        else if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return StartCoroutine(refill(false ,true, hiddenCards));
         }
         else
         {
-            yield return StartCoroutine(refill(false , hiddenCards));
+            yield return StartCoroutine(refill(false ,false, hiddenCards));
         }
 
         if (!checkForOtherCards())
@@ -389,11 +393,15 @@ public class WinLoseManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator refill(bool isTurbo,int hiddenCards )
+    IEnumerator refill(bool isTurbo,bool isSuperTurbo,int hiddenCards )
     {
         if(isTurbo)
         {
             gridManager.refillTurbo(hiddenCards);
+        }
+        else if (isSuperTurbo)
+        {
+            gridManager.refillSuperTurbo(hiddenCards);
         }
         else
         {

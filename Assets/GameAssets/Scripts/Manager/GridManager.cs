@@ -146,9 +146,13 @@ public class GridManager : MonoBehaviour
         if (isGridSpaceAvailable())
         {
 
-            if (CommandCentre.Instance.TurboManager_.TurboSpin_)
+            if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
             {
                 TurboFillGrid(columnCount , rowCount , decks);
+            }
+            else if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                SuperTurboFillGrid(columnCount , rowCount , decks);
             }
             else
             {
@@ -437,7 +441,116 @@ public class GridManager : MonoBehaviour
             return;
         }
         CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
-        if(isFirstPlay)
+        if (isFirstPlay)
+        {
+            CommandCentre.Instance.SoundManager_.startSound();
+        }
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
+            {
+                // Validate rowData and its cardPositionInRow
+                if (rowData [row] == null || rowData [row].cardPositionInRow == null || rowData [row].cardPositionInRow.Count <= col)
+                {
+                    Debug.LogError($"Invalid rowData or cardPositionInRow at row {row}, column {col}.");
+                    continue;
+                }
+
+                Deck currentDeck = decks [col];
+                if (currentDeck == null)
+                {
+                    Debug.LogError($"Deck at column {col} is null.");
+                    continue;
+                }
+
+                GameObject newCard = currentDeck.DrawCard();
+                if (newCard == null)
+                {
+                    Debug.LogError($"DrawCard returned null for deck at column {col}.");
+                    continue;
+                }
+
+                // Setup the card using the cardManager
+                Card cardComponent = newCard.GetComponent<Card>();
+                if (cardComponent == null)
+                {
+                    Debug.LogError($"New card at column {col}, row {row} does not have a Card component.");
+                    continue;
+                }
+
+                if (isFirstPlay)
+                {
+                    cardManager.SetUpStartCards(cardComponent , col , row);
+                }
+                else
+                {
+                    cardManager.setUpCard(cardComponent , col , row);
+                }
+
+                // Reset the deck for subsequent draws
+                currentDeck.ResetDeck();
+
+                // Get the target position
+                Transform targetPos = rowData [row].cardPositionInRow [col]?.transform;
+                if (targetPos == null)
+                {
+                    Debug.LogError($"Target position at row {row}, column {col} is null.");
+                    continue;
+                }
+
+                // Set the card's parent and initial rotation
+                newCard.transform.SetParent(targetPos);
+                newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
+
+                // Animate the card to the target position
+                Sequence cardSequence = DOTween.Sequence();
+                cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                    .SetEase(Ease.OutQuad)
+                    .OnComplete(() =>
+                    {
+                        newCard.transform.localPosition = Vector3.zero;
+                        CardPos cardPos = targetPos.GetComponent<CardPos>();
+                        if (cardPos != null)
+                        {
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                            }
+                            cardPos.TheOwner = newCard;
+                        }
+                        else
+                        {
+                            Debug.LogError($"Target position at row {row}, column {col} does not have a CardPos component.");
+                        }
+                        CalculateObjectsPlaced();
+                    }));
+            }
+        }
+
+    }
+
+    public void SuperTurboFillGrid ( int columnCount , int rowCount , Deck [] decks )
+    {
+        // Ensure all inputs are valid
+        if (decks == null || decks.Length < columnCount)
+        {
+            Debug.LogError("Decks array is null or does not match the column count.");
+            return;
+        }
+
+        if (rowData == null || rowData.Count < rowCount)
+        {
+            Debug.LogError("RowData is null or does not match the row count.");
+            return;
+        }
+
+        if (cardManager == null)
+        {
+            Debug.LogError("CardManager is not assigned.");
+            return;
+        }
+        CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        if (isFirstPlay)
         {
             CommandCentre.Instance.SoundManager_.startSound();
         }
@@ -646,15 +759,77 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void refillSuperTurbo ( int objectshidden )
+    {
+        IsRefillingSequence = true;
+        APIManager apiManager = CommandCentre.Instance.APIManager_;
+        isRefilling = true;
+        Deck [] decks = multiDeckManager.decks;
+        objectsPlaced = totalObjectsToPlace - objectshidden;
+        int rowCount = 4; // Number of rows
+        int columnCount = decks.Length; // Number of columns
+        //CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+        for (int col = 0 ; col < columnCount ; col++)
+        {
+            for (int row = rowCount - 1 ; row >= 0 ; row--)
+            {
+
+                GameObject cardPosHolder = rowData [row].cardPositionInRow [col];
+                CardPos cardPos = cardPosHolder.GetComponent<CardPos>();
+                GameObject card = cardPos.TheOwner;
+                if (!card)
+                {
+                    Deck currentDeck = decks [col];
+                    GameObject newCard = currentDeck.DrawCard();
+                    CardData cardInfo = apiManager.refillCardsAPI_.GetCardInfo(col , row);
+                    if (cardInfo.name == "BIG_JOKER" || cardInfo.name == "LITTLE_JOKER")
+                    {
+                        if (cardPos.TheOwner != null)
+                        {
+                            continue; // Skip placing this card
+                        }
+                    }
+                    cardManager.SetUpRefillCards(newCard.GetComponent<Card>() , col , row);
+                    currentDeck.ResetDeck();
+                    Transform targetPos = rowData [row].cardPositionInRow [col].transform;
+
+                    newCard.transform.SetParent(targetPos);
+                    newCard.transform.rotation = Quaternion.Euler(0f , 180f , 0f);
+
+                    Sequence cardSequence = DOTween.Sequence();
+                    cardSequence.Append(newCard.transform.DOLocalMove(Vector3.zero , moveDuration)
+                        .SetEase(Ease.OutQuad)
+                        .OnComplete(() =>
+                        {
+                            if (newCard.GetComponent<Card>().ActiveCardType == CardType.SCATTER)
+                            {
+                                CommandCentre.Instance.SoundManager_.PlaySound("ScatterDrop" , false);
+                            }
+                            newCard.transform.localPosition = Vector3.zero;
+                            targetPos.GetComponent<CardPos>().TheOwner = newCard;
+                            CalculateObjectsPlaced();
+                        }));
+
+                    cardManager.UpdateGrid(col , row);
+                }
+            }
+        }
+    }
+
     void CalculateObjectsPlaced ()
     {
         objectsPlaced++;
         if(objectsPlaced==9)
         {
-            if (!CommandCentre.Instance.TurboManager_.TurboSpin_ && !isRefilling)
+            if (!isRefilling)
             {
-                CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+                if (!CommandCentre.Instance.TurboManager_.IsTurboSpin_ ||
+                    !CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+                {
+                    CommandCentre.Instance.SoundManager_.PlaySound("cards" , false);
+                }
             }
+           
         }
 
         if (isGridFilled())
