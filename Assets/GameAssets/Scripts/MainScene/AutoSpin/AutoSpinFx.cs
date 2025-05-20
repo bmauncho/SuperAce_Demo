@@ -4,7 +4,7 @@ using UnityEngine;
 public class AutoSpinFx : MonoBehaviour
 {
     public Transform Target;
-    float degreesPerSecond = 360;
+    public float degreesPerSecond = 360;
     public bool CanShowFx = false;
     public GameObject TheParticleSystem;
 

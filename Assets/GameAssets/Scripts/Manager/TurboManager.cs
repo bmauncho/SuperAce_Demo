@@ -11,6 +11,7 @@ public class TurboManager : MonoBehaviour
     public TMP_Text TurboSpinText;
     public TurboSpin TurboSpin;
     private Tween mytween;
+    public AutoSpinFx[] AutoSpinFx_;
     public void EnableTurbospin ()
     {
         mytween.Kill();
@@ -80,11 +81,20 @@ public class TurboManager : MonoBehaviour
             {
                 CommandCentre.Instance.GridManager_.moveDuration = 0.25f;
                 CommandCentre.Instance.DemoManager_.DemoGridManager_.moveDuration = 0.25f;
+                foreach(AutoSpinFx autoSpinFx in AutoSpinFx_)
+                {
+                    autoSpinFx.degreesPerSecond = 360;
+                }
             }
             else if (IsSuperTurboSpin_)
             {
                 CommandCentre.Instance.GridManager_.moveDuration = 0.1f;
                 CommandCentre.Instance.DemoManager_.DemoGridManager_.moveDuration = 0.1f;
+
+                foreach (AutoSpinFx autoSpinFx in AutoSpinFx_)
+                {
+                    autoSpinFx.degreesPerSecond = 1440;
+                }
             }
         }
     }
