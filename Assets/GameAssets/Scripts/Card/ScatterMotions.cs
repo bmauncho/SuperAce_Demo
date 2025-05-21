@@ -21,6 +21,21 @@ public class ScatterMotions : MonoBehaviour
         rotateCoroutine = StartCoroutine(RotateObject()); // Start rotation coroutine
 
     }
+
+    private void Update ()
+    {
+        if (CommandCentre.Instance)
+        {
+            if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                GetComponent<Animator>().speed = 10;
+            }
+            else
+            {
+                GetComponent<Animator>().speed = 1;
+            }
+        }
+    }
     [ContextMenu("Bounce")]
     public void Bounce ()
     {
@@ -28,6 +43,7 @@ public class ScatterMotions : MonoBehaviour
         isBounce = true;
         GetComponent<Animator>().enabled = true;
         transform.localRotation = Quaternion.Euler(0 , 0 , 0);
+
     }
 
 
