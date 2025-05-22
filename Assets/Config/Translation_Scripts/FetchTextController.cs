@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.UI;
 public class FetchTextController : MonoBehaviour
 {
     public TextMeshProUGUI myText;
+    public Text _myText;
     public string CODE;
+    public bool IsHardCoded;
     private void OnEnable()
     {
         Setup();
@@ -26,8 +28,17 @@ public class FetchTextController : MonoBehaviour
     [ContextMenu("Refresh")]
     public void RefreshFetch() 
     {
+        
         if (CODE == "")
             return;
-        myText.SetText(LanguageMan.instance.RequestForText(CODE));
+        if (myText)
+        {
+            myText.SetText(LanguageMan.instance.RequestForText(CODE));
+
+        }
+        if (_myText)
+        {
+            _myText.text = LanguageMan.instance.RequestForText(CODE);
+        }
     }
 }

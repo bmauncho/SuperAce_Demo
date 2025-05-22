@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using UnityEngine.UI;
 using System;
-using Config_Assets;
 public class FetchUserInfo : MonoBehaviour
 {
     [DllImport("__Internal")]

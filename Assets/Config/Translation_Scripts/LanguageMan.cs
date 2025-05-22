@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine.Events;
+[System.Serializable]
+public class OnLanguageRefresh : UnityEvent { }
 
 public enum TheLanguage
 {
@@ -26,6 +29,7 @@ public enum TheLanguage
 
 public class LanguageMan : MonoBehaviour
 {
+    public OnLanguageRefresh onLanguageRefresh;
     public TextAsset TranslationDocument;
     public TheLanguage ActiveLanguage;
     public string All_Game_Text;
@@ -77,6 +81,8 @@ public class LanguageMan : MonoBehaviour
         {
             texts[i].RefreshFetch();
         }
+        onLanguageRefresh.Invoke();
+
     }
     [ContextMenu("AssignCode")]
     public void AssignCodes()
@@ -87,13 +93,30 @@ public class LanguageMan : MonoBehaviour
         {
             bool found = false;
             string thetext = texts[i].GetComponent<TMP_Text>().text;
+            if (texts[i].GetComponent<TMP_Text>())
+            {
+                thetext = texts[i].GetComponent<TMP_Text>().text;
+            }
+            else  if (texts[i].GetComponent<Text>())
+            {
+                thetext = texts[i].GetComponent<Text>().text;
+            }
             for (int r = 0; r < Data.Length; r++)
             {
                 //                Debug.Log(Data[r]);
-                if (Data[r] == thetext)
+                if (Data[r] == thetext&& !texts[i].IsHardCoded)
                 {
+                   
                     Debug.Log(Data[r]);
-                    texts[i].myText = texts[i].GetComponent<TextMeshProUGUI>();
+                    if (texts[i].GetComponent<TMP_Text>())
+                    {
+                        texts[i].myText = texts[i].GetComponent<TextMeshProUGUI>();
+
+                    }
+                    else if (texts[i].GetComponent<Text>())
+                    {
+                        texts[i]._myText= texts[i].GetComponent<Text>();
+                    }
                     texts[i].CODE = Data[r - 1];
 #if UNITY_EDITOR
                     EditorUtility.SetDirty(texts[i]);
@@ -127,7 +150,6 @@ public class LanguageMan : MonoBehaviour
     {
         ActiveLanguage = _Language;
         RefreshAll();
-
         SetExtraLanguage();
     }
     void SetExtraLanguage()

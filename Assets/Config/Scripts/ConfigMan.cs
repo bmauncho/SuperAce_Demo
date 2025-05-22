@@ -127,6 +127,12 @@ public class ConfigMan : MonoBehaviour
     }
     public string GetBetId()
     {
+        string first = UnityEngine.Random.Range(10000, 99999).ToString();
+        string Second = UnityEngine.Random.Range(100000, 999999).ToString();
+        string Third = UnityEngine.Random.Range(10000000, 99999999).ToString();
+        string final = first + "-" + Second + "-" + Third;
+        return final;
+        /*
         var bytes = new byte[16];
         using (var rng = new RNGCryptoServiceProvider())
         {
@@ -135,10 +141,18 @@ public class ConfigMan : MonoBehaviour
 
         // and if you need it as a string...
         string hash1 = BitConverter.ToString(bytes);
-
-        string timestamp= DateTime.Now.ToBinary().ToString();
-        string final =timestamp+ ClientId+ hash1;
-        return final;
+        string[] tocken = hash1.Split("-");
+        string data = "";
+        for(int i = 0; i < tocken.Length; i++)
+        {
+            data = data + tocken[i];
+            //Debug.Log(tocken[i]);
+        }
+      //  Debug.Log(data);
+        string timestamp= ((short)DateTime.Now.ToBinary()).ToString();
+        string final =timestamp.Substring(3)+ ClientId+ data.Substring(20);
+        //final = final.Substring(10);
+        return final;*/
     }
     [ContextMenu("TestBetId")]
     void TestBetId()

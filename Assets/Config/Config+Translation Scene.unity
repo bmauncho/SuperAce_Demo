@@ -426,7 +426,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 759444331}
+  _myText: {fileID: 0}
   CODE: L_21
+  IsHardCoded: 0
 --- !u!1 &853479234
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +759,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 1167687726}
+  _myText: {fileID: 0}
   CODE: L_6
+  IsHardCoded: 0
 --- !u!1001 &1200565530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,7 +970,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 1485538401}
+  _myText: {fileID: 0}
   CODE: L_7
+  IsHardCoded: 0
 --- !u!114 &1485538401
 MonoBehaviour:
   m_ObjectHideFlags: 0

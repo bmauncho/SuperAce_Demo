@@ -10068,7 +10068,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 1475761579185260243}
+  _myText: {fileID: 0}
   CODE: L_28
+  IsHardCoded: 0
 --- !u!1 &2504028499140505815
 GameObject:
   m_ObjectHideFlags: 0
@@ -13309,7 +13311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 5938665496430362183}
+  _myText: {fileID: 0}
   CODE: L_4
+  IsHardCoded: 0
 --- !u!224 &5964890856727485706
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13591,7 +13595,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 687321881563722001}
+  _myText: {fileID: 0}
   CODE: L_8
+  IsHardCoded: 0
 --- !u!224 &6556383660160248966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13624,7 +13630,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 2481787813800862225}
+  _myText: {fileID: 0}
   CODE: L_22
+  IsHardCoded: 0
 --- !u!1 &6600734770034658327
 GameObject:
   m_ObjectHideFlags: 0
@@ -14283,7 +14291,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 883394064394093197}
+  _myText: {fileID: 0}
   CODE: L_24
+  IsHardCoded: 0
 --- !u!1 &7404100033520472327
 GameObject:
   m_ObjectHideFlags: 0
@@ -14436,7 +14446,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 2923484511325902573}
+  _myText: {fileID: 0}
   CODE: L_3
+  IsHardCoded: 0
 --- !u!224 &7568595843877280393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15217,7 +15229,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 697885377483462047}
+  _myText: {fileID: 0}
   CODE: L_23
+  IsHardCoded: 0
 --- !u!114 &8383565352071498502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15373,7 +15387,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 606201975455158676}
+  _myText: {fileID: 0}
   CODE: L_5
+  IsHardCoded: 0
 --- !u!114 &8571230842733248222
 MonoBehaviour:
   m_ObjectHideFlags: 0
