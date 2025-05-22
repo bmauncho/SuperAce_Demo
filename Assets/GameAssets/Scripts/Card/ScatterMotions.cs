@@ -29,10 +29,12 @@ public class ScatterMotions : MonoBehaviour
             if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
             {
                 GetComponent<Animator>().speed = 10;
+                rotationSpeed = 1440;
             }
             else
             {
                 GetComponent<Animator>().speed = 1;
+                rotationSpeed = 360;
             }
         }
     }
