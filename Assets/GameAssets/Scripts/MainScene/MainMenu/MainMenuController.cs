@@ -63,7 +63,7 @@ public class MainMenuController : MonoBehaviour
 
     public void EnableWinMoreMenu ()
     {
-        WinMoreMenu.SetActive(true);
+        //WinMoreMenu.SetActive(true);
         CanSpin = false;
     }
 

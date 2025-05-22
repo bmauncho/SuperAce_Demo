@@ -12,7 +12,15 @@ public class AutoSpinFx : MonoBehaviour
     {
         if (CanShowFx)
         {
-            Target.Rotate(new Vector3(0 , 0 , degreesPerSecond) * Time.deltaTime);
+            if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                degreesPerSecond = 2880;
+            }
+            else
+            {
+                degreesPerSecond = 360;
+            }
+            Target.Rotate(new Vector3(0, 0, degreesPerSecond) * Time.deltaTime);
         }
     }
 

@@ -124,12 +124,33 @@ public class WinLoseManager : MonoBehaviour
 
         
         CommandCentre.Instance.CommentaryManager_.PlayCommentary(winningCards);
-        yield return new WaitForSeconds(.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+             yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
         yield return StartCoroutine(WinEffect());
-        yield return new WaitForSeconds(.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
 
         CommandCentre.Instance.SoundManager_.PlaySound("win");
-        yield return new WaitForSeconds(.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
         Activatecardfx();
         yield return StartCoroutine(HideNormalCards());
 
@@ -156,14 +177,28 @@ public class WinLoseManager : MonoBehaviour
 
             if (card)
             {
+                if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+                {
+                    card.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f, 5, 1)
+                   .OnComplete(() =>
+                   {
+                       tweensCompleted++;
+                       //Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
+                   });
+                    cardfxMask.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.1f, 5, 1);
+                }
+                else
+                {
+                    card.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f, 5, 1)
+                   .OnComplete(() =>
+                   {
+                       tweensCompleted++;
+                       //Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
+                   });
+                    cardfxMask.transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f, 5, 1);
+                }
                 //card.GetComponent<Card>().enableWinEffect();
-                card.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1)
-                    .OnComplete(() =>
-                    {
-                        tweensCompleted++;
-                        //Debug.Log($"Tweens completed: {tweensCompleted} / {tweensToComplete}");
-                    });
-                cardfxMask.transform.DOPunchScale(new Vector3(0.2f , 0.2f , 0.2f) , 0.5f , 5 , 1);
+               
             }
         }
 
@@ -302,7 +337,9 @@ public class WinLoseManager : MonoBehaviour
             
             CommandCentre.Instance.SoundManager_.PlaySound("hidecards");
         }
+
         yield return new WaitForSeconds(1.5f);
+
 
         // Reset and refill processes
         CommandCentre.Instance.CardFxManager_.ReturnToPool();
@@ -339,8 +376,18 @@ public class WinLoseManager : MonoBehaviour
 
         if (BigJockerRotatedCards.Count > 0)
         {
-            yield return new WaitForSeconds(.25f);
-            //Debug.Log("BigJockerRotatedCards More Than 0");
+            if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                yield return new WaitForSeconds(.1f);
+                //Debug.Log("BigJockerRotatedCards More Than 0");
+            }
+            else
+            {
+                yield return new WaitForSeconds(.25f);
+                //Debug.Log("BigJockerRotatedCards More Than 0");
+            }
+
+
             isJumpingCards = true;
 
             HashSet<Tuple<int , int>> usedIndices = new HashSet<Tuple<int , int>>();
@@ -430,8 +477,17 @@ public class WinLoseManager : MonoBehaviour
             }
         }
 
-        // Wait for a duration that matches the scatter card rotation animation
-        yield return new WaitForSeconds(1);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            // Wait for a duration that matches the scatter card rotation animation
+            yield return new WaitForSeconds(.5f);
+        }
+        else
+        {
+            // Wait for a duration that matches the scatter card rotation animation
+            yield return new WaitForSeconds(1);
+        }
+
 
         // Activate the free game mechanics
         CommandCentre.Instance.FreeGameManager_.IsFreeGame = true;
@@ -458,11 +514,20 @@ public class WinLoseManager : MonoBehaviour
     private IEnumerator rotateNormalGoldenCards ( GameObject card,int col = 0,int row= 0 )
     {
         //Debug.Log(" Handle golden cards-2");
-        card.transform.DORotate(Vector3.zero , .2f);
-        yield return new WaitForSeconds(.5f);
+        
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            card.transform.DORotate(Vector3.zero, .05f);
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            card.transform.DORotate(Vector3.zero, .2f);
+            yield return new WaitForSeconds(.5f);
+        }
 
         // set golden cards to either bigJoker or little jocker
-         
+
         CommandCentre.Instance.CardManager_.SetUpRefillCards(card.GetComponent<Card>(),col,row);
         //Debug.Log(card.GetComponent<Card>().ActiveCardType);
         if(card.GetComponent<Card>().ActiveCardType == CardType.BIG_JOKER)
@@ -473,9 +538,25 @@ public class WinLoseManager : MonoBehaviour
             };
             BigJockerRotatedCards.Add(new Tuple<GameObject , HashSet<Tuple<int , int>>>(card,positions));
         }
-        yield return new WaitForSeconds(.5f);
-        card.transform.DORotate(new Vector3(0 , 180f , 0) , .2f);
-        yield return new WaitForSeconds(.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
+        //card.transform.DORotate(new Vector3(0 , 180f , 0) , .2f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            card.transform.DORotate(new Vector3(0, 180f, 0), .05f);
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            card.transform.DORotate(new Vector3(0, 180f, 0), .2f);
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
 
@@ -489,7 +570,14 @@ public class WinLoseManager : MonoBehaviour
             };
             BigJockerRotatedCards.Add(new Tuple<GameObject , HashSet<Tuple<int , int>>>(goldenCard , positions));
         }
-        yield return new WaitForSeconds(.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
         //goldenCard.transform.DORotate(Vector3.zero , .5f , RotateMode.FastBeyond360).OnComplete(() =>
         //{
         //    StartCoroutine(PunchScaleRotatedCards(goldenCard.transform,col,row));
@@ -500,11 +588,24 @@ public class WinLoseManager : MonoBehaviour
 
     public IEnumerator PunchScaleRotatedCards ( Transform target, int col = 0 , int row = 0 )
     {
-        yield return new WaitForSeconds(.25f);
-        Tween PunchScale = target.DOPunchScale(new Vector3(.1f , .1f , .1f) , .5f , 5 , 1).SetEase(Ease.OutQuad);
-        yield return PunchScale.WaitForCompletion();
-        //rotate
-        target.transform.DORotate(new Vector3(0,180f,0) , .5f , RotateMode.FastBeyond360);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            //yield return new WaitForSeconds(.05f);
+            Tween PunchScale = target.DOPunchScale(new Vector3(.1f, .1f, .1f), .1f, 5, 1).SetEase(Ease.OutQuad);
+            yield return PunchScale.WaitForCompletion();
+            //rotate
+            target.transform.DORotate(new Vector3(0, 180f, 0), .1f, RotateMode.FastBeyond360);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.25f);
+            Tween PunchScale = target.DOPunchScale(new Vector3(.1f, .1f, .1f), .5f, 5, 1).SetEase(Ease.OutQuad);
+            yield return PunchScale.WaitForCompletion();
+            //rotate
+            target.transform.DORotate(new Vector3(0, 180f, 0), .5f, RotateMode.FastBeyond360);
+        }
+
+        
     }
 
 
@@ -515,9 +616,19 @@ public class WinLoseManager : MonoBehaviour
             yield break;
         }
 
-        // Shake animation
-        Tween myTween2 = target.transform.DOShakeRotation(1f , 15 , 10 , 90 , false);
-        yield return myTween2.WaitForCompletion();
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            //yield return new WaitForSeconds(.05f);
+            Tween myTween2 = target.transform.DOShakeRotation(.1f, 15, 10, 90, false);
+            yield return myTween2.WaitForCompletion();
+        }
+        else
+        {
+            // Shake animation
+            Tween myTween2 = target.transform.DOShakeRotation(1f, 15, 10, 90, false);
+            yield return myTween2.WaitForCompletion();
+        }
+       
         //Debug.Log($"Start jumping");
 
         // Store initial position and rotation
@@ -561,13 +672,27 @@ public class WinLoseManager : MonoBehaviour
         foreach (var newCard in newCards)
         {
             Transform targetPos = newCard.transform.parent;
-            jumpSequence.Join(newCard.transform.DOJump(
-                targetPos.position , 3.0f , 1 , 1.0f).OnComplete(() =>
-                {
-                    objectsJumped++;
-                    newCard.transform.localPosition = Vector3.zero;
-                    newCard.transform.rotation = Quaternion.Euler(0 , 180 , 0);
-                }));
+            if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+            {
+                jumpSequence.Join(newCard.transform.DOJump(
+                     targetPos.position, 3.0f, 1, 0.2f).OnComplete(() =>
+                     {
+                         objectsJumped++;
+                         newCard.transform.localPosition = Vector3.zero;
+                         newCard.transform.rotation = Quaternion.Euler(0, 180, 0);
+                     }));
+            }
+            else
+            {
+                jumpSequence.Join(newCard.transform.DOJump(
+                     targetPos.position, 3.0f, 1, 1.0f).OnComplete(() =>
+                     {
+                         objectsJumped++;
+                         newCard.transform.localPosition = Vector3.zero;
+                         newCard.transform.rotation = Quaternion.Euler(0, 180, 0);
+                     }));
+            }
+         
         }
 
         if (jumpSequence.IsActive())
@@ -575,7 +700,14 @@ public class WinLoseManager : MonoBehaviour
             yield return jumpSequence.Play().WaitForCompletion();
         }
 
-        yield return new WaitForSeconds(0.5f);
+        if (CommandCentre.Instance.TurboManager_.IsSuperTurboSpin_)
+        {
+            yield return new WaitForSeconds(.1f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
 
         while (!IsObjectsJumpComplete())
         {
