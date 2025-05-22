@@ -91,6 +91,8 @@ public class BetUpdaterAPI : MonoBehaviour
             double newCashAmount = updateBetResponse_.new_wallet_balance;
             CashAmount = newCashAmount;
             NewCashAmount = CashAmount;
+            float amountWon = responseData.amount_won;
+            //CommandCentre.Instance.CashManager_.IncreaseWinings(amountWon);
         }
     }
 }

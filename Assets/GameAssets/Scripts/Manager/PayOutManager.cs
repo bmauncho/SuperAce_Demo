@@ -76,16 +76,22 @@ public class PayOutManager : MonoBehaviour
     IEnumerator showinnings ()
     {
         WinUI_.ActivateCurrentWinings();
-        float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
-        float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
-        if (CommandCentre.Instance.GridManager_.isRefillingSequence())
-        {
-            CurrentWin = winnings;
-        }
-        else
-        {
-            CurrentWin = winnings2;
-        }
+        //float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+        //float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+        //if (CommandCentre.Instance.GridManager_.isRefillingSequence())
+        //{
+        //    CurrentWin = winnings;
+        //}
+        //else
+        //{
+        //    CurrentWin = winnings2;
+        //}
+
+        //if (CurrentWin <= 0)
+        //{
+        //}
+        CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
+        Debug.Log("winnings ;" + CurrentWin);
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
         yield return new WaitForSeconds(1f);
         HideCurrentWin();

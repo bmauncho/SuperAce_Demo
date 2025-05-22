@@ -675,7 +675,7 @@ public class GridManager : MonoBehaviour
                         }
                     }
                     cardManager.SetUpRefillCards(newCard.GetComponent<Card>() , col , row);
-                    Debug.Log(newCard.GetComponent<Card>().ActiveCardType.ToString());
+                    //Debug.Log(newCard.GetComponent<Card>().ActiveCardType.ToString());
                     currentDeck.ResetDeck();
                     Transform targetPos = rowData [row].cardPositionInRow [col].transform;
                     newCard.transform.SetParent(targetPos);

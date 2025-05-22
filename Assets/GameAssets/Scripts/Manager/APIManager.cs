@@ -45,6 +45,7 @@ public class APIManager : MonoBehaviour
     public string Game_Id;
     public string Client_id ;
     public string bet_id;
+    public float Amountwon;
 
     public string CashAmount = string.Empty;
     public TMP_Text TranscationalText;
@@ -86,6 +87,7 @@ public class APIManager : MonoBehaviour
         }
        
         Debug.Log("Amount won = " + AmountWon);
+        Amountwon = float.Parse(AmountWon);
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);
     }
