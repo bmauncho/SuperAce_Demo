@@ -1,10 +1,12 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Hint : MonoBehaviour
 {
     [SerializeField] RectTransform m_RectTransform;
     public int slideCounter = 0;
+    public TMP_Text[] hintText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +18,12 @@ public class Hint : MonoBehaviour
     {
         
     }
-
+    public void SetHint(int whichHint)
+    {
+        int index = whichHint % hintText.Length;
+        hintText [index].gameObject.SetActive(true);
+        Activate();
+    }
     public void Activate ()
     {
         this.gameObject.SetActive(true);

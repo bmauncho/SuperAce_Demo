@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,9 @@ public class HintManager : MonoBehaviour
     public int whichHint = 1;
     public bool CanStartTimer;
     public bool CanShowHints = false;
-    public Sprite [] HintImage;
+    public int hintCount = 3;
+    public TMP_SpriteAsset hint_1_Asset;
+    public TMP_SpriteAsset hint_3_Asset;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,18 +39,13 @@ public class HintManager : MonoBehaviour
 
     public void SetHint(int Hint )
     {
-        for( int i = 0; i < HintImage.Length; i++)
-        {
-            if(i == Hint)
-            {
-                Hints_.ActiveHint.GetComponent<Image>().sprite = HintImage[i];
-                Hints_.ActiveHint.Activate();
-            }
-        }
-
-        if(whichHint > HintImage.Length)
+        Hints_.ActiveHint.SetHint(Hint);
+        whichHint++;
+        if (whichHint > hintCount)
         {
             whichHint = 0;
         }
+
+        timer = 0;
     }
 }
