@@ -7,7 +7,8 @@ public class AutoSpinManager : MonoBehaviour
 {
     public bool IsAutoSpin = false;
     public GameObject AutoSpinUI;
-    public TMP_Text AutoSpinText;
+    public TMP_Text AutoSpinTextEnabled;
+    public TMP_Text AutoSpinTextDisabled;
     public AutoSpinSettings AutoSpinSettings_;
     public int AutoSpinIndex_;
     public AutoSpin Autospin;
@@ -22,7 +23,8 @@ public class AutoSpinManager : MonoBehaviour
 
         IsAutoSpin = true;
         AutoSpinUI.GetComponent<CanvasGroup>().alpha = 0;
-        AutoSpinText.text = "Auto Spin Enabled";
+        AutoSpinTextDisabled.gameObject.SetActive(false);
+        AutoSpinTextEnabled.gameObject.SetActive(true);
         AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , 1f)
             .OnComplete(() =>
             {
@@ -36,7 +38,8 @@ public class AutoSpinManager : MonoBehaviour
         IsAutoSpin = false;
         ActivateAutoSpinUI();
         AutoSpinUI.GetComponent<CanvasGroup>().alpha = 0;
-        AutoSpinText.text = "Auto Spin Disabled";
+        AutoSpinTextEnabled.gameObject.SetActive(false);
+        AutoSpinTextDisabled.gameObject.SetActive(true);
        AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , .5f)
           .OnComplete(() =>
           {
