@@ -125,7 +125,15 @@ public class ConfigMan : MonoBehaviour
             PassClientId(ClientIdText.text);
         }
     }
-    public string GetBetId()
+    public string GetBetId_NoDash()
+    {
+        string first = UnityEngine.Random.Range(10000, 99999).ToString();
+        string Second = UnityEngine.Random.Range(100000, 999999).ToString();
+        string Third = UnityEngine.Random.Range(10000000, 99999999).ToString();
+        string final = first + Second +  Third;
+        return final;
+    }
+        public string GetBetId()
     {
         string first = UnityEngine.Random.Range(10000, 99999).ToString();
         string Second = UnityEngine.Random.Range(100000, 999999).ToString();
@@ -158,6 +166,11 @@ public class ConfigMan : MonoBehaviour
     void TestBetId()
     {
         Debug.Log(GetBetId());
+    }
+    [ContextMenu("TestBetId_NoDash")]
+    void TestBetId_NoDash()
+    {
+        Debug.Log(GetBetId_NoDash());
     }
 
 
