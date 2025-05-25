@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using static System.Net.WebRequestMethods;
@@ -34,7 +35,31 @@ public class PayOutManager : MonoBehaviour
         }
         else
         {
-            CurrentWinAmount.text = $"{CurrentWin.ToString("N2")}";
+            if (LanguageMan.instance) 
+            {
+                TheLanguage lan = LanguageMan.instance.ActiveLanguage;
+                CultureInfo cultureInfo = null;
+                switch (lan)
+                {
+                    case TheLanguage.English:
+                        cultureInfo = new CultureInfo("en-US");
+                        break;
+                    case TheLanguage.Chinese:
+                        cultureInfo = new CultureInfo("zh-CN"); // Simplified Chinese
+                        break;
+                    case TheLanguage.Portoguese:
+                        cultureInfo = new CultureInfo("pt-BR");
+                        break;
+                    default:
+                        break;
+                }
+                CurrentWinAmount.text = $"{CurrentWin.ToString("N2" , cultureInfo)}";
+            }
+            else
+            {
+                CurrentWinAmount.text = $"{CurrentWin.ToString("N2")}";
+            }
+            
         }
 
         if (CommandCentre.Instance)

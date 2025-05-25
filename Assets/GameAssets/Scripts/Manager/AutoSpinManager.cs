@@ -14,18 +14,19 @@ public class AutoSpinManager : MonoBehaviour
     public AutoSpin Autospin;
     public Toggle AutospinToggle;
     public Toggle DemoAutospinToggle;
-
+    Tween myTween;
 
     public void EnableAutoSpin ()
     {
         ResetAutoSpins ();
         ActivateAutoSpinUI();
-
+        myTween.Kill();
+        CancelInvoke(nameof(DisableAutoSpinUI));
         IsAutoSpin = true;
         AutoSpinUI.GetComponent<CanvasGroup>().alpha = 0;
         AutoSpinTextDisabled.gameObject.SetActive(false);
         AutoSpinTextEnabled.gameObject.SetActive(true);
-        AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , 1f)
+        myTween = AutoSpinUI.GetComponent<CanvasGroup>().DOFade(1 , 1f)
             .OnComplete(() =>
             {
                 Invoke(nameof(DisableAutoSpinUI) , 2f);

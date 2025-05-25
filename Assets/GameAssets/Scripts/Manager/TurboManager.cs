@@ -11,10 +11,13 @@ public class TurboManager : MonoBehaviour
     public TMP_Text TurboSpinText;
     public TurboSpin TurboSpin;
     private Tween mytween;
+    private Tween mytween2;
     public AutoSpinFx[] AutoSpinFx_;
     public void EnableTurbospin ()
     {
         mytween.Kill();
+        mytween2.Kill();
+        CancelInvoke(nameof(DisableTurboUI));
         ActivateTurboUI();
         TurboUI.GetComponent<CanvasGroup>().alpha = 0;
         if(IsTurboSpin_)
@@ -65,7 +68,7 @@ public class TurboManager : MonoBehaviour
 
     public void DisableTurboUI ()
     {
-        TurboUI.GetComponent<CanvasGroup>().DOFade(0 , .5f)
+        mytween2 = TurboUI.GetComponent<CanvasGroup>().DOFade(0 , .5f)
          .OnComplete(() =>
          {
              TurboUI.SetActive(false);

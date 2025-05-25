@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Assertions.Must;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 public class CashManager : MonoBehaviour
 {
@@ -64,26 +66,58 @@ public class CashManager : MonoBehaviour
 
     public void updateThecashUi ()
     {
+        TheLanguage lan = LanguageMan.instance.ActiveLanguage;
+        CultureInfo cultureInfo = null;
+        switch (lan)
+        {
+            case TheLanguage.English:
+                cultureInfo = new CultureInfo("en-US");
+                break;
+            case TheLanguage.Chinese:
+                cultureInfo = new CultureInfo("zh-CN"); // Simplified Chinese
+                break;
+            case TheLanguage.Portoguese:
+                cultureInfo = new CultureInfo("pt-BR");
+                break;
+            default:
+                break;
+        }
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
             CashAmountText [1].text = "DEMO MODE";
         }
         else
         {
-            CashAmountText [0].text = currentAmount.ToString("N2");
+            CashAmountText [0].text = currentAmount.ToString("N2",cultureInfo);
         }
         SaveCashAmount();
     }
 
     public void UpdateWinnings ()
     {
+        TheLanguage lan = LanguageMan.instance.ActiveLanguage;
+        CultureInfo cultureInfo = null;
+        switch (lan)
+        {
+            case TheLanguage.English:
+                cultureInfo = new CultureInfo("en-US");
+                break;
+            case TheLanguage.Chinese:
+                cultureInfo = new CultureInfo("zh-CN"); // Simplified Chinese
+                break;
+            case TheLanguage.Portoguese:
+                cultureInfo = new CultureInfo("pt-BR");
+                break;
+            default:
+                break;
+        }
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
-            WinCashAmountText [1].text = CurrentWinings.ToString("N2");
+            WinCashAmountText [1].text = CurrentWinings.ToString("N2" , cultureInfo);
         }
         else
         {
-            WinCashAmountText [0].text = CurrentWinings.ToString("N2");
+            WinCashAmountText [0].text = CurrentWinings.ToString("N2" , cultureInfo);
         }
     }
 
