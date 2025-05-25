@@ -123412,6 +123412,7 @@ GameObject:
   - component: {fileID: 1104217836}
   - component: {fileID: 1104217835}
   - component: {fileID: 1104217834}
+  - component: {fileID: 1104217837}
   m_Layer: 5
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
@@ -123436,7 +123437,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 4, y: 2.149994}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -120.98999, y: -27.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1104217834
 MonoBehaviour:
@@ -123553,6 +123554,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104217832}
   m_CullTransparentMesh: 1
+--- !u!114 &1104217837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104217832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1114040283 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7130461021387441791, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
@@ -149313,7 +149328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myText: {fileID: 1261700537}
   _myText: {fileID: 0}
-  CODE: L_56
+  CODE: L_112
   IsHardCoded: 0
 --- !u!114 &1261700537
 MonoBehaviour:
@@ -164234,6 +164249,7 @@ GameObject:
   - component: {fileID: 1309224932}
   - component: {fileID: 1309224931}
   - component: {fileID: 1309224933}
+  - component: {fileID: 1309224934}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -164255,10 +164271,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2829105620906235643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4, y: 2.149994}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 29.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1309224931
 MonoBehaviour:
@@ -164308,12 +164324,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 16
   m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 18
+  m_fontSizeMax: 16
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -164376,6 +164392,20 @@ MonoBehaviour:
   _myText: {fileID: 0}
   CODE: L_121
   IsHardCoded: 0
+--- !u!114 &1309224934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309224929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1309573387
 GameObject:
   m_ObjectHideFlags: 0
@@ -186124,6 +186154,7 @@ GameObject:
   - component: {fileID: 1667883493}
   - component: {fileID: 1667883492}
   - component: {fileID: 1667883491}
+  - component: {fileID: 1667883494}
   m_Layer: 5
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
@@ -186148,7 +186179,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 4, y: 2.149994}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -27.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1667883491
 MonoBehaviour:
@@ -186266,6 +186297,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667883489}
   m_CullTransparentMesh: 1
+--- !u!114 &1667883494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667883489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &1670452063 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 911807767924048190, guid: d5aaa5088e5495545b910cd2ebea3930, type: 3}
@@ -218629,7 +218674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myText: {fileID: 1964419919}
   _myText: {fileID: 0}
-  CODE: L_56
+  CODE: L_112
   IsHardCoded: 0
 --- !u!114 &1964419919
 MonoBehaviour:
@@ -292098,6 +292143,10 @@ PrefabInstance:
       propertyPath: 'hintText.Array.data[2]'
       value: 
       objectReference: {fileID: 1667883492}
+    - target: {fileID: 6900010150006393772, guid: 02214c26342fd924aab885f5e6c694bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6900010150006393772, guid: 02214c26342fd924aab885f5e6c694bb, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 107

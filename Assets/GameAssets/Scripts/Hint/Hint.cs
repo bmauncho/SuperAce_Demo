@@ -18,12 +18,24 @@ public class Hint : MonoBehaviour
     {
         
     }
-    public void SetHint(int whichHint)
+    public void SetHint ( int whichHint )
     {
+        if (hintText == null || hintText.Length == 0)
+        {
+            Debug.LogWarning("HintText array is empty or null.");
+            return;
+        }
+
         int index = whichHint % hintText.Length;
-        hintText [index].gameObject.SetActive(true);
+
+        for (int i = 0 ; i < hintText.Length ; i++)
+        {
+            hintText [i].gameObject.SetActive(i == index); // Only enable the selected index
+        }
+
         Activate();
     }
+
     public void Activate ()
     {
         this.gameObject.SetActive(true);

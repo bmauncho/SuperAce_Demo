@@ -7859,7 +7859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SuperAce
+  m_text: 'SuperAce '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e69e4e6d42f2a48d3808ccfc8ca95a07, type: 2}
   m_sharedMaterial: {fileID: 2236375997432499111, guid: e69e4e6d42f2a48d3808ccfc8ca95a07, type: 2}
@@ -7952,7 +7952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myText: {fileID: 1971037931}
   _myText: {fileID: 0}
-  CODE: L_56
+  CODE: L_112
   IsHardCoded: 0
 --- !u!1 &1973186095
 GameObject:
