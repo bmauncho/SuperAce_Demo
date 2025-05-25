@@ -41,6 +41,41 @@ public class DemoGridManager : MonoBehaviour
         originalPosition = cardPositionsHolder.transform.localPosition;
     }
 
+    public List<cardPositions> GetGrid ()
+    {
+        return colData;
+    }
+
+    public bool isGridFilled ()
+    {
+        int totalPositions = 0;
+        for (int i = 0 ; i < colData.Count ; i++)
+        {
+            for (int j = 0 ; j < colData [i].cardPositionInRow.Count ; j++)
+            {
+                
+                if (colData [i].cardPositionInRow [j] != null)
+                {
+                    CardPos slot = colData [i].cardPositionInRow [j].GetComponent<CardPos>();
+                    GameObject owner = slot.TheOwner;
+                    if (owner == null)
+                    {
+                        totalPositions++;
+                    }
+                }
+            }
+        }
+        Debug.Log(totalPositions);
+        if (totalPositions == totalDemoObjectsToPlace)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     [ContextMenu("Refresh Demo Grid")]
     public void refreshDemoGrid ()
     {
@@ -54,7 +89,12 @@ public class DemoGridManager : MonoBehaviour
 
         Tween myTween = cardPositionsHolder.transform.DOLocalMove(cardPositionsHolder.transform.localPosition + direction , .25f);
         yield return myTween.WaitForCompletion(true);
-        returnCardsToPool();
+
+        if (isGridFilled())
+        {
+            Debug.Log("return to pool");    
+            returnCardsToPool();
+        }
         //Debug.Log(originalPosition);
         cardPositionsHolder.transform.localPosition = originalPosition;
         isRefreshDone = true;
@@ -616,6 +656,14 @@ public class DemoGridManager : MonoBehaviour
                     CommandCentre.Instance.DemoManager_.IsDemo = false;
                     CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideDemoGamePlayMenu();
                     CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowNormalGamePlayMenu();
+                    isFirstPlay = true;
+                    CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
+                    CommandCentre.Instance.ComboManager_.ResetComboCounter();
+                    CommandCentre.Instance.MainMenuController_.StartGameMenu.SetActive(true);
+                    CommandCentre.Instance.MainMenuController_.CanSpin = true;
+                    CommandCentre.Instance.BetManager_.refreshBetSlip();
+                    CommandCentre.Instance.DemoManager_.winIndex = 0;
+                    CommandCentre.Instance.DemoManager_.ResetDemo();
                     Debug.Log("DemoDone");
 
                 }

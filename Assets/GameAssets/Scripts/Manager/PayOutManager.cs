@@ -46,20 +46,6 @@ public class PayOutManager : MonoBehaviour
                     CurrentWin = float.Parse(CommandCentre.Instance.DemoManager_.winAmount [CommandCentre.Instance.DemoManager_.winIndex]);
                 }
             }
-            else
-            {
-
-                //CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.finalData.AmountWon;
-                //if (CommandCentre.Instance.FreeGameManager_.IsFreeGame)
-                //{
-                //    CurrentWin = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
-                //}
-                //else
-                //{
-                //    CurrentWin = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
-                //}
-                    
-            }
         }
         
         if (CurrentWin >= 10000000)
@@ -75,22 +61,20 @@ public class PayOutManager : MonoBehaviour
 
     IEnumerator showinnings ()
     {
-        WinUI_.ActivateCurrentWinings();
-        //float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
-        //float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
-        //if (CommandCentre.Instance.GridManager_.isRefillingSequence())
-        //{
-        //    CurrentWin = winnings;
-        //}
-        //else
-        //{
-        //    CurrentWin = winnings2;
-        //}
+        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        {
 
-        //if (CurrentWin <= 0)
-        //{
-        //}
-        CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
+        }
+        else
+        {
+            CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
+        }
+
+        if (CurrentWin <= 0)
+        {
+            yield break;
+        }
+        WinUI_.ActivateCurrentWinings();
         Debug.Log("winnings ;" + CurrentWin);
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
         yield return new WaitForSeconds(1f);
@@ -112,6 +96,12 @@ public class PayOutManager : MonoBehaviour
     public void HideTotalWinnings ()
     {
         WinUI_.DeactivateTotalWinnings();
+    }
+
+    public void resetCurrentWinings ()
+    {
+        CurrentWin = 0;
+        WinUI_.CurrentWinnings.SetActive(false);
     }
 }
 

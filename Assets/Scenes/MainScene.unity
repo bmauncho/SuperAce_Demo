@@ -82833,8 +82833,8 @@ MonoBehaviour:
     Symbol\" will flip and\\n    transform to \"Joker Symbol\" after \\n    elimination.\\n3.\"Golden
     Symbol\" substitutes for \\n    the \"Normal symbol\" pays and \\n    eliminates."
   - "1.\u300C\u9EC4\u91D1\u6251\u514B\u724C\u300D\u4EC5\u4F1A\u5728\u7B2C2\u30013\u30014\u8F6E\u51FA\u73B0\u3002
-    \r 2.\u300C\u9EC3\u91D1\u6251\u514B\u724C\u300D\u4E0E\u300C\u666E\u901A\u6251\u514B\u724C\u300D\u53EF\u89C6\u4E3A\u76F8\u540C\u56FE\u6848,\u6D88\u9664\u8FDB\u884C\u5BF9\u5956\u3002
-    \r 3.\u300C\u9EC3\u91D1\u6251\u514B\u724C\u300D\u88AB\u6D88\u9664\u65F6,\u4F1A\u5728\u539F\u4F4D\u7F6E\u7FFB\u8F6C,\u53D8\u6210\u300C\u5C0F\u4E11\u9B3C\u724C\u300D "
+    \\n 2.\u300C\u9EC3\u91D1\u6251\u514B\u724C\u300D\u4E0E\u300C\u666E\u901A\u6251\u514B\u724C\u300D\u53EF\u89C6\u4E3A\u76F8\u540C\u56FE\u6848,\u6D88\u9664\u8FDB\u884C\u5BF9\u5956\u3002
+    \\n 3.\u300C\u9EC3\u91D1\u6251\u514B\u724C\u300D\u88AB\u6D88\u9664\u65F6,\u4F1A\u5728\u539F\u4F4D\u7F6E\u7FFB\u8F6C,\u53D8\u6210\u300C\u5C0F\u4E11\u9B3C\u724C\u300D "
   - "1.\u300C\u30B4\u30FC\u30EB\u30C7\u30F3 \u30AB\u30FC\u30C9\u300D\u306F\u30EA\u30FC\u30EB
     2\u30013\u30014 \u306B\u306E\u307F\u8868\u793A\u3055\u308C\u307E\u3059\u3002\\n2.\u300C\u30B4\u30FC\u30EB\u30C7\u30F3
     \u30B7\u30F3\u30DC\u30EB\u300D\u306F\u53CD\u8EE2\u3057\u3001\u6D88\u6EC5\u5F8C\u306B\u300C\u30B8\u30E7\u30FC\u30AB\u30FC
@@ -82906,7 +82906,7 @@ MonoBehaviour:
     Joker \\n    Symbol\".\\n4. Landing the \"Little Joker Symbol\",\\n    The \"Golden
     Symbol\" transform \\n    to\"Joker Symbol\" only.\\n 5. \"Joker Symbol\" substitutes
     for all\\n    symbols except Scatter."
-  - " .\u300C\u5C0F\u4E11\u9B3C\u724C\u300D\u4EC5\u80FD\u900F\u8FC7\u6D88\u9664\u300C\u9EC4\u91D1\u6251\u514B\u724C\u300D\u540E,\u624D\u4F1A\u51FA\u73B0\u3002
+  - "1 .\u300C\u5C0F\u4E11\u9B3C\u724C\u300D\u4EC5\u80FD\u900F\u8FC7\u6D88\u9664\u300C\u9EC4\u91D1\u6251\u514B\u724C\u300D\u540E,\u624D\u4F1A\u51FA\u73B0\u3002
     \\n 2.\u300C\u5C0F\u4E11\u9B3C\u724C\u300D\u5206\u4E3A\u201C\u5927\u9B3C\u724C\u300D\u3001\u300C\u5C0F\u9B3C\u724C\u300D\u4E24\u79CD\u6A21\u5F0F\u3002
     \\n 3.\u300E\u5927\u9B3C\u724C\u3002\u51FA\u73B0\u540E,\u539F\u300C\u9EC3\u91D1\u6251\u514B\u724C\u300D\u4F4D\u7F6E\u53D8\u6210\u300C\u5927\u9B3C\u724C\u300D,\u5E76\u968F\u673A\u590D\u5236\u300C\u5927\u9B3C\u724C\u300D\u53D6\u4EE3\u5176\u4ED6\u7B26\u53F7\\n 
     4.\u300E\u5C0F\u9B3C\u724C\u300F\u51FA\u73B0\u540E,\u4EC5\u300C\u9EC4\u91D1\u6251\u514B\u724C\u300D\u539F\u4F4D\u7F6E\u4F1A\u53D8\u6210\u300C\u5C0F\u9B3C\u724C\u300F\u3002\\n 
@@ -83031,12 +83031,12 @@ MonoBehaviour:
     \n   any wins and pays from multiplier level as \n   x3.\n7. The "Combo Multiplier"
     resets to x1 by no \n   wins and pays of for starts the next spin.
   - "1\u4E00\u822C\u6E38\u620F\u4E2D\u3002\u300C\u6D88\u9664\u4E58\u500D\u300D\u663E\u793A\u4E3A
-    x1 x2 x3x5 \r 2.\u6BCF\u6B21\u8FDB\u884C\u6D88\u9664\u540E\u7684\u8D62\u5206\u5BF9\u5956,\u61C9\u5206\u90FD\u4F1A\u627F\u4E0A\u76EE\u524D\u201C\u6D88\u9664\u627F\u500D\u3002\u4E0A\u9762\u7684\u6570
-    \r 3.\u6BCF\u6B21\u65CB\u8F6C\u7684\u300C\u7B2C\u4E00\u6B21\u5BF9\u5956\u300D\u90FD\u4ECE1\u5F00\u59CB\u8BA1\u7B97\u3002
-    \r 4. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u4E00\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u4E8C\u6B21\u5BF9\u5956\u7684\u300C\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x2
-    \r 5. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u4E8C\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u4E09\u6B21\u5BF9\u5956\u7684\u300C\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x3
-    \r 6. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u56DB\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u56DB\u6B21(\u542B\u4EE5\u540E)\u5BF9\u5956\u7684
-    *\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x5\u3002 \r 7.\u5F53\u65E0\u6CD5\u5BF9\u5956\u65F6\u300C\u6D88\u9664\u627F\u500D,\u56DE\u5F52\u5230\u7B2C\u4E00\u9636x1,\u5E76\u8FDB\u884C\u4E0B\u4E00\u6B21\u7684\u65CB\u8F6C\u3002 "
+    x1 x2 x3x5 \\n 2.\u6BCF\u6B21\u8FDB\u884C\u6D88\u9664\u540E\u7684\u8D62\u5206\u5BF9\u5956,\u61C9\u5206\u90FD\u4F1A\u627F\u4E0A\u76EE\u524D\u201C\u6D88\u9664\u627F\u500D\u3002\u4E0A\u9762\u7684\u6570
+    \\n 3.\u6BCF\u6B21\u65CB\u8F6C\u7684\u300C\u7B2C\u4E00\u6B21\u5BF9\u5956\u300D\u90FD\u4ECE1\u5F00\u59CB\u8BA1\u7B97\u3002
+    \\n 4. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u4E00\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u4E8C\u6B21\u5BF9\u5956\u7684\u300C\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x2
+    \\n 5. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u4E8C\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u4E09\u6B21\u5BF9\u5956\u7684\u300C\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x3
+    \\n 6. \u6BCF\u6B21\u65CB\u8F6C\u5185\u300C\u7B2C\u56DB\u6B21\u5BF9\u5956\u300D\u53EA\u8981\u4E2D\u4EFB\u610F\u5956,\u90FD\u80FD\u8BA9\u7B2C\u56DB\u6B21(\u542B\u4EE5\u540E)\u5BF9\u5956\u7684
+    *\u6D88\u9664\u4E58\u500D\u3002\u63D0\u5347\u4E00\u9636\u5230x5\u3002\\n  7.\u5F53\u65E0\u6CD5\u5BF9\u5956\u65F6\u300C\u6D88\u9664\u627F\u500D,\u56DE\u5F52\u5230\u7B2C\u4E00\u9636x1,\u5E76\u8FDB\u884C\u4E0B\u4E00\u6B21\u7684\u65CB\u8F6C\u3002 "
   - "1. \u901A\u5E38\u30B2\u30FC\u30E0\u3067\u306F\u3001\u300C\u30B3\u30F3\u30DC
     \u30DE\u30EB\u30C1\u30D7\u30E9\u30A4\u30E4\u30FC\u300D\u306B\u306F x1\u3001x2\u3001x3\u3001x5
     \u306E 4 \u3064\u306E\u30EC\u30D9\u30EB\u304C\u3042\u308A\u307E\u3059\u3002\\n2.
@@ -83198,82 +83198,88 @@ MonoBehaviour:
   - "\uBB34\uB8CC \uAC8C\uC784"
   - "\u1021\u1001\u1019\u1032\u1037\u1002\u102D\u1019\u103A\u1038\r"
   - L_46
-  - 1. Landing 3 or more "        " will\n    trigger the Free Game with 10 free
-    \n    spins.\n2. "The Combo Multiplier" has 4 levels \n    as x2, x4, x6, x10
-    in Free Game.\n3. Rule of Free Game are same as \n    the normal game, only difference
-    in\n    the "Combo Multiplier" level. 4. Landing 3 "        " in the Free \n   
-    Game will trigger addition 5 free \n    spin which is available to stack.
-  - "1.\u6536\u96C6\u4E09\u4E2A\u5373\u8D60\u900110\u5C40\u7684\u514D\u8D39\u6E38\u620F\u3002
+  - 1. Landing 3 or more <sprite name=Hint_3_1_scatter>  will\n    trigger the Free
+    Game with 10 free \n    spins.\n2. "The Combo Multiplier" has 4 levels \n   
+    as x2, x4, x6, x10 in Free Game.\n3. Rule of Free Game are same as \n    the
+    normal game, only difference in\n    the "Combo Multiplier" level. 4. Landing
+    3 \n    <sprite name=Hint_3_1_scatter>  in the Free Game will trigger addition
+    \n    5 free  spin which is available to stack.
+  - "1.\u6536\u96C6\u4E09\u4E2A\u5373\u8D60\u9001<sprite name=Hint_3_1_scatter> \u5C40\u7684\u514D\u8D39\u6E38\u620F\u3002
     \\n 2. \u514D\u8D39\u6E38\u620F\u4E2D\u201C\u6D88\u9664\u4E58\u500D\u3002\u4E3A\u4E00\u822C\u6E38\u620F\u7684\u4E24\u500D,\u63D0\u5347\u4E3A\u300Cx2x4x6
     \\n 3. \u514D\u8D39\u6E38\u620F\u4E2D,\u6D88\u9664\u4E58\u500D\u3002\u89C4\u5219\u4E0E\u4E00\u822C\u6E38\u620F\u76F8\u540C,\u4EC5\u300C\u6D88\u9664\u4E58\u500D\u300D\u6570\u503C\u4E3A\u4E00\u822C\u6E38\u620F\u7684\u4E24\u500D\u3002\\n 
-    4. \u514D\u8D39\u6E38\u620F\u4E2D\u518D\u6536\u96C6\u5230\u4E09\u4E2A\u52A0\u8D085\u5C40\u514D\u8D39\u6E38\u620F,\u53EF\u91CD\u590D\u9707\u79EF\u3002 "
-  - "1. 3 \u3064\u4EE5\u4E0A\u306E\u300C \u300D\u304C\u63C3\u3046\u3068\u300110 \u56DE\u306E\u30D5\u30EA\u30FC\u30B9\u30D4\u30F3\u3092\u542B\u3080\u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u304C\u30C8\u30EA\u30AC\u30FC\u3055\u308C\u307E\u3059\u3002\\n2.
+    4. \u514D\u8D39<sprite name=Hint_3_1_scatter> \u6E38\u620F\u4E2D\u518D\u6536\u96C6\u5230\u4E09\u4E2A\u52A0\u8D085\u5C40\u514D\u8D39\u6E38\u620F,\u53EF\u91CD\u590D\u9707\u79EF\u3002 "
+  - "1. 3 \u3064\u4EE5\u4E0A\u306E <sprite name=Hint_3_1_scatter> \u304C\u63C3\u3046\u3068\u300110
+    \u56DE\u306E\u30D5\u30EA\u30FC\u30B9\u30D4\u30F3\u3092\u542B\u3080\u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u304C\u958B\u59CB\u3055\u308C\u307E\u3059\u3002\\n2.
     \u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u306E\u300C\u30B3\u30F3\u30DC \u30DE\u30EB\u30C1\u30D7\u30E9\u30A4\u30E4\u30FC\u300D\u306B\u306F\u3001x2\u3001x4\u3001x6\u3001x10
     \u306E 4 \u3064\u306E\u30EC\u30D9\u30EB\u304C\u3042\u308A\u307E\u3059\u3002\\n3.
     \u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u306E\u30EB\u30FC\u30EB\u306F\u901A\u5E38\u306E\u30B2\u30FC\u30E0\u3068\u540C\u3058\u3067\u3059\u304C\u3001\u300C\u30B3\u30F3\u30DC
-    \u30DE\u30EB\u30C1\u30D7\u30E9\u30A4\u30E4\u30FC\u300D\u306E\u30EC\u30D9\u30EB\u306E\u307F\u304C\u7570\u306A\u308A\u307E\u3059\u3002
-    4. \u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u3067 3 \u3064\u306E\u300C \u300D\u304C\u63C3\u3046\u3068\u3001\u30B9\u30BF\u30C3\u30AF\u53EF\u80FD\u306A\u8FFD\u52A0\u306E
-    5 \u56DE\u306E\u30D5\u30EA\u30FC\u30B9\u30D4\u30F3\u304C\u30C8\u30EA\u30AC\u30FC\u3055\u308C\u307E\u3059\u3002"
-  - "1. Obtener 3 o m\xE1s s\xEDmbolos \" \" activar\xE1 el Juego Gratis con 10 giros
-    gratis. 2. El Multiplicador de Combo tiene 4 niveles: x2, x4, x6 y x10 en el
-    Juego Gratis. 3. Las reglas del Juego Gratis son las mismas que las del juego
-    normal, con la \xFAnica diferencia en el nivel del Multiplicador de Combo. 4.
-    Obtener 3 s\xEDmbolos \" \" en el Juego Gratis activar\xE1 5 giros gratis adicionales
-    que se pueden acumular."
-  - 1. Kutua 3 au zaidi "" kutasababisha\n Mchezo Usiolipishwa na mizunguko 10 ya
-    \n bila malipo.\n2. "Combo Multiplier" ina viwango 4 \n kama x2, x4, x6, x10
-    katika Mchezo Usiolipishwa.\n3. Sheria ya Mchezo Bila Malipo ni sawa na \n mchezo
-    wa kawaida, tofauti pekee katika\n kiwango cha "Combo Multiplier". 4. Kutua 3
-    " " kwenye Mchezo Usiolipishwa wa \n kutaanzisha mzunguko 5 wa \n bila malipo
-    ambao unapatikana kwa rafu.
-  - "1. Lander du 3 eller flere \" \" vil\\n udl\xF8se det gratis spil med 10 gratis
-    \\n spins.\\n2. \"The Combo Multiplier\" har 4 niveauer \\n som x2, x4, x6, x10
-    i gratis spil.\\n3. Reglen for gratis spil er de samme som \\n det normale spil,
-    kun forskel i\\n \"Combo Multiplier\"-niveauet. 4. Landing 3 \" \" i det gratis
-    \\n spil vil udl\xF8se yderligere 5 gratis \\n spin, som er tilg\xE6ngeligt at
-    stable."
-  - "1. \u0E01\u0E32\u0E23\u0E44\u0E14\u0E49 \" \" 3 \u0E2D\u0E31\u0E19\u0E02\u0E36\u0E49\u0E19\u0E44\u0E1B\u0E08\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E1F\u0E23\u0E35\u0E2A\u0E1B\u0E34\u0E19
-    10 \u0E04\u0E23\u0E31\u0E49\u0E072. \"\u0E15\u0E31\u0E27\u0E04\u0E39\u0E13\u0E04\u0E2D\u0E21\u0E42\u0E1A\"
-    \u0E21\u0E35 4 \u0E23\u0E30\u0E14\u0E31\u0E1A\u0E04\u0E37\u0E2D x2, x4, x6, x10
-    \u0E43\u0E19\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E353. \u0E01\u0E0E\u0E02\u0E2D\u0E07\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\u0E08\u0E30\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E1A\u0E40\u0E01\u0E21\u0E1B\u0E01\u0E15\u0E34
+    \u30DE\u30EB\u30C1\u30D7\u30E9\u30A4\u30E4\u30FC\u300D\u30EC\u30D9\u30EB\u306E\u307F\u304C\u7570\u306A\u308A\u307E\u3059\u30024.
+    \u30D5\u30EA\u30FC\u30B2\u30FC\u30E0\u3067 3 \u3064\u306E <sprite name=Hint_3_1_scatter>
+    \u304C\u63C3\u3046\u3068\u3001\u30B9\u30BF\u30C3\u30AF\u53EF\u80FD\u306A 5 \u56DE\u306E\u30D5\u30EA\u30FC\u30B9\u30D4\u30F3\u304C\u8FFD\u52A0\u3055\u308C\u307E\u3059\u3002"
+  - "1. Si aparecen 3 o m\xE1s <sprite name=Hint_3_1_scatter>, se activar\xE1 el
+    Juego Gratis con 10 giros gratis. 2. El Multiplicador de Combo tiene 4 niveles:
+    x2, x4, x6 y x10 en el Juego Gratis. 3. Las reglas del Juego Gratis son las mismas
+    que las del juego normal, con la \xFAnica diferencia en el nivel del Multiplicador
+    de Combo. 4. Si aparecen 3 <sprite name=Hint_3_1_scatter> en el Juego Gratis,
+    se activar\xE1n 5 giros gratis adicionales que se pueden acumular."
+  - 1. Kutua 3 au zaidi <sprite name=Hint_3_1_scatter> kuta\nanzisha Mchezo Bila
+    malipo kwa mizunguko 10 ya \n bila malipo.\n2. "Combo Multiplier" ina viwango
+    4 \n kama x2, x4, x6, x10 katika Mchezo Usiolipishwa.\n3. Sheria ya Mchezo Bila
+    Malipo ni sawa na \n mchezo wa kawaida, tofauti pekee katika\n kiwango cha "Combo
+    Multiplier". 4. Kutua 3 \n <sprite name=Hint_3_1_scatter> kwenye Mchezo Bila
+    malipo kutaanzisha nyongeza \n 5 za kuzunguka bila malipo ambazo zinapatikana
+    kwa rafu.
+  - "1. Lander du 3 eller flere <sprite name=Hint_3_1_scatter> vil\\n udl\xF8se det
+    gratis spil med 10 gratis \\n spins.\\n2. \"The Combo Multiplier\" har 4 niveauer
+    \\n som x2, x4, x6, x10 i gratis spil.\\n3. Reglen for gratis spil er de samme
+    som \\n det normale spil, kun forskel i\\n \"Combo Multiplier\"-niveauet. 4.
+    Landing 3 \\n <sprite name=Hint_3_1_scatter> i det gratis spil vil udl\xF8se
+    tilf\xF8jelse af \\n 5 gratis spin, som er tilg\xE6ngeligt at stable."
+  - "1. \u0E01\u0E32\u0E23\u0E44\u0E14\u0E49 <sprite name=Hint_3_1_scatter> 3 \u0E2D\u0E31\u0E19\u0E02\u0E36\u0E49\u0E19\u0E44\u0E1B\u0E08\u0E30\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E1F\u0E23\u0E35\u0E2A\u0E1B\u0E34\u0E19
+    10 \u0E04\u0E23\u0E31\u0E49\u0E07\\n2. \"\u0E15\u0E31\u0E27\u0E04\u0E39\u0E13\u0E04\u0E2D\u0E21\u0E42\u0E1A\"
+    \u0E21\u0E35 4 \u0E23\u0E30\u0E14\u0E31\u0E1A \\n \u0E40\u0E1B\u0E47\u0E19 x2,
+    x4, x6, x10 \u0E43\u0E19\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\\n3. \u0E01\u0E0E\u0E02\u0E2D\u0E07\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\u0E08\u0E30\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E1A\u0E40\u0E01\u0E21\u0E1B\u0E01\u0E15\u0E34
     \u0E15\u0E48\u0E32\u0E07\u0E01\u0E31\u0E19\u0E41\u0E04\u0E48\u0E23\u0E30\u0E14\u0E31\u0E1A
-    \"\u0E15\u0E31\u0E27\u0E04\u0E39\u0E13\u0E04\u0E2D\u0E21\u0E42\u0E1A\" \u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19
-    4. \u0E01\u0E32\u0E23\u0E44\u0E14\u0E49 \" \" 3 \u0E2D\u0E31\u0E19\u0E43\u0E19\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\u0E08\u0E30\u0E40\u0E1B\u0E34\u0E14\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E1F\u0E23\u0E35\u0E2A\u0E1B\u0E34\u0E19\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E2D\u0E35\u0E01
+    \"\u0E15\u0E31\u0E27\u0E04\u0E39\u0E13\u0E04\u0E2D\u0E21\u0E42\u0E1A\" 4. \u0E01\u0E32\u0E23\u0E44\u0E14\u0E49
+    <sprite name=Hint_3_1_scatter> 3 \u0E2D\u0E31\u0E19\u0E02\u0E36\u0E49\u0E19\u0E44\u0E1B\u0E43\u0E19\u0E40\u0E01\u0E21\u0E1F\u0E23\u0E35\u0E08\u0E30\u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E1F\u0E23\u0E35\u0E2A\u0E1B\u0E34\u0E19\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E2D\u0E35\u0E01
     5 \u0E04\u0E23\u0E31\u0E49\u0E07\u0E0B\u0E36\u0E48\u0E07\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E0B\u0E49\u0E2D\u0E19\u0E01\u0E31\u0E19\u0E44\u0E14\u0E49"
-  - 1. Mendapatkan 3 atau lebih " " akan memicu Permainan Gratis dengan 10 putaran
-    gratis. 2. "Pengganda Kombo" memiliki 4 level seperti x2, x4, x6, x10 dalam Permainan
-    Gratis. 3. Aturan Permainan Gratis sama dengan permainan normal, hanya perbedaannya
-    pada level "Pengganda Kombo". 4. Mendapatkan 3 " " dalam Permainan Gratis akan
-    memicu tambahan 5 putaran gratis yang tersedia untuk ditumpuk.
-  - "1. H\u1EA1 c\xE1nh 3 ho\u1EB7c nhi\u1EC1u h\u01A1n \" \" s\u1EBD k\xEDch ho\u1EA1t
-    Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED v\u1EDBi 10 l\u01B0\u1EE3t quay mi\u1EC5n ph\xED.\\n2.
-    \"H\u1EC7 s\u1ED1 nh\xE2n Combo\" c\xF3 4 c\u1EA5p \u0111\u1ED9 \\n l\xE0 x2,
-    x4, x6, x10 trong Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED.\\n3. Lu\u1EADt c\u1EE7a
-    Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED gi\u1ED1ng nh\u01B0 \\n tr\xF2 ch\u01A1i th\xF4ng
-    th\u01B0\u1EDDng, ch\u1EC9 kh\xE1c \u1EDF c\u1EA5p \u0111\u1ED9 \"H\u1EC7 s\u1ED1
-    nh\xE2n Combo\". 4. H\u1EA1 c\xE1nh 3 \" \" trong Tr\xF2 ch\u01A1i mi\u1EC5n
-    ph\xED s\u1EBD k\xEDch ho\u1EA1t th\xEAm 5 l\u01B0\u1EE3t quay mi\u1EC5n ph\xED
-    c\xF3 th\u1EC3 c\u1ED9ng d\u1ED3n."
-  - "1, Recolhe tr\xEAs Scatter para receber 10 r\\n odadas de Jogo Gr\xE1tis.\\n 
-    2, No Jogo Gr\xE1tis, o \"Multiplicador de \\n Elimina\xE7\xE3o\" \xE9 o dobro
-    do jogo geral, \\n e \xE9 aumentado para \"x2, x4, x6,\\n  x10\". \\n  3, No
-    Jogo Gr\xE1tis, as regras do \\n \"Multiplicador de Elimina\xE7\xE3o\" s\xE3o
-    as \\n mesmas do jogo geral, somente os \\n valores do \"Multiplicador de \\n
-    Elimina\xE7\xE3o\" s\xE3o o dobro de um jogo\\n  geral.\\n  4. Colete tr\xEAs
-    Scatter \"      \" no Jogo \\n Gr\xE1tis para receber 5 rodadas\\n  adicionais
-    de Jogo Gr\xE1tis, que\\n  podem ser acumuladas \\n  repetidamente.\\ n"
-  - "1. \" \"\uAC00 3\uAC1C \uC774\uC0C1 \uB098\uC624\uBA74 10\uBC88\uC758 \uBB34\uB8CC
-    \uC2A4\uD540\uC774 \uC81C\uACF5\uB418\uB294 \uBB34\uB8CC \uAC8C\uC784\uC774 \uC2DC\uC791\uB429\uB2C8\uB2E4.
-    2. \"\uCF64\uBCF4 \uBC30\uC218\"\uB294 x2, x4, x6, x10\uC758 4\uB2E8\uACC4\uB85C
+  - 1. Mendaratkan 3 atau lebih <sprite name=Hint_3_1_scatter> akan memicu Permainan
+    Gratis dengan 10 putaran gratis. 2. "Pengganda Kombo" memiliki 4 level seperti
+    x2, x4, x6, x10 dalam Permainan Gratis. 3. Aturan Permainan Gratis sama dengan
+    permainan normal, hanya perbedaannya pada level "Pengganda Kombo". 4. Mendaratkan
+    3 <sprite name=Hint_3_1_scatter> dalam Permainan Gratis akan memicu tambahan
+    5 putaran gratis yang tersedia untuk ditumpuk.
+  - "1. H\u1EA1 c\xE1nh 3 ho\u1EB7c nhi\u1EC1u h\u01A1n <sprite name=Hint_3_1_scatter>
+    s\u1EBD k\xEDch ho\u1EA1t Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED v\u1EDBi 10 l\u01B0\u1EE3t
+    quay mi\u1EC5n ph\xED.\\n2. \"B\u1ED9 nh\xE2n Combo\" c\xF3 4 c\u1EA5p \u0111\u1ED9
+    \\n l\xE0 x2, x4, x6, x10 trong Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED.\\n3. Lu\u1EADt
+    c\u1EE7a Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED gi\u1ED1ng nh\u01B0 \\n tr\xF2 ch\u01A1i
+    b\xECnh th\u01B0\u1EDDng, ch\u1EC9 kh\xE1c \u1EDF c\u1EA5p \u0111\u1ED9 \"B\u1ED9
+    nh\xE2n Combo\". 4. H\u1EA1 c\xE1nh 3 \\n <sprite name=Hint_3_1_scatter> trong
+    Tr\xF2 ch\u01A1i mi\u1EC5n ph\xED s\u1EBD k\xEDch ho\u1EA1t th\xEAm \\n 5 l\u01B0\u1EE3t
+    quay mi\u1EC5n ph\xED c\xF3 th\u1EC3 c\u1ED9ng d\u1ED3n."
+  - "1, Recolhe tr\xEAs Scatter para receber <sprite name=Hint_3_1_scatter>  r\\n
+    odadas de Jogo Gr\xE1tis.\\n  2, No Jogo Gr\xE1tis, o \"Multiplicador de \\n
+    Elimina\xE7\xE3o\" \xE9 o dobro do jogo geral, \\n e \xE9 aumentado para \"x2,
+    x4, x6,\\n  x10\". \\n  3, No Jogo Gr\xE1tis, as regras do \\n \"Multiplicador
+    de Elimina\xE7\xE3o\" s\xE3o as \\n mesmas do jogo geral, somente os \\n valores
+    do \"Multiplicador de \\n Elimina\xE7\xE3o\" s\xE3o o dobro de um jogo\\n  geral.\\n 
+    4. Colete tr\xEAs Scatter <sprite name=Hint_3_1_scatter>  no Jogo \\n Gr\xE1tis
+    para receber 5 rodadas\\n  adicionais de Jogo Gr\xE1tis, que\\n  podem ser acumuladas
+    \\n  repetidamente.\\ n"
+  - "1. <sprite name=Hint_3_1_scatter>\uAC00 3\uAC1C \uC774\uC0C1 \uB098\uC624\uBA74
+    10\uBC88\uC758 \uBB34\uB8CC \uC2A4\uD540\uC774 \uC81C\uACF5\uB418\uB294 \uBB34\uB8CC
+    \uAC8C\uC784\uC774 \uC2DC\uC791\uB429\uB2C8\uB2E4. 2. \uBB34\uB8CC \uAC8C\uC784\uC758
+    \"\uCF64\uBCF4 \uBC30\uC218\"\uB294 x2, x4, x6, x10\uC758 4\uB2E8\uACC4\uB85C
     \uAD6C\uC131\uB429\uB2C8\uB2E4. 3. \uBB34\uB8CC \uAC8C\uC784\uC758 \uADDC\uCE59\uC740
     \uC77C\uBC18 \uAC8C\uC784\uACFC \uB3D9\uC77C\uD558\uBA70, \"\uCF64\uBCF4 \uBC30\uC218\"
     \uB808\uBCA8\uB9CC \uB2E4\uB985\uB2C8\uB2E4. 4. \uBB34\uB8CC \uAC8C\uC784\uC5D0\uC11C
-    \" \"\uAC00 3\uAC1C \uB098\uC624\uBA74 5\uBC88\uC758 \uBB34\uB8CC \uC2A4\uD540\uC774
-    \uCD94\uAC00\uB85C \uC81C\uACF5\uB418\uBA70, \uC774 \uC2A4\uD540\uC740 \uC2A4\uD0DD\uC5D0
-    \uC313\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-  - "1. \u1006\u1004\u103A\u1038\u101E\u1000\u103A\u1001\u103C\u1004\u103A\u1038
-    3 \u101E\u102D\u102F\u1037\u1019\u101F\u102F\u1010\u103A \u1011\u102D\u102F\u1037\u1011\u1000\u103A\u1015\u102D\u102F\u1015\u102B\u1000
-    \\n 10 \u1021\u1001\u1019\u1032\u1037 \\n \u101D\u1004\u103A\u101E\u103D\u102C\u1038\u1001\u103C\u1004\u103A\u1038\u1016\u103C\u1004\u1037\u103A
+    <sprite name=Hint_3_1_scatter>\uAC00 3\uAC1C \uB098\uC624\uBA74 5\uBC88\uC758
+    \uBB34\uB8CC \uC2A4\uD540\uC774 \uCD94\uAC00\uB85C \uC81C\uACF5\uB418\uBA70,
+    \uC774 \uC2A4\uD540\uC740 \uC2A4\uD0DD\uC5D0 \uC313\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  - "1. Landing 3 \u101E\u102D\u102F\u1037\u1019\u101F\u102F\u1010\u103A \u1011\u102D\u102F\u1037\u1011\u1000\u103A\u1015\u102D\u102F\u101E\u1031\u102C
+    <sprite name=Hint_3_1_scatter> \u101E\u100A\u103A\\n\u1021\u1001\u1019\u1032\u1037
+    10 \u1021\u1001\u1019\u1032\u1037 \\n \u101D\u1004\u103A\u101E\u103D\u102C\u1038\u1001\u103C\u1004\u103A\u1038\u1016\u103C\u1004\u1037\u103A
     \u1021\u1001\u1019\u1032\u1037\u1002\u102D\u1019\u103A\u1038\u1000\u102D\u102F
     \u1021\u1005\u1015\u103B\u102D\u102F\u1038\u1015\u1031\u1038\u1015\u102B\u1019\u100A\u103A\u104B\\n2\u104B
     \"Combo Multiplier\" \u1010\u103D\u1004\u103A \u1021\u1001\u1019\u1032\u1037\u1002\u102D\u1019\u103A\u1038\u1010\u103D\u1004\u103A
@@ -83283,11 +83289,10 @@ MonoBehaviour:
     \\n \u101E\u102C\u1019\u102C\u1014\u103A\u1002\u102D\u1019\u103A\u1038\u1014\u103E\u1004\u1037\u103A
     \u1010\u1030\u100A\u102E\u101E\u100A\u103A\u104A \\n \"\u1015\u1031\u102B\u1004\u103A\u1038\u1005\u1015\u103A\u1021\u1019\u103C\u1031\u102C\u1000\u103A\u1021\u1019\u103B\u102C\u1038\"
     \u1021\u1006\u1004\u1037\u103A\u1010\u103D\u1004\u103A\u101E\u102C \u1000\u103D\u102C\u1001\u103C\u102C\u1038\u1001\u103B\u1000\u103A\u101B\u103E\u102D\u101E\u100A\u103A\u104B
-    4. \u1021\u1001\u1019\u1032\u1037 \\n \u1002\u102D\u1019\u103A\u1038\u1010\u103D\u1004\u103A
-    3 \" \" \u1006\u1004\u103A\u1038\u101E\u1000\u103A\u1001\u103C\u1004\u103A\u1038\u101E\u100A\u103A
-    stack \u1010\u103D\u1004\u103A\u101B\u1014\u102D\u102F\u1004\u103A\u101E\u1031\u102C
-    \u1021\u1001\u1019\u1032\u1037 \\n \u101C\u103E\u100A\u1037\u103A\u1001\u103C\u1004\u103A\u1038
-    5 \u1001\u102F \u1011\u1015\u103A\u1010\u102D\u102F\u1038\u1015\u102B\u1019\u100A\u103A\u104B\r"
+    4. Landing 3 \\n \u1021\u1001\u1019\u1032\u1037\u1002\u102D\u1019\u103A\u1038\u1010\u103D\u1004\u103A
+    <sprite name=Hint_3_1_scatter> \u101E\u100A\u103A \u1011\u1015\u103A\u101C\u1031\u102C\u1004\u103A\u1038\u1011\u100A\u1037\u103A\u101B\u1014\u103A
+    \\n \u1021\u1001\u1019\u1032\u1037\u101C\u103E\u100A\u1037\u103A\u1001\u103C\u1004\u103A\u1038
+    5 \u1001\u102F\u1000\u102D\u102F \u1021\u1005\u1015\u103B\u102D\u102F\u1038\u1015\u1031\u1038\u1015\u102B\u1019\u100A\u103A\u104B\r"
   - L_47
   - Paytable
   - "\u8D54\u4ED8\u8868 "
@@ -245377,10 +245382,10 @@ RectTransform:
   - {fileID: 8759757650439224476}
   m_Father: {fileID: 2475387420758763678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 29.64, y: 0}
-  m_SizeDelta: {x: 76.52, y: 29.571}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 102, y: -14.785004}
+  m_SizeDelta: {x: 68, y: 29.570007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1005995056979592898
 RectTransform:
@@ -251942,10 +251947,10 @@ RectTransform:
   - {fileID: 7445725724447842448}
   m_Father: {fileID: 2475387420758763678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -55.27581, y: -3.3}
-  m_SizeDelta: {x: 91.7124, y: 43.627}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 34, y: -14.785004}
+  m_SizeDelta: {x: 68, y: 29.570007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &2161480011616343910
 RectTransform:
@@ -257030,6 +257035,7 @@ GameObject:
   - component: {fileID: 7445725724447842448}
   - component: {fileID: 1406895686552235367}
   - component: {fileID: 8532941957134993630}
+  - component: {fileID: 8532941957134993631}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -269775,7 +269781,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 5.809002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5228326020749038542
 CanvasRenderer:
@@ -274963,6 +274969,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 1018997369005808318, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
+      propertyPath: Normal_Banner
+      value: 
+      objectReference: {fileID: 1261700534}
     - target: {fileID: 2319659102410024603, guid: 09adba871f4a6484d92e9d11bb213d9b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -283095,8 +283105,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000076293945, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 0.35649967}
+  m_SizeDelta: {x: 0, y: -21.840008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7455109615131380676
 GameObject:
@@ -289997,7 +290007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -290008,7 +290018,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e69e4e6d42f2a48d3808ccfc8ca95a07, type: 2}
-  m_sharedMaterial: {fileID: 6075422563909407125, guid: 7b4bb4fe570f28d459becc3a6fd81288, type: 2}
+  m_sharedMaterial: {fileID: 2236375997432499111, guid: e69e4e6d42f2a48d3808ccfc8ca95a07, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -290032,12 +290042,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.1
+  m_fontSize: 13.35
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 29.86
+  m_fontSizeMax: 13.35
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -290070,12 +290080,26 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.29164124, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8532941957134993631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2982899046161907487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!114 &8533240034535072967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290982,6 +291006,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674944979}
     m_Modifications:
+    - target: {fileID: 93923564753407944, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 93923564753407944, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 93923564753407944, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1348965803705248981, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -291066,14 +291102,46 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1743851831}
+    - target: {fileID: 2707037515844345377, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 164.31999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057091166264941852, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4967746042139721017, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
       propertyPath: m_Name
       value: DemoFeatureUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4967746042139721017, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5249256330886661694, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044714831763802927, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6058938401222760083, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
       propertyPath: m_FitTarget
       value: 
       objectReference: {fileID: 989666217835760278}
+    - target: {fileID: 7183309313872863442, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183309313872863442, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183309313872863442, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -283.50006
+      objectReference: {fileID: 0}
     - target: {fileID: 8118033601503020449, guid: 3f2e2a7a3dc991d498a72c9803809848, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

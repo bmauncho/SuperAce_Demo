@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Error: " + www.result);
                 CashAmount = "2000";
             }
-        } 
+        }
     }
 
     public bool IsDataFetched ()
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         FetchPlayerInfo();
     }
 
-    public void AddTransactionText (TMP_Text theText)
+    public void AddTransactionText ( TMP_Text theText )
     {
         TransactionsText = new TMP_Text [] { theText };
     }
@@ -268,7 +268,21 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Error: " + request.error);
-           //show ServerError
+            //show ServerError
         }
+    }
+    public bool IsDemo ()
+    {
+        return IsDemoMode;
+    }
+    public PlayerInfo GetPlayerInfo ()
+    {
+        return playerInfo;
+    }
+    public void SetPlayerInfo ( PlayerInfo info )
+    {
+        playerInfo = info;
+        CashAmount = info.wallet_balance;
+        FetchPlayerInfo();
     }
 }

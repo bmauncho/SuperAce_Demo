@@ -50,7 +50,7 @@ public class LoadingScreen : MonoBehaviour
                 isSliderLoaded = true;
                 // Show the start button or any other UI element
                 ContinueBtn.gameObject.SetActive(true);
-                ContinueBtn.DOSizeDelta(new Vector2(150, 40), .25f);
+                ContinueBtn.DOSizeDelta(new Vector2(160, 40), .25f);
                 Invoke(nameof(ActivateContinueText), .15f);
                 LoadingText.gameObject.SetActive(false);
                 TextHolder.SetActive(false);
@@ -114,5 +114,11 @@ public class LoadingScreen : MonoBehaviour
     void ActivateContinueText()
     {
         ContinueText.gameObject.SetActive(true);
+    }
+
+    public void ActivateDemoMode ()
+    {
+        ConfigMan.Instance.IsDemo = true;
+        Activate();
     }
 }

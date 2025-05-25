@@ -1,5 +1,7 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class DemoManager : MonoBehaviour
@@ -20,10 +22,12 @@ public class DemoManager : MonoBehaviour
     [SerializeField]private string [] originalWinAmounts; // To store the original amounts
     public string [] winAmount;
     public int winIndex = 0;
+    bool init = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         InitializeWinAmounts(winAmount);
+
     }
 
     // Update is called once per frame
@@ -33,6 +37,28 @@ public class DemoManager : MonoBehaviour
         {
 
             UpdateWinAmounts(CommandCentre.Instance.BetManager_.BetAmount);
+        }
+        if (!init)
+        {
+            if (GameManager.Instance)
+            {
+                if (GameManager.Instance.IsDemo())
+                {
+                    // set cards on grid
+
+                    StartDemoOnstart();
+                    init = true;
+                }
+                else
+                {
+                    //Debug.Log("Not in demo mode");
+                    IsDemo = false;
+                    CommandCentre.Instance.MainMenuController_.IsDemo = false;
+                    CommandCentre.Instance.MainMenuController_.StartGameMenu.SetActive(true);
+                    init = true;
+                }
+            }
+            
         }
     }
 
@@ -59,7 +85,21 @@ public class DemoManager : MonoBehaviour
         }
     }
 
-
+    void StartDemoOnstart ()
+    {
+        IsDemo = true;
+        CommandCentre.Instance.MainMenuController_.IsDemo = true;
+        CommandCentre.Instance.MainMenuController_.StartGameMenu.SetActive(false);
+        CommandCentre.Instance.MainMenuController_.GameplayMenu.SetActive(true);
+        CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().ShowDemoGamePlayMenu();
+        CommandCentre.Instance.MainMenuController_.GameplayMenu.GetComponent<GamePlayMenuController>().HideNormalGamePlayMenu();
+        CommandCentre.Instance.MainMenuController_.CanSpin = true;
+        DemoGridManager_.demoObjectsPlaced = 20;
+        DemoGridManager_.isFirstPlay = false;
+        CommandCentre.Instance.BetManager_.refreshBetSlip();
+        ActivateDemoUI();
+        Invoke(nameof(DemoSpin) , 1f);
+    }
 
 
     public void StartDemo ()
@@ -154,16 +194,42 @@ public class DemoManager : MonoBehaviour
         CommandCentre.Instance.MainMenuController_.CanSpin = true;
         CommandCentre.Instance.BetManager_.refreshBetSlip();
         Debug.Log("Change to normal game");
+        ResetDemo();
+        DemoGridManager_.isFirstPlay = true;
+        CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
+        CommandCentre.Instance.ComboManager_.ResetComboCounter();
+        CommandCentre.Instance.MainMenuController_.StartGameMenu.SetActive(true);
+        winIndex = 0;
     }
 
-    public void Demofill ()
+    public void ResetDemo ()
     {
+        List<cardPositions> colData = DemoGridManager_.GetGrid();
 
-    }
-
-    public void DemoRefill ()
-    {
-
+        foreach (var obj in colData)
+        {
+            foreach (var _obj in obj.cardPositionInRow)
+            {
+                var cardPos = _obj.GetComponent<CardPos>();
+                if (cardPos)
+                {
+                    var card = cardPos.TheOwner;
+                    if (card)
+                    {
+                        CommandCentre.Instance.PoolManager_.ReturnCard(card);
+                        cardPos.TheOwner = null;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"CardPos found :{cardPos.name} but TheOwner is null: {card.name}");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Transform does not have CardPos");
+                }
+            }
+        }
     }
 
 }

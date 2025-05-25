@@ -348,7 +348,11 @@ public class WinLoseManager : MonoBehaviour
         ResetWinDataList();
         ClearAddedKeys();
         // Show current win
-        CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+        if (!CommandCentre.Instance.GridManager_.isFirstPlay)
+        {
+            CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+        }
+        
         if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
         {
             yield return StartCoroutine(refill(true,false,hiddenCards));
