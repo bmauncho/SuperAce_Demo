@@ -203,7 +203,7 @@ public class GameDataAPI : MonoBehaviour
 
                         if (cardData_.transformed || ( IsFreeGame() && cardData_.name == "SCATTER" ))
                         {
-                            //Debug.Log("Scatter found");
+                            Debug.Log("Scatter found");
                             CommandCentre.Instance.WinLoseManager_.GetWinningCard(cardData_ , i , j);
                         }
 

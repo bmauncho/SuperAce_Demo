@@ -26,6 +26,7 @@ public class BetUpdaterAPI : MonoBehaviour
     //private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/update_bet";
     public UpdateBetResponse updateBetResponse_;
     public double CashAmount;
+    public double previousCashAmount;
     public double NewCashAmount;
     public bool IsBetUpdated = false;
 

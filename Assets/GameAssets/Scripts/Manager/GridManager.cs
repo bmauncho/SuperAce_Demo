@@ -20,6 +20,7 @@ public class GridManager : MonoBehaviour
     public bool isFirstPlay = true;
     public bool isRefreshDone = true;
     [SerializeField]private bool _isRefilling;
+    bool init = false;
     public bool isRefilling
     {
         get => _isRefilling;
@@ -932,6 +933,11 @@ public class GridManager : MonoBehaviour
         yield return null;
     }
 
+    public void ResetwinAmount ()
+    {
+        currentWinAmount = "0";
+        nextWinAmount = "0";
+    }
     IEnumerator HandleNoWin ()
     {
         if (CommandCentre.Instance.CardFxManager_.cardFxMask.activeSelf)
@@ -963,6 +969,23 @@ public class GridManager : MonoBehaviour
                 CommandCentre.Instance.FreeGameManager_.increaseSpins();
             }
         }
+        Debug.Log("current winings " + CommandCentre.Instance.CashManager_.CurrentWinings);
+
+        if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
+        {
+
+            float currentWinnnings = CommandCentre.Instance.CashManager_.CurrentWinings;
+            if (currentWinnnings > 0)
+            {
+                string  amountwon = currentWinnnings.ToString();
+                string betid = CommandCentre.Instance.APIManager_.bet_id;
+                string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
+                CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , amountwon , clientid);
+                yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
+            }
+        }
+
+        if (!init) { init = true; }
 
         if (CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount > 0 && 
             !CommandCentre.Instance.FreeGameManager_.IsFreeGame)
@@ -1014,19 +1037,6 @@ public class GridManager : MonoBehaviour
                                              !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
             //Debug.Log("Free Game Deactivated");
 
-            //updatebet 
-            string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
-            string betid = CommandCentre.Instance.APIManager_.bet_id;
-            string AmountWon = CommandCentre.Instance.FreeGameManager_.winAmount.ToString();
-            CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
-            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
-            double newCashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
-            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
-            CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
-            Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
-            //reset payout manager
-            CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
-           // CommandCentre.Instance.CashManager_.ResetWinings();
         }
 
 

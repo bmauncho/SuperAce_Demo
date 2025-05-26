@@ -228,6 +228,7 @@ public class MainMenuController : MonoBehaviour
         if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
         {
             CommandCentre.Instance.CashManager_.ResetWinings();
+            CommandCentre.Instance.GridManager_.ResetwinAmount();
         }
         CommandCentre.Instance.APIManager_.GameDataAPI_.isDataFetched = false;
     }

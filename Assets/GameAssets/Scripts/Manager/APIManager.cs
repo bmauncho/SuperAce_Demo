@@ -85,11 +85,17 @@ public class APIManager : MonoBehaviour
             float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
             AmountWon = winnings2.ToString();
         }
-       
-        //Debug.Log("Amount won = " + AmountWon);
-        Amountwon = float.Parse(AmountWon);
-        string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
-        betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);
+        Debug.Log($"Amount won = {Amountwon} : {AmountWon}");
+        if (Amountwon > 0)
+        {
+            if (!float.TryParse(AmountWon , out Amountwon))
+            {
+                Debug.LogWarning($"Unable to parse AmountWon: '{AmountWon}'");
+                Amountwon = 0f;
+            }
+            string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
+            betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
+        }
     }
 
     public void UpdateBetAfterFreeGame (string AmoutWon)
