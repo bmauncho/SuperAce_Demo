@@ -27,6 +27,7 @@ public class BetUpdaterAPI : MonoBehaviour
     public UpdateBetResponse updateBetResponse_;
     public double CashAmount;
     public double NewCashAmount;
+    public bool IsBetUpdated = false;
 
     private void Start ()
     {
@@ -41,6 +42,7 @@ public class BetUpdaterAPI : MonoBehaviour
     [ContextMenu("UpdateBet")]
     public void UpdateBet (string betid,string AmountWon,string Clientid)
     {
+        IsBetUpdated = false;
         //Debug.Log(CommandCentre.Instance.APIManager_.betPlacingAPI_.response.bet_id); 
         BetUpDateData Data = new BetUpDateData
         {
@@ -95,10 +97,12 @@ public class BetUpdaterAPI : MonoBehaviour
             NewCashAmount = CashAmount;
             float amountWon = responseData.amount_won;
             //CommandCentre.Instance.CashManager_.IncreaseWinings(amountWon);
+            IsBetUpdated = true;
         }
         else
         {
             Debug.Log("Error : " + request.error);
+            IsBetUpdated = true;
         }
     }
 }

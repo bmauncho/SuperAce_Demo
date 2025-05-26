@@ -1013,6 +1013,13 @@ public class GridManager : MonoBehaviour
             yield return new WaitUntil(() => !payOutManager.WinUI_.FreeGameWinUi.activeInHierarchy &&
                                              !payOutManager.WinUI_.FreeGameWinUi.activeSelf);
             //Debug.Log("Free Game Deactivated");
+
+            //updatebet 
+            string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
+            string betid = CommandCentre.Instance.APIManager_.bet_id;
+            string AmountWon = CommandCentre.Instance.FreeGameManager_.winAmount.ToString();
+            CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
         }
 
 
@@ -1050,6 +1057,11 @@ public class GridManager : MonoBehaviour
                     Debug.Log("Deactivate Free Game ");
                     yield return new WaitUntil(() => !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeInHierarchy &&
                     !CommandCentre.Instance.PayOutManager_.WinUI_.FreeGameWinUi.activeSelf);
+                    string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
+                    string betid = CommandCentre.Instance.APIManager_.bet_id;
+                    string AmountWon = CommandCentre.Instance.FreeGameManager_.winAmount.ToString();
+                    CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
+                    yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
                     // Debug.Log("Free Game Deactivated");
                 }
             }
