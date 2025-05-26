@@ -976,7 +976,7 @@ public class GridManager : MonoBehaviour
             Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
             //reset payout manager
             CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
-            CommandCentre.Instance.CashManager_.ResetWinings();
+            //CommandCentre.Instance.CashManager_.ResetWinings();
         }
 
         IsRefillingSequence = false;
@@ -1026,7 +1026,7 @@ public class GridManager : MonoBehaviour
             Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
             //reset payout manager
             CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
-            CommandCentre.Instance.CashManager_.ResetWinings();
+           // CommandCentre.Instance.CashManager_.ResetWinings();
         }
 
 
@@ -1076,7 +1076,7 @@ public class GridManager : MonoBehaviour
                     Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
                     //reset payout manager
                     CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
-                    CommandCentre.Instance.CashManager_.ResetWinings();
+                    //CommandCentre.Instance.CashManager_.ResetWinings();
                 }
             }
         }
