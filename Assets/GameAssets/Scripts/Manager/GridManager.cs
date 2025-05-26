@@ -1020,6 +1020,13 @@ public class GridManager : MonoBehaviour
             string AmountWon = CommandCentre.Instance.FreeGameManager_.winAmount.ToString();
             CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
             yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
+            double newCashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
+            CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
+            CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
+            Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+            //reset payout manager
+            CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
+            CommandCentre.Instance.CashManager_.ResetWinings();
         }
 
 
@@ -1063,6 +1070,13 @@ public class GridManager : MonoBehaviour
                     CommandCentre.Instance.APIManager_.betUpdaterAPI_.UpdateBet(betid , AmountWon , clientid);
                     yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.betUpdaterAPI_.IsBetUpdated);
                     // Debug.Log("Free Game Deactivated");
+                    double newCashAmount = CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount;
+                    CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
+                    CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
+                    Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+                    //reset payout manager
+                    CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
+                    CommandCentre.Instance.CashManager_.ResetWinings();
                 }
             }
         }
