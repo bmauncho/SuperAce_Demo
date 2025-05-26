@@ -86,7 +86,7 @@ public class APIManager : MonoBehaviour
             AmountWon = winnings2.ToString();
         }
        
-        Debug.Log("Amount won = " + AmountWon);
+        //Debug.Log("Amount won = " + AmountWon);
         Amountwon = float.Parse(AmountWon);
         string clientid = CommandCentre.Instance.APIManager_.betPlacingAPI_.client_id.ToString();
         betUpdaterAPI_.UpdateBet (betid,AmountWon,clientid);

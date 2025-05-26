@@ -351,8 +351,14 @@ public class WinLoseManager : MonoBehaviour
         if (!CommandCentre.Instance.GridManager_.isFirstPlay)
         {
             CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
+            yield return new WaitUntil(() => CommandCentre.Instance.PayOutManager_.IshowWinningsDone);
+
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
         }
-        
+
+
         if (CommandCentre.Instance.TurboManager_.IsTurboSpin_)
         {
             yield return StartCoroutine(refill(true,false,hiddenCards));

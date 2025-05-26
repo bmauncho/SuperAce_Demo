@@ -71,7 +71,7 @@ public class BetUpdaterAPI : MonoBehaviour
             object parsedResponse = JsonConvert.DeserializeObject(output);
             string formattedOutput = JsonConvert.SerializeObject(parsedResponse , Formatting.Indented);
 
-            Debug.Log("UpdateBet api Received: " + formattedOutput);
+           //Debug.Log("UpdateBet api Received: " + formattedOutput);
             // Parse successful response
             UpdateBetResponse responseData = JsonConvert.DeserializeObject<UpdateBetResponse>(output);
 

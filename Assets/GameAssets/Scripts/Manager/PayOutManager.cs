@@ -83,16 +83,26 @@ public class PayOutManager : MonoBehaviour
     {
         StartCoroutine(showinnings());
     }
-
+    public bool IshowWinningsDone = false;
     IEnumerator showinnings ()
     {
-        if (CommandCentre.Instance.DemoManager_.IsDemo)
+        IshowWinningsDone = false;
+        if (!CommandCentre.Instance.DemoManager_.IsDemo)
         {
+            string AmountWon = string.Empty;
 
-        }
-        else
-        {
-            CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
+            if (CommandCentre.Instance.GridManager_.isRefillingSequence())
+            {
+                float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+                AmountWon = winnings.ToString();
+            }
+            else
+            {
+                float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+                AmountWon = winnings2.ToString();
+            }
+            //CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
+            CurrentWin = float.Parse(AmountWon);
         }
 
         if (CurrentWin <= 0)
@@ -100,9 +110,10 @@ public class PayOutManager : MonoBehaviour
             yield break;
         }
         WinUI_.ActivateCurrentWinings();
-        Debug.Log("winnings ;" + CurrentWin);
+        //Debug.Log("winnings ;" + CurrentWin);
         CommandCentre.Instance.CashManager_.IncreaseWinings(CurrentWin);
         yield return new WaitForSeconds(1f);
+        IshowWinningsDone = true;
         HideCurrentWin();
     }
 

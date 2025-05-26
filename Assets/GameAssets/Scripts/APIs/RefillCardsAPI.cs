@@ -85,10 +85,12 @@ public class RefillCardsAPI : MonoBehaviour
             id = gameDataAPI_.game_id.ToString(),
             name = "Super Ace",
         };
+        bool freegame = CommandCentre.Instance.FreeGameManager_.IsFreeGame;
         api = new refillApi
         {
             game = gameinfo ,
             betAmount = gameDataAPI_.BetAmount ,
+            gameMode = freegame? "freeSpins" : "NORMAL" ,
             clientId = gameDataAPI_.clientId.ToString(),
             cards = data ,
         };

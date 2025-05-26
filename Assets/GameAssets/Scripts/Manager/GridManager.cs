@@ -894,26 +894,28 @@ public class GridManager : MonoBehaviour
             {
                 CommandCentre.Instance.CashManager_.updateThecashUi();
             }
-            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
-            
-            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+            CommandCentre.Instance.WinLoseManager_.winSequence();
 
-            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
-            {
-                CommandCentre.Instance.WinLoseManager_.winSequence();
-            }
-            else
-            {
-                yield return StartCoroutine(HandleServerError());
-            }
+            //CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+
+            //yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+
+            //if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
+            //{
+            //    CommandCentre.Instance.WinLoseManager_.winSequence();
+            //}
+            //else
+            //{
+            //    yield return StartCoroutine(HandleServerError());
+            //}
         }
         else
         {
-
             CommandCentre.Instance.WinLoseManager_.isWinsequence = false;
             CommandCentre.Instance.ComboManager_.ResetComboCounter();
             CommandCentre.Instance.WinLoseManager_.winSequence();
         }
+        yield return null;
     }
 
     IEnumerator HandleNoWin ()
@@ -958,6 +960,9 @@ public class GridManager : MonoBehaviour
             CommandCentre.Instance.CashManager_.UpdateCashAmount((float)newCashAmount);
             CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount = 0;
             Debug.Log($"Clear wins {CommandCentre.Instance.APIManager_.betUpdaterAPI_.NewCashAmount}");
+            //reset payout manager
+            CommandCentre.Instance.PayOutManager_.resetCurrentWinings();
+            CommandCentre.Instance.CashManager_.ResetWinings();
         }
 
         IsRefillingSequence = false;
