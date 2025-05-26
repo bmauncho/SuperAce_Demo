@@ -90,7 +90,7 @@ public class RefillCardsAPI : MonoBehaviour
         api = new refillApi
         {
             game = gameinfo ,
-            betAmount = gameDataAPI_.BetAmount ,
+            betAmount = float.Parse(gameDataAPI_.BetAmount) ,
             gameMode = freegame? "freeSpins" : "NORMAL" ,
             clientId = gameDataAPI_.clientId.ToString(),
             cards = data ,

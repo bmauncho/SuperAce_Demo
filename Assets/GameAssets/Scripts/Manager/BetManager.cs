@@ -11,7 +11,7 @@ public class BetManager : MonoBehaviour
 {
     public TMP_Text [] CurrentBetAmount;
     public BetMenu BetMenu_;
-    public float BetAmount;
+    public string BetAmount;
     public int rounds = 0;
 
     private void Start ()
@@ -35,7 +35,7 @@ public class BetManager : MonoBehaviour
         //Debug.Log("Deactivated all bets.");
     }
 
-    public void SetCurrentBetAmount ( float amount )
+    public void SetCurrentBetAmount ( string amount )
     {
         BetAmount = amount;
         if (CommandCentre.Instance.DemoManager_.IsDemo)
@@ -60,12 +60,12 @@ public class BetManager : MonoBehaviour
         if (CommandCentre.Instance.DemoManager_.IsDemo)
         {
             index = 1;
-            BetAmount = 10f;
+            BetAmount = "10";
         }
         else
         {
             index = 0;
-            BetAmount = 2;
+            BetAmount = "2";
         }
         UpdateBetAmount(index);
     }
@@ -76,7 +76,8 @@ public class BetManager : MonoBehaviour
         BetButtonsController bbc = BetMenu_.betButtonsController_;
         for (int i = 0;i<bbc.BetButtons.Count;i++)
         {
-            if(bbc.BetAmounts[i] == BetAmount)
+            string amount = bbc.BetButtons [i].Amount.ToString();
+            if (amount == BetAmount)
             {
                 bbc.BetButtons [i].GetComponentInChildren<Button>().Select ();
             }

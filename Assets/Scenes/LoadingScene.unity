@@ -981,6 +981,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6777487939459791550, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
+      propertyPath: Base_url
+      value: https://admin-api.ibibe.africa
+      objectReference: {fileID: 0}
     - target: {fileID: 8645518408272877438, guid: 6ca31c49fd6214f1e8bba2eaa30c4988, type: 3}
       propertyPath: Data.Array.size
       value: 1287

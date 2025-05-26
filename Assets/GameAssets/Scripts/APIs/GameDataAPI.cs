@@ -44,7 +44,7 @@ public class GameDataAPI : MonoBehaviour
 
     [Header("API Response")]
     public ApiResponse finalData;
-    public float BetAmount;
+    public string BetAmount;
     public float AmountWon;
     public float FreeSpins;
     [Space(10)]
@@ -94,7 +94,7 @@ public class GameDataAPI : MonoBehaviour
                     name = "SUPER_ACE" ,
                     mode = "FREE"
                 } ,
-                betAmount = BetAmount ,
+                betAmount = float.Parse(BetAmount) ,
                 clientId = clientId,
                 playerId = PlayerId,
                 action = "freeSpins" ,
@@ -112,7 +112,7 @@ public class GameDataAPI : MonoBehaviour
                     name = "SUPER_ACE" ,
                     mode = "NORMAL"
                 } ,
-                betAmount = BetAmount ,
+                betAmount = float.Parse(BetAmount) ,
                 clientId = clientId ,
                 playerId = PlayerId ,
             };

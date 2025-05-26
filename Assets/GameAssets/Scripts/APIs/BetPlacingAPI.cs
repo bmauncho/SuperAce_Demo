@@ -36,7 +36,7 @@ public class BetPlacingAPI : MonoBehaviour
     [Header("API Settings")]
     //private const string ApiUrl = "https://admin-api.ibibe.africa/api/v1/bet/place_bet";
     public BetResponse response;
-    public float BetAmount;
+    public string BetAmount;
     public string playerId;
     public string game_id;
     public string client_id;
@@ -77,11 +77,11 @@ public class BetPlacingAPI : MonoBehaviour
     {
         IsUpdated = false;
         int bet_id = Random.Range(100 , 10000000);
-
+        bool isFreeSpin = CommandCentre.Instance.FreeGameManager_.IsFreeGame;
         BetRequest Data = new BetRequest
         {
             player_id = playerId ,
-            amount = BetAmount.ToString() ,
+            amount = isFreeSpin ? "0":BetAmount ,
             bet_id = CommandCentre.Instance.APIManager_.bet_id,
             game_id = game_id ,
             client_id = client_id

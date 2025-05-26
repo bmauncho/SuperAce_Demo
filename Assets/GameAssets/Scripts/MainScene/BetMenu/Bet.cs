@@ -4,7 +4,7 @@ using UnityEngine;
 public class Bet : MonoBehaviour
 {
     public TMP_Text BetAmount;
-    public float Amount;
+    public string Amount;
     public bool IsPressed;
     
     public void SetBet ()
@@ -12,7 +12,7 @@ public class Bet : MonoBehaviour
         SetBetAmount(Amount);
     }
    
-    void SetBetAmount(float amount )
+    void SetBetAmount(string amount )
     {
         BetAmount.text = amount.ToString();
     }

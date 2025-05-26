@@ -34,8 +34,8 @@ public class DemoManager : MonoBehaviour
     {
         if (CommandCentre.Instance)
         {
-
-            UpdateWinAmounts(CommandCentre.Instance.BetManager_.BetAmount);
+            float amount = float.Parse(CommandCentre.Instance.BetManager_.BetAmount);
+            UpdateWinAmounts(amount);
         }
         if (!init)
         {
