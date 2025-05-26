@@ -51,7 +51,7 @@ public class BetManager : MonoBehaviour
 
     public void UpdateBetAmount (int index)
     {
-        CurrentBetAmount [index].text = BetAmount.ToString();
+        CurrentBetAmount [index].text = BetAmount;
     }
 
     public void refreshBetSlip ()
@@ -76,7 +76,7 @@ public class BetManager : MonoBehaviour
         BetButtonsController bbc = BetMenu_.betButtonsController_;
         for (int i = 0;i<bbc.BetButtons.Count;i++)
         {
-            string amount = bbc.BetButtons [i].Amount.ToString();
+            string amount = bbc.BetButtons [i].Amount;
             if (amount == BetAmount)
             {
                 bbc.BetButtons [i].GetComponentInChildren<Button>().Select ();

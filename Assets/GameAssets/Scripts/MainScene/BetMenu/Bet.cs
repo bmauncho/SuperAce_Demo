@@ -14,7 +14,7 @@ public class Bet : MonoBehaviour
    
     void SetBetAmount(string amount )
     {
-        BetAmount.text = amount.ToString();
+        BetAmount.text = amount;
     }
 
     public void BetIsSet ()

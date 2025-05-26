@@ -56,6 +56,7 @@ public class BetUpdaterAPI : MonoBehaviour
     private IEnumerator SendUpdateBetRequest(string jsonPayload )
     {
         string ApiUrl = ConfigMan.Instance.Base_url + "/api/v1/update_bet";
+
         UnityWebRequest request = new UnityWebRequest(ApiUrl , "POST");
         byte [] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonPayload);
         request.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -64,6 +65,7 @@ public class BetUpdaterAPI : MonoBehaviour
 
         // Send the request
         yield return request.SendWebRequest();
+
         if (request.result == UnityWebRequest.Result.Success)
         {
             string output = request.downloadHandler.text;
@@ -93,6 +95,10 @@ public class BetUpdaterAPI : MonoBehaviour
             NewCashAmount = CashAmount;
             float amountWon = responseData.amount_won;
             //CommandCentre.Instance.CashManager_.IncreaseWinings(amountWon);
+        }
+        else
+        {
+            Debug.Log("Error : " + request.error);
         }
     }
 }

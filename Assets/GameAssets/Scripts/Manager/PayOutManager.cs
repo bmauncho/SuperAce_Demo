@@ -104,7 +104,13 @@ public class PayOutManager : MonoBehaviour
             //    AmountWon = winnings2.ToString();
             //}
             //CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
-            CurrentWin = float.Parse(AmountWon);
+            Debug.Log(AmountWon);
+            if (!float.TryParse(AmountWon , out CurrentWin))
+            {
+                Debug.LogWarning($"Unable to parse AmountWon: '{AmountWon}'");
+                CurrentWin = 0f;
+            }
+
         }
 
         if (CurrentWin <= 0)

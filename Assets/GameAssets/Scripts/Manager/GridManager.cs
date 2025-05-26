@@ -892,6 +892,7 @@ public class GridManager : MonoBehaviour
         if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
         {
             CommandCentre.Instance.APIManager_.UpdateBet();
+
             if (!CommandCentre.Instance.FreeGameManager_.IsFreeGame)
             {
                 CommandCentre.Instance.CashManager_.updateThecashUi();

@@ -120,8 +120,9 @@ public class MainMenuController : MonoBehaviour
         if (!isBtnPressed)
         {
             isBtnPressed = true;
+            float amount = float.Parse(CommandCentre.Instance.BetManager_.BetAmount);
             if (CommandCentre.Instance.CashManager_.CashAmount <= 0
-                || CommandCentre.Instance.CashManager_.CashAmount < float.Parse(CommandCentre.Instance.BetManager_.BetAmount))
+                || CommandCentre.Instance.CashManager_.CashAmount < amount)
             {
                 InsufficientAmount.SetActive(true);
                 return;
