@@ -50,6 +50,7 @@ public class RefillCardsAPI : MonoBehaviour
     public bool isError;
     public bool IsServerError;
 
+
     [ContextMenu("Fetch Data")]
     public void FetchData ()
     {

@@ -91,22 +91,25 @@ public class PayOutManager : MonoBehaviour
         {
             string AmountWon = string.Empty;
 
-            if (CommandCentre.Instance.GridManager_.isRefillingSequence())
-            {
-                float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
-                AmountWon = winnings.ToString();
-            }
-            else
-            {
-                float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
-                AmountWon = winnings2.ToString();
-            }
+            AmountWon = CommandCentre.Instance.GridManager_.currentWinAmount;
+
+            //if (CommandCentre.Instance.GridManager_.isRefillingSequence())
+            //{
+            //    float winnings = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon;
+            //    AmountWon = winnings.ToString();
+            //}
+            //else
+            //{
+            //    float winnings2 = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon;
+            //    AmountWon = winnings2.ToString();
+            //}
             //CurrentWin = CommandCentre.Instance.APIManager_.Amountwon;
             CurrentWin = float.Parse(AmountWon);
         }
 
         if (CurrentWin <= 0)
         {
+            IshowWinningsDone = true;
             yield break;
         }
         WinUI_.ActivateCurrentWinings();

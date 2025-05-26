@@ -353,9 +353,14 @@ public class WinLoseManager : MonoBehaviour
             CommandCentre.Instance.PayOutManager_.ShowCurrentWin();
             yield return new WaitUntil(() => CommandCentre.Instance.PayOutManager_.IshowWinningsDone);
 
-            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+            //CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
 
-            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+            //yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+
+            //if (CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
+            //{
+            //    yield return StartCoroutine(CommandCentre.Instance.GridManager_.HandleServerError());
+            //}
         }
 
 
@@ -383,6 +388,22 @@ public class WinLoseManager : MonoBehaviour
             }
         }
         yield return new WaitUntil(() => !CommandCentre.Instance.GridManager_.isRefilling);
+
+        if (BigJockerRotatedCards.Count > 0)
+        {
+            Debug.Log("BigJockerRotatedCards More Than 0");
+            yield return StartCoroutine(jumpAvailableCards());
+        }
+
+        tempData.Clear();
+        BigJockerRotatedCards.Clear();
+        isWinsequence = false;
+
+        yield return null;
+    }
+
+    public IEnumerator jumpAvailableCards ()
+    {
 
         if (BigJockerRotatedCards.Count > 0)
         {
@@ -443,11 +464,6 @@ public class WinLoseManager : MonoBehaviour
 
             yield return new WaitUntil(() => !isJumpingCards);
         }
-
-        tempData.Clear();
-        BigJockerRotatedCards.Clear();
-        isWinsequence = false;
-        yield return null;
     }
 
     IEnumerator refill(bool isTurbo,bool isSuperTurbo,int hiddenCards )

@@ -840,6 +840,7 @@ public class GridManager : MonoBehaviour
                 isFirstPlay = false;
                 CommandCentre.Instance.MainMenuController_.EnableWinMoreMenu();
                 CommandCentre.Instance.MainMenuController_.GameplayMenu.SetActive(true);
+                CommandCentre.Instance.HintManager_.CanShowHints = true;
             }
            //Debug.Log("Grid is filled");
             StartCoroutine(CheckAndContinue());
@@ -884,7 +885,8 @@ public class GridManager : MonoBehaviour
 
         CommandCentre.Instance.APIManager_.refillCardsAPI_.isError = false;
     }
-
+    public string currentWinAmount = string.Empty;
+    public string nextWinAmount = string.Empty;
     IEnumerator HandleWin ()
     {
         if (CommandCentre.Instance.WinLoseManager_.checkForOtherCards())
@@ -894,20 +896,31 @@ public class GridManager : MonoBehaviour
             {
                 CommandCentre.Instance.CashManager_.updateThecashUi();
             }
-            CommandCentre.Instance.WinLoseManager_.winSequence();
 
-            //CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
+            CommandCentre.Instance.APIManager_.refillCardsAPI_.FetchData();
 
-            //yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
+            yield return new WaitUntil(() => CommandCentre.Instance.APIManager_.refillCardsAPI_.refillDataFetched);
 
-            //if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
-            //{
-            //    CommandCentre.Instance.WinLoseManager_.winSequence();
-            //}
-            //else
-            //{
-            //    yield return StartCoroutine(HandleServerError());
-            //}
+            if (!CommandCentre.Instance.APIManager_.refillCardsAPI_.IsServerError)
+            {
+                if(IsRefillingSequence)
+                {
+                    currentWinAmount = nextWinAmount;
+                    nextWinAmount = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon.ToString();
+                }
+                else
+                {
+                   currentWinAmount = CommandCentre.Instance.APIManager_.GameDataAPI_.AmountWon.ToString();
+                   nextWinAmount = CommandCentre.Instance.APIManager_.refillCardsAPI_.response.data.AmountWon.ToString();
+                } 
+
+                Debug.Log($"Current Win Amount: {currentWinAmount} : next winAmount {nextWinAmount}");
+                CommandCentre.Instance.WinLoseManager_.winSequence();
+            }
+            else
+            {
+                yield return StartCoroutine(HandleServerError());
+            }
         }
         else
         {
@@ -969,7 +982,7 @@ public class GridManager : MonoBehaviour
         yield return StartCoroutine(Autospin());
     }
 
-    IEnumerator HandleServerError ()
+    public IEnumerator HandleServerError ()
     {
         //Debug.Log("SeverError - update Grid");
         ServerError.SetActive(true);

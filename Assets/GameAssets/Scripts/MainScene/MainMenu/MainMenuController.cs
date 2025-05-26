@@ -134,7 +134,7 @@ public class MainMenuController : MonoBehaviour
             
         }
 
-        CommandCentre.Instance.HintManager_.CanShowHints = true;
+      
     }
 
     private IEnumerator FetchDataAndSpin ()
