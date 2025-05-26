@@ -167,10 +167,18 @@ public class GameManager : MonoBehaviour
     {
         TransactionsText = new TMP_Text [] { theText };
     }
+    string transaction = string.Empty;
 
+    private void Update ()
+    {
+        if (LanguageMan.instance)
+        {
+            transaction = LanguageMan.instance.RequestForText("L_124");
+        }
+    }
     public void ShowTransaction ( string thetrans )
     {
-        thetrans = "Transaction 15614 - 040024 -" + thetrans;
+        thetrans = transaction + " 15614 - 040024 -" + thetrans;
         for (int i = 0 ; i < TransactionsText.Length ; i++)
         {
             TransactionsText [i].text = thetrans;
